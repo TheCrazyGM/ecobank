@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ _('Welcome to EcoBank') }}</h1>
+<p>{{ _('Your decentralized finance hub.') }}</p>
+
+<div class="card mt-4">
+  <div class="card-header">
+    {{ _('Sample Hive Post Render') }}
+  </div>
+  <div class="card-body">
+    {{ content }}
+  </div>
+</div>
+{% endblock %}

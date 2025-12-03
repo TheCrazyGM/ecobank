@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ _('Create Draft') }}</h2>
+<p class="text-muted">{{ _('For Group:') }} {{ group.name }}</p>
+
+<form method="POST">
+    <div class="mb-3">
+        <label for="title" class="form-label">{{ _('Title') }}</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="hive_account" class="form-label">{{ _('Post As (Hive Account)') }}</label>
+        <select class="form-select" id="hive_account" name="hive_account" required>
+            {% for acc in hive_accounts %}
+            <option value="{{ acc }}">{{ acc }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="body" class="form-label">{{ _('Content (Markdown)') }}</label>
+        <textarea class="form-control" id="body" name="body" rows="10" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="tags" class="form-label">{{ _('Tags (space separated)') }}</label>
+        <input type="text" class="form-control" id="tags" name="tags" placeholder="ecobank hive blog">
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ _('Save Draft') }}</button>
+    <a href="{{ url_for('groups.view', id=group.id) }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
+</form>
+{% endblock %}

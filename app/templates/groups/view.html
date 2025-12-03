@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ url_for('groups.list_groups') }}">{{ _('Groups') }}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{ group.name }}</li>
+            </ol>
+        </nav>
+        <h2>{{ group.name }} <small class="text-muted fs-6">({{ membership.role }})</small></h2>
+        <p class="lead">{{ group.description }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Members Column -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>{{ _('Members') }}</span>
+                {% if membership.role in ['owner', 'admin'] %}
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">{{ _('Add') }}</button>
+                {% endif %}
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for m in members %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <strong>{{ m.user.username }}</strong> 
+                        <span class="badge bg-light text-dark border">{{ m.role }}</span>
+                    </span>
+                    {% if membership.role in ['owner', 'admin'] and m.user_id != group.owner_user_id %}
+                    <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}" method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Remove') }}</button>
+                    </form>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Resources Column -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>{{ _('Shared Resources') }}</span>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addResourceModal">{{ _('Share Hive Account') }}</button>
+            </div>
+            <div class="card-body">
+                {% if resources %}
+                    <ul class="list-group list-group-flush">
+                    {% for r in resources %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if r.resource_type == 'hive_account' %}
+                                    <span class="badge bg-warning text-dark">{{ _('Hive Account') }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ r.resource_type }}</span>
+                                {% endif %}
+                                <strong>{{ r.resource_id }}</strong>
+                            </div>
+                            
+                            <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}" method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Unlink') }}</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted small mb-0">{{ _('No shared resources yet.') }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Drafts Section -->
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>{{ _('Drafts / Content') }}</span>
+                <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create New Draft') }}</a>
+            </div>
+            <div class="card-body">
+                {% if group.drafts %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{{ _('Title') }}</th>
+                            <th>{{ _('Author') }}</th>
+                            <th>{{ _('Account') }}</th>
+                            <th>{{ _('Status') }}</th>
+                            <th>{{ _('Last Updated') }}</th>
+                            <th>{{ _('Actions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for draft in group.drafts %}
+                        <tr>
+                            <td><a href="{{ url_for('drafts.view', draft_id=draft.id) }}">{{ draft.title }}</a></td>
+                            <td>{{ draft.author.display_name }}</td>
+                            <td>@{{ draft.hive_account_username }}</td>
+                            <td>
+                                {% if draft.status == 'draft' %}
+                                <span class="badge bg-secondary">{{ _('Draft') }}</span>
+                                {% else %}
+                                <span class="badge bg-success">{{ _('Published') }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ draft.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-sm btn-info">{{ _('View') }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted">{{ _('No drafts yet.') }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Member Modal -->
+<div class="modal fade" id="addMemberModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url_for('groups.add_member', id=group.id) }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ _('Add Member') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">{{ _('Username of User to Add') }}</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ _('Add Member') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Resource Modal -->
+<div class="modal fade" id="addResourceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url_for('groups.link_resource', id=group.id) }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ _('Share Hive Account') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted">{{ _('Share one of your Hive accounts with this group. Members will be able to use it for drafting (and posting, if permissions allow).') }}</p>
+                    {% if available_accounts %}
+                    <div class="mb-3">
+                        <label for="resource_id" class="form-label">{{ _('Select Account') }}</label>
+                        <select class="form-select" name="resource_id" required>
+                            {% for acc in available_accounts %}
+                            <option value="{{ acc.username }}">{{ acc.username }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="resource_type" value="hive_account">
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning">{{ _('You have no available Hive accounts to share.') }} <a href="{{ url_for('account.create') }}">{{ _('Create one?') }}</a></div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                    {% if available_accounts %}
+                    <button type="submit" class="btn btn-primary">{{ _('Share Account') }}</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

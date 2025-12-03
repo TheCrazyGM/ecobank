@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ _('Buy Account Creation Credits') }}</h2>
+<p class="lead">{{ _('Each credit allows you to create one Hive account.') }}</p>
+<p><strong>{{ _('Price:') }}</strong> ${{ "%.2f"|format(price) }} USD {{ _('per credit') }}</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ _('Single Credit') }}</h5>
+                <p class="card-text">{{ _('Perfect for creating your first account.') }}</p>
+                <div id="paypal-button-container-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ _('Pack of 5') }}</h5>
+                <p class="card-text">{{ _('Onboard your friends and family!') }}</p>
+                <div id="paypal-button-container-5"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id={{ client_id }}&currency=USD"></script>
+<script>
+    function setupPaypal(containerId, qty) {
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return fetch('{{ url_for("paypal.create_order") }}', {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        quantity: qty
+                    })
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(orderData) {
+                    return orderData.id;
+                });
+            },
+            onApprove: function(data, actions) {
+                return fetch('{{ url_for("paypal.capture_order", order_id="") }}' + data.orderID, {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                }).then(function(res) {
+                    return res.json();
+                }).then(function(orderData) {
+                    if (orderData.status === 'COMPLETED') {
+                        alert('Transaction completed! You have received ' + qty + ' credit(s).');
+                        window.location.href = '{{ url_for("account.create") }}';
+                    }
+                });
+            }
+        }).render('#' + containerId);
+    }
+
+    setupPaypal('paypal-button-container-1', 1);
+    setupPaypal('paypal-button-container-5', 5);
+</script>
+{% endblock %}

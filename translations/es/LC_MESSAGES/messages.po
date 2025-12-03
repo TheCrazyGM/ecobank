@@ -1,0 +1,549 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-12-03 11:33-0500\n"
+"PO-Revision-Date: 2025-12-03 11:22-0500\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app/auth/forms.py:7 app/templates/account/create.html:13
+#: app/templates/account/import.html:9 app/templates/account/list.html:12
+#: app/templates/admin/credits.html:8 app/templates/main/profile.html:13
+msgid "Username"
+msgstr "Usuario"
+
+#: app/auth/forms.py:8 app/templates/account/create.html:18
+msgid "Password"
+msgstr "Contraseña"
+
+#: app/auth/forms.py:9
+msgid "Remember Me"
+msgstr "Recuérdame"
+
+#: app/auth/forms.py:10 app/templates/auth/login.html:4
+msgid "Sign In"
+msgstr "Iniciar Sesión"
+
+#: app/templates/base.html:6 app/templates/base.html:22
+msgid "Ecobank Development"
+msgstr "Desarrollo Ecobank"
+
+#: app/templates/base.html:29
+msgid "Home"
+msgstr "Inicio"
+
+#: app/templates/base.html:36
+msgid "Admin"
+msgstr "Administrador"
+
+#: app/templates/base.html:40
+msgid "Credits"
+msgstr "Créditos"
+
+#: app/templates/account/create.html:27 app/templates/base.html:43
+msgid "Buy Credits"
+msgstr "Comprar Créditos"
+
+#: app/templates/base.html:47
+msgid "Hive Accounts"
+msgstr "Cuentas Hive"
+
+#: app/templates/account/list.html:6 app/templates/base.html:50
+msgid "Create New"
+msgstr "Crear Nueva"
+
+#: app/templates/base.html:51
+msgid "My Accounts"
+msgstr "Mis Cuentas"
+
+#: app/templates/base.html:55 app/templates/groups/list.html:5
+msgid "My Groups"
+msgstr "Mis Grupos"
+
+#: app/templates/base.html:62
+msgid "Profile"
+msgstr "Perfil"
+
+#: app/templates/base.html:64
+msgid "Logout"
+msgstr "Cerrar Sesión"
+
+#: app/templates/base.html:69
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+#: app/templates/index.html:4
+msgid "Welcome to EcoBank"
+msgstr "Bienvenido a EcoBank"
+
+#: app/templates/index.html:5
+msgid "Your decentralized finance hub."
+msgstr "Tu centro de finanzas descentralizadas."
+
+#: app/templates/index.html:9
+msgid "Sample Hive Post Render"
+msgstr "Ejemplo de Renderizado de Post Hive"
+
+#: app/templates/account/buy_credits.html:4
+msgid "Buy Account Creation Credits"
+msgstr "Comprar Créditos de Creación de Cuenta"
+
+#: app/templates/account/buy_credits.html:5
+msgid "Each credit allows you to create one Hive account."
+msgstr "Cada crédito te permite crear una cuenta Hive."
+
+#: app/templates/account/buy_credits.html:6
+msgid "Price:"
+msgstr "Precio:"
+
+#: app/templates/account/buy_credits.html:6
+msgid "per credit"
+msgstr "por crédito"
+
+#: app/templates/account/buy_credits.html:12
+msgid "Single Credit"
+msgstr "Un Solo Crédito"
+
+#: app/templates/account/buy_credits.html:13
+msgid "Perfect for creating your first account."
+msgstr "Perfecto para crear tu primera cuenta."
+
+#: app/templates/account/buy_credits.html:21
+msgid "Pack of 5"
+msgstr "Paquete de 5"
+
+#: app/templates/account/buy_credits.html:22
+msgid "Onboard your friends and family!"
+msgstr "¡Invita a tus amigos y familia!"
+
+#: app/templates/account/create.html:4
+msgid "Create Hive Account"
+msgstr "Crear Cuenta Hive"
+
+#: app/templates/account/create.html:7
+#, python-format
+msgid "You have <strong>%(credits)s</strong> account creation credit(s)."
+msgstr "Tienes <strong>%(credits)s</strong> crédito(s) de creación de cuenta."
+
+#: app/templates/account/create.html:15
+msgid "3-16 chars, lowercase, numbers, . -"
+msgstr "3-16 caracteres, minúsculas, números, . -"
+
+#: app/templates/account/create.html:20
+msgid "Generate Random"
+msgstr "Generar Aleatorio"
+
+#: app/templates/account/create.html:22
+msgid "Create Account (Costs 1 Credit)"
+msgstr "Crear Cuenta (Cuesta 1 Crédito)"
+
+#: app/templates/account/create.html:26
+msgid "You need a credit to create a Hive account."
+msgstr "Necesitas un crédito para crear una cuenta Hive."
+
+#: app/templates/account/import.html:4
+msgid "Import Hive Account"
+msgstr "Importar Cuenta Hive"
+
+#: app/templates/account/import.html:5
+msgid "Import an existing Hive account to manage it here."
+msgstr "Importa una cuenta Hive existente para gestionarla aquí."
+
+#: app/templates/account/import.html:15 app/templates/account/import.html:26
+#: app/templates/account/view.html:6
+msgid "Master Password"
+msgstr "Contraseña Maestra"
+
+#: app/templates/account/import.html:18
+msgid "Individual Keys"
+msgstr "Claves Individuales"
+
+#: app/templates/account/import.html:28
+msgid ""
+"We will derive all keys from this password and verify them against the "
+"blockchain."
+msgstr "Derivaremos todas las claves de esta contraseña y las verificaremos contra la blockchain."
+
+#: app/templates/account/import.html:34
+msgid "Provide at least one private key (wif)."
+msgstr "Proporciona al menos una clave privada (wif)."
+
+#: app/templates/account/import.html:36
+msgid "Posting Key (Private)"
+msgstr "Clave Posting (Privada)"
+
+#: app/templates/account/import.html:40
+msgid "Active Key (Private)"
+msgstr "Clave Active (Privada)"
+
+#: app/templates/account/import.html:44
+msgid "Owner Key (Private)"
+msgstr "Clave Owner (Privada)"
+
+#: app/templates/account/import.html:48
+msgid "Memo Key (Private)"
+msgstr "Clave Memo (Privada)"
+
+#: app/templates/account/import.html:54
+msgid "Import Account"
+msgstr "Importar Cuenta"
+
+#: app/templates/account/import.html:55 app/templates/drafts/create.html:33
+#: app/templates/drafts/edit.html:33 app/templates/groups/view.html:146
+#: app/templates/groups/view.html:180
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: app/templates/account/list.html:4
+msgid "My Hive Accounts"
+msgstr "Mis Cuentas Hive"
+
+#: app/templates/account/list.html:7
+msgid "Import Existing"
+msgstr "Importar Existente"
+
+#: app/templates/account/list.html:13
+msgid "Created At"
+msgstr "Creada En"
+
+#: app/templates/account/list.html:14
+msgid "Source"
+msgstr "Fuente"
+
+#: app/templates/account/list.html:15 app/templates/groups/view.html:98
+msgid "Actions"
+msgstr "Acciones"
+
+#: app/templates/account/list.html:25
+msgid "Imported"
+msgstr "Importada"
+
+#: app/templates/account/list.html:27
+msgid "Created"
+msgstr "Creada"
+
+#: app/templates/account/list.html:31
+msgid "View Keys"
+msgstr "Ver Claves"
+
+#: app/templates/account/view.html:4
+msgid "Account Details:"
+msgstr "Detalles de la Cuenta:"
+
+#: app/templates/account/view.html:13
+msgid "Keys"
+msgstr "Claves"
+
+#: app/templates/account/view.html:17
+msgid "Public:"
+msgstr "Pública:"
+
+#: app/templates/account/view.html:18
+msgid "Private:"
+msgstr "Privada:"
+
+#: app/templates/account/view.html:24
+msgid "Back to List"
+msgstr "Volver a la Lista"
+
+#: app/templates/admin/credits.html:4
+msgid "Admin: Grant Credits"
+msgstr "Admin: Otorgar Créditos"
+
+#: app/templates/admin/credits.html:12
+msgid "Credits to Add"
+msgstr "Créditos a Agregar"
+
+#: app/templates/admin/credits.html:15
+msgid "Grant Credits"
+msgstr "Otorgar Créditos"
+
+#: app/templates/drafts/create.html:4
+msgid "Create Draft"
+msgstr "Crear Borrador"
+
+#: app/templates/drafts/create.html:5
+msgid "For Group:"
+msgstr "Para Grupo:"
+
+#: app/templates/drafts/create.html:9 app/templates/drafts/edit.html:9
+#: app/templates/groups/view.html:93
+msgid "Title"
+msgstr "Título"
+
+#: app/templates/drafts/create.html:14 app/templates/drafts/edit.html:14
+msgid "Post As (Hive Account)"
+msgstr "Publicar Como (Cuenta Hive)"
+
+#: app/templates/drafts/create.html:23 app/templates/drafts/edit.html:23
+msgid "Content (Markdown)"
+msgstr "Contenido (Markdown)"
+
+#: app/templates/drafts/create.html:28 app/templates/drafts/edit.html:28
+msgid "Tags (space separated)"
+msgstr "Etiquetas (separadas por espacio)"
+
+#: app/templates/drafts/create.html:32
+msgid "Save Draft"
+msgstr "Guardar Borrador"
+
+#: app/templates/drafts/edit.html:4
+msgid "Edit Draft"
+msgstr "Editar Borrador"
+
+#: app/templates/drafts/edit.html:5
+msgid "Group:"
+msgstr "Grupo:"
+
+#: app/templates/drafts/edit.html:32
+msgid "Update Draft"
+msgstr "Actualizar Borrador"
+
+#: app/templates/drafts/view.html:8
+msgid "By"
+msgstr "Por"
+
+#: app/templates/drafts/view.html:8
+msgid "For account:"
+msgstr "Para cuenta:"
+
+#: app/templates/drafts/view.html:13
+msgid "Edit"
+msgstr "Editar"
+
+#: app/templates/drafts/view.html:15
+msgid "Are you sure you want to publish this to Hive? This cannot be undone."
+msgstr "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede deshacer."
+
+#: app/templates/drafts/view.html:16
+msgid "Submit / Publish"
+msgstr "Enviar / Publicar"
+
+#: app/templates/drafts/view.html:20
+msgid "View on Hive"
+msgstr "Ver en Hive"
+
+#: app/templates/drafts/view.html:22
+msgid "Back to Group"
+msgstr "Volver al Grupo"
+
+#: app/templates/drafts/view.html:31
+msgid "Automatic Header Preview"
+msgstr "Vista Previa del Encabezado Automático"
+
+#: app/templates/drafts/view.html:32
+msgid "This will be prepended to your post upon submission."
+msgstr "Esto se añadirá al principio de tu publicación al enviarla."
+
+#: app/templates/drafts/view.html:39 app/templates/main/profile.html:72
+msgid "About the Author"
+msgstr "Sobre el Autor"
+
+#: app/templates/drafts/view.html:41
+#, python-format
+msgid "Member of %(group)s"
+msgstr "Miembro de %(group)s"
+
+#: app/templates/drafts/view.html:49
+msgid "Content Preview"
+msgstr "Vista Previa del Contenido"
+
+#: app/templates/groups/create.html:4
+msgid "Create New Group"
+msgstr "Crear Nuevo Grupo"
+
+#: app/templates/groups/create.html:7
+msgid "Group Name"
+msgstr "Nombre del Grupo"
+
+#: app/templates/groups/create.html:11
+msgid "Description"
+msgstr "Descripción"
+
+#: app/templates/groups/create.html:14 app/templates/groups/list.html:6
+msgid "Create Group"
+msgstr "Crear Grupo"
+
+#: app/templates/groups/list.html:23
+msgid "You are not a member of any groups."
+msgstr "No eres miembro de ningún grupo."
+
+#: app/templates/groups/view.html:8
+msgid "Groups"
+msgstr "Grupos"
+
+#: app/templates/groups/view.html:22
+msgid "Members"
+msgstr "Miembros"
+
+#: app/templates/groups/view.html:24
+msgid "Add"
+msgstr "Agregar"
+
+#: app/templates/groups/view.html:35
+msgid "Are you sure?"
+msgstr "¿Estás seguro?"
+
+#: app/templates/groups/view.html:36
+msgid "Remove"
+msgstr "Eliminar"
+
+#: app/templates/groups/view.html:49
+msgid "Shared Resources"
+msgstr "Recursos Compartidos"
+
+#: app/templates/groups/view.html:50 app/templates/groups/view.html:160
+msgid "Share Hive Account"
+msgstr "Compartir Cuenta Hive"
+
+#: app/templates/groups/view.html:59
+msgid "Hive Account"
+msgstr "Cuenta Hive"
+
+#: app/templates/groups/view.html:66
+msgid "Unlink this resource?"
+msgstr "¿Desvincular este recurso?"
+
+#: app/templates/groups/view.html:67
+msgid "Unlink"
+msgstr "Desvincular"
+
+#: app/templates/groups/view.html:73
+msgid "No shared resources yet."
+msgstr "Aún no hay recursos compartidos."
+
+#: app/templates/groups/view.html:85
+msgid "Drafts / Content"
+msgstr "Borradores / Contenido"
+
+#: app/templates/groups/view.html:86
+msgid "Create New Draft"
+msgstr "Crear Nuevo Borrador"
+
+#: app/templates/groups/view.html:94
+msgid "Author"
+msgstr "Autor"
+
+#: app/templates/groups/view.html:95
+msgid "Account"
+msgstr "Cuenta"
+
+#: app/templates/groups/view.html:96
+msgid "Status"
+msgstr "Estado"
+
+#: app/templates/groups/view.html:97
+msgid "Last Updated"
+msgstr "Última Actualización"
+
+#: app/templates/groups/view.html:109
+msgid "Draft"
+msgstr "Borrador"
+
+#: app/templates/groups/view.html:111
+msgid "Published"
+msgstr "Publicado"
+
+#: app/templates/groups/view.html:116
+msgid "View"
+msgstr "Ver"
+
+#: app/templates/groups/view.html:123
+msgid "No drafts yet."
+msgstr "Aún no hay borradores."
+
+#: app/templates/groups/view.html:136 app/templates/groups/view.html:147
+msgid "Add Member"
+msgstr "Agregar Miembro"
+
+#: app/templates/groups/view.html:141
+msgid "Username of User to Add"
+msgstr "Usuario a Agregar"
+
+#: app/templates/groups/view.html:164
+msgid ""
+"Share one of your Hive accounts with this group. Members will be able to "
+"use it for drafting (and posting, if permissions allow)."
+msgstr "Comparte una de tus cuentas Hive con este grupo. Los miembros podrán usarla para redactar (y publicar, si los permisos lo permiten)."
+
+#: app/templates/groups/view.html:167
+msgid "Select Account"
+msgstr "Seleccionar Cuenta"
+
+#: app/templates/groups/view.html:176
+msgid "You have no available Hive accounts to share."
+msgstr "No tienes cuentas Hive disponibles para compartir."
+
+#: app/templates/groups/view.html:176
+msgid "Create one?"
+msgstr "¿Crear una?"
+
+#: app/templates/groups/view.html:182
+msgid "Share Account"
+msgstr "Compartir Cuenta"
+
+#: app/templates/main/profile.html:8
+msgid "Edit Profile"
+msgstr "Editar Perfil"
+
+#: app/templates/main/profile.html:17
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: app/templates/main/profile.html:22
+msgid "Language / Idioma"
+msgstr "Idioma"
+
+#: app/templates/main/profile.html:31
+msgid "First Name"
+msgstr "Nombre"
+
+#: app/templates/main/profile.html:35
+msgid "Last Name"
+msgstr "Apellido"
+
+#: app/templates/main/profile.html:41
+msgid "Avatar URL"
+msgstr "URL del Avatar"
+
+#: app/templates/main/profile.html:43
+msgid "Link to a public image (e.g., from ImageKit, Imgur)."
+msgstr "Enlace a una imagen pública (ej. ImageKit, Imgur)."
+
+#: app/templates/main/profile.html:47
+msgid "Bio"
+msgstr "Biografía"
+
+#: app/templates/main/profile.html:49
+msgid ""
+"Tell us a bit about yourself. This will appear in the \"About the "
+"Author\" section of your posts."
+msgstr "Cuéntanos un poco sobre ti. Esto aparecerá en la sección \"Sobre el Autor\" de tus publicaciones."
+
+#: app/templates/main/profile.html:53
+msgid "Save Changes"
+msgstr "Guardar Cambios"
+
+#: app/templates/main/profile.html:62
+msgid "Header Preview"
+msgstr "Vista Previa del Encabezado"
+
+#: app/templates/main/profile.html:63
+msgid "This is how your bio will look on posts."
+msgstr "Así se verá tu biografía en las publicaciones."
+
+#: app/templates/main/profile.html:74
+msgid "Bio not set."
+msgstr "Biografía no configurada."

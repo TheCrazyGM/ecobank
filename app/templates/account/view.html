@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ _('Account Details:') }} {{ account.username }}</h2>
+<div class="card mb-3">
+    <div class="card-header">{{ _('Master Password') }}</div>
+    <div class="card-body">
+        <code>{{ password }}</code>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">{{ _('Keys') }}</div>
+    <div class="card-body">
+        {% for role, key_data in keys.items() %}
+        <h5>{{ role|title }}</h5>
+        <p><strong>{{ _('Public:') }}</strong> {{ key_data.public }}</p>
+        <p><strong>{{ _('Private:') }}</strong> <code>{{ key_data.private }}</code></p>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+
+<a href="{{ url_for('account.list_accounts') }}" class="btn btn-secondary">{{ _('Back to List') }}</a>
+{% endblock %}

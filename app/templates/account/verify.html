@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">{{ _('Security Check') }}</h4>
+            </div>
+            <div class="card-body">
+                <p>{{ _('Please enter your password to view the keys for account:') }} <strong>{{ account.username }}</strong></p>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">{{ _('Password') }}</label>
+                        <input type="password" class="form-control" id="password" name="password" required autofocus>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">{{ _('Verify & View Keys') }}</button>
+                        <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary">{{ _('Cancel') }}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

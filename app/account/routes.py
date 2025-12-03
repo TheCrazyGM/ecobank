@@ -3,6 +3,7 @@ import re
 
 from cryptography.fernet import Fernet
 from flask import current_app, flash, redirect, render_template, request, url_for
+from flask_babel import gettext as _
 from flask_login import current_user, login_required
 from nectar import Hive
 from nectar.account import Account
@@ -45,25 +46,25 @@ def create():
 
     # POST Logic
     if current_user.account_credits < 1:
-        flash("You do not have enough credits to create an account.", "danger")
+        flash(_("You do not have enough credits to create an account."), "danger")
         return redirect(url_for("account.buy_credits"))
 
     username = request.form.get("username", "").strip().lower()
     password = request.form.get("password", "").strip()
 
     if not is_valid_hive_username(username):
-        flash("Invalid username format.", "danger")
+        flash(_("Invalid username format."), "danger")
         return redirect(url_for("account.create"))
 
     if not password:
-        flash("Password is required.", "danger")
+        flash(_("Password is required."), "danger")
         return redirect(url_for("account.create"))
 
     # Check if username exists on chain
     hive = Hive()
     try:
         Account(username, blockchain_instance=hive)
-        flash("Username already exists on Hive.", "danger")
+        flash(_("Username already exists on Hive."), "danger")
         return redirect(url_for("account.create"))
     except:
         pass  # Username is available
@@ -73,7 +74,7 @@ def create():
     claimer_key = current_app.config.get("HIVE_CLAIMER_KEY")
 
     if not claimer or not claimer_key:
-        flash("Account creator not configured.", "danger")
+        flash(_("Account creator not configured."), "danger")
         return redirect(url_for("account.create"))
 
     try:
@@ -83,7 +84,7 @@ def create():
         )
     except Exception as e:
         current_app.logger.exception("Hive account creation failed")
-        flash(f"Account creation failed: {str(e)}", "danger")
+        flash(_("Account creation failed: %(error)s", error=str(e)), "danger")
         return redirect(url_for("account.create"))
 
     # Generate and Encrypt Keys
@@ -100,7 +101,7 @@ def create():
     encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
     if not encryption_key:
         flash(
-            "Encryption key not configured. Cannot save credentials safely.", "danger"
+            _("Encryption key not configured. Cannot save credentials safely."), "danger"
         )
         return redirect(url_for("account.create"))
 
@@ -121,7 +122,7 @@ def create():
     db.session.add(new_account)
     db.session.commit()
 
-    flash(f"Account {username} created successfully!", "success")
+    flash(_("Account %(username)s created successfully!", username=username), "success")
     return redirect(url_for("account.list_accounts"))
 
 
@@ -140,7 +141,7 @@ def import_account():
     memo_key = request.form.get("memo_key", "").strip()
 
     if not is_valid_hive_username(username):
-        flash("Invalid username format.", "danger")
+        flash(_("Invalid username format."), "danger")
         return redirect(url_for("account.import_account"))
 
     # Check for existing import
@@ -148,7 +149,7 @@ def import_account():
         username=username, created_by_id=current_user.id
     ).first()
     if existing:
-        flash("You have already imported this account.", "warning")
+        flash(_("You have already imported this account."), "warning")
         return redirect(url_for("account.list_accounts"))
 
     # Validate against blockchain
@@ -156,7 +157,7 @@ def import_account():
     try:
         acc = Account(username, blockchain_instance=hive)
     except:
-        flash("Account not found on Hive blockchain.", "danger")
+        flash(_("Account not found on Hive blockchain."), "danger")
         return redirect(url_for("account.import_account"))
 
     prefix = hive.prefix
@@ -187,14 +188,14 @@ def import_account():
                     }
             else:
                 flash(
-                    "Master password validation failed: Derived posting key does not match account.",
+                    _("Master password validation failed: Derived posting key does not match account."),
                     "danger",
                 )
                 return redirect(url_for("account.import_account"))
 
         except Exception as e:
             current_app.logger.error(f"Password validation error: {e}")
-            flash("Error validating password.", "danger")
+            flash(_("Error validating password."), "danger")
             return redirect(url_for("account.import_account"))
 
     # 2. Validate via Individual Keys
@@ -248,14 +249,14 @@ def import_account():
 
         if not verified:
             flash(
-                "No valid keys provided that match the account authorities.", "danger"
+                _("No valid keys provided that match the account authorities."), "danger"
             )
             return redirect(url_for("account.import_account"))
 
     # Save to DB
     encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
     if not encryption_key:
-        flash("Encryption key error.", "danger")
+        flash(_("Encryption key error."), "danger")
         return redirect(url_for("account.list_accounts"))
 
     fernet = Fernet(encryption_key)
@@ -277,7 +278,7 @@ def import_account():
     db.session.add(new_account)
     db.session.commit()
 
-    flash(f"Account {username} imported successfully!", "success")
+    flash(_("Account %(username)s imported successfully!", username=username), "success")
     return redirect(url_for("account.list_accounts"))
 
 
@@ -288,14 +289,27 @@ def list_accounts():
     return render_template("account/list.html", accounts=accounts)
 
 
-@bp.route("/view/<int:id>")
+@bp.route("/view/<int:id>", methods=["GET", "POST"])
 @login_required
 def view_account(id):
     account = HiveAccount.query.get_or_404(id)
     if account.created_by_id != current_user.id:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("account.list_accounts"))
+    
+    # Security Check
+    verified = False
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if current_user.check_password(password):
+            verified = True
+        else:
+            flash(_('Invalid password'), 'danger')
 
+    if not verified:
+        return render_template('account/verify.html', account=account)
+
+    # Decryption Logic
     encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
     fernet = Fernet(encryption_key)
 
@@ -306,7 +320,7 @@ def view_account(id):
 
         keys = json.loads(fernet.decrypt(account.keys_enc.encode()).decode())
     except:
-        flash("Failed to decrypt credentials.", "danger")
+        flash(_("Failed to decrypt credentials."), "danger")
         return redirect(url_for("account.list_accounts"))
 
     return render_template(

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-03 11:33-0500\n"
+"POT-Creation-Date: 2025-12-03 11:46-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -18,31 +18,150 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/auth/forms.py:7 app/templates/account/create.html:13
-#: app/templates/account/import.html:9 app/templates/account/list.html:12
-#: app/templates/admin/credits.html:8 app/templates/main/profile.html:13
+#: app/templates/base.html:29 debug_i18n.py:11
+msgid "Home"
+msgstr "Inicio"
+
+#: app/templates/drafts/create.html:4 debug_i18n.py:12
+msgid "Create Draft"
+msgstr "Crear Borrador"
+
+#: app/account/routes.py:49
+msgid "You do not have enough credits to create an account."
+msgstr "No tienes suficientes créditos para crear una cuenta."
+
+#: app/account/routes.py:56 app/account/routes.py:144
+msgid "Invalid username format."
+msgstr "Formato de usuario inválido."
+
+#: app/account/routes.py:60
+msgid "Password is required."
+msgstr "Se requiere contraseña."
+
+#: app/account/routes.py:67
+msgid "Username already exists on Hive."
+msgstr "El usuario ya existe en Hive."
+
+#: app/account/routes.py:77
+msgid "Account creator not configured."
+msgstr "Creador de cuentas no configurado."
+
+#: app/account/routes.py:87
+#, python-format
+msgid "Account creation failed: %(error)s"
+msgstr "Falló la creación de la cuenta: %(error)s"
+
+#: app/account/routes.py:104
+msgid "Encryption key not configured. Cannot save credentials safely."
+msgstr ""
+"Clave de encriptación no configurada. No se pueden guardar las "
+"credenciales de forma segura."
+
+#: app/account/routes.py:125
+#, python-format
+msgid "Account %(username)s created successfully!"
+msgstr "¡Cuenta %(username)s creada exitosamente!"
+
+#: app/account/routes.py:152
+msgid "You have already imported this account."
+msgstr "Ya has importado esta cuenta."
+
+#: app/account/routes.py:160
+msgid "Account not found on Hive blockchain."
+msgstr "Cuenta no encontrada en la blockchain Hive."
+
+#: app/account/routes.py:191
+msgid ""
+"Master password validation failed: Derived posting key does not match "
+"account."
+msgstr ""
+"Falló la validación de la contraseña maestra: La clave posting derivada "
+"no coincide con la cuenta."
+
+#: app/account/routes.py:198
+msgid "Error validating password."
+msgstr "Error validando la contraseña."
+
+#: app/account/routes.py:252
+msgid "No valid keys provided that match the account authorities."
+msgstr ""
+"No se proporcionaron claves válidas que coincidan con las autoridades de "
+"la cuenta."
+
+#: app/account/routes.py:259
+msgid "Encryption key error."
+msgstr "Error de clave de encriptación."
+
+#: app/account/routes.py:281
+#, python-format
+msgid "Account %(username)s imported successfully!"
+msgstr "¡Cuenta %(username)s importada exitosamente!"
+
+#: app/account/routes.py:297
+msgid "Unauthorized"
+msgstr "No autorizado"
+
+#: app/account/routes.py:307
+msgid "Invalid password"
+msgstr "Contraseña inválida"
+
+#: app/account/routes.py:323
+msgid "Failed to decrypt credentials."
+msgstr "Fallo al desencriptar credenciales."
+
+#: app/auth/forms.py:9 app/auth/forms.py:15
+#: app/templates/account/create.html:13 app/templates/account/import.html:9
+#: app/templates/account/list.html:12 app/templates/admin/credits.html:8
+#: app/templates/main/profile.html:13
 msgid "Username"
 msgstr "Usuario"
 
-#: app/auth/forms.py:8 app/templates/account/create.html:18
+#: app/auth/forms.py:10 app/auth/forms.py:17
+#: app/templates/account/create.html:18 app/templates/account/verify.html:15
 msgid "Password"
 msgstr "Contraseña"
 
-#: app/auth/forms.py:9
+#: app/auth/forms.py:11
 msgid "Remember Me"
 msgstr "Recuérdame"
 
-#: app/auth/forms.py:10 app/templates/auth/login.html:4
+#: app/auth/forms.py:12 app/auth/routes.py:31 app/templates/auth/login.html:4
+#: app/templates/auth/register.html:39
 msgid "Sign In"
 msgstr "Iniciar Sesión"
+
+#: app/auth/forms.py:16 app/templates/main/profile.html:17
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: app/auth/forms.py:18
+msgid "Repeat Password"
+msgstr "Repetir Contraseña"
+
+#: app/auth/forms.py:19 app/auth/routes.py:51
+#: app/templates/auth/register.html:4
+msgid "Register"
+msgstr "Registrarse"
+
+#: app/auth/forms.py:24
+msgid "Please use a different username."
+msgstr "Por favor usa un nombre de usuario diferente."
+
+#: app/auth/forms.py:29
+msgid "Please use a different email address."
+msgstr "Por favor usa una dirección de correo diferente."
+
+#: app/auth/routes.py:24
+msgid "Invalid username or password"
+msgstr "Usuario o contraseña inválidos"
+
+#: app/auth/routes.py:49
+msgid "Congratulations, you are now a registered user!"
+msgstr "¡Felicidades, ahora eres un usuario registrado!"
 
 #: app/templates/base.html:6 app/templates/base.html:22
 msgid "Ecobank Development"
 msgstr "Desarrollo Ecobank"
-
-#: app/templates/base.html:29
-msgid "Home"
-msgstr "Inicio"
 
 #: app/templates/base.html:36
 msgid "Admin"
@@ -174,7 +293,9 @@ msgstr "Claves Individuales"
 msgid ""
 "We will derive all keys from this password and verify them against the "
 "blockchain."
-msgstr "Derivaremos todas las claves de esta contraseña y las verificaremos contra la blockchain."
+msgstr ""
+"Derivaremos todas las claves de esta contraseña y las verificaremos "
+"contra la blockchain."
 
 #: app/templates/account/import.html:34
 msgid "Provide at least one private key (wif)."
@@ -200,9 +321,9 @@ msgstr "Clave Memo (Privada)"
 msgid "Import Account"
 msgstr "Importar Cuenta"
 
-#: app/templates/account/import.html:55 app/templates/drafts/create.html:33
-#: app/templates/drafts/edit.html:33 app/templates/groups/view.html:146
-#: app/templates/groups/view.html:180
+#: app/templates/account/import.html:55 app/templates/account/verify.html:20
+#: app/templates/drafts/create.html:33 app/templates/drafts/edit.html:33
+#: app/templates/groups/view.html:146 app/templates/groups/view.html:180
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -238,6 +359,18 @@ msgstr "Creada"
 msgid "View Keys"
 msgstr "Ver Claves"
 
+#: app/templates/account/verify.html:8
+msgid "Security Check"
+msgstr "Verificación de Seguridad"
+
+#: app/templates/account/verify.html:11
+msgid "Please enter your password to view the keys for account:"
+msgstr "Por favor ingresa tu contraseña para ver las claves de la cuenta:"
+
+#: app/templates/account/verify.html:19
+msgid "Verify & View Keys"
+msgstr "Verificar y Ver Claves"
+
 #: app/templates/account/view.html:4
 msgid "Account Details:"
 msgstr "Detalles de la Cuenta:"
@@ -270,9 +403,17 @@ msgstr "Créditos a Agregar"
 msgid "Grant Credits"
 msgstr "Otorgar Créditos"
 
-#: app/templates/drafts/create.html:4
-msgid "Create Draft"
-msgstr "Crear Borrador"
+#: app/templates/auth/login.html:25
+msgid "New User?"
+msgstr "¿Nuevo Usuario?"
+
+#: app/templates/auth/login.html:26
+msgid "Click to Register!"
+msgstr "¡Haz clic para registrarte!"
+
+#: app/templates/auth/register.html:38
+msgid "Already have an account?"
+msgstr "¿Ya tienes una cuenta?"
 
 #: app/templates/drafts/create.html:5
 msgid "For Group:"
@@ -325,7 +466,9 @@ msgstr "Editar"
 
 #: app/templates/drafts/view.html:15
 msgid "Are you sure you want to publish this to Hive? This cannot be undone."
-msgstr "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede deshacer."
+msgstr ""
+"¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
+"deshacer."
 
 #: app/templates/drafts/view.html:16
 msgid "Submit / Publish"
@@ -476,7 +619,9 @@ msgstr "Usuario a Agregar"
 msgid ""
 "Share one of your Hive accounts with this group. Members will be able to "
 "use it for drafting (and posting, if permissions allow)."
-msgstr "Comparte una de tus cuentas Hive con este grupo. Los miembros podrán usarla para redactar (y publicar, si los permisos lo permiten)."
+msgstr ""
+"Comparte una de tus cuentas Hive con este grupo. Los miembros podrán "
+"usarla para redactar (y publicar, si los permisos lo permiten)."
 
 #: app/templates/groups/view.html:167
 msgid "Select Account"
@@ -530,7 +675,9 @@ msgstr "Biografía"
 msgid ""
 "Tell us a bit about yourself. This will appear in the \"About the "
 "Author\" section of your posts."
-msgstr "Cuéntanos un poco sobre ti. Esto aparecerá en la sección \"Sobre el Autor\" de tus publicaciones."
+msgstr ""
+"Cuéntanos un poco sobre ti. Esto aparecerá en la sección \"Sobre el "
+"Autor\" de tus publicaciones."
 
 #: app/templates/main/profile.html:53
 msgid "Save Changes"

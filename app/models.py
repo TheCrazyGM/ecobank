@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -51,7 +51,7 @@ class HiveAccount(db.Model):
     username = db.Column(db.String(16), index=True, unique=True)
     password_enc = db.Column(db.Text)  # Encrypted password
     keys_enc = db.Column(db.Text)  # Encrypted JSON keys
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     tx_id = db.Column(db.String(64))
 
@@ -64,9 +64,11 @@ class PayPalOrder(db.Model):
     currency = db.Column(db.String(3), default="USD")
     status = db.Column(db.String(20), default="CREATED")  # CREATED, COMPLETED, FAILED
     credits_purchased = db.Column(db.Integer)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     updated_at = db.Column(
-        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+        db.DateTime,
+        default=datetime.now(timezone.utc),
+        onupdate=datetime.now(timezone.utc),
     )
 
 
@@ -75,7 +77,9 @@ class Group(db.Model):
     name = db.Column(db.String(128), unique=True, nullable=False)
     description = db.Column(db.Text)
     owner_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(
+        db.DateTime, default=datetime.now(timezone.utc), nullable=False
+    )
 
     members = db.relationship(
         "GroupMember", backref="group", cascade="all, delete-orphan"
@@ -100,7 +104,9 @@ class GroupMember(db.Model):
     role = db.Column(
         db.String(50), default="member", nullable=False
     )  # owner, admin, member, moderator, editor
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(
+        db.DateTime, default=datetime.now(timezone.utc), nullable=False
+    )
 
     __table_args__ = (
         db.UniqueConstraint("group_id", "user_id", name="uq_group_member"),
@@ -115,7 +121,9 @@ class GroupResource(db.Model):
     group_id = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=False)
     resource_type = db.Column(db.String(64), nullable=False)  # e.g., hive_account
     resource_id = db.Column(db.String(64), nullable=False)  # e.g., username
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(
+        db.DateTime, default=datetime.now(timezone.utc), nullable=False
+    )
 
     __table_args__ = (
         db.UniqueConstraint(
@@ -143,9 +151,13 @@ class Draft(db.Model):
     status = db.Column(db.String(20), default="draft")  # draft, published
     tx_id = db.Column(db.String(64))
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(
+        db.DateTime, default=datetime.now(timezone.utc), nullable=False
+    )
     updated_at = db.Column(
-        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+        db.DateTime,
+        default=datetime.now(timezone.utc),
+        onupdate=datetime.now(timezone.utc),
     )
     published_at = db.Column(db.DateTime)
 

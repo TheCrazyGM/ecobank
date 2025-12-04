@@ -31,10 +31,37 @@
                                 <strong>{{ m.user.username }}</strong>
                                 <span class="badge bg-light text-dark border">{{ m.role }}</span>
                             </span>
-                            {% if membership.role in ['owner', 'admin'] and m.user_id != group.owner_user_id %}
-                                <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}" method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Remove') }}</button>
-                                </form>
+
+                            {% if membership.role == 'owner' and m.user_id != group.owner_user_id %}
+                                <div class="d-flex gap-1">
+                                    {% if m.role != 'moderator' %}
+                                        <form action="{{ url_for('groups.promote_member', id=group.id, user_id=m.user_id) }}" method="POST">
+                                            <button type="submit" class="btn btn-sm btn-outline-success" title="{{ _('Promote') }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
+                                    {% if m.role != 'member' %}
+                                        <form action="{{ url_for('groups.demote_member', id=group.id, user_id=m.user_id) }}" method="POST">
+                                            <button type="submit" class="btn btn-sm btn-outline-warning" title="{{ _('Demote') }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
+                                    <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}" method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ _('Remove') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
                             {% endif %}
                         </li>
                     {% endfor %}
@@ -139,7 +166,12 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="username" class="form-label">{{ _('Username of User to Add') }}</label>
-                            <input type="text" class="form-control" name="username" required>
+                            <input type="text" class="form-control" name="username" list="user-list" required autocomplete="off">
+                            <datalist id="user-list">
+                                {% for u in available_users_to_add %}
+                                    <option value="{{ u.username }}">
+                                {% endfor %}
+                            </datalist>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -73,6 +73,15 @@ def view(id):
         acc for acc in my_hive_accounts if acc.username not in linked_usernames
     ]
 
+    # Fetch potential members (users not already in the group)
+    # If user base grows large, this should be AJAX based, but fine for small scale
+    existing_member_ids = [m.user_id for m in members]
+    available_users_to_add = db.session.scalars(
+        sa.select(User)
+        .where(User.id.notin_(existing_member_ids))
+        .order_by(User.username)
+    ).all()
+
     return render_template(
         "groups/view.html",
         group=group,
@@ -80,6 +89,7 @@ def view(id):
         members=members,
         resources=resources,
         available_accounts=available_accounts,
+        available_users_to_add=available_users_to_add,
     )
 
 
@@ -126,8 +136,8 @@ def remove_member(id, user_id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role not in ["owner", "admin"]:
-        flash("Unauthorized", "danger")
+    if not membership or membership.role != "owner":
+        flash("Unauthorized. Only owner can remove members.", "danger")
         return redirect(url_for("groups.view", id=id))
 
     if user_id == group.owner_user_id:
@@ -140,6 +150,63 @@ def remove_member(id, user_id):
         db.session.commit()
         flash("Member removed.", "success")
 
+    return redirect(url_for("groups.view", id=id))
+
+
+@bp.route("/<int:id>/promote_member/<int:user_id>", methods=["POST"])
+@login_required
+def promote_member(id, user_id):
+    Group.query.get_or_404(id)
+
+    # Only owner can promote/demote for now
+    membership = GroupMember.query.filter_by(
+        group_id=id, user_id=current_user.id
+    ).first()
+    if not membership or membership.role != "owner":
+        flash("Unauthorized", "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    member = GroupMember.query.filter_by(group_id=id, user_id=user_id).first()
+    if not member:
+        flash("Member not found", "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    # Simple cycle: member -> editor -> moderator -> member
+    if member.role == "member":
+        member.role = "editor"
+    elif member.role == "editor":
+        member.role = "moderator"
+
+    db.session.commit()
+    flash(f"Member promoted to {member.role}.", "success")
+    return redirect(url_for("groups.view", id=id))
+
+
+@bp.route("/<int:id>/demote_member/<int:user_id>", methods=["POST"])
+@login_required
+def demote_member(id, user_id):
+    Group.query.get_or_404(id)
+
+    membership = GroupMember.query.filter_by(
+        group_id=id, user_id=current_user.id
+    ).first()
+    if not membership or membership.role != "owner":
+        flash("Unauthorized", "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    member = GroupMember.query.filter_by(group_id=id, user_id=user_id).first()
+    if not member:
+        flash("Member not found", "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    # Simple cycle: moderator -> editor -> member
+    if member.role == "moderator":
+        member.role = "editor"
+    elif member.role == "editor":
+        member.role = "member"
+
+    db.session.commit()
+    flash(f"Member demoted to {member.role}.", "success")
     return redirect(url_for("groups.view", id=id))
 
 

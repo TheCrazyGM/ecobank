@@ -9,17 +9,29 @@
             </p>
         </div>
         <div class="col-md-4 text-end">
-            {% if draft.status == 'draft' %}
-                <a href="{{ url_for('drafts.edit', draft_id=draft.id) }}" class="btn btn-outline-primary">{{ _('Edit') }}</a>
-                {% if can_submit %}
-                    <form action="{{ url_for('drafts.submit', draft_id=draft.id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ _('Are you sure you want to publish this to Hive? This cannot be undone.') }}');">
-                        <button type="submit" class="btn btn-success">{{ _('Submit / Publish') }}</button>
-                    </form>
+            <div class="btn-group" role="group">
+                {% if draft.status == 'draft' %}
+                    {% if can_edit %}
+                        <a href="{{ url_for('drafts.edit', draft_id=draft.id) }}" class="btn btn-outline-primary">{{ _('Edit') }}</a>
+                    {% endif %}
+
+                    {% if can_submit %}
+                        <form action="{{ url_for('drafts.submit', draft_id=draft.id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ _('Are you sure you want to publish this to Hive? This cannot be undone.') }}');">
+                            <button type="submit" class="btn btn-success">{{ _('Publish') }}</button>
+                        </form>
+                    {% endif %}
+
+                    {% if can_delete %}
+                        <form action="{{ url_for('drafts.reject', draft_id=draft.id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ _('Are you sure you want to reject/delete this draft?') }}');">
+                            <button type="submit" class="btn btn-danger">{{ _('Reject') }}</button>
+                        </form>
+                    {% endif %}
+
+                {% elif draft.status == 'published' %}
+                    <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank" class="btn btn-info">{{ _('View on Hive') }}</a>
                 {% endif %}
-            {% elif draft.status == 'published' %}
-                <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank" class="btn btn-info">{{ _('View on Hive') }}</a>
-            {% endif %}
-            <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-secondary">{{ _('Back to Group') }}</a>
+                <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-secondary">{{ _('Back') }}</a>
+            </div>
         </div>
     </div>
 

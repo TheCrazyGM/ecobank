@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-04 05:45-0500\n"
+"POT-Creation-Date: 2025-12-04 06:40-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -111,7 +111,7 @@ msgstr "Fallo al desencriptar credenciales."
 #: app/templates/account/create.html:13 app/templates/account/import.html:9
 #: app/templates/account/list.html:12 app/templates/admin/credits.html:8
 #: app/templates/admin/logs_hive.html:13 app/templates/admin/users.html:13
-#: app/templates/main/profile.html:24
+#: app/templates/groups/view.html:168 app/templates/main/profile.html:24
 msgid "Username"
 msgstr "Usuario"
 
@@ -296,7 +296,7 @@ msgid "Your decentralized finance hub."
 msgstr "Tu centro de finanzas descentralizadas."
 
 #: app/templates/drafts/view.html:8 app/templates/hive/post.html:18
-#: app/templates/hive/tag_feed.html:19 app/templates/index.html:21
+#: app/templates/hive/tag_feed.html:25 app/templates/index.html:21
 msgid "By"
 msgstr "Por"
 
@@ -430,7 +430,7 @@ msgstr "Importar Cuenta"
 #: app/templates/account/import.html:55 app/templates/account/verify.html:20
 #: app/templates/auth/change_password.html:36
 #: app/templates/drafts/create.html:33 app/templates/drafts/edit.html:33
-#: app/templates/groups/view.html:146 app/templates/groups/view.html:180
+#: app/templates/groups/view.html:178 app/templates/groups/view.html:212
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -451,11 +451,11 @@ msgid "Source"
 msgstr "Fuente"
 
 #: app/templates/account/list.html:15 app/templates/admin/groups.html:18
-#: app/templates/admin/users.html:16 app/templates/groups/view.html:98
+#: app/templates/admin/users.html:16 app/templates/groups/view.html:125
 msgid "Actions"
 msgstr "Acciones"
 
-#: app/templates/account/list.html:25 app/templates/admin/logs_hive.html:27
+#: app/templates/account/list.html:25 app/templates/admin/logs_hive.html:35
 msgid "Imported"
 msgstr "Importado"
 
@@ -570,6 +570,7 @@ msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
+#: app/templates/drafts/view.html:29
 msgid "Back"
 msgstr "Volver"
 
@@ -610,15 +611,23 @@ msgstr "Editar"
 msgid "Hive Account Creation Logs"
 msgstr "Registros de Creación de Cuentas Hive"
 
-#: app/templates/admin/logs_hive.html:14
+#: app/templates/admin/logs_hive.html:11
+msgid "System Account:"
+msgstr "Cuenta del Sistema:"
+
+#: app/templates/admin/logs_hive.html:13
+msgid "Pending Claimed Accounts:"
+msgstr "Cuentas Reclamadas Pendientes:"
+
+#: app/templates/admin/logs_hive.html:22
 msgid "Created By"
 msgstr "Creado Por"
 
-#: app/templates/admin/logs_hive.html:15
+#: app/templates/admin/logs_hive.html:23
 msgid "TX ID"
 msgstr "ID de Transacción"
 
-#: app/templates/admin/logs_hive.html:16
+#: app/templates/admin/logs_hive.html:24
 #: app/templates/admin/logs_paypal.html:18
 msgid "Date"
 msgstr "Fecha"
@@ -636,7 +645,7 @@ msgid "Amount"
 msgstr "Monto"
 
 #: app/templates/admin/logs_paypal.html:16 app/templates/admin/posts.html:16
-#: app/templates/groups/view.html:96
+#: app/templates/groups/view.html:123
 msgid "Status"
 msgstr "Estado"
 
@@ -645,11 +654,11 @@ msgid "Post / Draft Manager"
 msgstr "Gestor de Publicaciones / Borradores"
 
 #: app/templates/admin/posts.html:13 app/templates/drafts/create.html:9
-#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:93
+#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:120
 msgid "Title"
 msgstr "Título"
 
-#: app/templates/admin/posts.html:14 app/templates/groups/view.html:94
+#: app/templates/admin/posts.html:14 app/templates/groups/view.html:121
 msgid "Author"
 msgstr "Autor"
 
@@ -657,20 +666,20 @@ msgstr "Autor"
 msgid "Group"
 msgstr "Grupo"
 
-#: app/templates/admin/posts.html:17 app/templates/groups/view.html:97
+#: app/templates/admin/posts.html:17 app/templates/groups/view.html:124
 msgid "Last Updated"
 msgstr "Última Actualización"
 
 #: app/templates/admin/posts.html:18 app/templates/admin/posts.html:37
-#: app/templates/groups/view.html:116
+#: app/templates/groups/view.html:143
 msgid "View"
 msgstr "Ver"
 
-#: app/templates/admin/posts.html:30 app/templates/groups/view.html:109
+#: app/templates/admin/posts.html:30 app/templates/groups/view.html:136
 msgid "Draft"
 msgstr "Borrador"
 
-#: app/templates/admin/posts.html:32 app/templates/groups/view.html:111
+#: app/templates/admin/posts.html:32 app/templates/groups/view.html:138
 msgid "Published"
 msgstr "Publicado"
 
@@ -749,46 +758,48 @@ msgstr "Grupo:"
 msgid "Update Draft"
 msgstr "Actualizar Borrador"
 
-#: app/templates/drafts/view.html:8
-msgid "For account:"
-msgstr "Para cuenta:"
-
-#: app/templates/drafts/view.html:15
-msgid "Are you sure you want to publish this to Hive? This cannot be undone."
-msgstr ""
-"¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
-"deshacer."
-
 #: app/templates/drafts/view.html:16
 msgid "Submit / Publish"
 msgstr "Enviar / Publicar"
 
-#: app/templates/drafts/view.html:20
+#: app/templates/drafts/view.html:18
+msgid "Publish"
+msgstr "Publicar"
+
+#: app/templates/drafts/view.html:22
+msgid "Are you sure you want to reject/delete this draft?"
+msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
+
+#: app/templates/drafts/view.html:23
+msgid "Reject"
+msgstr "Rechazar"
+
+#: app/templates/drafts/view.html:27
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
-#: app/templates/drafts/view.html:22
-msgid "Back to Group"
-msgstr "Volver al Grupo"
+#: app/templates/drafts/view.html:29
+msgid "Back"
+msgstr "Volver"
 
-#: app/templates/drafts/view.html:31
+#: app/templates/drafts/view.html:35
 msgid "Automatic Header Preview"
 msgstr "Vista Previa del Encabezado Automático"
 
-#: app/templates/drafts/view.html:32
+#: app/templates/drafts/view.html:36
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:39 app/templates/main/profile.html:84
+#: app/templates/drafts/view.html:43 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
-#: app/templates/drafts/view.html:41
+#: app/templates/drafts/view.html:45
 #, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
-#: app/templates/drafts/view.html:49
+#: app/templates/drafts/view.html:53
 msgid "Content Preview"
 msgstr "Vista Previa del Contenido"
 
@@ -808,63 +819,71 @@ msgstr "No eres miembro de ningún grupo."
 msgid "Add"
 msgstr "Agregar"
 
-#: app/templates/groups/view.html:35
+#: app/templates/groups/view.html:39
+msgid "Promote"
+msgstr "Promover"
+
+#: app/templates/groups/view.html:49
+msgid "Demote"
+msgstr "Degradar"
+
+#: app/templates/groups/view.html:57
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
-#: app/templates/groups/view.html:36
+#: app/templates/groups/view.html:58
 msgid "Remove"
 msgstr "Eliminar"
 
-#: app/templates/groups/view.html:49
+#: app/templates/groups/view.html:76
 msgid "Shared Resources"
 msgstr "Recursos Compartidos"
 
-#: app/templates/groups/view.html:50 app/templates/groups/view.html:160
+#: app/templates/groups/view.html:77 app/templates/groups/view.html:192
 msgid "Share Hive Account"
 msgstr "Compartir Cuenta Hive"
 
-#: app/templates/groups/view.html:59
+#: app/templates/groups/view.html:86
 msgid "Hive Account"
 msgstr "Cuenta Hive"
 
-#: app/templates/groups/view.html:66
+#: app/templates/groups/view.html:93
 msgid "Unlink this resource?"
 msgstr "¿Desvincular este recurso?"
 
-#: app/templates/groups/view.html:67
+#: app/templates/groups/view.html:94
 msgid "Unlink"
 msgstr "Desvincular"
 
-#: app/templates/groups/view.html:73
+#: app/templates/groups/view.html:100
 msgid "No shared resources yet."
 msgstr "Aún no hay recursos compartidos."
 
-#: app/templates/groups/view.html:85
+#: app/templates/groups/view.html:112
 msgid "Drafts / Content"
 msgstr "Borradores / Contenido"
 
-#: app/templates/groups/view.html:86
+#: app/templates/groups/view.html:113
 msgid "Create New Draft"
 msgstr "Crear Nuevo Borrador"
 
-#: app/templates/groups/view.html:95
+#: app/templates/groups/view.html:122
 msgid "Account"
 msgstr "Cuenta"
 
-#: app/templates/groups/view.html:123
+#: app/templates/groups/view.html:150
 msgid "No drafts yet."
 msgstr "Aún no hay borradores."
 
-#: app/templates/groups/view.html:136 app/templates/groups/view.html:147
+#: app/templates/groups/view.html:163 app/templates/groups/view.html:179
 msgid "Add Member"
 msgstr "Agregar Miembro"
 
-#: app/templates/groups/view.html:141
+#: app/templates/groups/view.html:168
 msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
-#: app/templates/groups/view.html:164
+#: app/templates/groups/view.html:196
 msgid ""
 "Share one of your Hive accounts with this group. Members will be able to "
 "use it for drafting (and posting, if permissions allow)."
@@ -872,19 +891,19 @@ msgstr ""
 "Comparte una de tus cuentas Hive con este grupo. Los miembros podrán "
 "usarla para redactar (y publicar, si los permisos lo permiten)."
 
-#: app/templates/groups/view.html:167
+#: app/templates/groups/view.html:199
 msgid "Select Account"
 msgstr "Seleccionar Cuenta"
 
-#: app/templates/groups/view.html:176
+#: app/templates/groups/view.html:208
 msgid "You have no available Hive accounts to share."
 msgstr "No tienes cuentas Hive disponibles para compartir."
 
-#: app/templates/groups/view.html:176
+#: app/templates/groups/view.html:208
 msgid "Create one?"
 msgstr "¿Crear una?"
 
-#: app/templates/groups/view.html:182
+#: app/templates/groups/view.html:214
 msgid "Share Account"
 msgstr "Compartir Cuenta"
 
@@ -892,49 +911,45 @@ msgstr "Compartir Cuenta"
 msgid "Hive"
 msgstr "Hive"
 
-#: app/templates/hive/post.html:34
-msgid "Votes"
-msgstr "Votos"
-
-#: app/templates/hive/post.html:43 app/templates/hive/user_blog.html:14
+#: app/templates/hive/post.html:37 app/templates/hive/user_blog.html:19
 msgid "Open in PeakD"
 msgstr "Abrir en PeakD"
 
-#: app/templates/hive/post.html:44 app/templates/hive/user_blog.html:15
+#: app/templates/hive/post.html:38 app/templates/hive/user_blog.html:21
 msgid "Open in Ecency"
 msgstr "Abrir en Ecency"
 
-#: app/templates/hive/tag_feed.html:6
+#: app/templates/hive/tag_feed.html:8
 msgid "Posts tagged"
 msgstr "Publicaciones etiquetadas"
 
-#: app/templates/hive/user_blog.html:12
-msgid "View Wallet"
-msgstr "Ver Billetera"
-
-#: app/templates/hive/user_blog.html:13
-msgid "Open in Hive.blog"
-msgstr "Abrir en Hive.blog"
-
-#: app/templates/hive/user_blog.html:25
-msgid "Blog Posts"
-msgstr "Publicaciones de Blog"
-
-#: app/templates/hive/user_blog.html:37
-msgid "Reblogged"
-msgstr "Reblogueado"
-
-#: app/templates/hive/user_blog.html:47 app/templates/hive/tag_feed.html:25
+#: app/templates/hive/tag_feed.html:34 app/templates/hive/user_blog.html:54
 msgid "Load More"
 msgstr "Cargar Más"
 
-#: app/templates/hive/user_blog.html:51
-msgid "No posts found."
-msgstr "No se encontraron publicaciones."
-
-#: app/templates/hive/tag_feed.html:29
+#: app/templates/hive/tag_feed.html:38
 msgid "No posts found for this tag."
 msgstr "No se encontraron publicaciones para esta etiqueta."
+
+#: app/templates/hive/user_blog.html:15
+msgid "View Wallet"
+msgstr "Ver Billetera"
+
+#: app/templates/hive/user_blog.html:17
+msgid "Open in Hive.blog"
+msgstr "Abrir en Hive.blog"
+
+#: app/templates/hive/user_blog.html:31
+msgid "Blog Posts"
+msgstr "Publicaciones de Blog"
+
+#: app/templates/hive/user_blog.html:44
+msgid "Reblogged"
+msgstr "Reblogueado"
+
+#: app/templates/hive/user_blog.html:58 app/templates/index.html:39
+msgid "No posts found."
+msgstr "No se encontraron publicaciones."
 
 #: app/templates/hive/wallet.html:7 app/templates/hive/wallet.html:15
 msgid "Wallet"

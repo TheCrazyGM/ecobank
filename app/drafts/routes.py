@@ -96,7 +96,7 @@ def edit(draft_id):
     group = Group.query.get(draft.group_id)
 
     # Check Permissions
-    # Moderator or above (Owner, Admin, Editor - assuming 'admin' maps to Editor/Owner level rights or better)
+    # Moderator or above (Owner, Admin, Moderator, Editor)
     # Also allow the original author to edit their own draft if it's still a draft
     membership = GroupMember.query.filter_by(
         group_id=group.id, user_id=current_user.id
@@ -105,8 +105,10 @@ def edit(draft_id):
         abort(403)
 
     can_edit = False
+    # Roles that can edit ANY draft
     if membership.role in ["owner", "admin", "moderator", "editor"]:
         can_edit = True
+    # Authors can always edit their own
     elif draft.author_user_id == current_user.id:
         can_edit = True
 
@@ -154,18 +156,68 @@ def view(draft_id):
 
     rendered_body = render_markdown(draft.body)
 
-    # Permissions to submit
+    # Permissions to submit: Owner or Moderator only
     can_submit = False
-    if membership.role in ["owner", "admin", "editor"]:
+    if membership.role in ["owner", "moderator", "admin"]:
         can_submit = True
+
+    # Permissions to edit
+    can_edit = False
+    if (
+        membership.role in ["owner", "admin", "moderator", "editor"]
+        or draft.author_user_id == current_user.id
+    ):
+        can_edit = True
+
+    # Permissions to delete/reject (Owner, Moderator, or Author)
+    can_delete = False
+    if (
+        membership.role in ["owner", "admin", "moderator"]
+        or draft.author_user_id == current_user.id
+    ):
+        can_delete = True
 
     return render_template(
         "drafts/view.html",
         draft=draft,
         rendered_body=rendered_body,
         can_submit=can_submit,
+        can_edit=can_edit,
+        can_delete=can_delete,
         author=draft.author,
     )
+
+
+@bp.route("/reject/<int:draft_id>", methods=["POST"])
+@login_required
+def reject(draft_id):
+    draft = Draft.query.get_or_404(draft_id)
+    group = Group.query.get(draft.group_id)
+
+    # Check Permissions
+    membership = GroupMember.query.filter_by(
+        group_id=group.id, user_id=current_user.id
+    ).first()
+
+    can_delete = False
+    if membership and (
+        membership.role in ["owner", "admin", "moderator"]
+        or draft.author_user_id == current_user.id
+    ):
+        can_delete = True
+
+    if not can_delete:
+        flash("Unauthorized to delete this draft.", "danger")
+        return redirect(url_for("drafts.view", draft_id=draft_id))
+
+    if draft.status == "published":
+        flash("Cannot delete published posts.", "warning")
+        return redirect(url_for("drafts.view", draft_id=draft_id))
+
+    db.session.delete(draft)
+    db.session.commit()
+    flash("Draft rejected/deleted.", "success")
+    return redirect(url_for("groups.view", id=group.id))
 
 
 @bp.route("/submit/<int:draft_id>", methods=["POST"])
@@ -174,12 +226,15 @@ def submit(draft_id):
     draft = Draft.query.get_or_404(draft_id)
     group = Group.query.get(draft.group_id)
 
-    # Check Permissions (Owner or Editor only)
+    # Check Permissions (Owner, Admin, Moderator only)
     membership = GroupMember.query.filter_by(
         group_id=group.id, user_id=current_user.id
     ).first()
-    if not membership or membership.role not in ["owner", "admin", "editor"]:
-        flash("Unauthorized to submit drafts.", "danger")
+    if not membership or membership.role not in ["owner", "admin", "moderator"]:
+        flash(
+            "Unauthorized to submit drafts. Only Owners and Moderators can publish.",
+            "danger",
+        )
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     if draft.status == "published":

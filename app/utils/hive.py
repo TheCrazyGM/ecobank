@@ -264,3 +264,13 @@ def fetch_posts_by_tag(
         )
 
     return shaped, next_cursor
+
+
+def fetch_pending_claimed_accounts(username: str) -> int:
+    """Fetch the pending claimed accounts count for a user."""
+    try:
+        acc = Account(username)
+        return int(acc.get("pending_claimed_accounts", 0))
+    except Exception as e:
+        logger.error(f"Failed to fetch pending claimed accounts for {username}: {e}")
+        return 0

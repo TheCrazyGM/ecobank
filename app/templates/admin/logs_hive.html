@@ -6,6 +6,14 @@
         <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">{{ _('Back to Dashboard') }}</a>
     </div>
 
+    {% if system_account %}
+        <div class="alert alert-info mb-4">
+            <strong>{{ _('System Account:') }}</strong> {{ system_account }}
+            |
+            <strong>{{ _('Pending Claimed Accounts:') }}</strong> <span class="badge bg-light text-dark border">{{ pending_claims }}</span>
+        </div>
+    {% endif %}
+
     <table class="table table-sm table-bordered">
         <thead>
             <tr>

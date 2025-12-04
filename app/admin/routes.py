@@ -1,10 +1,11 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_babel import gettext as _
 from app.admin import bp
 from app.admin.decorators import admin_required
 from app.admin.forms import AdminUserEditForm, AdminGroupEditForm
 from app.models import User, Group, Draft, HiveAccount, PayPalOrder
 from app.extensions import db
+from app.utils.hive import fetch_pending_claimed_accounts
 
 
 @bp.route("/")
@@ -127,4 +128,15 @@ def logs_paypal():
 @admin_required
 def logs_hive():
     accounts = HiveAccount.query.order_by(HiveAccount.created_at.desc()).limit(50).all()
-    return render_template("admin/logs_hive.html", accounts=accounts)
+
+    system_account = current_app.config.get("HIVE_CLAIMER_ACCOUNT")
+    pending_claims = 0
+    if system_account:
+        pending_claims = fetch_pending_claimed_accounts(system_account)
+
+    return render_template(
+        "admin/logs_hive.html",
+        accounts=accounts,
+        pending_claims=pending_claims,
+        system_account=system_account,
+    )

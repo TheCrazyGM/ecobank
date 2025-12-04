@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.extensions import db, login_manager
 
 
-class User(UserMixin, db.Model):
+class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -46,7 +46,7 @@ class User(UserMixin, db.Model):
         return f"<User {self.username}>"
 
 
-class HiveAccount(db.Model):
+class HiveAccount(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(16), index=True, unique=True)
     password_enc = db.Column(db.Text)  # Encrypted password
@@ -56,7 +56,7 @@ class HiveAccount(db.Model):
     tx_id = db.Column(db.String(64))
 
 
-class PayPalOrder(db.Model):
+class PayPalOrder(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     paypal_order_id = db.Column(db.String(64), unique=True)
@@ -72,7 +72,7 @@ class PayPalOrder(db.Model):
     )
 
 
-class Group(db.Model):
+class Group(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True, nullable=False)
     description = db.Column(db.Text)
@@ -94,10 +94,10 @@ class Group(db.Model):
 
     @property
     def members_list(self):
-        return [m.user for m in self.members]
+        return [m.user for m in self.members]  # ty:ignore[not-iterable]
 
 
-class GroupMember(db.Model):
+class GroupMember(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -116,7 +116,7 @@ class GroupMember(db.Model):
         return f"<GroupMember {self.user_id} in {self.group_id}>"
 
 
-class GroupResource(db.Model):
+class GroupResource(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=False)
     resource_type = db.Column(db.String(64), nullable=False)  # e.g., hive_account
@@ -135,7 +135,7 @@ class GroupResource(db.Model):
         return f"<GroupResource {self.resource_type}:{self.resource_id} for {self.group_id}>"
 
 
-class Draft(db.Model):
+class Draft(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey("group.id"), nullable=False)
     author_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)

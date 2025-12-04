@@ -82,7 +82,7 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
     jm = data.get("json_metadata") or {}
     if isinstance(jm, dict):
         if isinstance(jm.get("tags"), list):
-            tags = [str(t) for t in jm.get("tags")]
+            tags = [str(t) for t in jm.get("tags")]  # type: ignore
     data["tags"] = tags
 
     # Rough payout summary if available
@@ -171,10 +171,10 @@ def fetch_account_wallet(username: str) -> Optional[Dict[str, Any]]:
         hive = Hive()
 
         # Calculate Hive Power (HP) from VESTS
-        vests = Amount(acc.get("vesting_shares"))
+        vests = Amount(acc.get("vesting_shares"))  # type: ignore
         dgpo = hive.get_dynamic_global_properties()
-        total_vesting_fund = Amount(dgpo["total_vesting_fund_hive"])
-        total_vesting_shares = Amount(dgpo["total_vesting_shares"])
+        total_vesting_fund = Amount(dgpo["total_vesting_fund_hive"])  # type: ignore
+        total_vesting_shares = Amount(dgpo["total_vesting_shares"])  # type: ignore
 
         hive_power = 0.0
         if total_vesting_shares.amount > 0:

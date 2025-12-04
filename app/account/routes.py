@@ -317,6 +317,12 @@ def view_account(id):
 
     # Decryption Logic
     encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
+    if not encryption_key:
+        flash(
+            _("Encryption key not configured. Cannot decrypt credentials safely."),
+            "danger",
+        )
+        return redirect(url_for("account.list_accounts"))
     fernet = Fernet(encryption_key)
 
     try:

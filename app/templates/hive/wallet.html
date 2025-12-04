@@ -1,74 +1,74 @@
 {% extends "base.html" %}
 
 {% block content %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ url_for('main.hive_user_blog', username=username) }}">@{{ username }}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{ _('Wallet') }}</li>
-  </ol>
-</nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.hive_user_blog', username=username) }}">@{{ username }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ _('Wallet') }}</li>
+        </ol>
+    </nav>
 
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white d-flex align-items-center">
-                <h3 class="mb-0 me-auto">{{ _('Wallet') }}: @{{ username }}</h3>
-                <span class="badge bg-light text-dark">{{ wallet.voting_power }} VP</span>
-            </div>
-            <div class="card-body">
-                <div class="row mb-3 text-center">
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <h5 class="text-muted">HIVE</h5>
-                            <h3 class="text-primary">{{ wallet.hive_balance }}</h3>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <h5 class="text-muted">HIVE POWER</h5>
-                            <h3 class="text-success">{{ wallet.vesting_shares }}</h3>
-                            <small class="text-muted">(VESTS)</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-3 border rounded bg-light">
-                            <h5 class="text-muted">HBD</h5>
-                            <h3 class="text-warning">{{ wallet.hbd_balance }}</h3>
-                        </div>
-                    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <h3 class="mb-0 me-auto">{{ _('Wallet') }}: @{{ username }}</h3>
+                    <span class="badge bg-light text-dark">{{ wallet.voting_power }} VP</span>
                 </div>
+                <div class="card-body">
+                    <div class="row mb-3 text-center">
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5 class="text-muted">HIVE</h5>
+                                <h3 class="text-primary">{{ wallet.hive_balance }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5 class="text-muted">HIVE POWER</h5>
+                                <h3 class="text-success">{{ wallet.vesting_shares }}</h3>
+                                <small class="text-muted">(VESTS)</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded bg-light">
+                                <h5 class="text-muted">HBD</h5>
+                                <h3 class="text-warning">{{ wallet.hbd_balance }}</h3>
+                            </div>
+                        </div>
+                    </div>
 
-                <h5 class="mt-4">{{ _('Savings') }}</h5>
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Savings HIVE
-                        <span class="fw-bold">{{ wallet.savings_hive }}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Savings HBD
-                        <span class="fw-bold">{{ wallet.savings_hbd }}</span>
-                    </li>
-                </ul>
+                    <h5 class="mt-4">{{ _('Savings') }}</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Savings HIVE
+                            <span class="fw-bold">{{ wallet.savings_hive }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Savings HBD
+                            <span class="fw-bold">{{ wallet.savings_hbd }}</span>
+                        </li>
+                    </ul>
 
-                <div class="mt-4">
-                    <h5>{{ _('Account Info') }}</h5>
-                    <table class="table table-sm">
-                        <tr>
-                            <td>{{ _('Created Date') }}</td>
-                            <td class="text-end">{{ wallet.created }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ _('Post Count') }}</td>
-                            <td class="text-end">{{ wallet.post_count }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ _('Memo Key') }}</td>
-                            <td class="text-end"><code class="small">{{ wallet.memo_key }}</code></td>
-                        </tr>
-                    </table>
+                    <div class="mt-4">
+                        <h5>{{ _('Account Info') }}</h5>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>{{ _('Created Date') }}</td>
+                                <td class="text-end">{{ wallet.created }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ _('Post Count') }}</td>
+                                <td class="text-end">{{ wallet.post_count }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ _('Memo Key') }}</td>
+                                <td class="text-end"><code class="small">{{ wallet.memo_key }}</code></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

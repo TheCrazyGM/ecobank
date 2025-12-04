@@ -1,56 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4>{{ _('Edit User: %(username)s', username=user.username) }}</h4>
-                <a href="{{ url_for('admin.manage_users') }}" class="btn btn-sm btn-secondary">{{ _('Back') }}</a>
-            </div>
-            <div class="card-body">
-                <form action="" method="post">
-                    {{ form.hidden_tag() }}
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            {{ form.username.label(class="form-label") }}
-                            {{ form.username(class="form-control") }}
-                            {% for error in form.username.errors %}
-                            <span class="text-danger small">{{ error }}</span>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4>{{ _('Edit User: %(username)s', username=user.username) }}</h4>
+                    <a href="{{ url_for('admin.manage_users') }}" class="btn btn-sm btn-secondary">{{ _('Back') }}</a>
+                </div>
+                <div class="card-body">
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.username.label(class="form-label") }}
+                                {{ form.username(class="form-control") }}
+                                {% for error in form.username.errors %}
+                                    <span class="text-danger small">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.email.label(class="form-label") }}
+                                {{ form.email(class="form-control") }}
+                                {% for error in form.email.errors %}
+                                    <span class="text-danger small">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.account_credits.label(class="form-label") }}
+                            {{ form.account_credits(class="form-control") }}
+                            {% for error in form.account_credits.errors %}
+                                <span class="text-danger small">{{ error }}</span>
                             {% endfor %}
                         </div>
-                        <div class="col-md-6 mb-3">
-                            {{ form.email.label(class="form-label") }}
-                            {{ form.email(class="form-control") }}
-                            {% for error in form.email.errors %}
-                            <span class="text-danger small">{{ error }}</span>
+
+                        <div class="mb-3 p-3 bg-light border rounded">
+                            <label class="form-label text-danger fw-bold">{{ _('Reset Password (Optional)') }}</label>
+                            {{ form.password(class="form-control", placeholder=_("Leave blank to keep current password")) }}
+                            <div class="form-text text-warning">{{ _('Entering a value here will immediately reset the user\'s password.') }}</div>
+                            {% for error in form.password.errors %}
+                                <span class="text-danger small">{{ error }}</span>
                             {% endfor %}
                         </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        {{ form.account_credits.label(class="form-label") }}
-                        {{ form.account_credits(class="form-control") }}
-                        {% for error in form.account_credits.errors %}
-                        <span class="text-danger small">{{ error }}</span>
-                        {% endfor %}
-                    </div>
 
-                    <div class="mb-3 p-3 bg-light border rounded">
-                        <label class="form-label text-danger fw-bold">{{ _('Reset Password (Optional)') }}</label>
-                        {{ form.password(class="form-control", placeholder=_("Leave blank to keep current password")) }}
-                        <div class="form-text text-warning">{{ _('Entering a value here will immediately reset the user\'s password.') }}</div>
-                        {% for error in form.password.errors %}
-                        <span class="text-danger small">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="d-grid gap-2">
-                        {{ form.submit(class="btn btn-primary") }}
-                    </div>
-                </form>
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

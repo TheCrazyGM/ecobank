@@ -1,54 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mb-3">
-    <div class="col-md-8">
-        <h2>{{ draft.title }} <span class="badge bg-secondary">{{ draft.status }}</span></h2>
-        <p class="text-muted">
-            {{ _('By') }} {{ author.display_name }} | {{ _('For account:') }} @{{ draft.hive_account_username }}
-        </p>
-    </div>
-    <div class="col-md-4 text-end">
-        {% if draft.status == 'draft' %}
-            <a href="{{ url_for('drafts.edit', draft_id=draft.id) }}" class="btn btn-outline-primary">{{ _('Edit') }}</a>
-            {% if can_submit %}
-            <form action="{{ url_for('drafts.submit', draft_id=draft.id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ _('Are you sure you want to publish this to Hive? This cannot be undone.') }}');">
-                <button type="submit" class="btn btn-success">{{ _('Submit / Publish') }}</button>
-            </form>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h2>{{ draft.title }} <span class="badge bg-secondary">{{ draft.status }}</span></h2>
+            <p class="text-muted">
+                {{ _('By') }} {{ author.display_name }} | {{ _('For account:') }} @{{ draft.hive_account_username }}
+            </p>
+        </div>
+        <div class="col-md-4 text-end">
+            {% if draft.status == 'draft' %}
+                <a href="{{ url_for('drafts.edit', draft_id=draft.id) }}" class="btn btn-outline-primary">{{ _('Edit') }}</a>
+                {% if can_submit %}
+                    <form action="{{ url_for('drafts.submit', draft_id=draft.id) }}" method="POST" class="d-inline" onsubmit="return confirm('{{ _('Are you sure you want to publish this to Hive? This cannot be undone.') }}');">
+                        <button type="submit" class="btn btn-success">{{ _('Submit / Publish') }}</button>
+                    </form>
+                {% endif %}
+            {% elif draft.status == 'published' %}
+                <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank" class="btn btn-info">{{ _('View on Hive') }}</a>
             {% endif %}
-        {% elif draft.status == 'published' %}
-            <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank" class="btn btn-info">{{ _('View on Hive') }}</a>
-        {% endif %}
-        <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-secondary">{{ _('Back to Group') }}</a>
+            <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-secondary">{{ _('Back to Group') }}</a>
+        </div>
     </div>
-</div>
 
-<hr>
+    <hr>
 
 <!-- Preview of Automatic Header -->
-<div class="card mb-4 bg-light border-info">
-    <div class="card-body">
-        <h5 class="card-title text-info">{{ _('Automatic Header Preview') }}</h5>
-        <p class="small text-muted">{{ _('This will be prepended to your post upon submission.') }}</p>
-        <table>
-        <tr>
-        <td>
-        <center><img src="{{ author.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
-        </td>
-        <td>
-        <span><h4>{{ _('About the Author') }}</h4></span>
-        <div><span><strong>{{ author.display_name }}</strong></span> - 
-        <span>{{ author.bio or _('Member of %(group)s', group=draft.group.name) }}</span></div>
-        </td>
-        </tr>
-        </table>
+    <div class="card mb-4 bg-light border-info">
+        <div class="card-body">
+            <h5 class="card-title text-info">{{ _('Automatic Header Preview') }}</h5>
+            <p class="small text-muted">{{ _('This will be prepended to your post upon submission.') }}</p>
+            <table>
+                <tr>
+                    <td>
+                        <center><img src="{{ author.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
+                    </td>
+                    <td>
+                        <span><h4>{{ _('About the Author') }}</h4></span>
+                        <div><span><strong>{{ author.display_name }}</strong></span> -
+                            <span>{{ author.bio or _('Member of %(group)s', group=draft.group.name) }}</span></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-</div>
 
-<div class="card">
-    <div class="card-header">{{ _('Content Preview') }}</div>
-    <div class="card-body">
-        {{ rendered_body }}
+    <div class="card">
+        <div class="card-header">{{ _('Content Preview') }}</div>
+        <div class="card-body">
+            {{ rendered_body }}
+        </div>
     </div>
-</div>
 {% endblock %}

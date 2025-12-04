@@ -1,37 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ _('My Hive Accounts') }}</h2>
-<div class="mb-3">
-    <a href="{{ url_for('account.create') }}" class="btn btn-primary">{{ _('Create New') }}</a>
-    <a href="{{ url_for('account.import_account') }}" class="btn btn-outline-secondary">{{ _('Import Existing') }}</a>
-</div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>{{ _('Username') }}</th>
-            <th>{{ _('Created At') }}</th>
-            <th>{{ _('Source') }}</th>
-            <th>{{ _('Actions') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for account in accounts %}
-        <tr>
-            <td>{{ account.username }}</td>
-            <td>{{ account.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td>
-                {% if account.tx_id == 'import' %}
-                <span class="badge bg-info">{{ _('Imported') }}</span>
-                {% else %}
-                <span class="badge bg-success">{{ _('Created') }}</span>
-                {% endif %}
-            </td>
-            <td>
-                <a href="{{ url_for('account.view_account', id=account.id) }}" class="btn btn-sm btn-info">{{ _('View Keys') }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <h2>{{ _('My Hive Accounts') }}</h2>
+    <div class="mb-3">
+        <a href="{{ url_for('account.create') }}" class="btn btn-primary">{{ _('Create New') }}</a>
+        <a href="{{ url_for('account.import_account') }}" class="btn btn-outline-secondary">{{ _('Import Existing') }}</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ _('Username') }}</th>
+                <th>{{ _('Created At') }}</th>
+                <th>{{ _('Source') }}</th>
+                <th>{{ _('Actions') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td>{{ account.username }}</td>
+                    <td>{{ account.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        {% if account.tx_id == 'import' %}
+                            <span class="badge bg-info">{{ _('Imported') }}</span>
+                        {% else %}
+                            <span class="badge bg-success">{{ _('Created') }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('account.view_account', id=account.id) }}" class="btn btn-sm btn-info">{{ _('View Keys') }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

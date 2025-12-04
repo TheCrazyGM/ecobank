@@ -86,7 +86,7 @@ def view(id):
 @bp.route("/<int:id>/add_member", methods=["POST"])
 @login_required
 def add_member(id):
-    group = Group.query.get_or_404(id)
+    Group.query.get_or_404(id)
 
     # Check auth (owner or admin only)
     membership = GroupMember.query.filter_by(
@@ -146,7 +146,7 @@ def remove_member(id, user_id):
 @bp.route("/<int:id>/link_resource", methods=["POST"])
 @login_required
 def link_resource(id):
-    group = Group.query.get_or_404(id)
+    Group.query.get_or_404(id)
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
@@ -181,7 +181,7 @@ def link_resource(id):
 @bp.route("/<int:id>/unlink_resource/<int:resource_id>", methods=["POST"])
 @login_required
 def unlink_resource(id, resource_id):
-    group = Group.query.get_or_404(id)
+    Group.query.get_or_404(id)
     # Logic for who can unlink?
     # 1. The group owner/admin
     # 2. The owner of the resource (if we tracked who added it, currently we don't explicitly track who added the resource link, but we can infer from HiveAccount ownership)

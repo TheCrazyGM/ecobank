@@ -29,7 +29,7 @@ def create_app(config_class=Config):
     # Ensure i18n helpers are available in templates (Ecofront pattern)
     app.jinja_env.add_extension("jinja2.ext.i18n")
     app.jinja_env.globals.update(_=_, gettext=_, ngettext=ngettext)
-    
+
     # Register filters
     app.jinja_env.filters["markdown"] = render_markdown
 

@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>{{ _('User Manager') }}</h2>
-    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">{{ _('Back to Dashboard') }}</a>
-</div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ _('User Manager') }}</h2>
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">{{ _('Back to Dashboard') }}</a>
+    </div>
 
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>{{ _('Username') }}</th>
-            <th>{{ _('Email') }}</th>
-            <th>{{ _('Credits') }}</th>
-            <th>{{ _('Actions') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.account_credits }}</td>
-            <td>
-                <div class="d-flex gap-2">
-                    <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-sm btn-primary">{{ _('Edit') }}</a>
-                    <form action="{{ url_for('admin.grant_credits', user_id=user.id) }}" method="POST" class="d-flex gap-2">
-                        <input type="number" name="amount" value="1" class="form-control form-control-sm" style="width: 70px;">
-                        <button type="submit" class="btn btn-sm btn-outline-success">{{ _('Add Credits') }}</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ _('Username') }}</th>
+                <th>{{ _('Email') }}</th>
+                <th>{{ _('Credits') }}</th>
+                <th>{{ _('Actions') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.account_credits }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-sm btn-primary">{{ _('Edit') }}</a>
+                            <form action="{{ url_for('admin.grant_credits', user_id=user.id) }}" method="POST" class="d-flex gap-2">
+                                <input type="number" name="amount" value="1" class="form-control form-control-sm" style="width: 70px;">
+                                <button type="submit" class="btn btn-sm btn-outline-success">{{ _('Add Credits') }}</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

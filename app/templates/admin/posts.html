@@ -1,43 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>{{ _('Post / Draft Manager') }}</h2>
-    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">{{ _('Back to Dashboard') }}</a>
-</div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ _('Post / Draft Manager') }}</h2>
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">{{ _('Back to Dashboard') }}</a>
+    </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>{{ _('Title') }}</th>
-            <th>{{ _('Author') }}</th>
-            <th>{{ _('Group') }}</th>
-            <th>{{ _('Status') }}</th>
-            <th>{{ _('Last Updated') }}</th>
-            <th>{{ _('View') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for draft in drafts %}
-        <tr>
-            <td>{{ draft.id }}</td>
-            <td>{{ draft.title }}</td>
-            <td>{{ draft.author.username }}</td>
-            <td>{{ draft.group.name }}</td>
-            <td>
-                {% if draft.status == 'draft' %}
-                <span class="badge bg-secondary">{{ _('Draft') }}</span>
-                {% else %}
-                <span class="badge bg-success">{{ _('Published') }}</span>
-                {% endif %}
-            </td>
-            <td>{{ draft.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td>
-                <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-sm btn-info">{{ _('View') }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{{ _('Title') }}</th>
+                <th>{{ _('Author') }}</th>
+                <th>{{ _('Group') }}</th>
+                <th>{{ _('Status') }}</th>
+                <th>{{ _('Last Updated') }}</th>
+                <th>{{ _('View') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for draft in drafts %}
+                <tr>
+                    <td>{{ draft.id }}</td>
+                    <td>{{ draft.title }}</td>
+                    <td>{{ draft.author.username }}</td>
+                    <td>{{ draft.group.name }}</td>
+                    <td>
+                        {% if draft.status == 'draft' %}
+                            <span class="badge bg-secondary">{{ _('Draft') }}</span>
+                        {% else %}
+                            <span class="badge bg-success">{{ _('Published') }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ draft.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-sm btn-info">{{ _('View') }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

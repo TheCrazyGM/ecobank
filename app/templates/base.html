@@ -39,9 +39,9 @@
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
               {% if current_user.is_authenticated %}
                 {% if current_user.username == 'admin' %}
-                <li class="nav-item">
+                  <li class="nav-item">
                     <a class="nav-link text-warning" href="{{ url_for('admin.dashboard') }}">{{ _('Admin') }}</a>
-                </li>
+                  </li>
                 {% endif %}
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('account.buy_credits') }}">{{ _('Buy Credits') }}</a>
@@ -56,7 +56,7 @@
                   </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('groups.list_groups') }}">{{ _('My Groups') }}</a>
+                  <a class="nav-link" href="{{ url_for('groups.list_groups') }}">{{ _('My Groups') }}</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -91,7 +91,7 @@
             {% endfor %}
           {% endif %}
         {% endwith %}
-        
+
         {% block content %}{% endblock %}
       </div>
     </main>

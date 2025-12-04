@@ -57,9 +57,9 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
     raw_last_update = getattr(c, "last_update", None) or _safe_get(c, "last_update")
     raw_cashout = getattr(c, "cashout_time", None) or _safe_get(c, "cashout_time")
     raw_last_payout = getattr(c, "last_payout", None) or _safe_get(c, "last_payout")
-    
+
     created_val = raw_created or raw_last_update or raw_cashout or raw_last_payout
-    
+
     data = {
         "author": getattr(c, "author", author),
         "permlink": getattr(c, "permlink", permlink),
@@ -111,7 +111,7 @@ def fetch_user_blog(
     kwargs = {}
     if start is not None:
         kwargs["start"] = start
-    
+
     try:
         entries = list(acc.get_blog(limit=limit, **kwargs))
     except Exception:
@@ -123,8 +123,8 @@ def fetch_user_blog(
     for e in entries:
         # In some nectar versions, get_blog returns a list of dicts directly
         # Structure might differ, checking safely
-        comment = e.get('comment', e) if isinstance(e, dict) else e
-        
+        comment = e.get("comment", e) if isinstance(e, dict) else e
+
         author = _safe_get(comment, "author")
         permlink = _safe_get(comment, "permlink")
         title = _safe_get(comment, "title") or permlink
@@ -147,16 +147,19 @@ def fetch_user_blog(
                 "summary": summary,
                 "payout": str(payout) if payout else None,
                 # If it's a reblog, 'reblogged_on' might be present in the wrapper 'e'
-                "reblogged_on": _normalize_ts(e.get("reblogged_on")) if isinstance(e, dict) and "reblogged_on" in e else None
+                "reblogged_on": _normalize_ts(e.get("reblogged_on"))
+                if isinstance(e, dict) and "reblogged_on" in e
+                else None,
             }
         )
 
         # Pagination cursor: post_id from get_blog wrapper
-        post_id = _safe_get(e, "entry_id") # In recent Nectar/Beem, it's often entry_id
+        post_id = _safe_get(e, "entry_id")  # In recent Nectar/Beem, it's often entry_id
         if post_id is not None:
             next_cursor = post_id
 
     return shaped, next_cursor
+
 
 def fetch_account_wallet(username: str) -> Optional[Dict[str, Any]]:
     """Fetch account wallet balances and basic info."""
@@ -173,7 +176,7 @@ def fetch_account_wallet(username: str) -> Optional[Dict[str, Any]]:
             "memo_key": acc.get("memo_key"),
             "created": _normalize_ts(acc.get("created")),
             "post_count": acc.get("post_count"),
-            "voting_power": f"{acc.get_voting_power() / 100:.2f}%"
+            "voting_power": f"{acc.get_voting_power() / 100:.2f}%",
         }
     except Exception as e:
         logger.error(f"Failed to fetch wallet for {username}: {e}")

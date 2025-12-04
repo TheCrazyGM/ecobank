@@ -1,0 +1,213 @@
+E402 Module level import not at top of file
+ --> app/account/__init__.py:5:1
+  |
+3 | bp = Blueprint("account", __name__)
+4 |
+5 | from app.account import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.account.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/account/__init__.py:5:25
+  |
+3 | bp = Blueprint("account", __name__)
+4 |
+5 | from app.account import routes
+  |                         ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+E722 Do not use bare `except`
+  --> app/account/routes.py:69:5
+   |
+67 |         flash(_("Username already exists on Hive."), "danger")
+68 |         return redirect(url_for("account.create"))
+69 |     except:
+   |     ^^^^^^
+70 |         pass  # Username is available
+   |
+
+E722 Do not use bare `except`
+   --> app/account/routes.py:160:5
+    |
+158 |     try:
+159 |         acc = Account(username, blockchain_instance=hive)
+160 |     except:
+    |     ^^^^^^
+161 |         flash(_("Account not found on Hive blockchain."), "danger")
+162 |         return redirect(url_for("account.import_account"))
+    |
+
+E722 Do not use bare `except`
+   --> app/account/routes.py:224:13
+    |
+222 |                     if pub in auth_keys:
+223 |                         return {"public": pub, "private": str(priv)}
+224 |             except:
+    |             ^^^^^^
+225 |                 pass
+226 |             return None
+    |
+
+E722 Do not use bare `except`
+   --> app/account/routes.py:328:5
+    |
+327 |         keys = json.loads(fernet.decrypt(account.keys_enc.encode()).decode())
+328 |     except:
+    |     ^^^^^^
+329 |         flash(_("Failed to decrypt credentials."), "danger")
+330 |         return redirect(url_for("account.list_accounts"))
+    |
+
+E402 Module level import not at top of file
+ --> app/admin/__init__.py:5:1
+  |
+3 | bp = Blueprint("admin", __name__)
+4 |
+5 | from app.admin import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.admin.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/admin/__init__.py:5:23
+  |
+3 | bp = Blueprint("admin", __name__)
+4 |
+5 | from app.admin import routes
+  |                       ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+E402 Module level import not at top of file
+ --> app/auth/__init__.py:5:1
+  |
+3 | bp = Blueprint("auth", __name__)
+4 |
+5 | from app.auth import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.auth.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/auth/__init__.py:5:22
+  |
+3 | bp = Blueprint("auth", __name__)
+4 |
+5 | from app.auth import routes
+  |                      ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+E402 Module level import not at top of file
+ --> app/drafts/__init__.py:5:1
+  |
+3 | bp = Blueprint("drafts", __name__)
+4 |
+5 | from app.drafts import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.drafts.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/drafts/__init__.py:5:24
+  |
+3 | bp = Blueprint("drafts", __name__)
+4 |
+5 | from app.drafts import routes
+  |                        ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+E402 Module level import not at top of file
+ --> app/groups/__init__.py:5:1
+  |
+3 | bp = Blueprint("groups", __name__)
+4 |
+5 | from app.groups import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.groups.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/groups/__init__.py:5:24
+  |
+3 | bp = Blueprint("groups", __name__)
+4 |
+5 | from app.groups import routes
+  |                        ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+F841 Local variable `group` is assigned to but never used
+  --> app/groups/routes.py:89:5
+   |
+87 | @login_required
+88 | def add_member(id):
+89 |     group = Group.query.get_or_404(id)
+   |     ^^^^^
+90 |
+91 |     # Check auth (owner or admin only)
+   |
+help: Remove assignment to unused variable `group`
+
+F841 Local variable `group` is assigned to but never used
+   --> app/groups/routes.py:149:5
+    |
+147 | @login_required
+148 | def link_resource(id):
+149 |     group = Group.query.get_or_404(id)
+    |     ^^^^^
+150 |     membership = GroupMember.query.filter_by(
+151 |         group_id=id, user_id=current_user.id
+    |
+help: Remove assignment to unused variable `group`
+
+F841 Local variable `group` is assigned to but never used
+   --> app/groups/routes.py:184:5
+    |
+182 | @login_required
+183 | def unlink_resource(id, resource_id):
+184 |     group = Group.query.get_or_404(id)
+    |     ^^^^^
+185 |     # Logic for who can unlink?
+186 |     # 1. The group owner/admin
+    |
+help: Remove assignment to unused variable `group`
+
+E402 Module level import not at top of file
+ --> app/main/__init__.py:5:1
+  |
+3 | bp = Blueprint("main", __name__)
+4 |
+5 | from app.main import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.main.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/main/__init__.py:5:22
+  |
+3 | bp = Blueprint("main", __name__)
+4 |
+5 | from app.main import routes
+  |                      ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+E402 Module level import not at top of file
+ --> app/paypal/__init__.py:5:1
+  |
+3 | bp = Blueprint("paypal", __name__)
+4 |
+5 | from app.paypal import routes
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+
+F401 `app.paypal.routes` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+ --> app/paypal/__init__.py:5:24
+  |
+3 | bp = Blueprint("paypal", __name__)
+4 |
+5 | from app.paypal import routes
+  |                        ^^^^^^
+  |
+help: Use an explicit re-export: `routes as routes`
+
+Found 21 errors.
+No fixes available (3 hidden fixes can be enabled with the `--unsafe-fixes` option).

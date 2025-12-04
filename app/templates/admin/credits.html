@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ _('Admin: Grant Credits') }}</h2>
+    <h2>{{ _('Admin: Grant Credits') }}</h2>
 
-<form method="POST">
-    <div class="mb-3">
-        <label for="username" class="form-label">{{ _('Username') }}</label>
-        <input type="text" class="form-control" id="username" name="username" required>
-    </div>
-    <div class="mb-3">
-        <label for="credits" class="form-label">{{ _('Credits to Add') }}</label>
-        <input type="number" class="form-control" id="credits" name="credits" value="1" required>
-    </div>
-    <button type="submit" class="btn btn-primary">{{ _('Grant Credits') }}</button>
-</form>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="username" class="form-label">{{ _('Username') }}</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="credits" class="form-label">{{ _('Credits to Add') }}</label>
+            <input type="number" class="form-control" id="credits" name="credits" value="1" required>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ _('Grant Credits') }}</button>
+    </form>
 
 {% endblock %}

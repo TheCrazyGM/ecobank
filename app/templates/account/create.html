@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ _('Create Hive Account') }}</h2>
+    <h2>{{ _('Create Hive Account') }}</h2>
 
-<div class="alert alert-info">
-    {{ _('You have <strong>%(credits)s</strong> account creation credit(s).', credits=current_user.account_credits) }}
-</div>
+    <div class="alert alert-info">
+        {{ _('You have <strong>%(credits)s</strong> account creation credit(s).', credits=current_user.account_credits) }}
+    </div>
 
-{% if (current_user.account_credits | default(0)) > 0 %}
-<form method="POST">
-    <div class="mb-3">
-        <label for="username" class="form-label">{{ _('Username') }}</label>
-        <input type="text" class="form-control" id="username" name="username" required pattern="^[a-z0-9.-]+$" title="Lowercase letters, numbers, dots, hyphens only">
-        <div class="form-text">{{ _('3-16 chars, lowercase, numbers, . -') }}</div>
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">{{ _('Password') }}</label>
-        <input type="text" class="form-control" id="password" name="password" required>
-        <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="document.getElementById('password').value = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);">{{ _('Generate Random') }}</button>
-    </div>
-    <button type="submit" class="btn btn-primary">{{ _('Create Account (Costs 1 Credit)') }}</button>
-</form>
-{% else %}
-<div class="text-center py-5">
-    <p class="lead">{{ _('You need a credit to create a Hive account.') }}</p>
-    <a href="{{ url_for('account.buy_credits') }}" class="btn btn-lg btn-success">{{ _('Buy Credits') }}</a>
-</div>
-{% endif %}
+    {% if (current_user.account_credits | default(0)) > 0 %}
+        <form method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">{{ _('Username') }}</label>
+                <input type="text" class="form-control" id="username" name="username" required pattern="^[a-z0-9.-]+$" title="Lowercase letters, numbers, dots, hyphens only">
+                <div class="form-text">{{ _('3-16 chars, lowercase, numbers, . -') }}</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">{{ _('Password') }}</label>
+                <input type="text" class="form-control" id="password" name="password" required>
+                <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="document.getElementById('password').value = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);">{{ _('Generate Random') }}</button>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ _('Create Account (Costs 1 Credit)') }}</button>
+        </form>
+    {% else %}
+        <div class="text-center py-5">
+            <p class="lead">{{ _('You need a credit to create a Hive account.') }}</p>
+            <a href="{{ url_for('account.buy_credits') }}" class="btn btn-lg btn-success">{{ _('Buy Credits') }}</a>
+        </div>
+    {% endif %}
 
 {% endblock %}

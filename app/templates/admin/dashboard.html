@@ -1,71 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-md-12">
-        <h2>{{ _('Admin Dashboard') }}</h2>
-    </div>
-</div>
-
-<div class="row">
-    <!-- Users -->
-    <div class="col-md-3">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-header">{{ _('Users') }}</div>
-            <div class="card-body">
-                <h5 class="card-title">{{ user_count }}</h5>
-                <p class="card-text">{{ _('Registered users') }}</p>
-                <a href="{{ url_for('admin.manage_users') }}" class="btn btn-light btn-sm">{{ _('Manage') }}</a>
-            </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>{{ _('Admin Dashboard') }}</h2>
         </div>
     </div>
+
+    <div class="row">
+    <!-- Users -->
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">{{ _('Users') }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_count }}</h5>
+                    <p class="card-text">{{ _('Registered users') }}</p>
+                    <a href="{{ url_for('admin.manage_users') }}" class="btn btn-light btn-sm">{{ _('Manage') }}</a>
+                </div>
+            </div>
+        </div>
 
     <!-- Groups -->
-    <div class="col-md-3">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-header">{{ _('Groups') }}</div>
-            <div class="card-body">
-                <h5 class="card-title">{{ group_count }}</h5>
-                <p class="card-text">{{ _('Active groups') }}</p>
-                <a href="{{ url_for('admin.manage_groups') }}" class="btn btn-light btn-sm">{{ _('Manage') }}</a>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">{{ _('Groups') }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ group_count }}</h5>
+                    <p class="card-text">{{ _('Active groups') }}</p>
+                    <a href="{{ url_for('admin.manage_groups') }}" class="btn btn-light btn-sm">{{ _('Manage') }}</a>
+                </div>
             </div>
         </div>
-    </div>
 
     <!-- Posts -->
-    <div class="col-md-3">
-        <div class="card text-white bg-info mb-3">
-            <div class="card-header">{{ _('Posts / Drafts') }}</div>
-            <div class="card-body">
-                <h5 class="card-title">{{ draft_count }}</h5>
-                <p class="card-text">{{ _('Total drafts created') }}</p>
-                <a href="{{ url_for('admin.manage_posts') }}" class="btn btn-light btn-sm">{{ _('Manage') }}</a>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">{{ _('Posts / Drafts') }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ draft_count }}</h5>
+                    <p class="card-text">{{ _('Total drafts created') }}</p>
+                    <a href="{{ url_for('admin.manage_posts') }}" class="btn btn-light btn-sm">{{ _('Manage') }}</a>
+                </div>
             </div>
         </div>
-    </div>
 
     <!-- Hive Accounts -->
-    <div class="col-md-3">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-header">{{ _('Hive Accounts') }}</div>
-            <div class="card-body">
-                <h5 class="card-title">{{ hive_account_count }}</h5>
-                <p class="card-text">{{ _('Accounts managed') }}</p>
-                <a href="{{ url_for('admin.logs_hive') }}" class="btn btn-light btn-sm">{{ _('View Logs') }}</a>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">{{ _('Hive Accounts') }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ hive_account_count }}</h5>
+                    <p class="card-text">{{ _('Accounts managed') }}</p>
+                    <a href="{{ url_for('admin.logs_hive') }}" class="btn btn-light btn-sm">{{ _('View Logs') }}</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">{{ _('Quick Links') }}</div>
-            <div class="list-group list-group-flush">
-                <a href="{{ url_for('admin.logs_paypal') }}" class="list-group-item list-group-item-action">{{ _('View PayPal Logs') }}</a>
-                <a href="{{ url_for('admin.logs_hive') }}" class="list-group-item list-group-item-action">{{ _('View Account Creation Logs') }}</a>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">{{ _('Quick Links') }}</div>
+                <div class="list-group list-group-flush">
+                    <a href="{{ url_for('admin.logs_paypal') }}" class="list-group-item list-group-item-action">{{ _('View PayPal Logs') }}</a>
+                    <a href="{{ url_for('admin.logs_hive') }}" class="list-group-item list-group-item-action">{{ _('View Account Creation Logs') }}</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

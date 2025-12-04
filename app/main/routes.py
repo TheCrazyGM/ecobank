@@ -1,32 +1,55 @@
-import sqlalchemy as sa
-from flask import flash, redirect, render_template, request, url_for
+import random
+from flask import flash, redirect, render_template, request, url_for, abort
+from flask_babel import gettext as _
 from flask_login import current_user, login_required
 
 from app.extensions import db
 from app.main import bp
-from app.models import User
-from app.utils.markdown_render import render_markdown
+from app.models import HiveAccount
+from app.utils.hive import fetch_post, fetch_user_blog, fetch_account_wallet
 
 
 @bp.route("/")
 def index():
-    sample_markdown = """
-# Welcome to EcoBank
+    usernames_to_fetch = []
 
-This is a sample Hive post rendered with **safe markdown**.
+    if current_user.is_authenticated:
+        # Get current user's hive accounts
+        usernames_to_fetch = [acc.username for acc in current_user.hive_accounts]
 
-- Item 1
-- Item 2
+        # If they have no accounts, maybe show some random community ones?
+        if not usernames_to_fetch:
+            all_accounts = (
+                HiveAccount.query.order_by(HiveAccount.created_at.desc())
+                .limit(20)
+                .all()
+            )
+            usernames_to_fetch = [acc.username for acc in all_accounts]
+        feed_title = _("My Feed")
+    else:
+        # Get public feed: latest created accounts (proxy for activity)
+        all_accounts = (
+            HiveAccount.query.order_by(HiveAccount.created_at.desc()).limit(20).all()
+        )
+        usernames_to_fetch = [acc.username for acc in all_accounts]
+        feed_title = _("Community Feed")
 
-```python
-def hello():
-    print("Hello World")
-```
+    # Shuffle and limit to avoid hammering API
+    random.shuffle(usernames_to_fetch)
+    usernames_to_fetch = usernames_to_fetch[:5]  # Fetch max 5 users
 
-![Image](https://via.placeholder.com/150)
-    """
-    rendered_content = render_markdown(sample_markdown)
-    return render_template("index.html", content=rendered_content)
+    aggregated_posts = []
+
+    for username in usernames_to_fetch:
+        # Fetch top 3 posts per user
+        entries, _next_cursor = fetch_user_blog(username, limit=3)
+        aggregated_posts.extend(entries)
+
+    # Sort by created date desc (if we can parse it, otherwise simple string sort might be off but okay)
+    # The utils return normalized string, so let's try to just show them.
+    # Ideal would be parsing ISO format back to datetime for sort.
+
+    return render_template("index.html", posts=aggregated_posts, feed_title=feed_title)
 
 
 @bp.route("/profile", methods=["GET", "POST"])
@@ -51,26 +74,49 @@ def profile():
     return render_template("main/profile.html", user=current_user)
 
 
-@bp.route("/admin/credits", methods=["GET", "POST"])
-@login_required
-def admin_credits():
-    if current_user.username != "admin":
-        flash("Unauthorized", "danger")
-        return redirect(url_for("main.index"))
+# -------------------- Hive Social Endpoints --------------------
 
-    if request.method == "POST":
-        username = request.form.get("username")
-        credits = int(request.form.get("credits", 0))
 
-        user = db.session.scalar(sa.select(User).where(User.username == username))
-        if user:
-            user.account_credits += credits
-            db.session.commit()
-            flash(
-                f"Added {credits} credits to {username}. Total: {user.account_credits}",
-                "success",
-            )
-        else:
-            flash(f"User {username} not found.", "danger")
+@bp.route("/@<username>")
+def hive_user_blog(username):
+    """Hive user blog roll: /@<username>"""
+    start = request.args.get("start", type=int)
+    entries, next_cursor = fetch_user_blog(username, limit=20, start=start)
+    # If user followed an old/bad cursor and nothing loads, fall back to first page
+    if start is not None and not entries:
+        return redirect(url_for("main.hive_user_blog", username=username))
 
-    return render_template("admin/credits.html")
+    return render_template(
+        "hive/user_blog.html",
+        username=username,
+        entries=entries,
+        next_cursor=next_cursor,
+    )
+
+
+@bp.route("/@<username>/<permlink>")
+def hive_view_post(username, permlink):
+    """Hive post view: /@<username>/<permlink>"""
+    post = fetch_post(username, permlink)
+    if post:
+        return render_template(
+            "hive/post.html",
+            post=post,
+            author=post["author"],
+            permlink=post["permlink"],
+            community=post.get("community"),
+            tags=post.get("tags"),
+            active_votes=post.get("active_votes"),
+            reblogged_by=post.get("reblogged_by"),
+            payout=post.get("payout"),
+        )
+    abort(404)
+
+
+@bp.route("/@<username>/wallet")
+def hive_view_wallet(username):
+    """Hive wallet view: /@<username>/wallet"""
+    wallet = fetch_account_wallet(username)
+    if not wallet:
+        abort(404)
+    return render_template("hive/wallet.html", wallet=wallet, username=username)

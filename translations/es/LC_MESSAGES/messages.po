@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-03 11:46-0500\n"
+"POT-Creation-Date: 2025-12-04 04:14-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -17,14 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
-
-#: app/templates/base.html:29 debug_i18n.py:11
-msgid "Home"
-msgstr "Inicio"
-
-#: app/templates/drafts/create.html:4 debug_i18n.py:12
-msgid "Create Draft"
-msgstr "Crear Borrador"
 
 #: app/account/routes.py:49
 msgid "You do not have enough credits to create an account."
@@ -109,12 +101,73 @@ msgstr "Contraseña inválida"
 msgid "Failed to decrypt credentials."
 msgstr "Fallo al desencriptar credenciales."
 
-#: app/auth/forms.py:9 app/auth/forms.py:15
+#: app/admin/forms.py:7 app/auth/forms.py:9 app/auth/forms.py:15
 #: app/templates/account/create.html:13 app/templates/account/import.html:9
 #: app/templates/account/list.html:12 app/templates/admin/credits.html:8
-#: app/templates/main/profile.html:13
+#: app/templates/admin/logs_hive.html:13 app/templates/admin/users.html:13
+#: app/templates/main/profile.html:24
 msgid "Username"
 msgstr "Usuario"
+
+#: app/admin/forms.py:8 app/auth/forms.py:16 app/templates/admin/users.html:14
+#: app/templates/main/profile.html:28
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#: app/admin/forms.py:9 app/templates/admin/logs_paypal.html:17
+#: app/templates/admin/users.html:15
+msgid "Credits"
+msgstr "Créditos"
+
+#: app/admin/forms.py:11 app/auth/forms.py:33
+msgid "New Password"
+msgstr "Nueva Contraseña"
+
+#: app/admin/forms.py:12
+msgid "Update User"
+msgstr "Actualizar Usuario"
+
+#: app/admin/forms.py:15 app/templates/groups/create.html:7
+msgid "Group Name"
+msgstr "Nombre del Grupo"
+
+#: app/admin/forms.py:16 app/templates/admin/groups.html:14
+#: app/templates/groups/create.html:11
+msgid "Description"
+msgstr "Descripción"
+
+#: app/admin/forms.py:17
+msgid "Owner Username"
+msgstr "Nombre de Usuario del Propietario"
+
+#: app/admin/forms.py:18
+msgid "Update Group"
+msgstr "Actualizar Grupo"
+
+#: app/admin/routes.py:40
+#, python-format
+msgid "Password reset for user %(username)s."
+msgstr "Contraseña restablecida para el usuario %(username)s."
+
+#: app/admin/routes.py:43
+#, python-format
+msgid "User %(username)s updated successfully."
+msgstr "Usuario %(username)s actualizado exitosamente."
+
+#: app/admin/routes.py:54
+#, python-format
+msgid "Credits updated for user %(username)s."
+msgstr "Créditos actualizados para el usuario %(username)s."
+
+#: app/admin/routes.py:81
+#, python-format
+msgid "User %(username)s not found. Owner not changed."
+msgstr "Usuario %(username)s no encontrado. El propietario no fue cambiado."
+
+#: app/admin/routes.py:85
+#, python-format
+msgid "Group %(name)s updated successfully."
+msgstr "Grupo %(name)s actualizado exitosamente."
 
 #: app/auth/forms.py:10 app/auth/forms.py:17
 #: app/templates/account/create.html:18 app/templates/account/verify.html:15
@@ -125,20 +178,16 @@ msgstr "Contraseña"
 msgid "Remember Me"
 msgstr "Recuérdame"
 
-#: app/auth/forms.py:12 app/auth/routes.py:31 app/templates/auth/login.html:4
+#: app/auth/forms.py:12 app/auth/routes.py:43 app/templates/auth/login.html:4
 #: app/templates/auth/register.html:39
 msgid "Sign In"
 msgstr "Iniciar Sesión"
-
-#: app/auth/forms.py:16 app/templates/main/profile.html:17
-msgid "Email"
-msgstr "Correo Electrónico"
 
 #: app/auth/forms.py:18
 msgid "Repeat Password"
 msgstr "Repetir Contraseña"
 
-#: app/auth/forms.py:19 app/auth/routes.py:51
+#: app/auth/forms.py:19 app/auth/routes.py:73
 #: app/templates/auth/register.html:4
 msgid "Register"
 msgstr "Registrarse"
@@ -151,69 +200,124 @@ msgstr "Por favor usa un nombre de usuario diferente."
 msgid "Please use a different email address."
 msgstr "Por favor usa una dirección de correo diferente."
 
-#: app/auth/routes.py:24
+#: app/auth/forms.py:32
+msgid "Current Password"
+msgstr "Contraseña Actual"
+
+#: app/auth/forms.py:34
+msgid "Confirm New Password"
+msgstr "Confirmar Nueva Contraseña"
+
+#: app/auth/forms.py:35 app/auth/routes.py:96
+#: app/templates/auth/change_password.html:8 app/templates/main/profile.html:65
+msgid "Change Password"
+msgstr "Cambiar Contraseña"
+
+#: app/auth/routes.py:30
 msgid "Invalid username or password"
 msgstr "Usuario o contraseña inválidos"
 
-#: app/auth/routes.py:49
+#: app/auth/routes.py:69
 msgid "Congratulations, you are now a registered user!"
 msgstr "¡Felicidades, ahora eres un usuario registrado!"
 
-#: app/templates/base.html:6 app/templates/base.html:22
+#: app/auth/routes.py:83
+msgid "Invalid current password."
+msgstr "Contraseña actual inválida."
+
+#: app/auth/routes.py:91
+msgid "Your password has been updated."
+msgstr "Tu contraseña ha sido actualizada."
+
+#: app/main/routes.py:23
+msgid "My Feed"
+msgstr ""
+
+#: app/main/routes.py:28
+msgid "Community Feed"
+msgstr ""
+
+#: app/templates/base.html:6 app/templates/base.html:29
 msgid "Ecobank Development"
 msgstr "Desarrollo Ecobank"
 
 #: app/templates/base.html:36
+msgid "Home"
+msgstr "Inicio"
+
+#: app/templates/base.html:43
 msgid "Admin"
 msgstr "Administrador"
 
-#: app/templates/base.html:40
-msgid "Credits"
-msgstr "Créditos"
-
-#: app/templates/account/create.html:27 app/templates/base.html:43
+#: app/templates/account/create.html:27 app/templates/base.html:47
 msgid "Buy Credits"
 msgstr "Comprar Créditos"
 
-#: app/templates/base.html:47
+#: app/templates/admin/dashboard.html:50 app/templates/base.html:51
 msgid "Hive Accounts"
 msgstr "Cuentas Hive"
 
-#: app/templates/account/list.html:6 app/templates/base.html:50
+#: app/templates/account/list.html:6 app/templates/base.html:54
 msgid "Create New"
 msgstr "Crear Nueva"
 
-#: app/templates/base.html:51
+#: app/templates/base.html:55
 msgid "My Accounts"
 msgstr "Mis Cuentas"
 
-#: app/templates/base.html:55 app/templates/groups/list.html:5
+#: app/templates/base.html:59 app/templates/groups/list.html:5
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:62
+#: app/templates/base.html:66
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/base.html:64
+#: app/templates/base.html:68
 msgid "Logout"
 msgstr "Cerrar Sesión"
 
-#: app/templates/base.html:69
+#: app/templates/base.html:73
 msgid "Login"
 msgstr "Iniciar Sesión"
 
-#: app/templates/index.html:4
+#: app/templates/index.html:5
 msgid "Welcome to EcoBank"
 msgstr "Bienvenido a EcoBank"
 
-#: app/templates/index.html:5
+#: app/templates/index.html:6
 msgid "Your decentralized finance hub."
 msgstr "Tu centro de finanzas descentralizadas."
 
-#: app/templates/index.html:9
-msgid "Sample Hive Post Render"
-msgstr "Ejemplo de Renderizado de Post Hive"
+#: app/templates/drafts/view.html:8 app/templates/hive/post.html:18
+#: app/templates/index.html:21
+msgid "By"
+msgstr "Por"
+
+#: app/templates/hive/post.html:33 app/templates/hive/user_blog.html:39
+#: app/templates/index.html:28
+msgid "Payout:"
+msgstr "Pago:"
+
+#: app/templates/index.html:29
+msgid "Read More"
+msgstr "Leer Más"
+
+#: app/templates/index.html:38
+msgid "No posts found right now."
+msgstr "No se encontraron publicaciones en este momento."
+
+#: app/templates/index.html:39
+msgid "Register a Hive account or create one to start seeing content here!"
+msgstr "¡Registra una cuenta Hive o crea una para comenzar a ver contenido aquí!"
+
+#: app/templates/index.html:41
+msgid "Join Now"
+msgstr "Únete Ahora"
+
+#: app/templates/account/create.html:4 app/templates/index.html:43
+msgid "Create Hive Account"
+msgstr "Crear Cuenta Hive"
 
 #: app/templates/account/buy_credits.html:4
 msgid "Buy Account Creation Credits"
@@ -246,10 +350,6 @@ msgstr "Paquete de 5"
 #: app/templates/account/buy_credits.html:22
 msgid "Onboard your friends and family!"
 msgstr "¡Invita a tus amigos y familia!"
-
-#: app/templates/account/create.html:4
-msgid "Create Hive Account"
-msgstr "Crear Cuenta Hive"
 
 #: app/templates/account/create.html:7
 #, python-format
@@ -322,6 +422,7 @@ msgid "Import Account"
 msgstr "Importar Cuenta"
 
 #: app/templates/account/import.html:55 app/templates/account/verify.html:20
+#: app/templates/auth/change_password.html:36
 #: app/templates/drafts/create.html:33 app/templates/drafts/edit.html:33
 #: app/templates/groups/view.html:146 app/templates/groups/view.html:180
 msgid "Cancel"
@@ -335,7 +436,7 @@ msgstr "Mis Cuentas Hive"
 msgid "Import Existing"
 msgstr "Importar Existente"
 
-#: app/templates/account/list.html:13
+#: app/templates/account/list.html:13 app/templates/admin/groups.html:17
 msgid "Created At"
 msgstr "Creada En"
 
@@ -343,13 +444,14 @@ msgstr "Creada En"
 msgid "Source"
 msgstr "Fuente"
 
-#: app/templates/account/list.html:15 app/templates/groups/view.html:98
+#: app/templates/account/list.html:15 app/templates/admin/groups.html:18
+#: app/templates/admin/users.html:16 app/templates/groups/view.html:98
 msgid "Actions"
 msgstr "Acciones"
 
-#: app/templates/account/list.html:25
+#: app/templates/account/list.html:25 app/templates/admin/logs_hive.html:27
 msgid "Imported"
-msgstr "Importada"
+msgstr "Importado"
 
 #: app/templates/account/list.html:27
 msgid "Created"
@@ -403,6 +505,196 @@ msgstr "Créditos a Agregar"
 msgid "Grant Credits"
 msgstr "Otorgar Créditos"
 
+#: app/templates/admin/dashboard.html:6
+msgid "Admin Dashboard"
+msgstr "Panel de Administración"
+
+#: app/templates/admin/dashboard.html:14
+msgid "Users"
+msgstr "Usuarios"
+
+#: app/templates/admin/dashboard.html:17
+msgid "Registered users"
+msgstr "Usuarios registrados"
+
+#: app/templates/admin/dashboard.html:18 app/templates/admin/dashboard.html:30
+#: app/templates/admin/dashboard.html:42
+msgid "Manage"
+msgstr "Gestionar"
+
+#: app/templates/admin/dashboard.html:26 app/templates/groups/view.html:8
+msgid "Groups"
+msgstr "Grupos"
+
+#: app/templates/admin/dashboard.html:29
+msgid "Active groups"
+msgstr "Grupos activos"
+
+#: app/templates/admin/dashboard.html:38
+msgid "Posts / Drafts"
+msgstr "Publicaciones / Borradores"
+
+#: app/templates/admin/dashboard.html:41
+msgid "Total drafts created"
+msgstr "Total de borradores creados"
+
+#: app/templates/admin/dashboard.html:53
+msgid "Accounts managed"
+msgstr "Cuentas gestionadas"
+
+#: app/templates/admin/dashboard.html:54
+msgid "View Logs"
+msgstr "Ver Registros"
+
+#: app/templates/admin/dashboard.html:63
+msgid "Quick Links"
+msgstr "Enlaces Rápidos"
+
+#: app/templates/admin/dashboard.html:65
+msgid "View PayPal Logs"
+msgstr "Ver Registros PayPal"
+
+#: app/templates/admin/dashboard.html:66
+msgid "View Account Creation Logs"
+msgstr "Ver Registros de Creación de Cuentas"
+
+#: app/templates/admin/group_edit.html:8
+#, python-format
+msgid "Edit Group: %(name)s"
+msgstr "Editar Grupo: %(name)s"
+
+#: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
+msgid "Back"
+msgstr "Volver"
+
+#: app/templates/admin/group_edit.html:34
+msgid "Enter the username of the new owner. Must be a valid registered user."
+msgstr ""
+"Ingresa el usuario del nuevo propietario. Debe ser un usuario registrado "
+"válido."
+
+#: app/templates/admin/groups.html:5
+msgid "Group Manager"
+msgstr "Gestor de Grupos"
+
+#: app/templates/admin/groups.html:6 app/templates/admin/logs_hive.html:6
+#: app/templates/admin/logs_paypal.html:6 app/templates/admin/posts.html:6
+#: app/templates/admin/users.html:6
+msgid "Back to Dashboard"
+msgstr "Volver al Panel"
+
+#: app/templates/admin/groups.html:13
+msgid "Name"
+msgstr "Nombre"
+
+#: app/templates/admin/groups.html:15
+msgid "Owner"
+msgstr "Propietario"
+
+#: app/templates/admin/groups.html:16 app/templates/groups/view.html:22
+msgid "Members"
+msgstr "Miembros"
+
+#: app/templates/admin/groups.html:31 app/templates/admin/users.html:28
+#: app/templates/drafts/view.html:13
+msgid "Edit"
+msgstr "Editar"
+
+#: app/templates/admin/logs_hive.html:5
+msgid "Hive Account Creation Logs"
+msgstr "Registros de Creación de Cuentas Hive"
+
+#: app/templates/admin/logs_hive.html:14
+msgid "Created By"
+msgstr "Creado Por"
+
+#: app/templates/admin/logs_hive.html:15
+msgid "TX ID"
+msgstr "ID de Transacción"
+
+#: app/templates/admin/logs_hive.html:16
+#: app/templates/admin/logs_paypal.html:18
+msgid "Date"
+msgstr "Fecha"
+
+#: app/templates/admin/logs_paypal.html:5
+msgid "PayPal Logs"
+msgstr "Registros de PayPal"
+
+#: app/templates/admin/logs_paypal.html:13
+msgid "User"
+msgstr "Usuario"
+
+#: app/templates/admin/logs_paypal.html:15
+msgid "Amount"
+msgstr "Monto"
+
+#: app/templates/admin/logs_paypal.html:16 app/templates/admin/posts.html:16
+#: app/templates/groups/view.html:96
+msgid "Status"
+msgstr "Estado"
+
+#: app/templates/admin/posts.html:5
+msgid "Post / Draft Manager"
+msgstr "Gestor de Publicaciones / Borradores"
+
+#: app/templates/admin/posts.html:13 app/templates/drafts/create.html:9
+#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:93
+msgid "Title"
+msgstr "Título"
+
+#: app/templates/admin/posts.html:14 app/templates/groups/view.html:94
+msgid "Author"
+msgstr "Autor"
+
+#: app/templates/admin/posts.html:15
+msgid "Group"
+msgstr "Grupo"
+
+#: app/templates/admin/posts.html:17 app/templates/groups/view.html:97
+msgid "Last Updated"
+msgstr "Última Actualización"
+
+#: app/templates/admin/posts.html:18 app/templates/admin/posts.html:37
+#: app/templates/groups/view.html:116
+msgid "View"
+msgstr "Ver"
+
+#: app/templates/admin/posts.html:30 app/templates/groups/view.html:109
+msgid "Draft"
+msgstr "Borrador"
+
+#: app/templates/admin/posts.html:32 app/templates/groups/view.html:111
+msgid "Published"
+msgstr "Publicado"
+
+#: app/templates/admin/user_edit.html:8
+#, python-format
+msgid "Edit User: %(username)s"
+msgstr "Editar Usuario: %(username)s"
+
+#: app/templates/admin/user_edit.html:40
+msgid "Reset Password (Optional)"
+msgstr "Restablecer Contraseña (Opcional)"
+
+#: app/templates/admin/user_edit.html:41
+msgid "Leave blank to keep current password"
+msgstr "Dejar en blanco para mantener la actual"
+
+#: app/templates/admin/user_edit.html:42
+msgid "Entering a value here will immediately reset the user's password."
+msgstr ""
+"Ingresar un valor aquí restablecerá inmediatamente la contraseña del "
+"usuario."
+
+#: app/templates/admin/users.html:5
+msgid "User Manager"
+msgstr "Gestor de Usuarios"
+
+#: app/templates/admin/users.html:31
+msgid "Add Credits"
+msgstr "Agregar Créditos"
+
 #: app/templates/auth/login.html:25
 msgid "New User?"
 msgstr "¿Nuevo Usuario?"
@@ -415,14 +707,13 @@ msgstr "¡Haz clic para registrarte!"
 msgid "Already have an account?"
 msgstr "¿Ya tienes una cuenta?"
 
+#: app/templates/drafts/create.html:4
+msgid "Create Draft"
+msgstr "Crear Borrador"
+
 #: app/templates/drafts/create.html:5
 msgid "For Group:"
 msgstr "Para Grupo:"
-
-#: app/templates/drafts/create.html:9 app/templates/drafts/edit.html:9
-#: app/templates/groups/view.html:93
-msgid "Title"
-msgstr "Título"
 
 #: app/templates/drafts/create.html:14 app/templates/drafts/edit.html:14
 msgid "Post As (Hive Account)"
@@ -453,16 +744,8 @@ msgid "Update Draft"
 msgstr "Actualizar Borrador"
 
 #: app/templates/drafts/view.html:8
-msgid "By"
-msgstr "Por"
-
-#: app/templates/drafts/view.html:8
 msgid "For account:"
 msgstr "Para cuenta:"
-
-#: app/templates/drafts/view.html:13
-msgid "Edit"
-msgstr "Editar"
 
 #: app/templates/drafts/view.html:15
 msgid "Are you sure you want to publish this to Hive? This cannot be undone."
@@ -490,7 +773,7 @@ msgstr "Vista Previa del Encabezado Automático"
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:39 app/templates/main/profile.html:72
+#: app/templates/drafts/view.html:39 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
@@ -507,14 +790,6 @@ msgstr "Vista Previa del Contenido"
 msgid "Create New Group"
 msgstr "Crear Nuevo Grupo"
 
-#: app/templates/groups/create.html:7
-msgid "Group Name"
-msgstr "Nombre del Grupo"
-
-#: app/templates/groups/create.html:11
-msgid "Description"
-msgstr "Descripción"
-
 #: app/templates/groups/create.html:14 app/templates/groups/list.html:6
 msgid "Create Group"
 msgstr "Crear Grupo"
@@ -522,14 +797,6 @@ msgstr "Crear Grupo"
 #: app/templates/groups/list.html:23
 msgid "You are not a member of any groups."
 msgstr "No eres miembro de ningún grupo."
-
-#: app/templates/groups/view.html:8
-msgid "Groups"
-msgstr "Grupos"
-
-#: app/templates/groups/view.html:22
-msgid "Members"
-msgstr "Miembros"
 
 #: app/templates/groups/view.html:24
 msgid "Add"
@@ -575,33 +842,9 @@ msgstr "Borradores / Contenido"
 msgid "Create New Draft"
 msgstr "Crear Nuevo Borrador"
 
-#: app/templates/groups/view.html:94
-msgid "Author"
-msgstr "Autor"
-
 #: app/templates/groups/view.html:95
 msgid "Account"
 msgstr "Cuenta"
-
-#: app/templates/groups/view.html:96
-msgid "Status"
-msgstr "Estado"
-
-#: app/templates/groups/view.html:97
-msgid "Last Updated"
-msgstr "Última Actualización"
-
-#: app/templates/groups/view.html:109
-msgid "Draft"
-msgstr "Borrador"
-
-#: app/templates/groups/view.html:111
-msgid "Published"
-msgstr "Publicado"
-
-#: app/templates/groups/view.html:116
-msgid "View"
-msgstr "Ver"
 
 #: app/templates/groups/view.html:123
 msgid "No drafts yet."
@@ -639,39 +882,107 @@ msgstr "¿Crear una?"
 msgid "Share Account"
 msgstr "Compartir Cuenta"
 
+#: app/templates/hive/post.html:19
+msgid "Hive"
+msgstr "Hive"
+
+#: app/templates/hive/post.html:34
+msgid "Votes"
+msgstr "Votos"
+
+#: app/templates/hive/post.html:43 app/templates/hive/user_blog.html:14
+msgid "Open in PeakD"
+msgstr "Abrir en PeakD"
+
+#: app/templates/hive/post.html:44 app/templates/hive/user_blog.html:15
+msgid "Open in Ecency"
+msgstr "Abrir en Ecency"
+
+#: app/templates/hive/user_blog.html:12
+msgid "View Wallet"
+msgstr "Ver Billetera"
+
+#: app/templates/hive/user_blog.html:13
+msgid "Open in Hive.blog"
+msgstr "Abrir en Hive.blog"
+
+#: app/templates/hive/user_blog.html:25
+msgid "Blog Posts"
+msgstr "Publicaciones de Blog"
+
+#: app/templates/hive/user_blog.html:37
+msgid "Reblogged"
+msgstr "Reblogueado"
+
+#: app/templates/hive/user_blog.html:47
+msgid "Load More"
+msgstr "Cargar Más"
+
+#: app/templates/hive/user_blog.html:51
+msgid "No posts found."
+msgstr "No se encontraron publicaciones."
+
+#: app/templates/hive/wallet.html:7 app/templates/hive/wallet.html:15
+msgid "Wallet"
+msgstr "Billetera"
+
+#: app/templates/hive/wallet.html:41
+msgid "Savings"
+msgstr "Ahorros"
+
+#: app/templates/hive/wallet.html:54
+msgid "Account Info"
+msgstr "Información de la Cuenta"
+
+#: app/templates/hive/wallet.html:57
+msgid "Created Date"
+msgstr "Fecha de Creación"
+
+#: app/templates/hive/wallet.html:61
+msgid "Post Count"
+msgstr "Conteo de Publicaciones"
+
+#: app/templates/hive/wallet.html:65
+msgid "Memo Key"
+msgstr "Clave Memo"
+
 #: app/templates/main/profile.html:8
+msgid "Account Credits"
+msgstr "Créditos de Cuenta"
+
+#: app/templates/main/profile.html:9
+msgid "Buy More"
+msgstr "Comprar Más"
+
+#: app/templates/main/profile.html:19
 msgid "Edit Profile"
 msgstr "Editar Perfil"
 
-#: app/templates/main/profile.html:17
-msgid "Email"
-msgstr "Correo Electrónico"
-
-#: app/templates/main/profile.html:22
+#: app/templates/main/profile.html:33
 msgid "Language / Idioma"
 msgstr "Idioma"
 
-#: app/templates/main/profile.html:31
+#: app/templates/main/profile.html:42
 msgid "First Name"
 msgstr "Nombre"
 
-#: app/templates/main/profile.html:35
+#: app/templates/main/profile.html:46
 msgid "Last Name"
 msgstr "Apellido"
 
-#: app/templates/main/profile.html:41
+#: app/templates/main/profile.html:52
 msgid "Avatar URL"
 msgstr "URL del Avatar"
 
-#: app/templates/main/profile.html:43
+#: app/templates/main/profile.html:54
 msgid "Link to a public image (e.g., from ImageKit, Imgur)."
 msgstr "Enlace a una imagen pública (ej. ImageKit, Imgur)."
 
-#: app/templates/main/profile.html:47
+#: app/templates/main/profile.html:58
 msgid "Bio"
 msgstr "Biografía"
 
-#: app/templates/main/profile.html:49
+#: app/templates/main/profile.html:60
 msgid ""
 "Tell us a bit about yourself. This will appear in the \"About the "
 "Author\" section of your posts."
@@ -679,18 +990,19 @@ msgstr ""
 "Cuéntanos un poco sobre ti. Esto aparecerá en la sección \"Sobre el "
 "Autor\" de tus publicaciones."
 
-#: app/templates/main/profile.html:53
+#: app/templates/main/profile.html:64
 msgid "Save Changes"
 msgstr "Guardar Cambios"
 
-#: app/templates/main/profile.html:62
+#: app/templates/main/profile.html:74
 msgid "Header Preview"
 msgstr "Vista Previa del Encabezado"
 
-#: app/templates/main/profile.html:63
+#: app/templates/main/profile.html:75
 msgid "This is how your bio will look on posts."
 msgstr "Así se verá tu biografía en las publicaciones."
 
-#: app/templates/main/profile.html:74
+#: app/templates/main/profile.html:86
 msgid "Bio not set."
 msgstr "Biografía no configurada."
+

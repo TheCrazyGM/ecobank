@@ -5,6 +5,7 @@ from flask_login import current_user
 
 from app.extensions import babel, db, login_manager, migrate
 from config import Config
+from app.utils.markdown_render import render_markdown
 
 
 def get_locale():
@@ -28,6 +29,9 @@ def create_app(config_class=Config):
     # Ensure i18n helpers are available in templates (Ecofront pattern)
     app.jinja_env.add_extension("jinja2.ext.i18n")
     app.jinja_env.globals.update(_=_, gettext=_, ngettext=ngettext)
+    
+    # Register filters
+    app.jinja_env.filters["markdown"] = render_markdown
 
     login_manager.login_view = "auth.login"
 
@@ -55,5 +59,9 @@ def create_app(config_class=Config):
     from app.drafts import bp as drafts_bp
 
     app.register_blueprint(drafts_bp, url_prefix="/drafts")
+
+    from app.admin import bp as admin_bp
+
+    app.register_blueprint(admin_bp, url_prefix="/admin")
 
     return app

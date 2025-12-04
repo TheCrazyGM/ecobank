@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>{{ _('Group Manager') }}</h2>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">{{ _('Back to Dashboard') }}</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>{{ _('Name') }}</th>
+            <th>{{ _('Description') }}</th>
+            <th>{{ _('Owner') }}</th>
+            <th>{{ _('Members') }}</th>
+            <th>{{ _('Created At') }}</th>
+            <th>{{ _('Actions') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+        <tr>
+            <td>{{ group.id }}</td>
+            <td><a href="{{ url_for('groups.view', id=group.id) }}">{{ group.name }}</a></td>
+            <td>{{ group.description|truncate(50) }}</td>
+            <td>{{ group.owner.username }}</td>
+            <td>{{ group.members|length }}</td>
+            <td>{{ group.created_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_group', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Edit') }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

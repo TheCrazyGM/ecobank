@@ -13,6 +13,13 @@
         background-color: #f8f9fa;
         padding: 15px 0;
       }
+      /* Ensure images in post content don't exceed container width and are centered */
+      .post-content img {
+        max-width: 100%;
+        height: auto;
+        display: block; /* Treat image as a block element */
+        margin: 0 auto; /* Center the image horizontally */
+      }
     </style>
   </head>
   <body class="d-flex flex-column h-100">
@@ -33,12 +40,9 @@
               {% if current_user.is_authenticated %}
                 {% if current_user.username == 'admin' %}
                 <li class="nav-item">
-                    <a class="nav-link text-warning" href="{{ url_for('main.admin_credits') }}">{{ _('Admin') }}</a>
+                    <a class="nav-link text-warning" href="{{ url_for('admin.dashboard') }}">{{ _('Admin') }}</a>
                 </li>
                 {% endif %}
-                <li class="nav-item">
-                    <span class="nav-link text-info">{{ _('Credits') }}: {{ current_user.account_credits }}</span>
-                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('account.buy_credits') }}">{{ _('Buy Credits') }}</a>
                 </li>

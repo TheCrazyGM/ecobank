@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('main.hive_user_blog', username=author) }}">@{{ author }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ title or permlink }}</li>
+  </ol>
+</nav>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h1 class="card-title">{{ post.title }}</h1>
+        <div class="d-flex justify-content-between text-muted small mb-3">
+            <span>
+                {{ _('By') }} <strong><a href="{{ url_for('main.hive_user_blog', username=author) }}">@{{ author }}</a></strong>
+                in {{ community or _('Hive') }}
+            </span>
+            <span>{{ post.created }}</span>
+        </div>
+        
+        <hr>
+        
+        <div class="post-content">
+            {{ post.body | markdown | safe }}
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <span class="badge bg-success me-2">{{ _('Payout:') }} {{ payout or '$0.00' }}</span>
+                <span class="badge bg-primary">{{ active_votes|length }} {{ _('Votes') }}</span>
+            </div>
+            <div>
+                {% for tag in tags %}
+                <span class="badge bg-secondary rounded-pill">#{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <a href="https://peakd.com/@{{ author }}/{{ permlink }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">{{ _('Open in PeakD') }}</a>
+            <a href="https://ecency.com/@{{ author }}/{{ permlink }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">{{ _('Open in Ecency') }}</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+{% endblock %}

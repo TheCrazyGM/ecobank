@@ -16,18 +16,19 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title"><a href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}">{{ post.title }}</a></h5>
+                                    <h5 class="card-title"><a
+                                        href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}">{{
+                                        post.title }}</a></h5>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        {{ _('By') }} <a href="{{ url_for('main.hive_user_blog', username=post.author) }}">@{{ post.author }}</a>
+                                        {{ _('By') }} <a href="{{ url_for('main.hive_user_blog', username=post.author) }}">@{{
+                                            post.author }}</a>
                                         &bull; <small>{{ post.created }}</small>
                                     </h6>
-                                    <p class="card-text small">{{ post.summary }}</p>
+                                    <p class="card-text small text-break">{{ post.summary }}</p>
                                 </div>
-                                <div class="card-footer bg-transparent">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="badge bg-light text-dark border">{{ _('Payout:') }} {{ post.payout or '$0.00' }}</span>
-                                        <a href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}" class="btn btn-sm btn-outline-primary">{{ _('Read More') }}</a>
-                                    </div>
+                                <div class="card-footer bg-transparent text-end">
+                                    <a href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}"
+                                       class="btn btn-sm btn-outline-primary">{{ _('Read More') }}</a>
                                 </div>
                             </div>
                         </div>

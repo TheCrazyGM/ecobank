@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-04 04:14-0500\n"
+"POT-Creation-Date: 2025-12-04 05:45-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "You do not have enough credits to create an account."
 msgstr "No tienes suficientes créditos para crear una cuenta."
 
-#: app/account/routes.py:56 app/account/routes.py:144
+#: app/account/routes.py:56 app/account/routes.py:145
 msgid "Invalid username format."
 msgstr "Formato de usuario inválido."
 
@@ -49,20 +49,20 @@ msgstr ""
 "Clave de encriptación no configurada. No se pueden guardar las "
 "credenciales de forma segura."
 
-#: app/account/routes.py:125
+#: app/account/routes.py:126
 #, python-format
 msgid "Account %(username)s created successfully!"
 msgstr "¡Cuenta %(username)s creada exitosamente!"
 
-#: app/account/routes.py:152
+#: app/account/routes.py:153
 msgid "You have already imported this account."
 msgstr "Ya has importado esta cuenta."
 
-#: app/account/routes.py:160
+#: app/account/routes.py:161
 msgid "Account not found on Hive blockchain."
 msgstr "Cuenta no encontrada en la blockchain Hive."
 
-#: app/account/routes.py:191
+#: app/account/routes.py:193
 msgid ""
 "Master password validation failed: Derived posting key does not match "
 "account."
@@ -70,38 +70,44 @@ msgstr ""
 "Falló la validación de la contraseña maestra: La clave posting derivada "
 "no coincide con la cuenta."
 
-#: app/account/routes.py:198
+#: app/account/routes.py:201
 msgid "Error validating password."
 msgstr "Error validando la contraseña."
 
-#: app/account/routes.py:252
+#: app/account/routes.py:255
 msgid "No valid keys provided that match the account authorities."
 msgstr ""
 "No se proporcionaron claves válidas que coincidan con las autoridades de "
 "la cuenta."
 
-#: app/account/routes.py:259
+#: app/account/routes.py:263
 msgid "Encryption key error."
 msgstr "Error de clave de encriptación."
 
-#: app/account/routes.py:281
+#: app/account/routes.py:286
 #, python-format
 msgid "Account %(username)s imported successfully!"
 msgstr "¡Cuenta %(username)s importada exitosamente!"
 
-#: app/account/routes.py:297
+#: app/account/routes.py:303
 msgid "Unauthorized"
 msgstr "No autorizado"
 
-#: app/account/routes.py:307
+#: app/account/routes.py:313
 msgid "Invalid password"
 msgstr "Contraseña inválida"
 
-#: app/account/routes.py:323
+#: app/account/routes.py:322
+msgid "Encryption key not configured. Cannot decrypt credentials safely."
+msgstr ""
+"Clave de encriptación no configurada. No se pueden descifrar las "
+"credenciales de forma segura."
+
+#: app/account/routes.py:335
 msgid "Failed to decrypt credentials."
 msgstr "Fallo al desencriptar credenciales."
 
-#: app/admin/forms.py:7 app/auth/forms.py:9 app/auth/forms.py:15
+#: app/admin/forms.py:9 app/auth/forms.py:10 app/auth/forms.py:18
 #: app/templates/account/create.html:13 app/templates/account/import.html:9
 #: app/templates/account/list.html:12 app/templates/admin/credits.html:8
 #: app/templates/admin/logs_hive.html:13 app/templates/admin/users.html:13
@@ -109,106 +115,106 @@ msgstr "Fallo al desencriptar credenciales."
 msgid "Username"
 msgstr "Usuario"
 
-#: app/admin/forms.py:8 app/auth/forms.py:16 app/templates/admin/users.html:14
+#: app/admin/forms.py:12 app/auth/forms.py:21 app/templates/admin/users.html:14
 #: app/templates/main/profile.html:28
 msgid "Email"
 msgstr "Correo Electrónico"
 
-#: app/admin/forms.py:9 app/templates/admin/logs_paypal.html:17
+#: app/admin/forms.py:14 app/templates/admin/logs_paypal.html:17
 #: app/templates/admin/users.html:15
 msgid "Credits"
 msgstr "Créditos"
 
-#: app/admin/forms.py:11 app/auth/forms.py:33
+#: app/admin/forms.py:16 app/auth/forms.py:45
 msgid "New Password"
 msgstr "Nueva Contraseña"
 
-#: app/admin/forms.py:12
+#: app/admin/forms.py:17
 msgid "Update User"
 msgstr "Actualizar Usuario"
 
-#: app/admin/forms.py:15 app/templates/groups/create.html:7
+#: app/admin/forms.py:21 app/templates/groups/create.html:7
 msgid "Group Name"
 msgstr "Nombre del Grupo"
 
-#: app/admin/forms.py:16 app/templates/admin/groups.html:14
+#: app/admin/forms.py:22 app/templates/admin/groups.html:14
 #: app/templates/groups/create.html:11
 msgid "Description"
 msgstr "Descripción"
 
-#: app/admin/forms.py:17
+#: app/admin/forms.py:23
 msgid "Owner Username"
 msgstr "Nombre de Usuario del Propietario"
 
-#: app/admin/forms.py:18
+#: app/admin/forms.py:24
 msgid "Update Group"
 msgstr "Actualizar Grupo"
 
-#: app/admin/routes.py:40
+#: app/admin/routes.py:46
 #, python-format
 msgid "Password reset for user %(username)s."
 msgstr "Contraseña restablecida para el usuario %(username)s."
 
-#: app/admin/routes.py:43
+#: app/admin/routes.py:52
 #, python-format
 msgid "User %(username)s updated successfully."
 msgstr "Usuario %(username)s actualizado exitosamente."
 
-#: app/admin/routes.py:54
+#: app/admin/routes.py:67
 #, python-format
 msgid "Credits updated for user %(username)s."
 msgstr "Créditos actualizados para el usuario %(username)s."
 
-#: app/admin/routes.py:81
+#: app/admin/routes.py:99
 #, python-format
 msgid "User %(username)s not found. Owner not changed."
 msgstr "Usuario %(username)s no encontrado. El propietario no fue cambiado."
 
-#: app/admin/routes.py:85
+#: app/admin/routes.py:107
 #, python-format
 msgid "Group %(name)s updated successfully."
 msgstr "Grupo %(name)s actualizado exitosamente."
 
-#: app/auth/forms.py:10 app/auth/forms.py:17
+#: app/auth/forms.py:11 app/auth/forms.py:23
 #: app/templates/account/create.html:18 app/templates/account/verify.html:15
 msgid "Password"
 msgstr "Contraseña"
 
-#: app/auth/forms.py:11
+#: app/auth/forms.py:12
 msgid "Remember Me"
 msgstr "Recuérdame"
 
-#: app/auth/forms.py:12 app/auth/routes.py:43 app/templates/auth/login.html:4
+#: app/auth/forms.py:13 app/auth/routes.py:43 app/templates/auth/login.html:4
 #: app/templates/auth/register.html:39
 msgid "Sign In"
 msgstr "Iniciar Sesión"
 
-#: app/auth/forms.py:18
+#: app/auth/forms.py:25
 msgid "Repeat Password"
 msgstr "Repetir Contraseña"
 
-#: app/auth/forms.py:19 app/auth/routes.py:73
+#: app/auth/forms.py:27 app/auth/routes.py:73
 #: app/templates/auth/register.html:4
 msgid "Register"
 msgstr "Registrarse"
 
-#: app/auth/forms.py:24
+#: app/auth/forms.py:32
 msgid "Please use a different username."
 msgstr "Por favor usa un nombre de usuario diferente."
 
-#: app/auth/forms.py:29
+#: app/auth/forms.py:37
 msgid "Please use a different email address."
 msgstr "Por favor usa una dirección de correo diferente."
 
-#: app/auth/forms.py:32
+#: app/auth/forms.py:42
 msgid "Current Password"
 msgstr "Contraseña Actual"
 
-#: app/auth/forms.py:34
+#: app/auth/forms.py:48
 msgid "Confirm New Password"
 msgstr "Confirmar Nueva Contraseña"
 
-#: app/auth/forms.py:35 app/auth/routes.py:96
+#: app/auth/forms.py:50 app/auth/routes.py:96
 #: app/templates/auth/change_password.html:8 app/templates/main/profile.html:65
 msgid "Change Password"
 msgstr "Cambiar Contraseña"
@@ -229,13 +235,13 @@ msgstr "Contraseña actual inválida."
 msgid "Your password has been updated."
 msgstr "Tu contraseña ha sido actualizada."
 
-#: app/main/routes.py:23
-msgid "My Feed"
-msgstr ""
-
 #: app/main/routes.py:28
+msgid "My Feed"
+msgstr "Mi Feed"
+
+#: app/main/routes.py:35
 msgid "Community Feed"
-msgstr ""
+msgstr "Feed de la Comunidad"
 
 #: app/templates/base.html:6 app/templates/base.html:29
 msgid "Ecobank Development"
@@ -290,7 +296,7 @@ msgid "Your decentralized finance hub."
 msgstr "Tu centro de finanzas descentralizadas."
 
 #: app/templates/drafts/view.html:8 app/templates/hive/post.html:18
-#: app/templates/index.html:21
+#: app/templates/hive/tag_feed.html:19 app/templates/index.html:21
 msgid "By"
 msgstr "Por"
 
@@ -898,6 +904,10 @@ msgstr "Abrir en PeakD"
 msgid "Open in Ecency"
 msgstr "Abrir en Ecency"
 
+#: app/templates/hive/tag_feed.html:6
+msgid "Posts tagged"
+msgstr "Publicaciones etiquetadas"
+
 #: app/templates/hive/user_blog.html:12
 msgid "View Wallet"
 msgstr "Ver Billetera"
@@ -914,13 +924,17 @@ msgstr "Publicaciones de Blog"
 msgid "Reblogged"
 msgstr "Reblogueado"
 
-#: app/templates/hive/user_blog.html:47
+#: app/templates/hive/user_blog.html:47 app/templates/hive/tag_feed.html:25
 msgid "Load More"
 msgstr "Cargar Más"
 
 #: app/templates/hive/user_blog.html:51
 msgid "No posts found."
 msgstr "No se encontraron publicaciones."
+
+#: app/templates/hive/tag_feed.html:29
+msgid "No posts found for this tag."
+msgstr "No se encontraron publicaciones para esta etiqueta."
 
 #: app/templates/hive/wallet.html:7 app/templates/hive/wallet.html:15
 msgid "Wallet"
@@ -1005,4 +1019,3 @@ msgstr "Así se verá tu biografía en las publicaciones."
 #: app/templates/main/profile.html:86
 msgid "Bio not set."
 msgstr "Biografía no configurada."
-

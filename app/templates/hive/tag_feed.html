@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card bg-light border-0">
+                <div class="card-body">
+                    <h2 class="mb-0">{{ _('Posts tagged') }} #{{ tag }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% if entries %}
+                <div class="list-group">
+                    {% for entry in entries %}
+                        <a href="{{ url_for('main.hive_view_post', username=entry.author, permlink=entry.permlink) }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1 text-break">{{ entry.title }}</h5>
+                                <small class="text-muted">{{ entry.created }}</small>
+                            </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <small class="text-muted">{{ _('By') }} @{{ entry.author }}</small>
+                            </div>
+                            <p class="mb-1 text-break">{{ entry.summary }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                {% if next_cursor %}
+                    <div class="mt-3 text-center">
+                        <a href="{{ url_for('main.hive_tag_feed', tag=tag, start_author=next_cursor.author, start_permlink=next_cursor.permlink) }}" class="btn btn-primary">{{ _('Load More') }}</a>
+                    </div>
+                {% endif %}
+            {% else %}
+                <p class="text-muted">{{ _('No posts found for this tag.') }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

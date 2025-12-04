@@ -3,8 +3,11 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 
+from nectar import Hive
 from nectar.account import Account
+from nectar.amount import Amount
 from nectar.comment import Comment
+from nectar.discussions import Discussions, Query
 from nectar.exceptions import ContentDoesNotExistsException
 
 logger = logging.getLogger(__name__)
@@ -165,19 +168,99 @@ def fetch_account_wallet(username: str) -> Optional[Dict[str, Any]]:
     """Fetch account wallet balances and basic info."""
     try:
         acc = Account(username)
+        hive = Hive()
+
+        # Calculate Hive Power (HP) from VESTS
+        vests = Amount(acc.get("vesting_shares"))
+        dgpo = hive.get_dynamic_global_properties()
+        total_vesting_fund = Amount(dgpo["total_vesting_fund_hive"])
+        total_vesting_shares = Amount(dgpo["total_vesting_shares"])
+
+        hive_power = 0.0
+        if total_vesting_shares.amount > 0:
+            hive_power = vests.amount * (
+                total_vesting_fund.amount / total_vesting_shares.amount
+            )
+
         # Account object has dict-like access to chain properties
         return {
             "username": acc.name,
             "hive_balance": str(acc.get("balance")),
             "hbd_balance": str(acc.get("hbd_balance")),
             "vesting_shares": str(acc.get("vesting_shares")),
+            "hive_power": f"{hive_power:.3f} HP",
             "savings_hive": str(acc.get("savings_balance")),
             "savings_hbd": str(acc.get("savings_hbd_balance")),
             "memo_key": acc.get("memo_key"),
             "created": _normalize_ts(acc.get("created")),
             "post_count": acc.get("post_count"),
-            "voting_power": f"{acc.get_voting_power() / 100:.2f}%",
+            # get_voting_power() appears to return percentage (0-100) in this version
+            "voting_power": f"{acc.get_voting_power():.2f}%",
         }
     except Exception as e:
         logger.error(f"Failed to fetch wallet for {username}: {e}")
         return None
+
+
+def fetch_posts_by_tag(
+    tag: str,
+    limit: int = 20,
+    start_author: Optional[str] = None,
+    start_permlink: Optional[str] = None,
+) -> Tuple[List[Dict[str, Any]], Optional[Dict[str, str]]]:
+    """Fetch posts by tag (discussion)."""
+    try:
+        d = Discussions()
+        # Use 'created' to get latest posts in that tag
+        query = Query(limit=limit, tag=tag)
+        if start_author and start_permlink:
+            query["start_author"] = start_author
+            query["start_permlink"] = start_permlink
+
+        posts = list(d.get_discussions("created", query, limit=limit))
+    except Exception as e:
+        logger.error(f"Failed to fetch posts by tag {tag}: {e}")
+        return [], None
+
+    shaped = []
+    next_cursor = None
+
+    if posts:
+        # Prepare cursor from last item
+        last_post = posts[-1]
+        # Only if we got a full page, there might be more
+        if len(posts) == limit:
+            next_cursor = {
+                "author": _safe_get(last_post, "author"),
+                "permlink": _safe_get(last_post, "permlink"),
+            }
+
+    for p in posts:
+        # Filter out the exact start post if it appears (pagination overlap)
+        if start_author and start_permlink:
+            if (
+                _safe_get(p, "author") == start_author
+                and _safe_get(p, "permlink") == start_permlink
+            ):
+                continue
+
+        author = _safe_get(p, "author")
+        permlink = _safe_get(p, "permlink")
+        title = _safe_get(p, "title") or permlink
+        created = _safe_get(p, "created")
+        payout = _safe_get(p, "pending_payout_value")
+        body = _safe_get(p, "body") or ""
+        summary = (body[:180] + "...") if len(body) > 180 else body
+
+        shaped.append(
+            {
+                "author": author,
+                "permlink": permlink,
+                "title": title,
+                "created": _normalize_ts(created),
+                "summary": summary,
+                "payout": str(payout) if payout else None,
+            }
+        )
+
+    return shaped, next_cursor

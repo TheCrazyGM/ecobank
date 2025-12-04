@@ -6,7 +6,12 @@ from flask_login import current_user, login_required
 from app.extensions import db
 from app.main import bp
 from app.models import HiveAccount
-from app.utils.hive import fetch_post, fetch_user_blog, fetch_account_wallet
+from app.utils.hive import (
+    fetch_post,
+    fetch_user_blog,
+    fetch_account_wallet,
+    fetch_posts_by_tag,
+)
 
 
 @bp.route("/")
@@ -110,7 +115,13 @@ def hive_view_post(username, permlink):
             reblogged_by=post.get("reblogged_by"),
             payout=post.get("payout"),
         )
-    abort(404)
+
+
+@bp.route("/<community>/@<username>/<permlink>")
+def hive_view_post_community(community, username, permlink):
+    """Hive post view with community prefix: /<community>/@<username>/<permlink>"""
+    # Logic is identical to standard post view, community param is just for URL structure/SEO
+    return hive_view_post(username, permlink)
 
 
 @bp.route("/@<username>/wallet")
@@ -120,3 +131,18 @@ def hive_view_wallet(username):
     if not wallet:
         abort(404)
     return render_template("hive/wallet.html", wallet=wallet, username=username)
+
+
+@bp.route("/tags/<tag>")
+def hive_tag_feed(tag):
+    """Hive posts by tag: /tags/<tag>"""
+    start_author = request.args.get("start_author")
+    start_permlink = request.args.get("start_permlink")
+
+    entries, next_cursor = fetch_posts_by_tag(
+        tag, limit=20, start_author=start_author, start_permlink=start_permlink
+    )
+
+    return render_template(
+        "hive/tag_feed.html", tag=tag, entries=entries, next_cursor=next_cursor
+    )

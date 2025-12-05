@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EcoBank VERSION\n"
 "Report-Msgid-Bugs-To: support@ecobank.com\n"
-"POT-Creation-Date: 2025-12-05 10:40-0500\n"
+"POT-Creation-Date: 2025-12-05 11:10-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: EcoBank Team <team@ecobank.com>\n"
 "Language: es\n"
@@ -835,7 +835,6 @@ msgid "Amount"
 msgstr "Monto"
 
 #: app/templates/admin/logs_paypal.html:16 app/templates/admin/posts.html:16
-#: app/templates/groups/view.html:123
 msgid "Status"
 msgstr "Estado"
 
@@ -844,11 +843,13 @@ msgid "Post / Draft Manager"
 msgstr "Gestor de Publicaciones / Borradores"
 
 #: app/templates/admin/posts.html:13 app/templates/drafts/create.html:23
-#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:120
+#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:132
+#: app/templates/groups/view.html:165
 msgid "Title"
 msgstr "Título"
 
-#: app/templates/admin/posts.html:14 app/templates/groups/view.html:121
+#: app/templates/admin/posts.html:14 app/templates/groups/view.html:133
+#: app/templates/groups/view.html:166
 msgid "Author"
 msgstr "Autor"
 
@@ -856,20 +857,19 @@ msgstr "Autor"
 msgid "Group"
 msgstr "Grupo"
 
-#: app/templates/admin/posts.html:17 app/templates/groups/view.html:124
+#: app/templates/admin/posts.html:17 app/templates/groups/view.html:135
 msgid "Last Updated"
 msgstr "Última Actualización"
 
 #: app/templates/admin/posts.html:18 app/templates/admin/posts.html:37
-#: app/templates/groups/view.html:143
 msgid "View"
 msgstr "Ver"
 
-#: app/templates/admin/posts.html:30 app/templates/groups/view.html:136
+#: app/templates/admin/posts.html:30
 msgid "Draft"
 msgstr "Borrador"
 
-#: app/templates/admin/posts.html:32 app/templates/groups/view.html:138
+#: app/templates/admin/posts.html:32
 msgid "Published"
 msgstr "Publicado"
 
@@ -1363,3 +1363,4 @@ msgstr "Sin notificaciones."
 
 #~ msgid "No drafts yet."
 #~ msgstr "Aún no hay borradores."
+

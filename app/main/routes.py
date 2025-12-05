@@ -54,6 +54,7 @@ def index():
     # Sort by created date desc (if we can parse it, otherwise simple string sort might be off but okay)
     # The utils return normalized string, so let's try to just show them.
     # Ideal would be parsing ISO format back to datetime for sort.
+    aggregated_posts.sort(key=lambda x: x["created"], reverse=True)
 
     return render_template("index.html", posts=aggregated_posts, feed_title=feed_title)
 

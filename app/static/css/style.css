@@ -1,100 +1,110 @@
 /* IMPORT FONTS */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap");
 
 :root {
-    /* Palette Overrides */
-    --bs-primary: #2A5D48;       /* Deep Forest Green */
-    --bs-primary-rgb: 42, 93, 72;
+  /* Palette Overrides */
+  --bs-primary: #2a5d48; /* Deep Forest Green */
+  --bs-primary-rgb: 42, 93, 72;
 
-    --bs-secondary: #588157;     /* Muted Sage */
-    --bs-secondary-rgb: 88, 129, 87;
+  --bs-secondary: #588157; /* Muted Sage */
+  --bs-secondary-rgb: 88, 129, 87;
 
-    --bs-success: #40916C;       /* Vibrant Leaf */
-    --bs-danger: #BC4749;        /* Terracotta */
-    --bs-info: #4A8E8D;          /* Teal-ish for Info */
+  --bs-success: #40916c; /* Vibrant Leaf */
+  --bs-danger: #bc4749; /* Terracotta */
+  --bs-info: #4a8e8d; /* Teal-ish for Info */
 
-    --bs-body-bg: #FDFCF5;       /* Warm Parchment */
-    --bs-body-color: #2D312F;    /* Charcoal Text */
+  --bs-body-bg: #fdfcf5; /* Warm Parchment */
+  --bs-body-color: #2d312f; /* Charcoal Text */
 
-    /* Component Roundedness */
-    --bs-border-radius: 0.5rem;  /* Softer corners */
-    --bs-border-radius-lg: 0.75rem;
-    --bs-border-radius-sm: 0.375rem;
+  /* Component Roundedness */
+  --bs-border-radius: 0.5rem; /* Softer corners */
+  --bs-border-radius-lg: 0.75rem;
+  --bs-border-radius-sm: 0.375rem;
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    color: var(--bs-body-color);
-    background-color: var(--bs-body-bg);
+  font-family: "Open Sans", sans-serif;
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
 }
 
-h1, h2, h3, h4, h5, h6, .navbar-brand {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    color: var(--bs-primary); /* Headers in Green */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  color: var(--bs-primary); /* Headers in Green */
 }
 
 .navbar-dark .navbar-brand {
-    color: #fff !important;
+  color: #fff !important;
 }
 
 /* Navbar Tweaks */
 .navbar-dark.bg-dark {
-    background-color: var(--bs-primary) !important; /* Override black navbar with Green */
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); /* Subtle shadow */
+  background-color: var(
+    --bs-primary
+  ) !important; /* Override black navbar with Green */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 /* Card Tweaks to make them pop off the cream background */
 .card {
-    border: none;
-    box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.08); /* Green-tinted shadow */
-    background-color: #ffffff; /* Explicitly white for contrast */
+  border: none;
+  box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.08); /* Green-tinted shadow */
+  background-color: #ffffff; /* Explicitly white for contrast */
 }
 
 /* Main Container Padding */
 main > .container {
-    padding: 60px 15px 0;
+  padding: 60px 15px 0;
 }
 
 /* Footer */
 .footer {
-    background-color: var(--bs-body-bg);
-    padding: 15px 0;
+  background-color: var(--bs-body-bg);
+  padding: 15px 0;
 }
 
 /* Post Content & Editor Preview Images */
 /* Ensure images in post content don't exceed container width and are centered */
-.post-content img, .editor-preview-side img {
-    max-width: 100%;
-    height: auto;
-    display: block; /* Treat image as a block element */
-    margin: 0 auto; /* Center the image horizontally */
+.post-content img,
+.editor-preview-side img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Treat image as a block element */
+  margin: 0 auto; /* Center the image horizontally */
 }
 
 /* EasyMDE Fullscreen Z-Index Fix */
 .EasyMDEContainer .CodeMirror-fullscreen {
-    z-index: 1060 !important; /* Higher than Bootstrap navbar (1030) */
+  z-index: 1060 !important; /* Higher than Bootstrap navbar (1030) */
 }
 .editor-toolbar.fullscreen {
-    z-index: 1060 !important;
+  z-index: 1060 !important;
 }
 .editor-preview-side {
-    z-index: 1061 !important;
+  z-index: 1061 !important;
 }
 
 /* Constraint preview width in fullscreen */
 .CodeMirror-fullscreen .editor-preview-side {
-    max-width: 50%;
+  max-width: 50%;
 }
 
 /* Draft View - Author Avatar */
 .author-avatar {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 
 /* Draft History - Summary Pointer */
 .history-summary {
-    cursor: pointer;
+  cursor: pointer;
 }
+

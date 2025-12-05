@@ -1,5 +1,34 @@
 {% extends "base.html" %}
 
+{% block title %}{{ post.title }} | Ecobank{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ post.summary|default(post.title) }}">
+    <meta name="author" content="{{ post.author }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{{ post.title }}">
+    <meta property="og:description" content="{{ post.summary|default(post.title) }}">
+    {% if post.thumbnail %}
+        <meta property="og:image" content="{{ post.thumbnail }}">
+    {% else %}
+        <meta property="og:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+    {% endif %}
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="{{ post.title }}">
+    <meta property="twitter:description" content="{{ post.summary|default(post.title) }}">
+    {% if post.thumbnail %}
+        <meta property="twitter:image" content="{{ post.thumbnail }}">
+    {% else %}
+        <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
 

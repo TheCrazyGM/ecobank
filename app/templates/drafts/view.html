@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}{{ draft.title }} (Draft) | Ecobank{% endblock %}
+
+{% block meta %}
+    <meta name="robots" content="noindex">
+    <meta name="description" content="{{ _('Preview draft: %(title)s', title=draft.title) }}">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[Draft] {{ draft.title }}">
+    <meta property="og:description" content="{{ _('This is a draft post on Ecobank.') }}">
+{% endblock %}
+
 {% block content %}
     <div class="row mb-3">
         <div class="col-md-8">

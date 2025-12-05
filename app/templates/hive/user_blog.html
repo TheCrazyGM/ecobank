@@ -1,5 +1,37 @@
 {% extends "base.html" %}
 
+{% block title %}{{ profile.display_name or username }} (@{{ username }}) | Ecobank{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ profile.about or _('Check out %(user)s\'s profile on Ecobank.', user=username) }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{{ profile.display_name or username }} (@{{ username }})">
+    <meta property="og:description" content="{{ profile.about or _('Check out %(user)s\'s profile on Ecobank.', user=username) }}">
+    {% if profile.cover_image %}
+        <meta property="og:image" content="{{ profile.cover_image }}">
+    {% elif profile.profile_image %}
+        <meta property="og:image" content="{{ profile.profile_image }}">
+    {% else %}
+        <meta property="og:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+    {% endif %}
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="{{ profile.display_name or username }} (@{{ username }})">
+    <meta property="twitter:description" content="{{ profile.about or _('Check out %(user)s\'s profile on Ecobank.', user=username) }}">
+    {% if profile.cover_image %}
+        <meta property="twitter:image" content="{{ profile.cover_image }}">
+    {% elif profile.profile_image %}
+        <meta property="twitter:image" content="{{ profile.profile_image }}">
+    {% else %}
+        <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <!-- Profile Header -->
     <div class="card mb-4 border-0 shadow-sm overflow-hidden">

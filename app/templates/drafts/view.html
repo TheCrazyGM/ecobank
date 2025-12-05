@@ -46,7 +46,7 @@
             <table>
                 <tr>
                     <td>
-                        <center><img src="{{ author.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
+                        <center><img src="{{ author.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}" class="author-avatar"/></center>
                     </td>
                     <td>
                         <span><h4>{{ _('About the Author') }}</h4></span>

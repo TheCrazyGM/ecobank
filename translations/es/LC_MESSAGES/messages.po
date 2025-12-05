@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-05 05:07-0500\n"
+"POT-Creation-Date: 2025-12-05 05:06-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -106,39 +106,39 @@ msgstr ""
 msgid "Encryption key error."
 msgstr "Error de clave de encriptación."
 
-#: app/account/routes.py:335
+#: app/account/routes.py:331
 #, python-format
 msgid "Account %(username)s imported successfully!"
 msgstr "¡Cuenta %(username)s importada exitosamente!"
 
-#: app/account/routes.py:352 app/account/routes.py:396
+#: app/account/routes.py:348 app/account/routes.py:392
 msgid "Unauthorized"
 msgstr "No autorizado"
 
-#: app/account/routes.py:362
+#: app/account/routes.py:358
 msgid "Invalid password"
 msgstr "Contraseña inválida"
 
-#: app/account/routes.py:371
+#: app/account/routes.py:367
 msgid "Encryption key not configured. Cannot decrypt credentials safely."
 msgstr ""
 "Clave de encriptación no configurada. No se pueden descifrar las "
 "credenciales de forma segura."
 
-#: app/account/routes.py:384
+#: app/account/routes.py:380
 msgid "Failed to decrypt credentials."
 msgstr "Fallo al desencriptar credenciales."
 
-#: app/account/routes.py:402
+#: app/account/routes.py:398
 #, python-format
 msgid ""
 "Hive account %(username)s has been removed from EcoBank. Remember to keep"
 " your keys safe!"
-msgstr ""
+msgstr "La cuenta Hive %(username)s ha sido eliminada de EcoBank. ¡Recuerda mantener tus claves a salvo!"
 
-#: app/account/routes.py:406
+#: app/account/routes.py:402
 msgid "Failed to remove Hive account from EcoBank. Please try again."
-msgstr ""
+msgstr "No se pudo eliminar la cuenta Hive de EcoBank. Por favor inténtalo de nuevo."
 
 #: app/admin/forms.py:9 app/auth/forms.py:10 app/auth/forms.py:18
 #: app/templates/account/create.html:13 app/templates/account/import.html:9
@@ -253,13 +253,12 @@ msgid "Change Password"
 msgstr "Cambiar Contraseña"
 
 #: app/auth/forms.py:55 app/auth/forms.py:62
-#, fuzzy
 msgid "Request Password Reset"
-msgstr "Repetir Contraseña"
+msgstr "Solicitar Restablecimiento de Contraseña"
 
 #: app/auth/routes.py:23
 msgid "[EcoBank] Verify Your Email"
-msgstr ""
+msgstr "[EcoBank] Verifica Tu Correo Electrónico"
 
 #: app/auth/routes.py:44
 msgid "Invalid username or password"
@@ -267,24 +266,21 @@ msgstr "Usuario o contraseña inválidos"
 
 #: app/auth/routes.py:63
 msgid "Verification link is invalid or has expired."
-msgstr ""
+msgstr "El enlace de verificación es inválido o ha expirado."
 
 #: app/auth/routes.py:67
-#, fuzzy
 msgid "Account already verified."
-msgstr "Creador de cuentas no configurado."
+msgstr "Cuenta ya verificada."
 
 #: app/auth/routes.py:71
-#, fuzzy
 msgid "Your account has been verified!"
-msgstr "Tu contraseña ha sido actualizada."
+msgstr "¡Tu cuenta ha sido verificada!"
 
 #: app/auth/routes.py:98
-#, fuzzy
 msgid ""
 "Congratulations, you are now a registered user! Please check your email "
 "to verify your account."
-msgstr "¡Felicidades, ahora eres un usuario registrado!"
+msgstr "¡Felicidades, ahora eres un usuario registrado! Por favor revisa tu correo para verificar tu cuenta."
 
 #: app/auth/routes.py:112
 msgid "Invalid current password."
@@ -319,9 +315,8 @@ msgid "Buy Credits"
 msgstr "Comprar Créditos"
 
 #: app/templates/base.html:70 app/templates/notifications/index.html:5
-#, fuzzy
 msgid "Notifications"
-msgstr "Acciones"
+msgstr "Notificaciones"
 
 #: app/templates/admin/dashboard.html:50 app/templates/base.html:82
 msgid "Hive Accounts"
@@ -557,16 +552,15 @@ msgstr "Volver a la Lista"
 
 #: app/templates/account/view.html:26
 msgid "Download Keys"
-msgstr ""
+msgstr "Descargar Claves"
 
 #: app/templates/account/view.html:29
 msgid "Delete Account from EcoBank"
-msgstr ""
+msgstr "Eliminar Cuenta de EcoBank"
 
 #: app/templates/account/view.html:36
-#, fuzzy
 msgid "Confirm Account Deletion"
-msgstr "Ver Registros de Creación de Cuentas"
+msgstr "Confirmar Eliminación de Cuenta"
 
 #: app/templates/account/view.html:40
 msgid ""
@@ -574,31 +568,31 @@ msgid ""
 "EcoBank's management. The account will remain on the Hive blockchain, but"
 " EcoBank will no longer store your keys or manage it. You MUST download "
 "your keys if you wish to retain access to this account."
-msgstr ""
+msgstr "ADVERTENCIA: Esta acción eliminará permanentemente esta cuenta Hive de la gestión de EcoBank. La cuenta permanecerá en la blockchain Hive, pero EcoBank ya no almacenará tus claves ni la gestionará. DEBES descargar tus claves si deseas conservar el acceso a esta cuenta."
 
 #: app/templates/account/view.html:44
 msgid ""
 "I have downloaded all my keys and understand EcoBank will no longer store"
 " them."
-msgstr ""
+msgstr "He descargado todas mis claves y entiendo que EcoBank ya no las almacenará."
 
 #: app/templates/account/view.html:50
 msgid ""
 "I understand this action is permanent and EcoBank cannot recover my "
 "account."
-msgstr ""
+msgstr "Entiendo que esta acción es permanente y EcoBank no puede recuperar mi cuenta."
 
 #: app/templates/account/view.html:56
 msgid "Delete Permanently"
-msgstr ""
+msgstr "Eliminar Permanentemente"
 
 #: app/templates/account/view.html:113
 msgid "Failed to delete account. Please try again."
-msgstr ""
+msgstr "Fallo al eliminar la cuenta. Por favor inténtalo de nuevo."
 
 #: app/templates/account/view.html:120
 msgid "An error occurred. Please try again."
-msgstr ""
+msgstr "Ocurrió un error. Por favor inténtalo de nuevo."
 
 #: app/templates/admin/credits.html:4
 msgid "Admin: Grant Credits"
@@ -722,7 +716,7 @@ msgstr "Cuentas Reclamadas Pendientes:"
 
 #: app/templates/admin/logs_hive.html:33
 msgid "Claim New Ticket (Uses RC)"
-msgstr ""
+msgstr "Reclamar Nuevo Ticket (Usa CR)"
 
 #: app/templates/admin/logs_hive.html:41
 msgid "Active Delegations (RC Support)"
@@ -836,9 +830,8 @@ msgid "Add Credits"
 msgstr "Agregar Créditos"
 
 #: app/templates/auth/login.html:25
-#, fuzzy
 msgid "Forgot Password?"
-msgstr "Repetir Contraseña"
+msgstr "¿Olvidaste tu contraseña?"
 
 #: app/templates/auth/login.html:27
 msgid "New User?"
@@ -854,9 +847,8 @@ msgstr "¿Ya tienes una cuenta?"
 
 #: app/templates/auth/reset_password.html:4
 #: app/templates/auth/reset_password_request.html:4
-#, fuzzy
 msgid "Reset Password"
-msgstr "Repetir Contraseña"
+msgstr "Restablecer Contraseña"
 
 #: app/templates/drafts/create.html:4
 msgid "Create Draft"
@@ -900,45 +892,43 @@ msgstr "Actualizar Borrador"
 
 #: app/templates/drafts/history.html:5
 msgid "Version History"
-msgstr ""
+msgstr "Historial de Versiones"
 
 #: app/templates/drafts/history.html:6
-#, fuzzy
 msgid "Back to Draft"
-msgstr "Volver a la Lista"
+msgstr "Volver al Borrador"
 
 #: app/templates/drafts/history.html:14
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #: app/templates/drafts/history.html:18
 msgid "Tags:"
-msgstr ""
+msgstr "Etiquetas:"
 
 #: app/templates/drafts/history.html:20
 msgid "Restore this version? Current content will be saved as a new version."
-msgstr ""
+msgstr "¿Restaurar esta versión? El contenido actual se guardará como una nueva versión."
 
 #: app/templates/drafts/history.html:21
-#, fuzzy
 msgid "Restore"
-msgstr "Registrarse"
+msgstr "Restaurar"
 
 #: app/templates/drafts/history.html:25
-#, fuzzy
 msgid "Show Content"
-msgstr "Borradores / Contenido"
+msgstr "Mostrar Contenido"
 
 #: app/templates/drafts/history.html:32
 msgid "No history available."
-msgstr ""
+msgstr "No hay historial disponible."
 
 #: app/templates/drafts/view.html:8
 msgid "For account:"
 msgstr "Para cuenta:"
 
 #: app/templates/drafts/view.html:19
-msgid "Are you sure you want to publish this to Hive? This cannot be undone."
+msgid ""
+"Are you sure you want to publish this to Hive? This cannot be undone."
 msgstr ""
 "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
 "deshacer."
@@ -961,7 +951,7 @@ msgstr "Ver en Hive"
 
 #: app/templates/drafts/view.html:33
 msgid "History"
-msgstr ""
+msgstr "Historial"
 
 #: app/templates/drafts/view.html:44
 msgid "Automatic Header Preview"
@@ -1218,12 +1208,11 @@ msgstr "Biografía no configurada."
 
 #: app/templates/notifications/index.html:6
 msgid "Mark All Read"
-msgstr ""
+msgstr "Marcar Todo como Leído"
 
 #: app/templates/notifications/index.html:20
 msgid "No notifications."
-msgstr ""
+msgstr "Sin notificaciones."
 
 #~ msgid "Owner Key (Private)"
 #~ msgstr "Clave Owner (Privada)"
-

@@ -16,15 +16,27 @@
             {% if entries %}
                 <div class="list-group">
                     {% for entry in entries %}
-                        <a href="{{ url_for('main.hive_view_post', username=entry.author, permlink=entry.permlink) }}" class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 text-break">{{ entry.title }}</h5>
-                                <small class="text-muted">{{ entry.created }}</small>
+                        <a href="{{ url_for('main.hive_view_post', username=entry.author, permlink=entry.permlink) }}" class="list-group-item list-group-item-action p-3">
+                            <div class="row">
+                                {% if entry.thumbnail %}
+                                    <div class="col-md-3 mb-3 mb-md-0">
+                                        <img src="{{ entry.thumbnail }}" class="img-fluid rounded" loading="lazy" style="object-fit: cover; height: 100%; max-height: 150px; width: 100%;">
+                                    </div>
+                                    <div class="col-md-9">
+                                {% else %}
+                                    <div class="col-md-12">
+                                {% endif %}
+
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1 text-break fw-bold">{{ entry.title }}</h5>
+                                    <small class="text-muted">{{ entry.created }}</small>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between mb-2">
+                                    <small class="text-muted">{{ _('By') }} @{{ entry.author }}</small>
+                                </div>
+                                <p class="mb-1 text-break">{{ entry.summary }}</p>
                             </div>
-                            <div class="d-flex w-100 justify-content-between">
-                                <small class="text-muted">{{ _('By') }} @{{ entry.author }}</small>
-                            </div>
-                            <p class="mb-1 text-break">{{ entry.summary }}</p>
+                        </div>
                         </a>
                     {% endfor %}
                 </div>

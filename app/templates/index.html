@@ -14,7 +14,10 @@
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     {% for post in posts %}
                         <div class="col">
-                            <div class="card h-100">
+                            <div class="card h-100 shadow-sm">
+                                {% if post.thumbnail %}
+                                    <img src="{{ post.thumbnail }}" class="card-img-top" alt="{{ post.title }}" loading="lazy" style="height: 200px; object-fit: cover;">
+                                {% endif %}
                                 <div class="card-body">
                                     <h5 class="card-title"><a
                                         href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}">{{

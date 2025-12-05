@@ -6,16 +6,16 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from nectar import Hive
 from nectar.account import Account
-
 from nectar.amount import Amount
 from nectar.comment import Comment
 from nectar.discussions import Discussions, Query
 from nectar.exceptions import ContentDoesNotExistsException
 
+from app.utils.markdown_render import render_markdown_preview
+
 logger = logging.getLogger(__name__)
 
 
-# Force reload check
 def _extract_val(obj: Any, key: str, default=None) -> Any:
     """Safely extract value from dict or object."""
     if obj is None:
@@ -62,12 +62,6 @@ def fetch_user_profile(username: str) -> Optional[Dict[str, Any]]:
 
         profile = meta.get("profile", {})
 
-        # Stats (followers/following need separate calls usually, but Account might have counts)
-        # Nectar Account object keys for counts:
-        # 'followers_count' / 'following_count' might require extra API calls or plugins.
-        # Standard 'get_accounts' response doesn't always have follow counts directly.
-        # We will stick to basic account info available on the struct for now.
-
         return {
             "username": acc.name,
             "display_name": profile.get("name", acc.name),
@@ -108,11 +102,9 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
     """
     try:
         c = Comment(f"@{author}/{permlink}")
-        # Ensure the object is hydrated; Comment typically lazy-loads from chain.
         try:
             c.refresh()  # may raise if not exists
         except Exception:
-            # Some nectar versions auto-fetch; ignore refresh errors if data present
             pass
     except ContentDoesNotExistsException:
         return None
@@ -193,7 +185,13 @@ def fetch_user_blog(
     entries = []
     try:
         # Use specific nodes to ensure connectivity
-        hive = Hive()
+        hive = Hive(
+            node=[
+                "https://api.hive.blog",
+                "https://api.deathwing.me",
+                "https://anyx.io",
+            ]
+        )
         acc = Account(username.strip(), blockchain_instance=hive)
 
         # Use get_account_posts (Bridge API)
@@ -251,7 +249,21 @@ def fetch_user_blog(
         body = _extract_val(e, "body") or ""
         summary = None
         if body:
-            summary = (body[:180] + "...") if len(body) > 180 else body
+            summary = render_markdown_preview(body, limit=180)
+
+        # Extract thumbnail
+        json_meta = _extract_val(e, "json_metadata") or {}
+        if isinstance(json_meta, str):
+            try:
+                json_meta = json.loads(json_meta)
+            except Exception:
+                json_meta = {}
+
+        thumbnail = None
+        if isinstance(json_meta, dict):
+            images = json_meta.get("image")
+            if isinstance(images, list) and images:
+                thumbnail = images[0]
 
         shaped.append(
             {
@@ -260,6 +272,7 @@ def fetch_user_blog(
                 "title": title,
                 "created": _normalize_ts(created),
                 "summary": summary,
+                "thumbnail": thumbnail,
                 "payout": str(payout) if payout else None,
                 "reblogged_on": "yes" if is_reblog else None,
             }
@@ -365,7 +378,21 @@ def fetch_posts_by_tag(
         created = _extract_val(p, "created")
         payout = _extract_val(p, "pending_payout_value")
         body = _extract_val(p, "body") or ""
-        summary = (body[:180] + "...") if len(body) > 180 else body
+        summary = render_markdown_preview(body, limit=180)
+
+        # Extract thumbnail
+        json_meta = _extract_val(p, "json_metadata") or {}
+        if isinstance(json_meta, str):
+            try:
+                json_meta = json.loads(json_meta)
+            except Exception:
+                json_meta = {}
+
+        thumbnail = None
+        if isinstance(json_meta, dict):
+            images = json_meta.get("image")
+            if isinstance(images, list) and images:
+                thumbnail = images[0]
 
         shaped.append(
             {
@@ -374,6 +401,7 @@ def fetch_posts_by_tag(
                 "title": title,
                 "created": _normalize_ts(created),
                 "summary": summary,
+                "thumbnail": thumbnail,
                 "payout": str(payout) if payout else None,
             }
         )

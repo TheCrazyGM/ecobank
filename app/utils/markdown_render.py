@@ -150,6 +150,15 @@ def render_markdown(text: Any) -> Markup:
     try:
         md_src = _preprocess_markdown(str(text))
 
+        if _mdformat is not None:
+            try:
+                # Normalize markdown structure (fixes lists, headers, spacing)
+                # Use 'gfm' extension if available for tables/strikethrough
+                md_src = _mdformat.text(md_src, extensions={"gfm"})
+            except Exception:
+                # If mdformat fails (e.g. syntax too broken), ignore and proceed with raw preprocessed text
+                pass
+
         if _markdown is not None:
             html = _markdown.markdown(
                 md_src,

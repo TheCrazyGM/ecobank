@@ -66,41 +66,80 @@ def generate_permlink(title):
     )
 
 
+@bp.route("/create", defaults={"group_id": None}, methods=["GET", "POST"])
 @bp.route("/create/<int:group_id>", methods=["GET", "POST"])
 @login_required
 def create(group_id):
-    group = Group.query.get_or_404(group_id)
+    group = None
+    user_groups = []
+    hive_accounts = []
 
-    # Check membership
-    membership = GroupMember.query.filter_by(
-        group_id=group_id, user_id=current_user.id
-    ).first()
-    if not membership:
-        flash("Unauthorized", "danger")
-        return redirect(url_for("groups.list_groups"))
+    if group_id:
+        group = Group.query.get_or_404(group_id)
+        # Check membership
+        membership = GroupMember.query.filter_by(
+            group_id=group_id, user_id=current_user.id
+        ).first()
+        if not membership:
+            flash("Unauthorized", "danger")
+            return redirect(url_for("groups.list_groups"))
 
-    # Get available shared accounts
-    resources = GroupResource.query.filter_by(
-        group_id=group_id, resource_type="hive_account"
-    ).all()
-    hive_accounts = [r.resource_id for r in resources]
+        # Get available shared accounts for this group
+        resources = GroupResource.query.filter_by(
+            group_id=group_id, resource_type="hive_account"
+        ).all()
+        hive_accounts = [r.resource_id for r in resources]
+    else:
+        # No group specified, get all groups user is a member of
+        memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
+        user_groups = [m.group for m in memberships]
+        if not user_groups:
+            flash("You must belong to a group to create a draft.", "warning")
+            return redirect(url_for("groups.create_group"))
+
+        # If only one group, auto-select it
+        if len(user_groups) == 1:
+            return redirect(url_for("drafts.create", group_id=user_groups[0].id))
 
     if request.method == "POST":
+        # If group wasn't in URL, it must be in form
+        if not group_id:
+            try:
+                group_id = int(request.form.get("group_id"))
+                group = Group.query.get(group_id)
+                # Re-verify membership for the posted group
+                membership = GroupMember.query.filter_by(
+                    group_id=group_id, user_id=current_user.id
+                ).first()
+                if not membership:
+                    abort(403)
+            except (ValueError, TypeError):
+                flash("Invalid group selected", "danger")
+                return redirect(url_for("drafts.create"))
+
         title = request.form.get("title")
         body = request.form.get("body")
         tags = request.form.get("tags")
         hive_account = request.form.get("hive_account")
 
-        # Let's assume we store it as a JSON string.
-        # beneficiaries = request.form.get("beneficiaries", "[]") # Removed
-
         if not title or not body or not hive_account:
             flash("Title, body and hive account are required", "danger")
-            return redirect(url_for("drafts.create", group_id=group_id))
+            if group:
+                return redirect(url_for("drafts.create", group_id=group.id))
+            return redirect(url_for("drafts.create"))
 
-        if hive_account not in hive_accounts:
-            flash("Invalid hive account selected", "danger")
-            return redirect(url_for("drafts.create", group_id=group_id))
+        # Verify hive account belongs to group (if group was passed or selected)
+        # If selected from dropdown, we need to re-fetch resources to verify
+        resources = GroupResource.query.filter_by(
+            group_id=group_id, resource_type="hive_account"
+        ).all()
+        valid_accounts = [r.resource_id for r in resources]
+
+        if hive_account not in valid_accounts:
+            flash("Invalid hive account selected for this group", "danger")
+            if group:
+                return redirect(url_for("drafts.create", group_id=group.id))
+            return redirect(url_for("drafts.create"))
 
         draft = Draft(
             group_id=group_id,
@@ -109,7 +148,6 @@ def create(group_id):
             title=title,
             body=body,
             tags=tags,
-            # beneficiaries=beneficiaries, # Removed
             permlink=generate_permlink(title),
             status="draft",
         )
@@ -123,7 +161,10 @@ def create(group_id):
         return redirect(url_for("drafts.view", draft_id=draft.id))
 
     return render_template(
-        "drafts/create.html", group=group, hive_accounts=hive_accounts
+        "drafts/create.html",
+        group=group,
+        user_groups=user_groups,
+        hive_accounts=hive_accounts,
     )
 
 

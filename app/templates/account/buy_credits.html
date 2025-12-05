@@ -5,26 +5,47 @@
     <p class="lead">{{ _('Each credit allows you to create one Hive account.') }}</p>
     <p><strong>{{ _('Price:') }}</strong> ${{ "%.2f"|format(price) }} USD {{ _('per credit') }}</p>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">{{ _('Single Credit') }}</h5>
-                    <p class="card-text">{{ _('Perfect for creating your first account.') }}</p>
-                    <div id="paypal-button-container-1"></div>
+    {% if hive_claim_tickets == 0 %}
+        <div class="alert alert-warning" role="alert">
+            {{ _('Currently, no account creation tickets are available. Please check back later!') }}
+        </div>
+    {% elif hive_claim_tickets < 5 %}
+        <div class="alert alert-info" role="alert">
+            {{ _('Only single account creation tickets are available at the moment. More will be available soon!') }}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ _('Single Credit') }}</h5>
+                        <p class="card-text">{{ _('Perfect for creating your first account.') }}</p>
+                        <div id="paypal-button-container-1"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">{{ _('Pack of 5') }}</h5>
-                    <p class="card-text">{{ _('Onboard your friends and family!') }}</p>
-                    <div id="paypal-button-container-5"></div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ _('Single Credit') }}</h5>
+                        <p class="card-text">{{ _('Perfect for creating your first account.') }}</p>
+                        <div id="paypal-button-container-1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ _('Pack of 5') }}</h5>
+                        <p class="card-text">{{ _('Onboard your friends and family!') }}</p>
+                        <div id="paypal-button-container-5"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     <script src="https://www.paypal.com/sdk/js?client-id={{ client_id }}&currency=USD"></script>
     <script>
@@ -63,7 +84,16 @@
             }).render('#' + containerId);
         }
 
-        setupPaypal('paypal-button-container-1', 1);
-        setupPaypal('paypal-button-container-5', 5);
+        // Only setup PayPal buttons if their containers exist
+        {% if hive_claim_tickets >= 1 %}
+            if (document.getElementById('paypal-button-container-1')) {
+                setupPaypal('paypal-button-container-1', 1);
+            }
+        {% endif %}
+        {% if hive_claim_tickets >= 5 %}
+            if (document.getElementById('paypal-button-container-5')) {
+                setupPaypal('paypal-button-container-5', 5);
+            }
+        {% endif %}
     </script>
 {% endblock %}

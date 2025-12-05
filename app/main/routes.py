@@ -9,6 +9,7 @@ from app.models import HiveAccount
 from app.utils.hive import (
     fetch_post,
     fetch_user_blog,
+    fetch_user_profile,
     fetch_account_wallet,
     fetch_posts_by_tag,
 )
@@ -84,18 +85,57 @@ def profile():
 
 @bp.route("/@<username>")
 def hive_user_blog(username):
-    """Hive user blog roll: /@<username>"""
-    start = request.args.get("start", type=int)
-    entries, next_cursor = fetch_user_blog(username, limit=20, start=start)
-    # If user followed an old/bad cursor and nothing loads, fall back to first page
-    if start is not None and not entries:
-        return redirect(url_for("main.hive_user_blog", username=username))
+    """Hive user blog roll (Posts Only): /@<username>"""
+    start_author = request.args.get("start_author")
+    start_permlink = request.args.get("start_permlink")
+
+    profile = fetch_user_profile(username)
+    if not profile:
+        abort(404)
+
+    entries, next_cursor = fetch_user_blog(
+        username,
+        limit=20,
+        start_author=start_author,
+        start_permlink=start_permlink,
+        mode="posts",
+    )
 
     return render_template(
         "hive/user_blog.html",
         username=username,
+        profile=profile,
         entries=entries,
         next_cursor=next_cursor,
+        current_tab="posts",
+    )
+
+
+@bp.route("/@<username>/feed")
+def hive_user_reblogs(username):
+    """Hive user reblogs (Feed): /@<username>/feed"""
+    start_author = request.args.get("start_author")
+    start_permlink = request.args.get("start_permlink")
+
+    profile = fetch_user_profile(username)
+    if not profile:
+        abort(404)
+
+    entries, next_cursor = fetch_user_blog(
+        username,
+        limit=20,
+        start_author=start_author,
+        start_permlink=start_permlink,
+        mode="reblogs",
+    )
+
+    return render_template(
+        "hive/user_blog.html",
+        username=username,
+        profile=profile,
+        entries=entries,
+        next_cursor=next_cursor,
+        current_tab="reblogs",
     )
 
 

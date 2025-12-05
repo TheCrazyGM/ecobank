@@ -1,61 +1,122 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card bg-light border-0">
-                <div class="card-body d-flex align-items-center">
-                    <img src="https://images.hive.blog/u/{{ username }}/avatar" class="rounded-circle me-3" width="80"
-                         height="80"
+    <!-- Profile Header -->
+    <div class="card mb-4 border-0 shadow-sm overflow-hidden">
+        {% if profile.cover_image %}
+            <div style="height: 200px; background-image: url('{{ profile.cover_image }}'); background-size: cover; background-position: center;"></div>
+        {% else %}
+            <div style="height: 150px; background-color: var(--bs-primary);"></div>
+        {% endif %}
+
+        <div class="card-body position-relative pt-0 pb-4">
+            <div class="d-sm-flex align-items-end">
+                <div class="me-4 position-relative" style="margin-top: -60px;">
+                    <img src="{{ profile.profile_image or 'https://images.hive.blog/u/' + username + '/avatar' }}"
+                         class="rounded-circle border border-4 border-white shadow-sm"
+                         width="120" height="120"
+                         style="background-color: #fff;"
                          onerror="this.src='{{ url_for('static', filename='img/user-circle-svgrepo-com.svg') }}'">
-                    <div>
-                        <h2 class="mb-0">@{{ username }}</h2>
-                        <div class="mt-2">
-                            <a href="{{ url_for('main.hive_view_wallet', username=username) }}"
-                               class="btn btn-sm btn-outline-primary">{{ _('View Wallet') }}</a>
-                            <a href="https://hive.blog/@{{ username }}" target="_blank" rel="noopener noreferrer"
-                               class="btn btn-sm btn-outline-secondary">{{ _('Open in Hive.blog') }}</a>
-                            <a href="https://peakd.com/@{{ username }}" target="_blank" rel="noopener noreferrer"
-                               class="btn btn-sm btn-outline-secondary">{{ _('Open in PeakD') }}</a>
-                            <a href="https://ecency.com/@{{ username }}" target="_blank" rel="noopener noreferrer"
-                               class="btn btn-sm btn-outline-secondary">{{ _('Open in Ecency') }}</a>
+                </div>
+                <div class="pt-3 pt-sm-0 flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 class="mb-0 fw-bold">{{ profile.display_name or username }}</h2>
+                            <p class="text-muted mb-0">@{{ username }} <span class="badge bg-secondary rounded-pill ms-1">{{ profile.reputation }}</span></p>
                         </div>
+                        <div>
+                            <a href="{{ url_for('main.hive_view_wallet', username=username) }}" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-wallet2"></i> {{ _('Wallet') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    {% if profile.about %}
+                        <p class="mb-2">{{ profile.about }}</p>
+                    {% endif %}
+
+                    <div class="d-flex flex-wrap text-muted small gap-3">
+                        {% if profile.location %}
+                            <span><i class="bi bi-geo-alt"></i> {{ profile.location }}</span>
+                        {% endif %}
+                        {% if profile.website %}
+                            <span><i class="bi bi-link-45deg"></i> <a href="{{ profile.website }}" target="_blank" rel="nofollow">{{ profile.website }}</a></span>
+                        {% endif %}
+                        <span><i class="bi bi-calendar3"></i> {{ _('Joined') }} {{ profile.created[:10] }}</span>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <div class="d-flex justify-content-md-end gap-2">
+                        <a href="https://hive.blog/@{{ username }}" target="_blank" class="btn btn-sm btn-outline-light text-secondary border-secondary" title="Hive.blog">Hive</a>
+                        <a href="https://peakd.com/@{{ username }}" target="_blank" class="btn btn-sm btn-outline-light text-secondary border-secondary" title="PeakD">PeakD</a>
+                        <a href="https://ecency.com/@{{ username }}" target="_blank" class="btn btn-sm btn-outline-light text-secondary border-secondary" title="Ecency">Ecency</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'posts' %}active fw-bold{% endif %}" href="{{ url_for('main.hive_user_blog', username=username) }}">
+                {{ _('Posts') }} <span class="badge bg-light text-dark ms-1">{{ profile.post_count }}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if current_tab == 'reblogs' %}active fw-bold{% endif %}" href="{{ url_for('main.hive_user_reblogs', username=username) }}">
+                {{ _('Reblogs / Feed') }}
+            </a>
+        </li>
+    </ul>
+
+    <!-- Content List -->
     <div class="row">
         <div class="col-md-12">
-            <h3>{{ _('Blog Posts') }}</h3>
             {% if entries %}
-                <div class="list-group">
+                <div class="list-group list-group-flush border rounded-3 shadow-sm">
                     {% for entry in entries %}
                         <a href="{{ url_for('main.hive_view_post', username=entry.author, permlink=entry.permlink) }}"
-                           class="list-group-item list-group-item-action">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1 text-break">{{ entry.title }}</h5>
-                                <small class="text-muted">{{ entry.created }}</small>
+                           class="list-group-item list-group-item-action p-4">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    {% if entry.reblogged_on %}
+                                        <span class="badge bg-info me-2"><i class="bi bi-arrow-repeat"></i> {{ _('Reblogged') }}</span>
+                                    {% endif %}
+                                    <h5 class="mb-0 text-primary fw-bold text-break">{{ entry.title }}</h5>
+                                </div>
+                                <small class="text-muted text-nowrap ms-2">{{ entry.created }}</small>
                             </div>
-                            <p class="mb-1 text-break">{{ entry.summary }}</p>
-                            <small class="text-muted">
-                                {% if entry.reblogged_on %}
-                                    <span class="badge bg-info">{{ _('Reblogged') }}</span>
-                                {% endif %}
-                            </small>
+
+                            {% if entry.author != username and current_tab == 'reblogs' %}
+                                <p class="text-muted small mb-2">
+                                    {{ _('Originally by') }} <strong>@{{ entry.author }}</strong>
+                                </p>
+                            {% endif %}
+
+                            <p class="mb-2 text-secondary text-break">{{ entry.summary }}</p>
+
+                            <div class="d-flex justify-content-end align-items-center mt-2">
+                                <small class="text-primary">{{ _('Read more') }} &rarr;</small>
+                            </div>
                         </a>
                     {% endfor %}
                 </div>
 
                 {% if next_cursor %}
-                    <div class="mt-3 text-center">
-                        <a href="{{ url_for('main.hive_user_blog', username=username, start=next_cursor) }}"
-                           class="btn btn-primary">{{ _('Load More') }}</a>
+                    <div class="mt-4 text-center">
+                        <a href="{{ request.path }}?start_author={{ next_cursor.author }}&start_permlink={{ next_cursor.permlink }}"
+                           class="btn btn-outline-primary px-4">{{ _('Load More') }}</a>
                     </div>
                 {% endif %}
             {% else %}
-                <p class="text-muted">{{ _('No posts found.') }}</p>
+                <div class="text-center py-5">
+                    <p class="text-muted fs-5 mb-0">{{ _('No posts found here yet.') }}</p>
+                </div>
             {% endif %}
         </div>
     </div>

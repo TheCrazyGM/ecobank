@@ -12,7 +12,7 @@ from nectargraphenebase.account import PasswordKey, PrivateKey
 from app.account import bp
 from app.extensions import db
 from app.models import HiveAccount
-from app.utils.hive import delegate_vesting, hp_to_vests
+from app.utils.hive import delegate_vesting, hp_to_vests, fetch_pending_claimed_accounts
 
 USERNAME_REGEX = re.compile(r"^(?=.{3,16}$)[a-z][a-z0-9]{2,}(?:[.-][a-z0-9]{3,})*$")
 
@@ -32,10 +32,19 @@ def is_valid_hive_username(username):
 @bp.route("/buy-credits")
 @login_required
 def buy_credits():
+    system_account = current_app.config.get("HIVE_CLAIMER_ACCOUNT")
+    hive_claim_tickets = 0
+    if system_account:
+        try:
+            hive_claim_tickets = fetch_pending_claimed_accounts(system_account)
+        except Exception as e:
+            current_app.logger.error(f"Failed to fetch pending claims: {e}")
+
     return render_template(
         "account/buy_credits.html",
         client_id=current_app.config["PAYPAL_CLIENT_ID"],
         price=current_app.config["CREDIT_PRICE_USD"],
+        hive_claim_tickets=hive_claim_tickets,
     )
 
 

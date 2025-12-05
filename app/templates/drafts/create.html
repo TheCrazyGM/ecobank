@@ -2,9 +2,23 @@
 
 {% block content %}
     <h2>{{ _('Create Draft') }}</h2>
-    <p class="text-muted">{{ _('For Group:') }} {{ group.name }}</p>
 
     <form method="POST">
+        {% if group %}
+            <p class="text-muted">{{ _('For Group:') }} {{ group.name }}</p>
+            <input type="hidden" name="group_id" value="{{ group.id }}">
+        {% else %}
+            <div class="mb-3">
+                <label for="group_id" class="form-label">{{ _('Select Group') }}</label>
+                <select class="form-select" id="group_id" name="group_id" required onchange="loadHiveAccounts()">
+                    <option value="" disabled selected>{{ _('Choose a group...') }}</option>
+                    {% for g in user_groups %}
+                        <option value="{{ g.id }}">{{ g.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+
         <div class="mb-3">
             <label for="title" class="form-label">{{ _('Title') }}</label>
             <input type="text" class="form-control" id="title" name="title" required>
@@ -12,10 +26,14 @@
 
         <div class="mb-3">
             <label for="hive_account" class="form-label">{{ _('Post As (Hive Account)') }}</label>
-            <select class="form-select" id="hive_account" name="hive_account" required>
-                {% for acc in hive_accounts %}
-                    <option value="{{ acc }}">{{ acc }}</option>
-                {% endfor %}
+            <select class="form-select" id="hive_account" name="hive_account" required {% if not group %}disabled{% endif %}>
+                {% if group %}
+                    {% for acc in hive_accounts %}
+                        <option value="{{ acc }}">{{ acc }}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="" disabled selected>{{ _('Select a group first') }}</option>
+                {% endif %}
             </select>
         </div>
 
@@ -40,10 +58,43 @@
         </div>
 
         <button type="submit" class="btn btn-primary">{{ _('Save Draft') }}</button>
-        <a href="{{ url_for('groups.view', id=group.id) }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
+        <a href="{{ url_for('groups.list_groups') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
     </form>
 
     <script>
+        // Function to load hive accounts via API when group changes
+        function loadHiveAccounts() {
+            const groupSelect = document.getElementById('group_id');
+            const accountSelect = document.getElementById('hive_account');
+            const groupId = groupSelect.value;
+
+            if (!groupId) return;
+
+            accountSelect.disabled = true;
+            accountSelect.innerHTML = '<option>{{ _("Loading...") }}</option>';
+
+            fetch(`/api/group/${groupId}/accounts`)
+                .then(response => response.json())
+                .then(data => {
+                    accountSelect.innerHTML = '';
+                    if (data.accounts && data.accounts.length > 0) {
+                        data.accounts.forEach(acc => {
+                            const option = document.createElement('option');
+                            option.value = acc;
+                            option.text = acc;
+                            accountSelect.appendChild(option);
+                        });
+                        accountSelect.disabled = false;
+                    } else {
+                        accountSelect.innerHTML = '<option disabled selected>{{ _("No shared accounts found") }}</option>';
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    accountSelect.innerHTML = '<option disabled selected>{{ _("Error loading accounts") }}</option>';
+                });
+        }
+
         window.addEventListener('load', function() {
             const easyMDE = new EasyMDE({
                 element: document.getElementById('body'),
@@ -61,10 +112,27 @@
             function uploadImage(file, onSuccess, onError) {
                 const formData = new FormData();
                 formData.append('image', file);
-                formData.append('group_id', '{{ group.id }}');
+
+                // Get Group ID either from hidden input or select
+                let groupId = null;
+                const groupInput = document.querySelector('input[name="group_id"]');
+                const groupSelect = document.getElementById('group_id');
+
+                if (groupInput) {
+                    groupId = groupInput.value;
+                } else if (groupSelect) {
+                    groupId = groupSelect.value;
+                }
+
+                if (!groupId) {
+                    onError("Please select a group first.");
+                    return;
+                }
+
+                formData.append('group_id', groupId);
 
                 const hiveAccountSelect = document.getElementById('hive_account');
-                if (hiveAccountSelect) {
+                if (hiveAccountSelect && hiveAccountSelect.value) {
                     formData.append('hive_username', hiveAccountSelect.value);
                 }
 

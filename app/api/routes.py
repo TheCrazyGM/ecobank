@@ -96,3 +96,20 @@ def upload_image():
     except Exception as e:
         current_app.logger.error(f"Image upload failed: {e}")
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500
+
+
+@bp.route("/group/<int:group_id>/accounts")
+@login_required
+def get_group_accounts(group_id):
+    # Verify membership
+    membership = GroupMember.query.filter_by(
+        group_id=group_id, user_id=current_user.id
+    ).first()
+    if not membership:
+        return jsonify({"error": "Unauthorized"}), 403
+
+    resources = GroupResource.query.filter_by(
+        group_id=group_id, resource_type="hive_account"
+    ).all()
+    accounts = [r.resource_id for r in resources]
+    return jsonify({"accounts": accounts})

@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import json
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 
 from nectar import Hive
 from nectar.account import Account
+
 from nectar.amount import Amount
 from nectar.comment import Comment
 from nectar.discussions import Discussions, Query
@@ -13,14 +15,21 @@ from nectar.exceptions import ContentDoesNotExistsException
 logger = logging.getLogger(__name__)
 
 
-def _safe_get(d: dict, *keys, default=None):
-    cur = d
-    for k in keys:
-        if isinstance(cur, dict) and k in cur:
-            cur = cur[k]
-        else:
-            return default
-    return cur
+# Force reload check
+def _extract_val(obj: Any, key: str, default=None) -> Any:
+    """Safely extract value from dict or object."""
+    if obj is None:
+        return default
+    # Try dict access
+    try:
+        return obj[key]
+    except (TypeError, KeyError, IndexError):
+        pass
+    # Try attribute access
+    try:
+        return getattr(obj, key, default)
+    except AttributeError:
+        return default
 
 
 def _normalize_ts(value: Any) -> str:
@@ -35,6 +44,61 @@ def _normalize_ts(value: Any) -> str:
     if s.startswith("1970") or s == "0" or s.lower() == "none":
         return ""
     return s
+
+
+def fetch_user_profile(username: str) -> Optional[Dict[str, Any]]:
+    """Fetch detailed user profile metadata and stats."""
+    try:
+        acc = Account(username)
+
+        # Parse metadata
+        # It can be in 'posting_json_metadata' or 'json_metadata'
+        meta_str = acc.get("posting_json_metadata") or acc.get("json_metadata") or "{}"
+        meta = {}
+        try:
+            meta = json.loads(meta_str)
+        except json.JSONDecodeError:
+            pass
+
+        profile = meta.get("profile", {})
+
+        # Stats (followers/following need separate calls usually, but Account might have counts)
+        # Nectar Account object keys for counts:
+        # 'followers_count' / 'following_count' might require extra API calls or plugins.
+        # Standard 'get_accounts' response doesn't always have follow counts directly.
+        # We will stick to basic account info available on the struct for now.
+
+        return {
+            "username": acc.name,
+            "display_name": profile.get("name", acc.name),
+            "about": profile.get("about", ""),
+            "location": profile.get("location", ""),
+            "website": profile.get("website", ""),
+            "profile_image": profile.get("profile_image", ""),
+            "cover_image": profile.get("cover_image", ""),
+            "post_count": acc.get("post_count", 0),
+            "reputation": _rep_log10(acc.get("reputation", 0)),
+            "created": _normalize_ts(acc.get("created")),
+        }
+    except Exception as e:
+        logger.error(f"Failed to fetch profile for {username}: {e}")
+        return None
+
+
+def _rep_log10(rep_raw):
+    """Convert raw reputation score to human readable log10 score (e.g. 25-70+)."""
+    try:
+        import math
+
+        rep = int(rep_raw)
+        if rep == 0:
+            return 25
+        score = max(math.log10(abs(rep)) - 9, 0) * 9 + 25
+        if rep < 0:
+            score = 50 - score
+        return int(score)
+    except Exception:
+        return 25
 
 
 def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
@@ -56,25 +120,25 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
         return None
 
     # Pull common fields with fallbacks
-    raw_created = getattr(c, "created", None) or _safe_get(c, "created")
-    raw_last_update = getattr(c, "last_update", None) or _safe_get(c, "last_update")
-    raw_cashout = getattr(c, "cashout_time", None) or _safe_get(c, "cashout_time")
-    raw_last_payout = getattr(c, "last_payout", None) or _safe_get(c, "last_payout")
+    raw_created = getattr(c, "created", None) or _extract_val(c, "created")
+    raw_last_update = getattr(c, "last_update", None) or _extract_val(c, "last_update")
+    raw_cashout = getattr(c, "cashout_time", None) or _extract_val(c, "cashout_time")
+    raw_last_payout = getattr(c, "last_payout", None) or _extract_val(c, "last_payout")
 
     created_val = raw_created or raw_last_update or raw_cashout or raw_last_payout
 
     data = {
         "author": getattr(c, "author", author),
         "permlink": getattr(c, "permlink", permlink),
-        "title": getattr(c, "title", None) or _safe_get(c, "title") or permlink,
+        "title": getattr(c, "title", None) or _extract_val(c, "title") or permlink,
         "body": getattr(c, "body", ""),
         "created": _normalize_ts(created_val),
         "json_metadata": getattr(c, "json_metadata", {})
-        or _safe_get(c, "json_metadata", default={}),
-        "active_votes": _safe_get(c, "active_votes", default=[]),
-        "community": _safe_get(c, "community", default=None)
-        or _safe_get(c, "community_title", default=None)
-        or _safe_get(c, "category", default=None),
+        or _extract_val(c, "json_metadata", default={}),
+        "active_votes": _extract_val(c, "active_votes", default=[]),
+        "community": _extract_val(c, "community", default=None)
+        or _extract_val(c, "community_title", default=None)
+        or _extract_val(c, "category", default=None),
     }
 
     # Tags from json_metadata
@@ -86,7 +150,9 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
     data["tags"] = tags
 
     # Rough payout summary if available
-    payout = _safe_get(c, "pending_payout_value") or _safe_get(c, "total_payout_value")
+    payout = _extract_val(c, "pending_payout_value") or _extract_val(
+        c, "total_payout_value"
+    )
     data["payout"] = str(payout) if payout else None
 
     # Rebloggers, best-effort
@@ -100,45 +166,91 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
 
 
 def fetch_user_blog(
-    username: str, limit: int = 20, start: Optional[int] = None
-) -> Tuple[List[Dict[str, Any]], Optional[int]]:
-    """Fetch a user's blog entries.
+    username: str,
+    limit: int = 20,
+    start_author: Optional[str] = None,
+    start_permlink: Optional[str] = None,
+    mode: str = "all",
+) -> Tuple[List[Dict[str, Any]], Optional[Dict[str, str]]]:
+    """Fetch a user's blog entries using Bridge API via Nectar.
 
-    Returns (entries, next_cursor). Each entry contains author, permlink, title, created, summary, payout.
+    mode: 'all' (default), 'posts' (only original), 'reblogs' (only reblogs)
+
+    Returns (entries, next_cursor_dict).
     """
-    try:
-        acc = Account(username)
-    except Exception:
-        return [], None
+    # Cap fetch_limit to Bridge API's maximum of 20
+    fetch_limit = min(limit, 20)
 
-    kwargs = {}
-    if start is not None:
-        kwargs["start"] = start
+    # We might need to fetch more if we are filtering, but Bridge API limit is 20.
+    # If mode is not 'all', we might fetch 20 and filter down to fewer.
+    if mode != "all" and limit < 20:
+        fetch_limit = min(limit * 2, 20)
+    elif mode == "all":
+        fetch_limit = min(limit, 20)
+    else:
+        fetch_limit = 20
 
+    entries = []
     try:
-        entries = list(acc.get_blog(limit=limit, **kwargs))
-    except Exception:
+        # Use specific nodes to ensure connectivity
+        hive = Hive()
+        acc = Account(username.strip(), blockchain_instance=hive)
+
+        # Use get_account_posts (Bridge API)
+        # Only pass pagination params if set
+        post_kwargs = {"sort": "blog", "limit": fetch_limit, "raw_data": True}
+
+        if start_author:
+            post_kwargs["start_author"] = start_author
+        if start_permlink:
+            post_kwargs["start_permlink"] = start_permlink
+
+        entries = list(acc.get_account_posts(**post_kwargs))
+
+    except Exception as e:
+        logger.error(f"fetch_user_blog: Error fetching blog for {username}: {e}")
         entries = []
 
     shaped: List[Dict[str, Any]] = []
-    next_cursor: Optional[int] = None
+    next_cursor: Optional[Dict[str, str]] = None
 
+    # Normalize target username for comparison
+    target_username = username.lower()
+
+    # Bridge API returns posts. If paginating, the first item might be the previous last item.
+    if start_author and start_permlink and entries:
+        first = entries[0]
+        if (
+            _extract_val(first, "author") == start_author
+            and _extract_val(first, "permlink") == start_permlink
+        ):
+            entries.pop(0)
+
+    count = 0
     for e in entries:
-        # In some nectar versions, get_blog returns a list of dicts directly
-        # Structure might differ, checking safely
-        comment = e.get("comment", e) if isinstance(e, dict) else e
+        # Bridge API returns flat dicts
+        author = _extract_val(e, "author")
 
-        author = _safe_get(comment, "author")
-        permlink = _safe_get(comment, "permlink")
-        title = _safe_get(comment, "title") or permlink
-        created = _safe_get(comment, "created")
-        payout = _safe_get(comment, "pending_payout_value")
+        # Filtering Logic
+        if not author:
+            continue
+
+        is_reblog = author.lower() != target_username
+
+        if mode == "posts" and is_reblog:
+            continue
+        if mode == "reblogs" and not is_reblog:
+            continue
+
+        permlink = _extract_val(e, "permlink")
+        title = _extract_val(e, "title") or permlink
+        created = _extract_val(e, "created")
+        payout = _extract_val(e, "pending_payout_value")
 
         # derive summary from body if available
-        body = _safe_get(comment, "body") or ""
+        body = _extract_val(e, "body") or ""
         summary = None
         if body:
-            # Very basic markdown strip could go here, but truncation is a start
             summary = (body[:180] + "...") if len(body) > 180 else body
 
         shaped.append(
@@ -149,17 +261,20 @@ def fetch_user_blog(
                 "created": _normalize_ts(created),
                 "summary": summary,
                 "payout": str(payout) if payout else None,
-                # If it's a reblog, 'reblogged_on' might be present in the wrapper 'e'
-                "reblogged_on": _normalize_ts(e.get("reblogged_on"))
-                if isinstance(e, dict) and "reblogged_on" in e
-                else None,
+                "reblogged_on": "yes" if is_reblog else None,
             }
         )
+        count += 1
+        if count >= limit:
+            break
 
-        # Pagination cursor: post_id from get_blog wrapper
-        post_id = _safe_get(e, "entry_id")  # In recent Nectar/Beem, it's often entry_id
-        if post_id is not None:
-            next_cursor = post_id
+    # Determine cursor for NEXT page
+    if entries:
+        last_entry = entries[-1]
+        next_cursor = {
+            "author": _extract_val(last_entry, "author"),
+            "permlink": _extract_val(last_entry, "permlink"),
+        }
 
     return shaped, next_cursor
 
@@ -231,25 +346,25 @@ def fetch_posts_by_tag(
         # Only if we got a full page, there might be more
         if len(posts) == limit:
             next_cursor = {
-                "author": _safe_get(last_post, "author"),
-                "permlink": _safe_get(last_post, "permlink"),
+                "author": _extract_val(last_post, "author"),
+                "permlink": _extract_val(last_post, "permlink"),
             }
 
     for p in posts:
         # Filter out the exact start post if it appears (pagination overlap)
         if start_author and start_permlink:
             if (
-                _safe_get(p, "author") == start_author
-                and _safe_get(p, "permlink") == start_permlink
+                _extract_val(p, "author") == start_author
+                and _extract_val(p, "permlink") == start_permlink
             ):
                 continue
 
-        author = _safe_get(p, "author")
-        permlink = _safe_get(p, "permlink")
-        title = _safe_get(p, "title") or permlink
-        created = _safe_get(p, "created")
-        payout = _safe_get(p, "pending_payout_value")
-        body = _safe_get(p, "body") or ""
+        author = _extract_val(p, "author")
+        permlink = _extract_val(p, "permlink")
+        title = _extract_val(p, "title") or permlink
+        created = _extract_val(p, "created")
+        payout = _extract_val(p, "pending_payout_value")
+        body = _extract_val(p, "body") or ""
         summary = (body[:180] + "...") if len(body) > 180 else body
 
         shaped.append(

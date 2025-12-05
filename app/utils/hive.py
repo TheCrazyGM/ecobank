@@ -141,6 +141,9 @@ def fetch_post(author: str, permlink: str) -> Optional[Dict[str, Any]]:
             tags = [str(t) for t in jm.get("tags")]  # type: ignore
     data["tags"] = tags
 
+    # Ecobank Metadata
+    data["ecobank_metadata"] = jm.get("ecobank") if isinstance(jm, dict) else None
+
     # Rough payout summary if available
     payout = _extract_val(c, "pending_payout_value") or _extract_val(
         c, "total_payout_value"
@@ -265,6 +268,9 @@ def fetch_user_blog(
             if isinstance(images, list) and images:
                 thumbnail = images[0]
 
+        # Ecobank Metadata
+        ecobank_meta = json_meta.get("ecobank") if isinstance(json_meta, dict) else None
+
         shaped.append(
             {
                 "author": author,
@@ -273,6 +279,7 @@ def fetch_user_blog(
                 "created": _normalize_ts(created),
                 "summary": summary,
                 "thumbnail": thumbnail,
+                "ecobank_metadata": ecobank_meta,
                 "payout": str(payout) if payout else None,
                 "reblogged_on": "yes" if is_reblog else None,
             }
@@ -394,6 +401,9 @@ def fetch_posts_by_tag(
             if isinstance(images, list) and images:
                 thumbnail = images[0]
 
+        # Ecobank Metadata
+        ecobank_meta = json_meta.get("ecobank") if isinstance(json_meta, dict) else None
+
         shaped.append(
             {
                 "author": author,
@@ -402,6 +412,7 @@ def fetch_posts_by_tag(
                 "created": _normalize_ts(created),
                 "summary": summary,
                 "thumbnail": thumbnail,
+                "ecobank_metadata": ecobank_meta,
                 "payout": str(payout) if payout else None,
             }
         )

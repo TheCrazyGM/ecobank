@@ -41,14 +41,17 @@
 
     <div class="card shadow-sm mb-4">
         <div class="card-body">
-            <h1 class="card-title">{{ post.title }}</h1>
-            <div class="d-flex justify-content-between text-muted small mb-3">
-                <span>
-                    {{ _('By') }} <strong><a href="{{ url_for('main.hive_user_blog', username=author) }}">@{{ author }}</a></strong>
-                    in {{ community or _('Hive') }}
-                </span>
-                <span>{{ post.created }}</span>
-            </div>
+            <h2>{{ post.title }}</h2>
+            <p class="text-muted">
+                {{ _('By') }} <a href="{{ url_for('main.hive_user_blog', username=author) }}">@{{ author }}</a>
+                {% if post.ecobank_metadata and post.ecobank_metadata.author_username %}
+                    <br><span class="text-secondary">{{ _('Originally by') }} <strong>@{{ post.ecobank_metadata.author_username }}</strong></span>
+                {% endif %}
+                | {{ post.created }}
+                {% if community %}
+                    | {{ _('Community:') }} {{ community }}
+                {% endif %}
+            </p>
 
             <hr>
 

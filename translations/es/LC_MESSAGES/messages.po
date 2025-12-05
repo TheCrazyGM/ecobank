@@ -1,15 +1,15 @@
-# Spanish translations for PROJECT.
-# Copyright (C) 2025 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# Spanish translations for EcoBank.
+# Copyright (C) 2025 EcoBank
+# This file is distributed under the same license as the EcoBank project.
+# EcoBank Team <team@ecobank.com>, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-05 07:35-0500\n"
+"Project-Id-Version: EcoBank VERSION\n"
+"Report-Msgid-Bugs-To: support@ecobank.com\n"
+"POT-Creation-Date: 2025-12-05 10:40-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: EcoBank Team <team@ecobank.com>\n"
 "Language: es\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -304,67 +304,75 @@ msgstr "Mi Feed"
 msgid "Community Feed"
 msgstr "Feed de la Comunidad"
 
-#: app/templates/base.html:6 app/templates/base.html:16
+#: app/templates/base.html:9 app/templates/base.html:16
+#: app/templates/base.html:23
+msgid "Ecobank - Your decentralized finance hub and Hive blogging platform."
+msgstr ""
+"Ecobank - Tu centro de finanzas descentralizadas y plataforma de blogging"
+" en Hive."
+
+#: app/templates/base.html:29
 msgid "Ecobank Development"
 msgstr "Desarrollo Ecobank"
 
-#: app/templates/base.html:18
+#: app/templates/base.html:41
 msgid "Ecobank"
 msgstr "Ecobank"
 
-#: app/templates/base.html:26
+#: app/templates/base.html:49
 msgid "Home"
 msgstr "Inicio"
 
-#: app/templates/base.html:35
+#: app/templates/base.html:58
 msgid "New Post"
 msgstr "Nueva Publicación"
 
-#: app/templates/base.html:42 app/templates/notifications/index.html:5
+#: app/templates/base.html:65 app/templates/notifications/index.html:5
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: app/templates/base.html:65
+#: app/templates/base.html:88
 msgid "Hive Management"
 msgstr "Gestión Hive"
 
-#: app/templates/base.html:66
+#: app/templates/base.html:89
 msgid "My Accounts"
 msgstr "Mis Cuentas"
 
-#: app/templates/base.html:67
+#: app/templates/base.html:90
 msgid "Create Account"
 msgstr "Crear Cuenta"
 
-#: app/templates/base.html:70
+#: app/templates/base.html:93
 msgid "Collaboration"
 msgstr "Colaboración"
 
-#: app/templates/base.html:71 app/templates/groups/list.html:5
+#: app/templates/base.html:94 app/templates/groups/list.html:5
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:74 app/templates/groups/view.html:122
+#: app/templates/base.html:97 app/templates/groups/view.html:134
+#: app/templates/groups/view.html:167
 msgid "Account"
 msgstr "Cuenta"
 
-#: app/templates/base.html:75
+#: app/templates/base.html:98
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/account/create.html:27 app/templates/base.html:76
+#: app/templates/account/create.html:27 app/templates/base.html:99
 msgid "Buy Credits"
 msgstr "Comprar Créditos"
 
-#: app/templates/base.html:80
+#: app/templates/base.html:103
 msgid "Admin"
 msgstr "Administrador"
 
-#: app/templates/base.html:84
+#: app/templates/base.html:107
 msgid "Logout"
 msgstr "Cerrar Sesión"
 
-#: app/templates/base.html:89
+#: app/templates/base.html:112
 msgid "Login"
 msgstr "Iniciar Sesión"
 
@@ -376,28 +384,34 @@ msgstr "Bienvenido a EcoBank"
 msgid "Your decentralized finance hub."
 msgstr "Tu centro de finanzas descentralizadas."
 
-#: app/templates/drafts/view.html:8 app/templates/hive/post.html:18
-#: app/templates/hive/tag_feed.html:25 app/templates/index.html:23
+#: app/templates/drafts/view.html:19 app/templates/hive/post.html:46
+#: app/templates/hive/tag_feed.html:36 app/templates/index.html:26
 msgid "By"
 msgstr "Por"
 
-#: app/templates/index.html:31
+#: app/templates/hive/post.html:48 app/templates/hive/tag_feed.html:38
+#: app/templates/hive/user_blog.html:137 app/templates/hive/user_blog.html:144
+#: app/templates/index.html:28
+msgid "Originally by"
+msgstr "Originalmente por"
+
+#: app/templates/index.html:36
 msgid "Read More"
 msgstr "Leer Más"
 
-#: app/templates/index.html:39
+#: app/templates/index.html:44
 msgid "No posts found right now."
 msgstr "No se encontraron publicaciones en este momento."
 
-#: app/templates/index.html:40
+#: app/templates/index.html:45
 msgid "Register a Hive account or create one to start seeing content here!"
 msgstr "¡Registra una cuenta Hive o crea una para comenzar a ver contenido aquí!"
 
-#: app/templates/index.html:42
+#: app/templates/index.html:47
 msgid "Join Now"
 msgstr "Únete Ahora"
 
-#: app/templates/account/create.html:4 app/templates/index.html:44
+#: app/templates/account/create.html:4 app/templates/index.html:49
 msgid "Create Hive Account"
 msgstr "Crear Cuenta Hive"
 
@@ -422,12 +436,16 @@ msgid ""
 "Currently, no account creation tickets are available. Please check back "
 "later!"
 msgstr ""
+"Actualmente no hay tickets de creación de cuenta disponibles. ¡Por favor "
+"vuelve a intentar más tarde!"
 
 #: app/templates/account/buy_credits.html:14
 msgid ""
 "Only single account creation tickets are available at the moment. More "
 "will be available soon!"
 msgstr ""
+"Solo hay tickets de creación de cuenta individuales disponibles por el "
+"momento. ¡Pronto habrá más disponibles!"
 
 #: app/templates/account/buy_credits.html:20
 #: app/templates/account/buy_credits.html:32
@@ -517,7 +535,7 @@ msgstr "Importar Cuenta"
 #: app/templates/account/view.html:55
 #: app/templates/auth/change_password.html:36
 #: app/templates/drafts/create.html:61 app/templates/drafts/edit.html:43
-#: app/templates/groups/view.html:178 app/templates/groups/view.html:212
+#: app/templates/groups/view.html:218 app/templates/groups/view.html:252
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -542,7 +560,8 @@ msgid "Source"
 msgstr "Fuente"
 
 #: app/templates/account/list.html:15 app/templates/admin/groups.html:18
-#: app/templates/admin/users.html:16 app/templates/groups/view.html:125
+#: app/templates/admin/users.html:16 app/templates/groups/view.html:136
+#: app/templates/groups/view.html:169
 msgid "Actions"
 msgstr "Acciones"
 
@@ -717,7 +736,7 @@ msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
-#: app/templates/drafts/view.html:34
+#: app/templates/drafts/view.html:45
 msgid "Back"
 msgstr "Volver"
 
@@ -750,7 +769,7 @@ msgid "Members"
 msgstr "Miembros"
 
 #: app/templates/admin/groups.html:31 app/templates/admin/users.html:28
-#: app/templates/drafts/view.html:15
+#: app/templates/drafts/view.html:26
 msgid "Edit"
 msgstr "Editar"
 
@@ -1000,54 +1019,63 @@ msgstr "Mostrar Contenido"
 msgid "No history available."
 msgstr "No hay historial disponible."
 
-#: app/templates/drafts/view.html:8
+#: app/templates/drafts/view.html:7
+#, python-format
+msgid "Preview draft: %(title)s"
+msgstr "Previsualización de borrador: %(title)s"
+
+#: app/templates/drafts/view.html:11
+msgid "This is a draft post on Ecobank."
+msgstr "Esta es una publicación en borrador en Ecobank."
+
+#: app/templates/drafts/view.html:19
 msgid "For account:"
 msgstr "Para cuenta:"
 
-#: app/templates/drafts/view.html:19
+#: app/templates/drafts/view.html:30
 msgid "Are you sure you want to publish this to Hive? This cannot be undone."
 msgstr ""
 "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
 "deshacer."
 
-#: app/templates/drafts/view.html:20
+#: app/templates/drafts/view.html:31
 msgid "Publish"
 msgstr "Publicar"
 
-#: app/templates/drafts/view.html:25
+#: app/templates/drafts/view.html:36
 msgid "Are you sure you want to reject/delete this draft?"
 msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
 
-#: app/templates/drafts/view.html:26
+#: app/templates/drafts/view.html:37
 msgid "Reject"
 msgstr "Rechazar"
 
-#: app/templates/drafts/view.html:31
+#: app/templates/drafts/view.html:42 app/templates/groups/view.html:180
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
-#: app/templates/drafts/view.html:33
+#: app/templates/drafts/view.html:44
 msgid "History"
 msgstr "Historial"
 
-#: app/templates/drafts/view.html:44
+#: app/templates/drafts/view.html:55
 msgid "Automatic Header Preview"
 msgstr "Vista Previa del Encabezado Automático"
 
-#: app/templates/drafts/view.html:45
+#: app/templates/drafts/view.html:56
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:52 app/templates/main/profile.html:84
+#: app/templates/drafts/view.html:63 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
-#: app/templates/drafts/view.html:54
+#: app/templates/drafts/view.html:65
 #, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
-#: app/templates/drafts/view.html:62
+#: app/templates/drafts/view.html:73
 msgid "Content Preview"
 msgstr "Vista Previa del Contenido"
 
@@ -1087,7 +1115,7 @@ msgstr "Eliminar"
 msgid "Shared Resources"
 msgstr "Recursos Compartidos"
 
-#: app/templates/groups/view.html:77 app/templates/groups/view.html:192
+#: app/templates/groups/view.html:77 app/templates/groups/view.html:232
 msgid "Share Hive Account"
 msgstr "Compartir Cuenta Hive"
 
@@ -1107,27 +1135,47 @@ msgstr "Desvincular"
 msgid "No shared resources yet."
 msgstr "Aún no hay recursos compartidos."
 
-#: app/templates/groups/view.html:112
-msgid "Drafts / Content"
-msgstr "Borradores / Contenido"
+#: app/templates/groups/view.html:114
+msgid "Active Drafts"
+msgstr "Borradores Activos"
 
-#: app/templates/groups/view.html:113
+#: app/templates/groups/view.html:117
+msgid "Published History"
+msgstr "Historial de Publicaciones"
+
+#: app/templates/groups/view.html:120
 msgid "Create New Draft"
 msgstr "Crear Nuevo Borrador"
 
-#: app/templates/groups/view.html:150
-msgid "No drafts yet."
-msgstr "Aún no hay borradores."
+#: app/templates/groups/view.html:147
+msgid "Edit / View"
+msgstr "Editar / Ver"
 
-#: app/templates/groups/view.html:163 app/templates/groups/view.html:179
+#: app/templates/groups/view.html:154
+msgid "No active drafts. Start writing!"
+msgstr "No hay borradores activos. ¡Empieza a escribir!"
+
+#: app/templates/groups/view.html:168
+msgid "Published Date"
+msgstr "Fecha de Publicación"
+
+#: app/templates/groups/view.html:181
+msgid "Local Record"
+msgstr "Registro Local"
+
+#: app/templates/groups/view.html:188
+msgid "No published posts yet."
+msgstr "Aún no hay publicaciones."
+
+#: app/templates/groups/view.html:203 app/templates/groups/view.html:219
 msgid "Add Member"
 msgstr "Agregar Miembro"
 
-#: app/templates/groups/view.html:168
+#: app/templates/groups/view.html:208
 msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
-#: app/templates/groups/view.html:196
+#: app/templates/groups/view.html:236
 msgid ""
 "Share one of your Hive accounts with this group. Members will be able to "
 "use it for drafting (and posting, if permissions allow)."
@@ -1135,31 +1183,31 @@ msgstr ""
 "Comparte una de tus cuentas Hive con este grupo. Los miembros podrán "
 "usarla para redactar (y publicar, si los permisos lo permiten)."
 
-#: app/templates/groups/view.html:199
+#: app/templates/groups/view.html:239
 msgid "Select Account"
 msgstr "Seleccionar Cuenta"
 
-#: app/templates/groups/view.html:208
+#: app/templates/groups/view.html:248
 msgid "You have no available Hive accounts to share."
 msgstr "No tienes cuentas Hive disponibles para compartir."
 
-#: app/templates/groups/view.html:208
+#: app/templates/groups/view.html:248
 msgid "Create one?"
 msgstr "¿Crear una?"
 
-#: app/templates/groups/view.html:214
+#: app/templates/groups/view.html:254
 msgid "Share Account"
 msgstr "Compartir Cuenta"
 
-#: app/templates/hive/post.html:19
-msgid "Hive"
-msgstr "Hive"
+#: app/templates/hive/post.html:52
+msgid "Community:"
+msgstr "Comunidad:"
 
-#: app/templates/hive/post.html:37
+#: app/templates/hive/post.html:69
 msgid "Open in PeakD"
 msgstr "Abrir en PeakD"
 
-#: app/templates/hive/post.html:38
+#: app/templates/hive/post.html:70
 msgid "Open in Ecency"
 msgstr "Abrir en Ecency"
 
@@ -1167,44 +1215,46 @@ msgstr "Abrir en Ecency"
 msgid "Posts tagged"
 msgstr "Publicaciones etiquetadas"
 
-#: app/templates/hive/tag_feed.html:34 app/templates/hive/user_blog.html:113
+#: app/templates/hive/tag_feed.html:52 app/templates/hive/user_blog.html:163
 msgid "Load More"
 msgstr "Cargar Más"
 
-#: app/templates/hive/tag_feed.html:38
+#: app/templates/hive/tag_feed.html:56
 msgid "No posts found for this tag."
 msgstr "No se encontraron publicaciones para esta etiqueta."
 
-#: app/templates/hive/user_blog.html:29 app/templates/hive/wallet.html:7
+#: app/templates/hive/user_blog.html:6 app/templates/hive/user_blog.html:12
+#: app/templates/hive/user_blog.html:25
+#, python-format
+msgid "Check out %(user)s's profile on Ecobank."
+msgstr "Mira el perfil de %(user)s en Ecobank."
+
+#: app/templates/hive/user_blog.html:61 app/templates/hive/wallet.html:7
 #: app/templates/hive/wallet.html:15
 msgid "Wallet"
 msgstr "Billetera"
 
-#: app/templates/hive/user_blog.html:49
+#: app/templates/hive/user_blog.html:81
 msgid "Joined"
 msgstr "Unido"
 
-#: app/templates/hive/user_blog.html:67
+#: app/templates/hive/user_blog.html:99
 msgid "Posts"
 msgstr "Publicaciones"
 
-#: app/templates/hive/user_blog.html:72
+#: app/templates/hive/user_blog.html:104
 msgid "Reblogs / Feed"
 msgstr "Reblogs / Feed"
 
-#: app/templates/hive/user_blog.html:88
+#: app/templates/hive/user_blog.html:132
 msgid "Reblogged"
 msgstr "Reblogueado"
 
-#: app/templates/hive/user_blog.html:97
-msgid "Originally by"
-msgstr "Originalmente por"
-
-#: app/templates/hive/user_blog.html:104
+#: app/templates/hive/user_blog.html:151
 msgid "Read more"
 msgstr "Leer más"
 
-#: app/templates/hive/user_blog.html:118
+#: app/templates/hive/user_blog.html:168
 msgid "No posts found here yet."
 msgstr "Aún no se encontraron publicaciones aquí."
 
@@ -1304,3 +1354,12 @@ msgstr "Sin notificaciones."
 
 #~ msgid "Open in Hive.blog"
 #~ msgstr "Abrir en Hive.blog"
+
+#~ msgid "Hive"
+#~ msgstr "Hive"
+
+#~ msgid "Drafts / Content"
+#~ msgstr "Borradores / Contenido"
+
+#~ msgid "No drafts yet."
+#~ msgstr "Aún no hay borradores."

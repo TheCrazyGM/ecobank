@@ -476,7 +476,17 @@ def submit(draft_id):
             tag_list = ["ecobank"]
 
         # Construct metadata
-        json_metadata = {"app": "ecobank/0.1", "format": "markdown", "tags": tag_list}
+        json_metadata = {
+            "app": "ecobank/0.1",
+            "format": "markdown",
+            "tags": tag_list,
+            "ecobank": {
+                "author_id": draft.author_user_id,
+                "author_username": author.username,
+                "group_id": group.id,
+                "group_name": group.name,
+            },
+        }
 
         # Post content
         tx = hive.post(

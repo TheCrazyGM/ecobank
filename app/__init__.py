@@ -59,6 +59,13 @@ def create_app(config_class=Config):
     # Register filters
     app.jinja_env.filters["markdown"] = render_markdown
 
+    # Context Processors
+    @app.context_processor
+    def inject_now():
+        from datetime import datetime, timezone
+
+        return {"now": datetime.now(timezone.utc)}
+
     login_manager.login_view = "auth.login"
 
     # Register blueprints
@@ -101,6 +108,10 @@ def create_app(config_class=Config):
     from app.notifications import bp as notifications_bp
 
     app.register_blueprint(notifications_bp, url_prefix="/notifications")
+
+    from app.errors import bp as errors_bp
+
+    app.register_blueprint(errors_bp)
 
     import os  # Ensure os is imported
 

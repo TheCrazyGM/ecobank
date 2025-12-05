@@ -9,6 +9,8 @@ from app.auth.forms import (
     ChangePasswordForm,
     LoginForm,
     RegistrationForm,
+    ResetPasswordRequestForm,
+    ResetPasswordForm,
 )
 from app.extensions import db
 from app.models import User
@@ -126,3 +128,46 @@ def change_password():
     return render_template(
         "auth/change_password.html", title=_("Change Password"), form=form
     )
+
+
+def send_password_reset_email(user):
+    token = user.get_reset_password_token()
+    send_email(
+        _("[EcoBank] Reset Your Password"),
+        sender=current_app.config["ADMINS"][0],
+        recipients=[user.email],
+        text_body=render_template("email/reset_password.txt", user=user, token=token),
+        html_body=render_template("email/reset_password.html", user=user, token=token),
+    )
+
+
+@bp.route("/reset_password_request", methods=["GET", "POST"])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
+        if user:
+            send_password_reset_email(user)
+        flash(_("Check your email for the instructions to reset your password"), "info")
+        return redirect(url_for("auth.login"))
+    return render_template(
+        "auth/reset_password_request.html", title=_("Reset Password"), form=form
+    )
+
+
+@bp.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for("main.index"))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash(_("Your password has been reset."), "success")
+        return redirect(url_for("auth.login"))
+    return render_template("auth/reset_password.html", form=form)

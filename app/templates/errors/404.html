@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="text-center py-5">
+        <h1 class="display-1 text-muted">404</h1>
+        <h2 class="mb-4">{{ _('Page Not Found') }}</h2>
+        <p class="lead text-muted">{{ _('The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.') }}</p>
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">{{ _('Back to Home') }}</a>
+    </div>
+{% endblock %}

@@ -186,3 +186,13 @@ def hive_tag_feed(tag):
     return render_template(
         "hive/tag_feed.html", tag=tag, entries=entries, next_cursor=next_cursor
     )
+
+
+@bp.route("/about")
+def about():
+    return render_template("main/about.html", title=_("About Ecobank"))
+
+
+@bp.route("/privacy")
+def privacy():
+    return render_template("main/privacy.html", title=_("Privacy Policy"))

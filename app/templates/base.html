@@ -137,7 +137,12 @@
 
     <footer class="footer mt-auto py-3 bg-light">
       <div class="container text-center">
-        <span class="text-muted">&copy; 2025 Ecobank Development. Built on Hive.</span>
+        <span class="text-muted">
+          &copy; {{ now.year }} Ecobank Development. Built on Hive.
+          <br>
+          <a href="{{ url_for('main.about') }}" class="text-muted me-2">{{ _('About') }}</a>
+          <a href="{{ url_for('main.privacy') }}" class="text-muted">{{ _('Privacy Policy') }}</a>
+        </span>
       </div>
     </footer>
 

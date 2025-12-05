@@ -45,12 +45,14 @@ def create_app(config_class=Config):
             hours=1,
         )
 
-    # Initialize MongoEngine
-    from mongoengine import connect
+        # Initialize MongoEngine
 
-    connect("ecobank", host="mongodb://localhost:27017/ecobank")
+        from mongoengine import connect
 
-    # Ensure i18n helpers are available in templates (Ecofront pattern)
+        connect(host=app.config["MONGO_URI"])
+
+        # Ensure i18n helpers are available in templates (Ecofront pattern)
+
     app.jinja_env.add_extension("jinja2.ext.i18n")
     app.jinja_env.globals.update(_=_, gettext=_, ngettext=ngettext)
 

@@ -19,6 +19,7 @@ class Config:
         "SQLALCHEMY_DATABASE_URI"
     ) or "sqlite:///" + os.path.join(basedir, "instance", "ecobank.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MONGO_URI = os.environ.get("MONGO_URI") or "mongodb://localhost:27017/ecobank"
 
     # i18n
     BABEL_DEFAULT_LOCALE = os.environ.get("BABEL_DEFAULT_LOCALE", "en")

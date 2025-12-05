@@ -38,16 +38,16 @@
                 </div>
                 <div class="mb-3">
                     <label for="active_key" class="form-label">{{ _('Active Key (Private)') }}</label>
-                    <input type="password" class="form-control" id="active_key" name="active_key" placeholder="5...">
+                    <input type="text" class="form-control" id="active_key" name="active_key">
                 </div>
-                <div class="mb-3">
-                    <label for="owner_key" class="form-label">{{ _('Owner Key (Private)') }}</label>
-                    <input type="password" class="form-control" id="owner_key" name="owner_key" placeholder="5...">
-                </div>
+
+        <!-- Owner Key removed for security - EcoBank does not hold Owner keys for imported accounts -->
+
                 <div class="mb-3">
                     <label for="memo_key" class="form-label">{{ _('Memo Key (Private)') }}</label>
-                    <input type="password" class="form-control" id="memo_key" name="memo_key" placeholder="5...">
+                    <input type="text" class="form-control" id="memo_key" name="memo_key">
                 </div>
+
             </div>
         </div>
 

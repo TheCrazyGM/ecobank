@@ -30,6 +30,7 @@
                 {% elif draft.status == 'published' %}
                     <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank" class="btn btn-info">{{ _('View on Hive') }}</a>
                 {% endif %}
+                <a href="{{ url_for('drafts.history', draft_id=draft.id) }}" class="btn btn-secondary">{{ _('History') }}</a>
                 <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-secondary">{{ _('Back') }}</a>
             </div>
         </div>

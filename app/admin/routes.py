@@ -5,7 +5,11 @@ from app.admin.decorators import admin_required
 from app.admin.forms import AdminUserEditForm, AdminGroupEditForm
 from app.models import User, Group, Draft, HiveAccount, PayPalOrder
 from app.extensions import db
-from app.utils.hive import fetch_pending_claimed_accounts
+from app.utils.hive import (
+    fetch_pending_claimed_accounts,
+    fetch_active_delegations,
+    claim_account,
+)
 
 
 @bp.route("/")
@@ -124,6 +128,24 @@ def logs_paypal():
     return render_template("admin/logs_paypal.html", orders=orders)
 
 
+@bp.route("/logs/hive/claim", methods=["POST"])
+@admin_required
+def claim_ticket():
+    system_account = current_app.config.get("HIVE_CLAIMER_ACCOUNT")
+    system_key = current_app.config.get("HIVE_CLAIMER_KEY")
+
+    if not system_account or not system_key:
+        flash("System account not configured.", "danger")
+        return redirect(url_for("admin.logs_hive"))
+
+    if claim_account(system_account, system_key):
+        flash("Successfully claimed one account creation ticket!", "success")
+    else:
+        flash("Failed to claim account ticket. Check RC.", "danger")
+
+    return redirect(url_for("admin.logs_hive"))
+
+
 @bp.route("/logs/hive")
 @admin_required
 def logs_hive():
@@ -131,12 +153,15 @@ def logs_hive():
 
     system_account = current_app.config.get("HIVE_CLAIMER_ACCOUNT")
     pending_claims = 0
+    active_delegations = []
     if system_account:
         pending_claims = fetch_pending_claimed_accounts(system_account)
+        active_delegations = fetch_active_delegations(system_account)
 
     return render_template(
         "admin/logs_hive.html",
         accounts=accounts,
         pending_claims=pending_claims,
         system_account=system_account,
+        active_delegations=active_delegations,
     )

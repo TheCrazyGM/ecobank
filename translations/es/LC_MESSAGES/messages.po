@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-04 06:40-0500\n"
+"POT-Creation-Date: 2025-12-05 05:07-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -18,51 +18,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/account/routes.py:49
+#: app/account/routes.py:50
 msgid "You do not have enough credits to create an account."
 msgstr "No tienes suficientes créditos para crear una cuenta."
 
-#: app/account/routes.py:56 app/account/routes.py:145
+#: app/account/routes.py:57 app/account/routes.py:190
 msgid "Invalid username format."
 msgstr "Formato de usuario inválido."
 
-#: app/account/routes.py:60
+#: app/account/routes.py:61
 msgid "Password is required."
 msgstr "Se requiere contraseña."
 
-#: app/account/routes.py:67
+#: app/account/routes.py:68
 msgid "Username already exists on Hive."
 msgstr "El usuario ya existe en Hive."
 
-#: app/account/routes.py:77
+#: app/account/routes.py:78
 msgid "Account creator not configured."
 msgstr "Creador de cuentas no configurado."
 
-#: app/account/routes.py:87
+#: app/account/routes.py:88
 #, python-format
 msgid "Account creation failed: %(error)s"
 msgstr "Falló la creación de la cuenta: %(error)s"
 
-#: app/account/routes.py:104
+#: app/account/routes.py:105
 msgid "Encryption key not configured. Cannot save credentials safely."
 msgstr ""
 "Clave de encriptación no configurada. No se pueden guardar las "
 "credenciales de forma segura."
 
-#: app/account/routes.py:126
+#: app/account/routes.py:140
+#, python-format
+msgid "Successfully delegated %(hp)s HP to %(username)s for Resource Credits!"
+msgstr "¡HP %(hp)s delegados a %(username)s para Créditos de Recursos!"
+
+#: app/account/routes.py:149
+#, python-format
+msgid "Failed to delegate RC to %(username)s. Please contact support."
+msgstr "No se pudieron delegar los CR a %(username)s. Contacta a soporte técnico."
+
+#: app/account/routes.py:164
+msgid ""
+"RC delegation not configured. Account created but may have low Resource "
+"Credits."
+msgstr ""
+"Delegación de CR no configurada. Cuenta creada pero puede tener Créditos "
+"de Recursos bajos."
+
+#: app/account/routes.py:169
+msgid "RC delegation amount is 0, skipping delegation."
+msgstr "La cantidad de delegación de CR es 0, omitiendo la delegación."
+
+#: app/account/routes.py:171
 #, python-format
 msgid "Account %(username)s created successfully!"
 msgstr "¡Cuenta %(username)s creada exitosamente!"
 
-#: app/account/routes.py:153
+#: app/account/routes.py:198
 msgid "You have already imported this account."
 msgstr "Ya has importado esta cuenta."
 
-#: app/account/routes.py:161
+#: app/account/routes.py:206
 msgid "Account not found on Hive blockchain."
 msgstr "Cuenta no encontrada en la blockchain Hive."
 
-#: app/account/routes.py:193
+#: app/account/routes.py:238
 msgid ""
 "Master password validation failed: Derived posting key does not match "
 "account."
@@ -70,53 +92,64 @@ msgstr ""
 "Falló la validación de la contraseña maestra: La clave posting derivada "
 "no coincide con la cuenta."
 
-#: app/account/routes.py:201
+#: app/account/routes.py:246
 msgid "Error validating password."
 msgstr "Error validando la contraseña."
 
-#: app/account/routes.py:255
+#: app/account/routes.py:300
 msgid "No valid keys provided that match the account authorities."
 msgstr ""
 "No se proporcionaron claves válidas que coincidan con las autoridades de "
 "la cuenta."
 
-#: app/account/routes.py:263
+#: app/account/routes.py:308
 msgid "Encryption key error."
 msgstr "Error de clave de encriptación."
 
-#: app/account/routes.py:286
+#: app/account/routes.py:335
 #, python-format
 msgid "Account %(username)s imported successfully!"
 msgstr "¡Cuenta %(username)s importada exitosamente!"
 
-#: app/account/routes.py:303
+#: app/account/routes.py:352 app/account/routes.py:396
 msgid "Unauthorized"
 msgstr "No autorizado"
 
-#: app/account/routes.py:313
+#: app/account/routes.py:362
 msgid "Invalid password"
 msgstr "Contraseña inválida"
 
-#: app/account/routes.py:322
+#: app/account/routes.py:371
 msgid "Encryption key not configured. Cannot decrypt credentials safely."
 msgstr ""
 "Clave de encriptación no configurada. No se pueden descifrar las "
 "credenciales de forma segura."
 
-#: app/account/routes.py:335
+#: app/account/routes.py:384
 msgid "Failed to decrypt credentials."
 msgstr "Fallo al desencriptar credenciales."
+
+#: app/account/routes.py:402
+#, python-format
+msgid ""
+"Hive account %(username)s has been removed from EcoBank. Remember to keep"
+" your keys safe!"
+msgstr ""
+
+#: app/account/routes.py:406
+msgid "Failed to remove Hive account from EcoBank. Please try again."
+msgstr ""
 
 #: app/admin/forms.py:9 app/auth/forms.py:10 app/auth/forms.py:18
 #: app/templates/account/create.html:13 app/templates/account/import.html:9
 #: app/templates/account/list.html:12 app/templates/admin/credits.html:8
-#: app/templates/admin/logs_hive.html:13 app/templates/admin/users.html:13
-#: app/templates/groups/view.html:168 app/templates/main/profile.html:24
+#: app/templates/admin/logs_hive.html:78 app/templates/admin/users.html:13
+#: app/templates/main/profile.html:24
 msgid "Username"
 msgstr "Usuario"
 
-#: app/admin/forms.py:12 app/auth/forms.py:21 app/templates/admin/users.html:14
-#: app/templates/main/profile.html:28
+#: app/admin/forms.py:12 app/auth/forms.py:21 app/auth/forms.py:54
+#: app/templates/admin/users.html:14 app/templates/main/profile.html:28
 msgid "Email"
 msgstr "Correo Electrónico"
 
@@ -150,32 +183,32 @@ msgstr "Nombre de Usuario del Propietario"
 msgid "Update Group"
 msgstr "Actualizar Grupo"
 
-#: app/admin/routes.py:46
+#: app/admin/routes.py:47
 #, python-format
 msgid "Password reset for user %(username)s."
 msgstr "Contraseña restablecida para el usuario %(username)s."
 
-#: app/admin/routes.py:52
+#: app/admin/routes.py:53
 #, python-format
 msgid "User %(username)s updated successfully."
 msgstr "Usuario %(username)s actualizado exitosamente."
 
-#: app/admin/routes.py:67
+#: app/admin/routes.py:68
 #, python-format
 msgid "Credits updated for user %(username)s."
 msgstr "Créditos actualizados para el usuario %(username)s."
 
-#: app/admin/routes.py:99
+#: app/admin/routes.py:100
 #, python-format
 msgid "User %(username)s not found. Owner not changed."
 msgstr "Usuario %(username)s no encontrado. El propietario no fue cambiado."
 
-#: app/admin/routes.py:107
+#: app/admin/routes.py:108
 #, python-format
 msgid "Group %(name)s updated successfully."
 msgstr "Grupo %(name)s actualizado exitosamente."
 
-#: app/auth/forms.py:11 app/auth/forms.py:23
+#: app/auth/forms.py:11 app/auth/forms.py:23 app/auth/forms.py:59
 #: app/templates/account/create.html:18 app/templates/account/verify.html:15
 msgid "Password"
 msgstr "Contraseña"
@@ -184,16 +217,16 @@ msgstr "Contraseña"
 msgid "Remember Me"
 msgstr "Recuérdame"
 
-#: app/auth/forms.py:13 app/auth/routes.py:43 app/templates/auth/login.html:4
+#: app/auth/forms.py:13 app/auth/routes.py:53 app/templates/auth/login.html:4
 #: app/templates/auth/register.html:39
 msgid "Sign In"
 msgstr "Iniciar Sesión"
 
-#: app/auth/forms.py:25
+#: app/auth/forms.py:25 app/auth/forms.py:61
 msgid "Repeat Password"
 msgstr "Repetir Contraseña"
 
-#: app/auth/forms.py:27 app/auth/routes.py:73
+#: app/auth/forms.py:27 app/auth/routes.py:100
 #: app/templates/auth/register.html:4
 msgid "Register"
 msgstr "Registrarse"
@@ -214,76 +247,107 @@ msgstr "Contraseña Actual"
 msgid "Confirm New Password"
 msgstr "Confirmar Nueva Contraseña"
 
-#: app/auth/forms.py:50 app/auth/routes.py:96
+#: app/auth/forms.py:50 app/auth/routes.py:125
 #: app/templates/auth/change_password.html:8 app/templates/main/profile.html:65
 msgid "Change Password"
 msgstr "Cambiar Contraseña"
 
-#: app/auth/routes.py:30
+#: app/auth/forms.py:55 app/auth/forms.py:62
+#, fuzzy
+msgid "Request Password Reset"
+msgstr "Repetir Contraseña"
+
+#: app/auth/routes.py:23
+msgid "[EcoBank] Verify Your Email"
+msgstr ""
+
+#: app/auth/routes.py:44
 msgid "Invalid username or password"
 msgstr "Usuario o contraseña inválidos"
 
-#: app/auth/routes.py:69
-msgid "Congratulations, you are now a registered user!"
+#: app/auth/routes.py:63
+msgid "Verification link is invalid or has expired."
+msgstr ""
+
+#: app/auth/routes.py:67
+#, fuzzy
+msgid "Account already verified."
+msgstr "Creador de cuentas no configurado."
+
+#: app/auth/routes.py:71
+#, fuzzy
+msgid "Your account has been verified!"
+msgstr "Tu contraseña ha sido actualizada."
+
+#: app/auth/routes.py:98
+#, fuzzy
+msgid ""
+"Congratulations, you are now a registered user! Please check your email "
+"to verify your account."
 msgstr "¡Felicidades, ahora eres un usuario registrado!"
 
-#: app/auth/routes.py:83
+#: app/auth/routes.py:112
 msgid "Invalid current password."
 msgstr "Contraseña actual inválida."
 
-#: app/auth/routes.py:91
+#: app/auth/routes.py:120
 msgid "Your password has been updated."
 msgstr "Tu contraseña ha sido actualizada."
 
-#: app/main/routes.py:28
+#: app/main/routes.py:33
 msgid "My Feed"
 msgstr "Mi Feed"
 
-#: app/main/routes.py:35
+#: app/main/routes.py:40
 msgid "Community Feed"
 msgstr "Feed de la Comunidad"
 
-#: app/templates/base.html:6 app/templates/base.html:29
+#: app/templates/base.html:6 app/templates/base.html:46
 msgid "Ecobank Development"
 msgstr "Desarrollo Ecobank"
 
-#: app/templates/base.html:36
+#: app/templates/base.html:53
 msgid "Home"
 msgstr "Inicio"
 
-#: app/templates/base.html:43
+#: app/templates/base.html:60
 msgid "Admin"
 msgstr "Administrador"
 
-#: app/templates/account/create.html:27 app/templates/base.html:47
+#: app/templates/account/create.html:27 app/templates/base.html:64
 msgid "Buy Credits"
 msgstr "Comprar Créditos"
 
-#: app/templates/admin/dashboard.html:50 app/templates/base.html:51
+#: app/templates/base.html:70 app/templates/notifications/index.html:5
+#, fuzzy
+msgid "Notifications"
+msgstr "Acciones"
+
+#: app/templates/admin/dashboard.html:50 app/templates/base.html:82
 msgid "Hive Accounts"
 msgstr "Cuentas Hive"
 
-#: app/templates/account/list.html:6 app/templates/base.html:54
+#: app/templates/account/list.html:6 app/templates/base.html:85
 msgid "Create New"
 msgstr "Crear Nueva"
 
-#: app/templates/base.html:55
+#: app/templates/base.html:86
 msgid "My Accounts"
 msgstr "Mis Cuentas"
 
-#: app/templates/base.html:59 app/templates/groups/list.html:5
+#: app/templates/base.html:90 app/templates/groups/list.html:5
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:66
+#: app/templates/base.html:97
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/base.html:68
+#: app/templates/base.html:99
 msgid "Logout"
 msgstr "Cerrar Sesión"
 
-#: app/templates/base.html:73
+#: app/templates/base.html:104
 msgid "Login"
 msgstr "Iniciar Sesión"
 
@@ -296,32 +360,27 @@ msgid "Your decentralized finance hub."
 msgstr "Tu centro de finanzas descentralizadas."
 
 #: app/templates/drafts/view.html:8 app/templates/hive/post.html:18
-#: app/templates/hive/tag_feed.html:25 app/templates/index.html:21
+#: app/templates/hive/tag_feed.html:25 app/templates/index.html:23
 msgid "By"
 msgstr "Por"
 
-#: app/templates/hive/post.html:33 app/templates/hive/user_blog.html:39
-#: app/templates/index.html:28
-msgid "Payout:"
-msgstr "Pago:"
-
-#: app/templates/index.html:29
+#: app/templates/index.html:31
 msgid "Read More"
 msgstr "Leer Más"
 
-#: app/templates/index.html:38
+#: app/templates/index.html:39
 msgid "No posts found right now."
 msgstr "No se encontraron publicaciones en este momento."
 
-#: app/templates/index.html:39
+#: app/templates/index.html:40
 msgid "Register a Hive account or create one to start seeing content here!"
 msgstr "¡Registra una cuenta Hive o crea una para comenzar a ver contenido aquí!"
 
-#: app/templates/index.html:41
+#: app/templates/index.html:42
 msgid "Join Now"
 msgstr "Únete Ahora"
 
-#: app/templates/account/create.html:4 app/templates/index.html:43
+#: app/templates/account/create.html:4 app/templates/index.html:44
 msgid "Create Hive Account"
 msgstr "Crear Cuenta Hive"
 
@@ -415,11 +474,7 @@ msgstr "Clave Posting (Privada)"
 msgid "Active Key (Private)"
 msgstr "Clave Active (Privada)"
 
-#: app/templates/account/import.html:44
-msgid "Owner Key (Private)"
-msgstr "Clave Owner (Privada)"
-
-#: app/templates/account/import.html:48
+#: app/templates/account/import.html:47
 msgid "Memo Key (Private)"
 msgstr "Clave Memo (Privada)"
 
@@ -428,8 +483,9 @@ msgid "Import Account"
 msgstr "Importar Cuenta"
 
 #: app/templates/account/import.html:55 app/templates/account/verify.html:20
+#: app/templates/account/view.html:55
 #: app/templates/auth/change_password.html:36
-#: app/templates/drafts/create.html:33 app/templates/drafts/edit.html:33
+#: app/templates/drafts/create.html:43 app/templates/drafts/edit.html:43
 #: app/templates/groups/view.html:178 app/templates/groups/view.html:212
 msgid "Cancel"
 msgstr "Cancelar"
@@ -455,7 +511,7 @@ msgstr "Fuente"
 msgid "Actions"
 msgstr "Acciones"
 
-#: app/templates/account/list.html:25 app/templates/admin/logs_hive.html:35
+#: app/templates/account/list.html:25 app/templates/admin/logs_hive.html:92
 msgid "Imported"
 msgstr "Importado"
 
@@ -498,6 +554,51 @@ msgstr "Privada:"
 #: app/templates/account/view.html:24
 msgid "Back to List"
 msgstr "Volver a la Lista"
+
+#: app/templates/account/view.html:26
+msgid "Download Keys"
+msgstr ""
+
+#: app/templates/account/view.html:29
+msgid "Delete Account from EcoBank"
+msgstr ""
+
+#: app/templates/account/view.html:36
+#, fuzzy
+msgid "Confirm Account Deletion"
+msgstr "Ver Registros de Creación de Cuentas"
+
+#: app/templates/account/view.html:40
+msgid ""
+"WARNING: This action will permanently remove this Hive account from "
+"EcoBank's management. The account will remain on the Hive blockchain, but"
+" EcoBank will no longer store your keys or manage it. You MUST download "
+"your keys if you wish to retain access to this account."
+msgstr ""
+
+#: app/templates/account/view.html:44
+msgid ""
+"I have downloaded all my keys and understand EcoBank will no longer store"
+" them."
+msgstr ""
+
+#: app/templates/account/view.html:50
+msgid ""
+"I understand this action is permanent and EcoBank cannot recover my "
+"account."
+msgstr ""
+
+#: app/templates/account/view.html:56
+msgid "Delete Permanently"
+msgstr ""
+
+#: app/templates/account/view.html:113
+msgid "Failed to delete account. Please try again."
+msgstr ""
+
+#: app/templates/account/view.html:120
+msgid "An error occurred. Please try again."
+msgstr ""
 
 #: app/templates/admin/credits.html:4
 msgid "Admin: Grant Credits"
@@ -570,7 +671,7 @@ msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
-#: app/templates/drafts/view.html:29
+#: app/templates/drafts/view.html:34
 msgid "Back"
 msgstr "Volver"
 
@@ -603,7 +704,7 @@ msgid "Members"
 msgstr "Miembros"
 
 #: app/templates/admin/groups.html:31 app/templates/admin/users.html:28
-#: app/templates/drafts/view.html:13
+#: app/templates/drafts/view.html:15
 msgid "Edit"
 msgstr "Editar"
 
@@ -611,26 +712,50 @@ msgstr "Editar"
 msgid "Hive Account Creation Logs"
 msgstr "Registros de Creación de Cuentas Hive"
 
-#: app/templates/admin/logs_hive.html:11
-msgid "System Account:"
-msgstr "Cuenta del Sistema:"
+#: app/templates/admin/logs_hive.html:15
+msgid "System Account Status"
+msgstr "Estado de la Cuenta del Sistema"
 
-#: app/templates/admin/logs_hive.html:13
+#: app/templates/admin/logs_hive.html:23
 msgid "Pending Claimed Accounts:"
 msgstr "Cuentas Reclamadas Pendientes:"
 
-#: app/templates/admin/logs_hive.html:22
-msgid "Created By"
-msgstr "Creado Por"
+#: app/templates/admin/logs_hive.html:33
+msgid "Claim New Ticket (Uses RC)"
+msgstr ""
 
-#: app/templates/admin/logs_hive.html:23
-msgid "TX ID"
-msgstr "ID de Transacción"
+#: app/templates/admin/logs_hive.html:41
+msgid "Active Delegations (RC Support)"
+msgstr "Delegaciones Activas (Soporte RC)"
 
-#: app/templates/admin/logs_hive.html:24
+#: app/templates/admin/logs_hive.html:49
+msgid "Delegatee"
+msgstr "Delegado"
+
+#: app/templates/admin/logs_hive.html:50
+msgid "Hive Power"
+msgstr "Poder Hive"
+
+#: app/templates/admin/logs_hive.html:51
+msgid "Vesting Shares"
+msgstr "Acciones de Vesting"
+
+#: app/templates/admin/logs_hive.html:52 app/templates/admin/logs_hive.html:81
 #: app/templates/admin/logs_paypal.html:18
 msgid "Date"
 msgstr "Fecha"
+
+#: app/templates/admin/logs_hive.html:68
+msgid "No active delegations found."
+msgstr "No se encontraron delegaciones activas."
+
+#: app/templates/admin/logs_hive.html:79
+msgid "Created By"
+msgstr "Creado Por"
+
+#: app/templates/admin/logs_hive.html:80
+msgid "TX ID"
+msgstr "ID de Transacción"
 
 #: app/templates/admin/logs_paypal.html:5
 msgid "PayPal Logs"
@@ -711,16 +836,27 @@ msgid "Add Credits"
 msgstr "Agregar Créditos"
 
 #: app/templates/auth/login.html:25
+#, fuzzy
+msgid "Forgot Password?"
+msgstr "Repetir Contraseña"
+
+#: app/templates/auth/login.html:27
 msgid "New User?"
 msgstr "¿Nuevo Usuario?"
 
-#: app/templates/auth/login.html:26
+#: app/templates/auth/login.html:27
 msgid "Click to Register!"
 msgstr "¡Haz clic para registrarte!"
 
 #: app/templates/auth/register.html:38
 msgid "Already have an account?"
 msgstr "¿Ya tienes una cuenta?"
+
+#: app/templates/auth/reset_password.html:4
+#: app/templates/auth/reset_password_request.html:4
+#, fuzzy
+msgid "Reset Password"
+msgstr "Repetir Contraseña"
 
 #: app/templates/drafts/create.html:4
 msgid "Create Draft"
@@ -738,11 +874,15 @@ msgstr "Publicar Como (Cuenta Hive)"
 msgid "Content (Markdown)"
 msgstr "Contenido (Markdown)"
 
-#: app/templates/drafts/create.html:28 app/templates/drafts/edit.html:28
+#: app/templates/drafts/create.html:31 app/templates/drafts/edit.html:31
+msgid "Insert Image"
+msgstr "Insertar Imagen"
+
+#: app/templates/drafts/create.html:38 app/templates/drafts/edit.html:38
 msgid "Tags (space separated)"
 msgstr "Etiquetas (separadas por espacio)"
 
-#: app/templates/drafts/create.html:32
+#: app/templates/drafts/create.html:42
 msgid "Save Draft"
 msgstr "Guardar Borrador"
 
@@ -754,52 +894,93 @@ msgstr "Editar Borrador"
 msgid "Group:"
 msgstr "Grupo:"
 
-#: app/templates/drafts/edit.html:32
+#: app/templates/drafts/edit.html:42
 msgid "Update Draft"
 msgstr "Actualizar Borrador"
 
-#: app/templates/drafts/view.html:16
-msgid "Submit / Publish"
-msgstr "Enviar / Publicar"
+#: app/templates/drafts/history.html:5
+msgid "Version History"
+msgstr ""
 
-#: app/templates/drafts/view.html:18
+#: app/templates/drafts/history.html:6
+#, fuzzy
+msgid "Back to Draft"
+msgstr "Volver a la Lista"
+
+#: app/templates/drafts/history.html:14
+msgid "Version"
+msgstr ""
+
+#: app/templates/drafts/history.html:18
+msgid "Tags:"
+msgstr ""
+
+#: app/templates/drafts/history.html:20
+msgid "Restore this version? Current content will be saved as a new version."
+msgstr ""
+
+#: app/templates/drafts/history.html:21
+#, fuzzy
+msgid "Restore"
+msgstr "Registrarse"
+
+#: app/templates/drafts/history.html:25
+#, fuzzy
+msgid "Show Content"
+msgstr "Borradores / Contenido"
+
+#: app/templates/drafts/history.html:32
+msgid "No history available."
+msgstr ""
+
+#: app/templates/drafts/view.html:8
+msgid "For account:"
+msgstr "Para cuenta:"
+
+#: app/templates/drafts/view.html:19
+msgid "Are you sure you want to publish this to Hive? This cannot be undone."
+msgstr ""
+"¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
+"deshacer."
+
+#: app/templates/drafts/view.html:20
 msgid "Publish"
 msgstr "Publicar"
 
-#: app/templates/drafts/view.html:22
+#: app/templates/drafts/view.html:25
 msgid "Are you sure you want to reject/delete this draft?"
 msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
 
-#: app/templates/drafts/view.html:23
+#: app/templates/drafts/view.html:26
 msgid "Reject"
 msgstr "Rechazar"
 
-#: app/templates/drafts/view.html:27
+#: app/templates/drafts/view.html:31
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
-#: app/templates/drafts/view.html:29
-msgid "Back"
-msgstr "Volver"
+#: app/templates/drafts/view.html:33
+msgid "History"
+msgstr ""
 
-#: app/templates/drafts/view.html:35
+#: app/templates/drafts/view.html:44
 msgid "Automatic Header Preview"
 msgstr "Vista Previa del Encabezado Automático"
 
-#: app/templates/drafts/view.html:36
+#: app/templates/drafts/view.html:45
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:43 app/templates/main/profile.html:84
+#: app/templates/drafts/view.html:52 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
-#: app/templates/drafts/view.html:45
+#: app/templates/drafts/view.html:54
 #, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
-#: app/templates/drafts/view.html:53
+#: app/templates/drafts/view.html:62
 msgid "Content Preview"
 msgstr "Vista Previa del Contenido"
 
@@ -947,7 +1128,7 @@ msgstr "Publicaciones de Blog"
 msgid "Reblogged"
 msgstr "Reblogueado"
 
-#: app/templates/hive/user_blog.html:58 app/templates/index.html:39
+#: app/templates/hive/user_blog.html:58
 msgid "No posts found."
 msgstr "No se encontraron publicaciones."
 
@@ -1034,3 +1215,15 @@ msgstr "Así se verá tu biografía en las publicaciones."
 #: app/templates/main/profile.html:86
 msgid "Bio not set."
 msgstr "Biografía no configurada."
+
+#: app/templates/notifications/index.html:6
+msgid "Mark All Read"
+msgstr ""
+
+#: app/templates/notifications/index.html:20
+msgid "No notifications."
+msgstr ""
+
+#~ msgid "Owner Key (Private)"
+#~ msgstr "Clave Owner (Privada)"
+

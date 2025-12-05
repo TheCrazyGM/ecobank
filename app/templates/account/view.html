@@ -22,4 +22,106 @@
     </div>
 
     <a href="{{ url_for('account.list_accounts') }}" class="btn btn-secondary">{{ _('Back to List') }}</a>
+
+    <button type="button" class="btn btn-info me-2" id="downloadKeysBtn">{{ _('Download Keys') }}</button>
+
+    <!-- Button to trigger delete modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">{{ _('Delete Account from EcoBank') }}</button>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">{{ _('Confirm Account Deletion') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger">{{ _('WARNING: This action will permanently remove this Hive account from EcoBank\'s management. The account will remain on the Hive blockchain, but EcoBank will no longer store your keys or manage it. You MUST download your keys if you wish to retain access to this account.') }}</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="confirmDownloadedKeys">
+                        <label class="form-check-label" for="confirmDownloadedKeys">
+                            {{ _('I have downloaded all my keys and understand EcoBank will no longer store them.') }}
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="confirmUnderstoodPermanent">
+                        <label class="form-check-label" for="confirmUnderstoodPermanent">
+                            {{ _('I understand this action is permanent and EcoBank cannot recover my account.') }}
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn" disabled>{{ _('Delete Permanently') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadKeysBtn = document.getElementById('downloadKeysBtn');
+            const confirmDownloadedKeys = document.getElementById('confirmDownloadedKeys');
+            const confirmUnderstoodPermanent = document.getElementById('confirmUnderstoodPermanent');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+            // Download Keys functionality
+            if (downloadKeysBtn) {
+                downloadKeysBtn.addEventListener('click', function() {
+                    const accountData = {
+                        username: "{{ account.username }}",
+                        master_password: "{{ password if password else 'Not stored (imported with individual keys)' }}",
+                        keys: JSON.parse('{{ keys|tojson }}') // Assuming keys is a dict, need to parse
+                    };
+                    const filename = `hive_keys_{{ account.username }}.json`;
+                    const blob = new Blob([JSON.stringify(accountData, null, 2)], {type: 'application/json'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+            }
+
+            // Enable/Disable delete button based on checkbox status
+            function toggleDeleteButton() {
+                confirmDeleteBtn.disabled = !(confirmDownloadedKeys.checked && confirmUnderstoodPermanent.checked);
+            }
+
+            if (confirmDownloadedKeys) confirmDownloadedKeys.addEventListener('change', toggleDeleteButton);
+            if (confirmUnderstoodPermanent) confirmUnderstoodPermanent.addEventListener('change', toggleDeleteButton);
+
+            // Actual deletion POST request
+            if (confirmDeleteBtn) {
+                confirmDeleteBtn.addEventListener('click', function() {
+                    fetch("{{ url_for('account.delete_account', id=account.id) }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            // Include CSRF token if used in your Flask setup
+                        },
+                        body: JSON.stringify({}) // Send empty body for POST request
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                window.location.href = "{{ url_for('account.list_accounts') }}"; // Redirect on success
+                            } else {
+                                alert("{{ _('Failed to delete account. Please try again.') }}");
+                            // Optionally, refresh the page or show a more specific error
+                                location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert("{{ _('An error occurred. Please try again.') }}");
+                            location.reload();
+                        });
+                });
+            }
+        });
+    </script>
 {% endblock %}

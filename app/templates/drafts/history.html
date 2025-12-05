@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ _('Version History') }}: {{ draft.title }}</h2>
+        <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-secondary">{{ _('Back to Draft') }}</a>
+    </div>
+
+    {% if versions %}
+        <div class="list-group">
+            {% for v in versions %}
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ _('Version') }} {{ v.version_number }}</h5>
+                        <small>{{ v.saved_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                    </div>
+                    <p class="mb-1">{{ v.title }}</p>
+                    <small class="text-muted">{{ _('Tags:') }} {{ v.tags }}</small>
+
+                    <form action="{{ url_for('drafts.restore', draft_id=draft.id, version_num=v.version_number) }}" method="POST" class="mt-2" onsubmit="return confirm('{{ _('Restore this version? Current content will be saved as a new version.') }}');">
+                        <button type="submit" class="btn btn-sm btn-warning">{{ _('Restore') }}</button>
+                    </form>
+
+                    <details class="mt-2">
+                        <summary class="text-info" style="cursor: pointer;">{{ _('Show Content') }}</summary>
+            <pre class="bg-light p-2 border rounded mt-2"><code>{{ v.body }}</code></pre>
+                    </details>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">{{ _('No history available.') }}</p>
+    {% endif %}
+{% endblock %}

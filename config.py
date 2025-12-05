@@ -31,6 +31,8 @@ class Config:
     HIVE_CLAIMER_ACCOUNT = os.environ.get("HIVE_CLAIMER_ACCOUNT")
     HIVE_CLAIMER_KEY = os.environ.get("HIVE_CLAIMER_KEY")
     HIVE_ENCRYPTION_KEY = os.environ.get("HIVE_ENCRYPTION_KEY")
+    # Default to 15 HP delegation for new accounts
+    HIVE_DELEGATION_AMOUNT = float(os.environ.get("HIVE_DELEGATION_AMOUNT", 15.0))
 
     # PayPal
     PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID")
@@ -38,5 +40,15 @@ class Config:
     PAYPAL_API_BASE = os.environ.get(
         "PAYPAL_API_BASE", "https://api-m.sandbox.paypal.com"
     )
+    PAYPAL_WEBHOOK_ID = os.environ.get("PAYPAL_WEBHOOK_ID")
+
+    # Mail Settings
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = int(os.environ.get("MAIL_PORT") or 25)
+    MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS") is not None
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    ADMINS = ["your-email@example.com"]
+
     # Cost per credit in USD
     CREDIT_PRICE_USD = 3.00

@@ -1,0 +1,10 @@
+Dear {{ user.username }},
+
+To verify your email address please click on the following link:
+
+{{ url_for('auth.verify_email', token=token, _external=True) }}
+
+If you have not registered for an account on EcoBank, simply ignore this message.
+
+Sincerely,
+The EcoBank Team

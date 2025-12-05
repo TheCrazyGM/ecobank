@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 from app.extensions import db
 from app.groups import bp
 from app.models import Group, GroupMember, GroupResource, HiveAccount, User
+from app.utils.notifications import create_notification
 
 
 @bp.route("/create", methods=["GET", "POST"])
@@ -122,6 +123,13 @@ def add_member(id):
     new_member = GroupMember(group_id=id, user_id=user_to_add.id, role="member")
     db.session.add(new_member)
     db.session.commit()
+
+    create_notification(
+        user_id=user_to_add.id,
+        message=f"You have been added to group '{Group.query.get(id).name}'",
+        link=url_for("groups.view", id=id),
+        type="invite",
+    )
 
     flash(f"{username} added to group.", "success")
     return redirect(url_for("groups.view", id=id))

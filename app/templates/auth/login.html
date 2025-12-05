@@ -22,7 +22,7 @@
         <p>{{ form.submit(class="btn btn-primary") }}</p>
     </form>
     <p>
-        {{ _('New User?') }}
-        <a href="{{ url_for('auth.register') }}">{{ _('Click to Register!') }}</a>
+        <a href="{{ url_for('auth.reset_password_request') }}">{{ _('Forgot Password?') }}</a>
     </p>
+    <p>{{ _('New User?') }} <a href="{{ url_for('auth.register') }}">{{ _('Click to Register!') }}</a></p>
 {% endblock %}

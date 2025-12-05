@@ -274,3 +274,89 @@ def fetch_pending_claimed_accounts(username: str) -> int:
     except Exception as e:
         logger.error(f"Failed to fetch pending claimed accounts for {username}: {e}")
         return 0
+
+
+def fetch_active_delegations(username: str) -> List[Dict[str, Any]]:
+    """Fetch active delegations made by the user."""
+    try:
+        acc = Account(username)
+        # get_vesting_delegations returns list of dicts
+        delegations = acc.get_vesting_delegations()
+
+        # Need to convert VESTS to HP for display
+        hive = Hive()
+        dgpo = hive.get_dynamic_global_properties()
+        total_vesting_fund = Amount(dgpo["total_vesting_fund_hive"])
+        total_vesting_shares = Amount(dgpo["total_vesting_shares"])
+
+        result = []
+        for d in delegations:
+            vests = Amount(d["vesting_shares"])
+            hp = 0.0
+            if total_vesting_shares.amount > 0:
+                hp = vests.amount * (
+                    total_vesting_fund.amount / total_vesting_shares.amount
+                )
+
+            result.append(
+                {
+                    "delegatee": d["delegatee"],
+                    "vesting_shares": str(vests),
+                    "hive_power": f"{hp:.3f} HP",
+                    "min_delegation_time": d["min_delegation_time"],
+                }
+            )
+        return result
+    except Exception as e:
+        logger.error(f"Failed to fetch delegations for {username}: {e}")
+        return []
+
+
+def hp_to_vests(hp_amount: float) -> float:
+    """Converts a given HP amount to VESTS."""
+    try:
+        hive = Hive()
+        dgpo = hive.get_dynamic_global_properties()
+        total_vesting_fund = Amount(dgpo["total_vesting_fund_hive"]).amount
+        total_vesting_shares = Amount(dgpo["total_vesting_shares"]).amount
+        if total_vesting_fund > 0:
+            return (hp_amount * total_vesting_shares) / total_vesting_fund
+    except Exception as e:
+        logger.error(f"Failed to convert HP to VESTS: {e}")
+    return 0.0
+
+
+def delegate_vesting(
+    delegator_account: str,
+    delegator_key: str,
+    delegatee_account: str,
+    vests_amount: float,
+) -> bool:
+    """Delegates vesting shares from delegator_account to delegatee_account."""
+    try:
+        hive = Hive(keys=[delegator_key])
+        hive.delegate_vesting_shares(
+            delegator_account, delegatee_account, f"{vests_amount:.6f} VESTS"
+        )
+        logger.info(
+            f"Delegated {vests_amount:.6f} VESTS from {delegator_account} to {delegatee_account}"
+        )
+        return True
+    except Exception as e:
+        logger.error(
+            f"Failed to delegate {vests_amount:.6f} VESTS from {delegator_account} to {delegatee_account}: {e}"
+        )
+        return False
+
+
+def claim_account(claimer_account: str, claimer_key: str) -> bool:
+    """Claims an account using the claimer_account RC."""
+    try:
+        hive = Hive(keys=[claimer_key])
+        # claim_account(creator, fee) - fee is '0.000 HIVE' when using RC
+        hive.claim_account(claimer_account, "0.000 HIVE")
+        logger.info(f"Claimed new account ticket for {claimer_account}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to claim account ticket for {claimer_account}: {e}")
+        return False

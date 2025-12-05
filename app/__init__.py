@@ -3,7 +3,7 @@ from flask_babel import gettext as _
 from flask_babel import ngettext
 from flask_login import current_user
 
-from app.extensions import babel, db, login_manager, migrate
+from app.extensions import babel, db, login_manager, migrate, mail, scheduler
 from config import Config
 from app.utils.markdown_render import render_markdown
 
@@ -25,6 +25,30 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     babel.init_app(app, locale_selector=get_locale)
     migrate.init_app(app, db)
+    mail.init_app(app)
+
+    # Initialize Scheduler
+    import os  # Move import os here to fix F823
+
+    # Only run scheduler in production or if explicitly enabled, to avoid double-runs in debug reloader
+    if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        scheduler.init_app(app)
+        from app.tasks import cleanup_pending_orders  # Import function directly
+
+        scheduler.start()
+
+        # Add jobs here or via configuration
+        scheduler.add_job(
+            id="cleanup_orders",
+            func=cleanup_pending_orders,
+            trigger="interval",
+            hours=1,
+        )
+
+    # Initialize MongoEngine
+    from mongoengine import connect
+
+    connect("ecobank", host="mongodb://localhost:27017/ecobank")
 
     # Ensure i18n helpers are available in templates (Ecofront pattern)
     app.jinja_env.add_extension("jinja2.ext.i18n")
@@ -63,5 +87,39 @@ def create_app(config_class=Config):
     from app.admin import bp as admin_bp
 
     app.register_blueprint(admin_bp, url_prefix="/admin")
+
+    from app.webhooks import bp as webhooks_bp
+
+    app.register_blueprint(webhooks_bp, url_prefix="/webhooks")
+
+    from app.api import bp as api_bp
+
+    app.register_blueprint(api_bp, url_prefix="/api")
+
+    from app.notifications import bp as notifications_bp
+
+    app.register_blueprint(notifications_bp, url_prefix="/notifications")
+
+    import os  # Ensure os is imported
+
+    if not app.debug and not app.testing:
+        import logging
+        from logging.handlers import RotatingFileHandler
+
+        if not os.path.exists("logs"):
+            os.mkdir("logs")
+        file_handler = RotatingFileHandler(
+            "logs/ecobank.log", maxBytes=10240, backupCount=10
+        )
+        file_handler.setFormatter(
+            logging.Formatter(
+                "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"
+            )
+        )
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
+
+        app.logger.setLevel(logging.INFO)
+        app.logger.info("EcoBank startup")
 
     return app

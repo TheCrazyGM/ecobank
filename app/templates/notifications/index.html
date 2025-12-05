@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>{{ _('Notifications') }}</h2>
+        <a href="{{ url_for('notifications.mark_all_read') }}" class="btn btn-sm btn-outline-secondary">{{ _('Mark All Read') }}</a>
+    </div>
+
+    <div class="list-group">
+        {% for n in notifications %}
+            <a href="{{ url_for('notifications.mark_read', notification_id=n.id) }}" class="list-group-item list-group-item-action {% if not n.is_read %}active text-white{% endif %}" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ n.type|title }}</h5>
+                    <small class="{% if not n.is_read %}text-white{% else %}text-muted{% endif %}">{{ n.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                </div>
+                <p class="mb-1">{{ n.message }}</p>
+            </a>
+        {% else %}
+            <div class="text-center py-5 text-muted">
+                <p>{{ _('No notifications.') }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

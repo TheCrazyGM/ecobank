@@ -1,17 +1,29 @@
-from urllib.parse import urlsplit
-
 import sqlalchemy as sa
-from flask import flash, redirect, render_template, request, url_for
+from flask import current_app, flash, redirect, render_template, request, url_for
 from flask_babel import gettext as _
 from flask_login import current_user, login_user, logout_user, login_required
+from urllib.parse import urlparse
 
 from app.auth import bp
-
-from app.auth.forms import LoginForm, RegistrationForm, ChangePasswordForm
-
+from app.auth.forms import (
+    ChangePasswordForm,
+    LoginForm,
+    RegistrationForm,
+)
 from app.extensions import db
-
 from app.models import User
+from app.utils.email import send_email
+
+
+def send_verification_email(user):
+    token = user.get_email_verification_token()
+    send_email(
+        _("[EcoBank] Verify Your Email"),
+        sender=current_app.config["ADMINS"][0],
+        recipients=[user.email],
+        text_body=render_template("email/verify_email.txt", user=user, token=token),
+        html_body=render_template("email/verify_email.html", user=user, token=token),
+    )
 
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -32,15 +44,31 @@ def login():
             return redirect(url_for("auth.login"))
 
         login_user(user, remember=form.remember_me.data)
-
         next_page = request.args.get("next")
-
-        if not next_page or urlsplit(next_page).netloc != "":
+        if not next_page or urlparse(next_page).netloc != "":
             next_page = url_for("main.index")
-
         return redirect(next_page)
-
     return render_template("auth/login.html", title=_("Sign In"), form=form)
+
+
+@bp.route("/verify_email/<token>")
+def verify_email(token):
+    if current_user.is_authenticated and current_user.is_verified:
+        return redirect(url_for("main.index"))
+
+    user = User.verify_email_verification_token(token)
+    if not user:
+        flash(_("Verification link is invalid or has expired."), "danger")
+        return redirect(url_for("main.index"))
+
+    if user.is_verified:
+        flash(_("Account already verified."), "info")
+    else:
+        user.is_verified = True
+        db.session.commit()
+        flash(_("Your account has been verified!"), "success")
+
+    return redirect(url_for("main.index"))
 
 
 @bp.route("/logout")
@@ -59,17 +87,20 @@ def register():
 
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
-
         user.set_password(form.password.data)
-
         db.session.add(user)
-
         db.session.commit()
 
-        flash(_("Congratulations, you are now a registered user!"), "success")
+        # Send verification email
+        send_verification_email(user)
 
+        flash(
+            _(
+                "Congratulations, you are now a registered user! Please check your email to verify your account."
+            ),
+            "success",
+        )
         return redirect(url_for("auth.login"))
-
     return render_template("auth/register.html", title=_("Register"), form=form)
 
 

@@ -12,6 +12,7 @@ from nectargraphenebase.account import PasswordKey, PrivateKey
 from app.account import bp
 from app.extensions import db
 from app.models import HiveAccount
+from app.utils.hive import delegate_vesting, hp_to_vests
 
 USERNAME_REGEX = re.compile(r"^(?=.{3,16}$)[a-z][a-z0-9]{2,}(?:[.-][a-z0-9]{3,})*$")
 
@@ -123,6 +124,50 @@ def create():
     db.session.add(new_account)
     db.session.commit()
 
+    # Delegate RC if configured
+    delegation_amount_hp = current_app.config.get("HIVE_DELEGATION_AMOUNT", 0.0)
+    if delegation_amount_hp > 0:
+        delegator_account = current_app.config.get("HIVE_CLAIMER_ACCOUNT")
+        delegator_key = current_app.config.get("HIVE_CLAIMER_KEY")
+        if delegator_account and delegator_key:
+            vests_to_delegate = hp_to_vests(delegation_amount_hp)
+            if vests_to_delegate > 0:
+                if delegate_vesting(
+                    delegator_account, delegator_key, username, vests_to_delegate
+                ):
+                    flash(
+                        _(
+                            "Successfully delegated %(hp)s HP to %(username)s for Resource Credits!",
+                            hp=delegation_amount_hp,
+                            username=username,
+                        ),
+                        "info",
+                    )
+                else:
+                    flash(
+                        _(
+                            "Failed to delegate RC to %(username)s. Please contact support.",
+                            username=username,
+                        ),
+                        "warning",
+                    )
+            else:
+                current_app.logger.warning(
+                    f"Calculated 0 VESTS for {delegation_amount_hp} HP, not delegating."
+                )
+        else:
+            current_app.logger.warning(
+                "HIVE_CLAIMER_ACCOUNT or HIVE_CLAIMER_KEY not set for delegation."
+            )
+            flash(
+                _(
+                    "RC delegation not configured. Account created but may have low Resource Credits."
+                ),
+                "warning",
+            )
+    else:
+        flash(_("RC delegation amount is 0, skipping delegation."), "info")
+
     flash(_("Account %(username)s created successfully!", username=username), "success")
     return redirect(url_for("account.list_accounts"))
 
@@ -138,7 +183,6 @@ def import_account():
 
     posting_key = request.form.get("posting_key", "").strip()
     active_key = request.form.get("active_key", "").strip()
-    owner_key = request.form.get("owner_key", "").strip()
     memo_key = request.form.get("memo_key", "").strip()
 
     if not is_valid_hive_username(username):
@@ -179,8 +223,8 @@ def import_account():
 
             if derived_pub in auth_keys:
                 verified = True
-                # Generate all keys from password to save
-                for role in ["owner", "active", "posting", "memo"]:
+                # Generate keys from password to save - EXCLUDING OWNER for security
+                for role in ["active", "posting", "memo"]:
                     pk_role = PasswordKey(username, password, role=role, prefix=prefix)
                     priv = pk_role.get_private_key()
                     keys_to_save[role] = {
@@ -236,18 +280,18 @@ def import_account():
             if res:
                 keys_to_save["active"] = res
                 verified = True
-        if owner_key:
-            res = verify_key("owner", owner_key)
-            if res:
-                keys_to_save["owner"] = res
-                verified = True
+
+        # Do NOT save owner key even if provided
+        # if owner_key:
+        #     res = verify_key("owner", owner_key)
+        #     if res:
+        #         keys_to_save["owner"] = res
+        #         verified = True
+
         if memo_key:
             res = verify_key("memo", memo_key)
             if res:
                 keys_to_save["memo"] = res
-                # Memo key alone usually considered verified if it matches?
-                # Typically we want at least posting/active for "management".
-                # But technically it is a valid key for the account.
                 verified = True
 
         if not verified:
@@ -265,7 +309,11 @@ def import_account():
 
     fernet = Fernet(encryption_key)
 
-    # If we used password, we save it encrypted. If keys only, password is null.
+    # If we used password, we save it encrypted.
+    # SECURITY NOTE: Saving master password is risky. We should consider NOT saving it if we already derived keys.
+    # However, user might expect us to manage everything. For import, we'll save it if they provided it,
+    # but strictly speaking we only need the derived keys.
+    # Let's keep saving it for now per current architecture, but NOT generating the owner key from it for storage.
     password_enc = None
     if password:
         password_enc = fernet.encrypt(password.encode()).decode()
@@ -338,3 +386,31 @@ def view_account(id):
     return render_template(
         "account/view.html", account=account, password=password, keys=keys
     )
+
+
+@bp.route("/delete/<int:id>", methods=["POST"])
+@login_required
+def delete_account(id):
+    account = HiveAccount.query.get_or_404(id)
+    if account.created_by_id != current_user.id:
+        flash(_("Unauthorized"), "danger")
+        return redirect(url_for("account.list_accounts"))
+
+    try:
+        db.session.delete(account)
+        db.session.commit()
+        flash(
+            _(
+                "Hive account %(username)s has been removed from EcoBank. Remember to keep your keys safe!",
+                username=account.username,
+            ),
+            "success",
+        )
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Error deleting HiveAccount {account.username}: {e}")
+        flash(
+            _("Failed to remove Hive account from EcoBank. Please try again."), "danger"
+        )
+
+    return redirect(url_for("account.list_accounts"))

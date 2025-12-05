@@ -7,10 +7,67 @@
     </div>
 
     {% if system_account %}
-        <div class="alert alert-info mb-4">
-            <strong>{{ _('System Account:') }}</strong> {{ system_account }}
-            |
-            <strong>{{ _('Pending Claimed Accounts:') }}</strong> <span class="badge bg-light text-dark border">{{ pending_claims }}</span>
+
+        <div class="card mb-4 border-info">
+
+            <div class="card-header bg-info text-white">
+
+                <strong>{{ _('System Account Status') }}</strong>: {{ system_account }}
+
+            </div>
+
+            <div class="card-body">
+
+                <p>
+
+                    <strong>{{ _('Pending Claimed Accounts:') }}</strong>
+
+                    <span class="badge bg-primary fs-6">{{ pending_claims }}</span>
+
+                </p>
+
+
+
+                <form action="{{ url_for('admin.claim_ticket') }}" method="POST" class="mb-3">
+
+                    <button type="submit" class="btn btn-success">{{ _('Claim New Ticket (Uses RC)') }}</button>
+
+                </form>
+
+
+
+                <hr>
+
+                <h5>{{ _('Active Delegations (RC Support)') }}</h5>
+
+
+                {% if active_delegations %}
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Delegatee') }}</th>
+                                    <th>{{ _('Hive Power') }}</th>
+                                    <th>{{ _('Vesting Shares') }}</th>
+                                    <th>{{ _('Date') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for d in active_delegations %}
+                                    <tr>
+                                        <td>@{{ d.delegatee }}</td>
+                                        <td class="text-success fw-bold">{{ d.hive_power }}</td>
+                                        <td class="text-muted small">{{ d.vesting_shares }}</td>
+                                        <td>{{ d.min_delegation_time }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">{{ _('No active delegations found.') }}</p>
+                {% endif %}
+            </div>
         </div>
     {% endif %}
 

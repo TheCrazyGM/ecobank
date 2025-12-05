@@ -1,7 +1,10 @@
-from datetime import datetime, timezone
-
+from datetime import datetime, timezone, timedelta
+import jwt
+from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
+
+from mongoengine import Document, StringField, IntField, DateTimeField
 
 from app.extensions import db, login_manager
 
@@ -13,6 +16,7 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
     password_hash = db.Column(db.String(128))
     locale = db.Column(db.String(2), default="en")
     account_credits = db.Column(db.Integer, default=0, nullable=False)
+    is_verified = db.Column(db.Boolean, default=False)
 
     # Profile info for "About the Author"
     first_name = db.Column(db.String(64))
@@ -30,11 +34,54 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
     # Drafts
     drafts = db.relationship("Draft", backref="author", lazy="dynamic")
 
+    # Notifications
+    notifications = db.relationship("Notification", backref="user", lazy="dynamic")
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {
+                "reset_password": self.id,
+                "exp": datetime.now(timezone.utc) + timedelta(seconds=expires_in),
+            },
+            current_app.config["SECRET_KEY"],
+            algorithm="HS256",
+        )
+
+    def get_email_verification_token(self, expires_in=86400):
+        return jwt.encode(
+            {
+                "verify_email": self.id,
+                "exp": datetime.now(timezone.utc) + timedelta(seconds=expires_in),
+            },
+            current_app.config["SECRET_KEY"],
+            algorithm="HS256",
+        )
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(
+                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+            )["reset_password"]
+        except Exception:
+            return None
+        return db.session.get(User, id)
+
+    @staticmethod
+    def verify_email_verification_token(token):
+        try:
+            id = jwt.decode(
+                token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
+            )["verify_email"]
+        except Exception:
+            return None
+        return db.session.get(User, id)
 
     @property
     def display_name(self):
@@ -147,6 +194,9 @@ class Draft(db.Model):  # ty:ignore[unsupported-base]
     body = db.Column(db.Text, nullable=False)
     tags = db.Column(db.String(256))  # Space separated
     permlink = db.Column(db.String(256), nullable=False)
+    beneficiaries = db.Column(
+        db.Text
+    )  # JSON string: [{"account": "user", "weight": 1000}]
 
     status = db.Column(db.String(20), default="draft")  # draft, published
     tx_id = db.Column(db.String(64))
@@ -168,3 +218,29 @@ class Draft(db.Model):  # ty:ignore[unsupported-base]
 @login_manager.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
+
+
+class DraftVersion(Document):
+    draft_id = IntField(required=True)  # Link to SQL Draft.id
+    version_number = IntField(required=True)
+    title = StringField(required=True)
+    body = StringField(required=True)
+    tags = StringField()  # Stores space-separated tags
+    # beneficiaries not strictly needed if we enforce system fee logic, but good for history
+    saved_at = DateTimeField(required=True, default=datetime.now(timezone.utc))
+    saved_by_user_id = IntField(required=True)
+
+    meta = {"collection": "draft_versions"}  # Specify collection name
+
+
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    message = db.Column(db.String(255), nullable=False)
+    link = db.Column(db.String(255))
+    type = db.Column(db.String(50), default="info")
+    is_read = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    def __repr__(self) -> str:
+        return f"<Notification {self.id} for {self.user_id}>"

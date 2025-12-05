@@ -8,17 +8,48 @@ from cryptography.fernet import Fernet
 from flask import abort, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from nectar import Hive
+from nectar.comment import Comment  # Import Comment
 
 from app.drafts import bp
 from app.extensions import db
 from app.models import (
     Draft,
+    DraftVersion,
     Group,
     GroupMember,
     GroupResource,
     HiveAccount,
 )
 from app.utils.markdown_render import render_markdown
+from app.utils.notifications import create_notification
+
+
+def _save_draft_version(draft: Draft, user_id: int, action: str):
+    """Saves a snapshot of the draft to MongoDB as a new version."""
+    try:
+        # Find the last version number for this draft
+        last_version = (
+            DraftVersion.objects(draft_id=draft.id).order_by("-version_number").first()
+        )
+        next_version_number = (last_version.version_number + 1) if last_version else 1
+
+        new_version = DraftVersion(
+            draft_id=draft.id,
+            version_number=next_version_number,
+            title=draft.title,
+            body=draft.body,
+            tags=draft.tags,
+            saved_by_user_id=user_id,
+            saved_at=datetime.now(timezone.utc),
+        )
+        new_version.save()
+        current_app.logger.info(
+            f"Draft {draft.id} version {next_version_number} saved by user {user_id} for action: {action}"
+        )
+    except Exception as e:
+        current_app.logger.error(
+            f"Failed to save draft version for draft {draft.id}: {e}"
+        )
 
 
 # Helper for generating permlinks
@@ -60,6 +91,9 @@ def create(group_id):
         tags = request.form.get("tags")
         hive_account = request.form.get("hive_account")
 
+        # Let's assume we store it as a JSON string.
+        # beneficiaries = request.form.get("beneficiaries", "[]") # Removed
+
         if not title or not body or not hive_account:
             flash("Title, body and hive account are required", "danger")
             return redirect(url_for("drafts.create", group_id=group_id))
@@ -75,11 +109,15 @@ def create(group_id):
             title=title,
             body=body,
             tags=tags,
+            # beneficiaries=beneficiaries, # Removed
             permlink=generate_permlink(title),
             status="draft",
         )
         db.session.add(draft)
         db.session.commit()
+
+        # Save initial version to MongoDB
+        _save_draft_version(draft, current_user.id, "created")
 
         flash("Draft created.", "success")
         return redirect(url_for("drafts.view", draft_id=draft.id))
@@ -127,18 +165,92 @@ def edit(draft_id):
     hive_accounts = [r.resource_id for r in resources]
 
     if request.method == "POST":
+        # Save current state as a version before updating
+        _save_draft_version(draft, current_user.id, "updated")
+
         draft.title = request.form.get("title")
         draft.body = request.form.get("body")
         draft.tags = request.form.get("tags")
         draft.hive_account_username = request.form.get("hive_account")
+        # draft.beneficiaries = request.form.get("beneficiaries", "[]") # Removed
 
         db.session.commit()
+
+        # Notify author if someone else edited
+        if draft.author_user_id != current_user.id:
+            create_notification(
+                user_id=draft.author_user_id,
+                message=f"Your draft '{draft.title}' was updated by {current_user.username}",
+                link=url_for("drafts.view", draft_id=draft.id),
+                type="edit",
+            )
+
         flash("Draft updated.", "success")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     return render_template(
         "drafts/edit.html", draft=draft, group=group, hive_accounts=hive_accounts
     )
+
+
+@bp.route("/versions/<int:draft_id>")
+@login_required
+def history(draft_id):
+    draft = Draft.query.get_or_404(draft_id)
+    group = Group.query.get(draft.group_id)
+
+    # Check Permissions (Member of group)
+    membership = GroupMember.query.filter_by(
+        group_id=group.id, user_id=current_user.id
+    ).first()
+    if not membership:
+        abort(403)
+
+    versions = DraftVersion.objects(draft_id=draft_id).order_by("-version_number")
+
+    return render_template("drafts/history.html", draft=draft, versions=versions)
+
+
+@bp.route("/versions/<int:draft_id>/restore/<int:version_num>", methods=["POST"])
+@login_required
+def restore(draft_id, version_num):
+    draft = Draft.query.get_or_404(draft_id)
+    group = Group.query.get(draft.group_id)
+
+    # Permission check (can edit)
+    membership = GroupMember.query.filter_by(
+        group_id=group.id, user_id=current_user.id
+    ).first()
+    can_edit = False
+    if membership and (
+        membership.role in ["owner", "admin", "moderator", "editor"]
+        or draft.author_user_id == current_user.id
+    ):
+        can_edit = True
+
+    if not can_edit:
+        flash("Unauthorized to restore versions.", "danger")
+        return redirect(url_for("drafts.history", draft_id=draft_id))
+
+    version = DraftVersion.objects(
+        draft_id=draft_id, version_number=version_num
+    ).first()
+    if not version:
+        flash("Version not found", "danger")
+        return redirect(url_for("drafts.history", draft_id=draft_id))
+
+    # Save current state as a version before restoring
+    _save_draft_version(draft, current_user.id, f"restored from v{version_num}")
+
+    # Restore
+    draft.title = version.title
+    draft.body = version.body
+    draft.tags = version.tags
+    # draft.beneficiaries = version.beneficiaries # Beneficiaries are silently set, so we don't restore them explicitly from history
+    db.session.commit()
+
+    flash(f"Restored version {version_num}.", "success")
+    return redirect(url_for("drafts.view", draft_id=draft_id))
 
 
 @bp.route("/view/<int:draft_id>")
@@ -325,6 +437,7 @@ def submit(draft_id):
         # Construct metadata
         json_metadata = {"app": "ecobank/0.1", "format": "markdown", "tags": tag_list}
 
+        # Post content
         tx = hive.post(
             title=draft.title,
             body=final_body,
@@ -334,11 +447,40 @@ def submit(draft_id):
             tags=tag_list,
         )
 
+        # Apply Comment Options (Beneficiaries) if any
+        beneficiaries_list = []
+        platform_account = current_app.config.get(
+            "HIVE_CLAIMER_ACCOUNT"
+        )  # Use claimer account as platform beneficiary
+
+        if platform_account:
+            # Platform takes 5%
+            beneficiaries_list.append(
+                {"account": platform_account, "weight": 500}
+            )  # 500 = 5%
+
+        # We enforce our platform fee. The draft.beneficiaries column is no longer used for dynamic user input.
+
+        if beneficiaries_list:
+            c = Comment(
+                f"@{draft.hive_account_username}/{draft.permlink}",
+                blockchain_instance=hive,
+            )
+            c.set_comment_options(beneficiaries=beneficiaries_list)
+
         # Update Draft Status
         draft.status = "published"
         draft.published_at = datetime.now(timezone.utc)
         draft.tx_id = tx.get("trx_id") if tx else "unknown"
         db.session.commit()
+
+        if draft.author_user_id != current_user.id:
+            create_notification(
+                user_id=draft.author_user_id,
+                message=f"Your draft '{draft.title}' has been published to Hive!",
+                link=f"https://hive.blog/@{draft.hive_account_username}/{draft.permlink}",
+                type="publish",
+            )
 
         flash("Post published successfully to Hive!", "success")
         return redirect(url_for("groups.view", id=group.id))

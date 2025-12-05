@@ -21,7 +21,17 @@
 
         <div class="mb-3">
             <label for="body" class="form-label">{{ _('Content (Markdown)') }}</label>
-            <textarea class="form-control" id="body" name="body" rows="10" required></textarea>
+            <div class="d-flex mb-2">
+                <input type="file" class="form-control me-2" id="image-upload-input" accept="image/*" style="display: none;">
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('image-upload-input').click();">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                    </svg>
+                    {{ _('Insert Image') }}
+                </button>
+            </div>
+            <textarea class="form-control" id="body" name="body" rows="10"></textarea>
         </div>
 
         <div class="mb-3">
@@ -32,4 +42,84 @@
         <button type="submit" class="btn btn-primary">{{ _('Save Draft') }}</button>
         <a href="{{ url_for('groups.view', id=group.id) }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
     </form>
+
+    <script>
+        window.addEventListener('load', function() {
+            const easyMDE = new EasyMDE({
+                element: document.getElementById('body'),
+                previewRender: function(plainText) {
+                    // Use EasyMDE's default markdown renderer (marked) then sanitize
+                    const preview = this.parent.markdown(plainText);
+                    return DOMPurify.sanitize(preview);
+                },
+                uploadImage: true,
+                imageUploadFunction: function(file, onSuccess, onError) {
+                    uploadImage(file, onSuccess, onError);
+                },
+            });
+
+            function uploadImage(file, onSuccess, onError) {
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('group_id', '{{ group.id }}');
+
+                const hiveAccountSelect = document.getElementById('hive_account');
+                if (hiveAccountSelect) {
+                    formData.append('hive_username', hiveAccountSelect.value);
+                }
+
+                fetch('{{ url_for("api.upload_image") }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(err => { throw new Error(err.error || 'Upload failed') });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        onSuccess(data.url);
+                    })
+                    .catch(error => {
+                        onError(error.message);
+                    });
+            }
+
+            // Manual Image Upload Handler
+            document.getElementById('image-upload-input').addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    // Show loading state if desired, or just upload
+                    const btn = this.nextElementSibling;
+                    const originalText = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.innerHTML = 'Uploading...';
+
+                    uploadImage(file, (url) => {
+                        const cm = easyMDE.codemirror;
+                        const doc = cm.getDoc();
+                        const cursor = doc.getCursor();
+                        const text = `![${file.name}](${url})`;
+                        doc.replaceRange(text, cursor);
+
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        // Clear input
+                        this.value = '';
+                    }, (err) => {
+                        alert('Image upload failed: ' + err);
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        this.value = '';
+                    });
+                }
+            });
+
+            // Ensure text area is updated on submit
+            document.querySelector('form').addEventListener('submit', () => {
+                document.getElementById('body').value = easyMDE.value();
+            });
+        });
+    </script>
 {% endblock %}

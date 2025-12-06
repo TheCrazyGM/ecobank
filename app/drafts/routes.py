@@ -507,8 +507,8 @@ def submit(draft_id):
         if platform_account:
             # Platform takes 5%
             beneficiaries_list.append(
-                {"account": platform_account, "weight": 500}
-            )  # 500 = 5%
+                {"account": platform_account, "weight": 1000}
+            )  # 1000 = 10%
 
         # We enforce our platform fee. The draft.beneficiaries column is no longer used for dynamic user input.
 

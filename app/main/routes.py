@@ -1,5 +1,14 @@
 import random
-from flask import flash, redirect, render_template, request, url_for, abort
+from flask import (
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+    abort,
+    send_from_directory,
+    current_app,
+)
 from flask_babel import gettext as _
 from flask_login import current_user, login_required
 
@@ -13,6 +22,11 @@ from app.utils.hive import (
     fetch_account_wallet,
     fetch_posts_by_tag,
 )
+
+
+@bp.route("/robots.txt")
+def robots_txt():
+    return send_from_directory(current_app.static_folder, "robots.txt")
 
 
 @bp.route("/")
@@ -47,8 +61,8 @@ def index():
     aggregated_posts = []
 
     for username in usernames_to_fetch:
-        # Fetch top 3 posts per user
-        entries, _next_cursor = fetch_user_blog(username, limit=3)
+        # Fetch top 4 posts per user (5 users * 4 posts = 20 total)
+        entries, _next_cursor = fetch_user_blog(username, limit=4)
         aggregated_posts.extend(entries)
 
     # Sort by created date desc (if we can parse it, otherwise simple string sort might be off but okay)

@@ -117,19 +117,6 @@ def capture_order(order_id):
         capture_data = response.json()
 
         if capture_data["status"] == "COMPLETED":
-            # Grant credits - Check status ONE LAST TIME to avoid race with webhook
-            # Use with_for_update() if possible, or just strict check
-            # SQLite doesn't support with_for_update well, but the GIL/request processing helps.
-            # We reload from DB to be sure.
-            db.session.refresh(order)
-            if order.status != "COMPLETED":
-                order.status = "COMPLETED"
-                current_user.account_credits += order.credits_purchased
-                db.session.commit()
-                current_app.logger.info(
-                    f"Order {order_id} captured by user. Credits granted."
-                )
-
             return jsonify(capture_data)
         else:
             return jsonify(capture_data), 400

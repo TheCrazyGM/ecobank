@@ -126,13 +126,11 @@ def paypal_webhook():
         return jsonify({"status": "ok", "message": "Processed"}), 200
 
     if event_type == "PAYMENT.CAPTURE.REFUNDED":
-        if order.status == "COMPLETED":
-            order.status = "REFUNDED"
-            # Optionally deduct credits? For now just mark status.
-            # To allow re-purchase or manual intervention.
-            current_app.logger.info(f"Order {order_id} was refunded.")
-            db.session.commit()
-        return jsonify({"status": "ok", "message": "Refund noted"}), 200
+        from app.paypal.services import process_refund
+
+        success, msg = process_refund(order_id)
+        current_app.logger.info(f"Refund webhook processed for {order_id}: {msg}")
+        return jsonify({"status": "ok", "message": msg}), 200
 
     if event_type == "PAYMENT.CAPTURE.DENIED":
         order.status = "DENIED"

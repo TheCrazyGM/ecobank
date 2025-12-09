@@ -28,6 +28,10 @@
                     <td>
                         {% if order.status == 'COMPLETED' %}
                             <span class="text-success">{{ order.status }}</span>
+                        {% elif order.status == 'REFUNDED' %}
+                            <span class="text-info">{{ order.status }}</span>
+                        {% elif order.status == 'REFUND_AUDIT' %}
+                            <span class="text-danger fw-bold">{{ order.status }}</span>
                         {% else %}
                             <span class="text-warning">{{ order.status }}</span>
                         {% endif %}

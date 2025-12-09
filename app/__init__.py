@@ -33,17 +33,21 @@ def create_app(config_class=Config):
     # Only run scheduler in production or if explicitly enabled, to avoid double-runs in debug reloader
     if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         scheduler.init_app(app)
-        from app.tasks import cleanup_pending_orders  # Import function directly
+        from app.tasks import run_paypal_maintenance  # Import function directly
 
         scheduler.start()
 
         # Add jobs here or via configuration
         scheduler.add_job(
-            id="cleanup_orders",
-            func=cleanup_pending_orders,
+            id="paypal_maintenance",
+            func=run_paypal_maintenance,
             trigger="interval",
             hours=1,
         )
+
+        import atexit
+
+        atexit.register(lambda: scheduler.shutdown(wait=False))
 
         # Initialize MongoEngine
 

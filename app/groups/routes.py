@@ -1,5 +1,6 @@
 import sqlalchemy as sa
 from flask import abort, flash, redirect, render_template, request, url_for
+from flask_babel import _
 from flask_login import current_user, login_required
 
 from app.extensions import db
@@ -17,12 +18,12 @@ def create():
         default_tags = request.form.get("default_tags")
 
         if not name:
-            flash("Group name is required", "danger")
+            flash(_("Group name is required"), "danger")
             return redirect(url_for("groups.create"))
 
         existing = db.session.scalar(sa.select(Group).where(Group.name == name))
         if existing:
-            flash("Group name already exists", "danger")
+            flash(_("Group name already exists"), "danger")
             return redirect(url_for("groups.create"))
 
         group = Group(
@@ -39,7 +40,7 @@ def create():
         db.session.add(member)
         db.session.commit()
 
-        flash(f'Group "{name}" created!', "success")
+        flash(_('Group "%(name)s" created!', name=name), "success")
         return redirect(url_for("groups.view", id=group.id))
 
     return render_template("groups/create.html")
@@ -55,7 +56,7 @@ def edit_group(id):
         group_id=id, user_id=current_user.id
     ).first()
     if not membership or membership.role not in ["owner", "admin"]:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     name = request.form.get("name")
@@ -63,14 +64,14 @@ def edit_group(id):
     default_tags = request.form.get("default_tags")
 
     if not name:
-        flash("Group name is required", "danger")
+        flash(_("Group name is required"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     # Check name uniqueness if changed
     if name != group.name:
         existing = db.session.scalar(sa.select(Group).where(Group.name == name))
         if existing:
-            flash("Group name already exists", "danger")
+            flash(_("Group name already exists"), "danger")
             return redirect(url_for("groups.view", id=id))
 
     group.name = name
@@ -78,7 +79,7 @@ def edit_group(id):
     group.default_tags = default_tags
     db.session.commit()
 
-    flash("Group settings updated.", "success")
+    flash(_("Group settings updated."), "success")
     return redirect(url_for("groups.view", id=id))
 
 

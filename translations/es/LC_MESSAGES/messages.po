@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-05 12:13-0500\n"
+"POT-Creation-Date: 2025-12-09 11:25-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -39,7 +39,7 @@ msgid "Account creator not configured."
 msgstr "Creador de cuentas no configurado."
 
 #: app/account/routes.py:97
-, python-format
+#, python-format
 msgid "Account creation failed: %(error)s"
 msgstr "Falló la creación de la cuenta: %(error)s"
 
@@ -50,12 +50,12 @@ msgstr ""
 "credenciales de forma segura."
 
 #: app/account/routes.py:149
-, python-format
+#, python-format
 msgid "Successfully delegated %(hp)s HP to %(username)s for Resource Credits!"
 msgstr "¡HP %(hp)s delegados a %(username)s para Créditos de Recursos!"
 
 #: app/account/routes.py:158
-, python-format
+#, python-format
 msgid "Failed to delegate RC to %(username)s. Please contact support."
 msgstr "No se pudieron delegar los CR a %(username)s. Contacta a soporte técnico."
 
@@ -72,7 +72,7 @@ msgid "RC delegation amount is 0, skipping delegation."
 msgstr "La cantidad de delegación de CR es 0, omitiendo la delegación."
 
 #: app/account/routes.py:180
-, python-format
+#, python-format
 msgid "Account %(username)s created successfully!"
 msgstr "¡Cuenta %(username)s creada exitosamente!"
 
@@ -107,11 +107,11 @@ msgid "Encryption key error."
 msgstr "Error de clave de encriptación."
 
 #: app/account/routes.py:343
-, python-format
+#, python-format
 msgid "Account %(username)s imported successfully!"
 msgstr "¡Cuenta %(username)s importada exitosamente!"
 
-#: app/account/routes.py:360 app/account/routes.py:405
+#: app/account/routes.py:360 app/account/routes.py:405 app/groups/routes.py:59
 msgid "Unauthorized"
 msgstr "No autorizado"
 
@@ -130,7 +130,7 @@ msgid "Failed to decrypt credentials."
 msgstr "Fallo al desencriptar credenciales."
 
 #: app/account/routes.py:413
-, python-format
+#, python-format
 msgid ""
 "Hive account %(username)s has been removed from EcoBank. Remember to keep"
 " your keys safe!"
@@ -171,11 +171,12 @@ msgid "Update User"
 msgstr "Actualizar Usuario"
 
 #: app/admin/forms.py:21 app/templates/groups/create.html:7
+#: app/templates/groups/view.html:304
 msgid "Group Name"
 msgstr "Nombre del Grupo"
 
 #: app/admin/forms.py:22 app/templates/admin/groups.html:14
-#: app/templates/groups/create.html:11
+#: app/templates/groups/create.html:11 app/templates/groups/view.html:308
 msgid "Description"
 msgstr "Descripción"
 
@@ -188,27 +189,27 @@ msgid "Update Group"
 msgstr "Actualizar Grupo"
 
 #: app/admin/routes.py:51
-, python-format
+#, python-format
 msgid "Password reset for user %(username)s."
 msgstr "Contraseña restablecida para el usuario %(username)s."
 
 #: app/admin/routes.py:57
-, python-format
+#, python-format
 msgid "User %(username)s updated successfully."
 msgstr "Usuario %(username)s actualizado exitosamente."
 
 #: app/admin/routes.py:72
-, python-format
+#, python-format
 msgid "Credits updated for user %(username)s."
 msgstr "Créditos actualizados para el usuario %(username)s."
 
 #: app/admin/routes.py:104
-, python-format
+#, python-format
 msgid "User %(username)s not found. Owner not changed."
 msgstr "Usuario %(username)s no encontrado. El propietario no fue cambiado."
 
 #: app/admin/routes.py:112
-, python-format
+#, python-format
 msgid "Group %(name)s updated successfully."
 msgstr "Grupo %(name)s actualizado exitosamente."
 
@@ -300,35 +301,52 @@ msgstr "Tu contraseña ha sido actualizada."
 msgid "[EcoBank] Reset Your Password"
 msgstr "[EcoBank] Restablece Tu Contraseña"
 
-#: app/auth/routes.py:154
+#: app/auth/routes.py:153
 msgid "Check your email for the instructions to reset your password"
 msgstr ""
 "Revisa tu correo electrónico para obtener las instrucciones para "
 "restablecer tu contraseña"
 
-#: app/auth/routes.py:158 app/templates/auth/reset_password.html:4
+#: app/auth/routes.py:156 app/templates/auth/reset_password.html:4
 #: app/templates/auth/reset_password_request.html:4
 msgid "Reset Password"
 msgstr "Restablecer Contraseña"
 
-#: app/auth/routes.py:173
+#: app/auth/routes.py:171
 msgid "Your password has been reset."
 msgstr "Tu contraseña ha sido restablecida."
 
-#: app/main/routes.py:34
+#: app/groups/routes.py:21 app/groups/routes.py:67
+msgid "Group name is required"
+msgstr "El nombre del grupo es obligatorio."
+
+#: app/groups/routes.py:26 app/groups/routes.py:74
+msgid "Group name already exists"
+msgstr "El nombre del grupo ya existe."
+
+#: app/groups/routes.py:43
+#, python-format
+msgid "Group \"%(name)s\" created!"
+msgstr "¡Grupo \"%(name)s\" creado!"
+
+#: app/groups/routes.py:82
+msgid "Group settings updated."
+msgstr "Configuración del grupo actualizada."
+
+#: app/main/routes.py:48
 msgid "My Feed"
 msgstr "Mi Feed"
 
-#: app/main/routes.py:41
+#: app/main/routes.py:55
 msgid "Community Feed"
 msgstr "Feed de la Comunidad"
 
-#: app/main/routes.py:193 app/templates/main/about.html:3
+#: app/main/routes.py:208 app/templates/main/about.html:3
 #: app/templates/main/about.html:6
 msgid "About Ecobank"
 msgstr "Acerca de Ecobank"
 
-#: app/main/routes.py:198 app/templates/base.html:144
+#: app/main/routes.py:213 app/templates/base.html:144
 #: app/templates/main/privacy.html:3 app/templates/main/privacy.html:6
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
@@ -380,8 +398,8 @@ msgstr "Colaboración"
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:97 app/templates/groups/view.html:134
-#: app/templates/groups/view.html:167
+#: app/templates/base.html:97 app/templates/groups/view.html:156
+#: app/templates/groups/view.html:191
 msgid "Account"
 msgstr "Cuenta"
 
@@ -404,6 +422,11 @@ msgstr "Cerrar Sesión"
 #: app/templates/base.html:112
 msgid "Login"
 msgstr "Iniciar Sesión"
+
+#: app/templates/base.html:143
+#, fuzzy
+msgid "About"
+msgstr "Monto"
 
 #: app/templates/index.html:5
 msgid "Welcome to EcoBank"
@@ -495,7 +518,7 @@ msgid "Onboard your friends and family!"
 msgstr "¡Invita a tus amigos y familia!"
 
 #: app/templates/account/create.html:7
-, python-format
+#, python-format
 msgid "You have <strong>%(credits)s</strong> account creation credit(s)."
 msgstr "Tienes <strong>%(credits)s</strong> crédito(s) de creación de cuenta."
 
@@ -563,8 +586,9 @@ msgstr "Importar Cuenta"
 #: app/templates/account/import.html:55 app/templates/account/verify.html:20
 #: app/templates/account/view.html:55
 #: app/templates/auth/change_password.html:36
-#: app/templates/drafts/create.html:61 app/templates/drafts/edit.html:43
-#: app/templates/groups/view.html:218 app/templates/groups/view.html:252
+#: app/templates/drafts/create.html:66 app/templates/drafts/edit.html:43
+#: app/templates/groups/view.html:247 app/templates/groups/view.html:283
+#: app/templates/groups/view.html:318
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -589,8 +613,8 @@ msgid "Source"
 msgstr "Fuente"
 
 #: app/templates/account/list.html:15 app/templates/admin/groups.html:18
-#: app/templates/admin/users.html:16 app/templates/groups/view.html:136
-#: app/templates/groups/view.html:169
+#: app/templates/admin/users.html:16 app/templates/groups/view.html:158
+#: app/templates/groups/view.html:193
 msgid "Actions"
 msgstr "Acciones"
 
@@ -760,7 +784,7 @@ msgid "View Account Creation Logs"
 msgstr "Ver Registros de Creación de Cuentas"
 
 #: app/templates/admin/group_edit.html:8
-, python-format
+#, python-format
 msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
@@ -872,13 +896,13 @@ msgid "Post / Draft Manager"
 msgstr "Gestor de Publicaciones / Borradores"
 
 #: app/templates/admin/posts.html:13 app/templates/drafts/create.html:23
-#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:132
-#: app/templates/groups/view.html:165
+#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:154
+#: app/templates/groups/view.html:189
 msgid "Title"
 msgstr "Título"
 
-#: app/templates/admin/posts.html:14 app/templates/groups/view.html:133
-#: app/templates/groups/view.html:166
+#: app/templates/admin/posts.html:14 app/templates/groups/view.html:155
+#: app/templates/groups/view.html:190
 msgid "Author"
 msgstr "Autor"
 
@@ -886,7 +910,7 @@ msgstr "Autor"
 msgid "Group"
 msgstr "Grupo"
 
-#: app/templates/admin/posts.html:17 app/templates/groups/view.html:135
+#: app/templates/admin/posts.html:17 app/templates/groups/view.html:157
 msgid "Last Updated"
 msgstr "Última Actualización"
 
@@ -903,7 +927,7 @@ msgid "Published"
 msgstr "Publicado"
 
 #: app/templates/admin/user_edit.html:8
-, python-format
+#, python-format
 msgid "Edit User: %(username)s"
 msgstr "Editar Usuario: %(username)s"
 
@@ -965,35 +989,35 @@ msgstr "Elige un grupo..."
 msgid "Post As (Hive Account)"
 msgstr "Publicar Como (Cuenta Hive)"
 
-#: app/templates/drafts/create.html:35
+#: app/templates/drafts/create.html:36
 msgid "Select a group first"
 msgstr "Selecciona un grupo primero"
 
-#: app/templates/drafts/create.html:41 app/templates/drafts/edit.html:23
+#: app/templates/drafts/create.html:42 app/templates/drafts/edit.html:23
 msgid "Content (Markdown)"
 msgstr "Contenido (Markdown)"
 
-#: app/templates/drafts/create.html:49 app/templates/drafts/edit.html:31
+#: app/templates/drafts/create.html:54 app/templates/drafts/edit.html:31
 msgid "Insert Image"
 msgstr "Insertar Imagen"
 
-#: app/templates/drafts/create.html:56 app/templates/drafts/edit.html:38
+#: app/templates/drafts/create.html:61 app/templates/drafts/edit.html:38
 msgid "Tags (space separated)"
 msgstr "Etiquetas (separadas por espacio)"
 
-#: app/templates/drafts/create.html:60
+#: app/templates/drafts/create.html:65
 msgid "Save Draft"
 msgstr "Guardar Borrador"
 
-#: app/templates/drafts/create.html:74
+#: app/templates/drafts/create.html:79
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: app/templates/drafts/create.html:89
+#: app/templates/drafts/create.html:94
 msgid "No shared accounts found"
 msgstr "No se encontraron cuentas compartidas"
 
-#: app/templates/drafts/create.html:94
+#: app/templates/drafts/create.html:104
 msgid "Error loading accounts"
 msgstr "Error cargando cuentas"
 
@@ -1044,7 +1068,7 @@ msgid "No history available."
 msgstr "No hay historial disponible."
 
 #: app/templates/drafts/view.html:7
-, python-format
+#, python-format
 msgid "Preview draft: %(title)s"
 msgstr "Previsualización de borrador: %(title)s"
 
@@ -1074,7 +1098,7 @@ msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
 msgid "Reject"
 msgstr "Rechazar"
 
-#: app/templates/drafts/view.html:42 app/templates/groups/view.html:180
+#: app/templates/drafts/view.html:42 app/templates/groups/view.html:206
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
@@ -1095,7 +1119,7 @@ msgid "About the Author"
 msgstr "Sobre el Autor"
 
 #: app/templates/drafts/view.html:65
-, python-format
+#, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
@@ -1135,7 +1159,11 @@ msgstr ""
 msgid "Create New Group"
 msgstr "Crear Nuevo Grupo"
 
-#: app/templates/groups/create.html:14 app/templates/groups/list.html:6
+#: app/templates/groups/create.html:15
+msgid "Default Tags (space separated)"
+msgstr "Etiquetas predeterminadas (separadas por espacio)"
+
+#: app/templates/groups/create.html:18 app/templates/groups/list.html:6
 msgid "Create Group"
 msgstr "Crear Grupo"
 
@@ -1143,113 +1171,134 @@ msgstr "Crear Grupo"
 msgid "You are not a member of any groups."
 msgstr "No eres miembro de ningún grupo."
 
-#: app/templates/groups/view.html:24
+#: app/templates/groups/view.html:26
+msgid "Settings"
+msgstr "Configuración"
+
+#: app/templates/groups/view.html:28
 msgid "Add"
 msgstr "Agregar"
 
-#: app/templates/groups/view.html:39
+#: app/templates/groups/view.html:45
 msgid "Promote"
 msgstr "Promover"
 
-#: app/templates/groups/view.html:49
+#: app/templates/groups/view.html:58
 msgid "Demote"
 msgstr "Degradar"
 
-#: app/templates/groups/view.html:57
+#: app/templates/groups/view.html:69
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
-#: app/templates/groups/view.html:58
+#: app/templates/groups/view.html:70
 msgid "Remove"
 msgstr "Eliminar"
 
-#: app/templates/groups/view.html:76
+#: app/templates/groups/view.html:90
 msgid "Shared Resources"
 msgstr "Recursos Compartidos"
 
-#: app/templates/groups/view.html:77 app/templates/groups/view.html:232
+#: app/templates/groups/view.html:92 app/templates/groups/view.html:261
 msgid "Share Hive Account"
 msgstr "Compartir Cuenta Hive"
 
-#: app/templates/groups/view.html:86
+#: app/templates/groups/view.html:101
 msgid "Hive Account"
 msgstr "Cuenta Hive"
 
-#: app/templates/groups/view.html:93
+#: app/templates/groups/view.html:109
 msgid "Unlink this resource?"
 msgstr "¿Desvincular este recurso?"
 
-#: app/templates/groups/view.html:94
+#: app/templates/groups/view.html:110
 msgid "Unlink"
 msgstr "Desvincular"
 
-#: app/templates/groups/view.html:100
+#: app/templates/groups/view.html:116
 msgid "No shared resources yet."
 msgstr "Aún no hay recursos compartidos."
 
-#: app/templates/groups/view.html:114
+#: app/templates/groups/view.html:132
 msgid "Active Drafts"
 msgstr "Borradores Activos"
 
-#: app/templates/groups/view.html:117
+#: app/templates/groups/view.html:137
 msgid "Published History"
 msgstr "Historial de Publicaciones"
 
-#: app/templates/groups/view.html:120
-msgid "Create New Draft"
+#: app/templates/groups/view.html:140
+#, fuzzy
+msgid ""
+"Create\n"
+"                    New Draft"
 msgstr "Crear Nuevo Borrador"
 
-#: app/templates/groups/view.html:147
+#: app/templates/groups/view.html:171
 msgid "Edit / View"
 msgstr "Editar / Ver"
 
-#: app/templates/groups/view.html:154
+#: app/templates/groups/view.html:178
 msgid "No active drafts. Start writing!"
 msgstr "No hay borradores activos. ¡Empieza a escribir!"
 
-#: app/templates/groups/view.html:168
+#: app/templates/groups/view.html:192
 msgid "Published Date"
 msgstr "Fecha de Publicación"
 
-#: app/templates/groups/view.html:181
+#: app/templates/groups/view.html:209
 msgid "Local Record"
 msgstr "Registro Local"
 
-#: app/templates/groups/view.html:188
+#: app/templates/groups/view.html:216
 msgid "No published posts yet."
 msgstr "Aún no hay publicaciones."
 
-#: app/templates/groups/view.html:203 app/templates/groups/view.html:219
+#: app/templates/groups/view.html:231 app/templates/groups/view.html:248
 msgid "Add Member"
 msgstr "Agregar Miembro"
 
-#: app/templates/groups/view.html:208
+#: app/templates/groups/view.html:236
 msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
-#: app/templates/groups/view.html:236
+#: app/templates/groups/view.html:265
+#, fuzzy
 msgid ""
-"Share one of your Hive accounts with this group. Members will be able to "
-"use it for drafting (and posting, if permissions allow)."
+"Share one of your Hive accounts with this group. Members will be\n"
+"                        able to use it for drafting (and posting, if "
+"permissions allow)."
 msgstr ""
 "Comparte una de tus cuentas Hive con este grupo. Los miembros podrán "
 "usarla para redactar (y publicar, si los permisos lo permiten)."
 
-#: app/templates/groups/view.html:239
+#: app/templates/groups/view.html:269
 msgid "Select Account"
 msgstr "Seleccionar Cuenta"
 
-#: app/templates/groups/view.html:248
+#: app/templates/groups/view.html:278
 msgid "You have no available Hive accounts to share."
 msgstr "No tienes cuentas Hive disponibles para compartir."
 
-#: app/templates/groups/view.html:248
+#: app/templates/groups/view.html:279
 msgid "Create one?"
 msgstr "¿Crear una?"
 
-#: app/templates/groups/view.html:254
+#: app/templates/groups/view.html:285
 msgid "Share Account"
 msgstr "Compartir Cuenta"
+
+#: app/templates/groups/view.html:299
+msgid "Group Settings"
+msgstr "Configuración del Grupo"
+
+#: app/templates/groups/view.html:312
+msgid "Default Tags"
+msgstr "Etiquetas predeterminadas"
+
+#: app/templates/groups/view.html:320 app/templates/main/profile.html:64
+msgid "Save Changes"
+msgstr "Guardar Cambios"
 
 #: app/templates/hive/post.html:52
 msgid "Community:"
@@ -1277,7 +1326,7 @@ msgstr "No se encontraron publicaciones para esta etiqueta."
 
 #: app/templates/hive/user_blog.html:6 app/templates/hive/user_blog.html:12
 #: app/templates/hive/user_blog.html:25
-, python-format
+#, python-format
 msgid "Check out %(user)s's profile on Ecobank."
 msgstr "Mira el perfil de %(user)s en Ecobank."
 
@@ -1332,7 +1381,9 @@ msgstr "Clave Memo"
 
 #: app/templates/main/about.html:7
 msgid "Ecobank is a decentralized finance hub built on the Hive blockchain."
-msgstr "Ecobank es un centro de finanzas descentralizadas construido sobre la blockchain de Hive."
+msgstr ""
+"Ecobank es un centro de finanzas descentralizadas construido sobre la "
+"blockchain de Hive."
 
 #: app/templates/main/about.html:8
 msgid ""
@@ -1358,12 +1409,14 @@ msgid "At Ecobank, your privacy is important to us."
 msgstr "En Ecobank, tu privacidad es importante para nosotros."
 
 #: app/templates/main/privacy.html:8
+#, fuzzy
 msgid ""
-"This Privacy Policy describes how your personal information is collected," 
-"used, and shared when you visit or make a purchase from the site."
+"This Privacy Policy describes how your personal information is collected,"
+" used, and shared when you visit or make a purchase from the site."
 msgstr ""
 "Esta Política de Privacidad describe cómo se recopila, utiliza y comparte"
-" tu información personal cuando visitas o realizas una compra en el sitio."
+" tu información personal cuando visitas o realizas una compra en el "
+"sitio."
 
 #: app/templates/main/privacy.html:10
 msgid "What personal information we collect"
@@ -1378,13 +1431,13 @@ msgid ""
 "billing address, shipping address, payment information (including credit "
 "card numbers), email address, and phone number."
 msgstr ""
-"Cuando creas una cuenta en el Sitio, recopilamos cierta información tuya, "
-"incluyendo tu nombre de usuario, dirección de correo electrónico y "
+"Cuando creas una cuenta en el Sitio, recopilamos cierta información tuya,"
+" incluyendo tu nombre de usuario, dirección de correo electrónico y "
 "cualquier información de perfil que elijas proporcionar. Cuando realizas "
 "una compra a través del Sitio, recopilamos cierta información tuya, "
 "incluyendo tu nombre, dirección de facturación, dirección de envío, "
-"información de pago (incluyendo números de tarjeta de crédito), "
-"dirección de correo electrónico y número de teléfono."
+"información de pago (incluyendo números de tarjeta de crédito), dirección"
+" de correo electrónico y número de teléfono."
 
 #: app/templates/main/privacy.html:13
 msgid "How we use your personal information"
@@ -1418,8 +1471,8 @@ msgid ""
 "with information or advertising relating to our products or services."
 msgstr ""
 "Cuando esté de acuerdo con las preferencias que hayas compartido con "
-"nosotros, proporcionarte información o publicidad relacionada con nuestros "
-"productos o servicios."
+"nosotros, proporcionarte información o publicidad relacionada con "
+"nuestros productos o servicios."
 
 #: app/templates/main/privacy.html:20
 msgid ""
@@ -1430,11 +1483,11 @@ msgid ""
 "to assess the success of our marketing and advertising campaigns)."
 msgstr ""
 "Utilizamos la información del Dispositivo que recopilamos para ayudarnos "
-"a detectar posibles riesgos y fraudes (en particular, tu dirección IP), y "
-"de manera más general para mejorar y optimizar nuestro Sitio (por "
+"a detectar posibles riesgos y fraudes (en particular, tu dirección IP), y"
+" de manera más general para mejorar y optimizar nuestro Sitio (por "
 "ejemplo, generando análisis sobre cómo nuestros clientes navegan e "
-"interactúan con el Sitio, y para evaluar el éxito de nuestras campañas "
-"de marketing y publicidad)."
+"interactúan con el Sitio, y para evaluar el éxito de nuestras campañas de"
+" marketing y publicidad)."
 
 #: app/templates/main/privacy.html:22
 msgid "Sharing your personal information"
@@ -1442,8 +1495,8 @@ msgstr "Compartiendo tu información personal"
 
 #: app/templates/main/privacy.html:23
 msgid ""
-"We share your Personal Information with third parties to help us use your "
-"Personal Information, as described above."
+"We share your Personal Information with third parties to help us use your"
+" Personal Information, as described above."
 msgstr ""
 "Compartimos tu Información Personal con terceros para ayudarnos a "
 "utilizar tu Información Personal, como se describe anteriormente."
@@ -1451,14 +1504,14 @@ msgstr ""
 #: app/templates/main/privacy.html:24
 msgid ""
 "Finally, we may also share your Personal Information to comply with "
-"applicable laws and regulations, to respond to a subpoena, search warrant "
-"or other lawful request for information we receive, or to otherwise "
+"applicable laws and regulations, to respond to a subpoena, search warrant"
+" or other lawful request for information we receive, or to otherwise "
 "protect our rights."
 msgstr ""
-"Finalmente, también podemos compartir tu Información Personal para cumplir "
-"con las leyes y regulaciones aplicables, para responder a una citación, "
-"orden de registro u otra solicitud legal de información que recibamos, o "
-"para proteger nuestros derechos de otra manera."
+"Finalmente, también podemos compartir tu Información Personal para "
+"cumplir con las leyes y regulaciones aplicables, para responder a una "
+"citación, orden de registro u otra solicitud legal de información que "
+"recibamos, o para proteger nuestros derechos de otra manera."
 
 #: app/templates/main/privacy.html:26
 msgid "Your rights"
@@ -1548,10 +1601,6 @@ msgstr ""
 "Cuéntanos un poco sobre ti. Esto aparecerá en la sección \"Sobre el "
 "Autor\" de tus publicaciones."
 
-#: app/templates/main/profile.html:64
-msgid "Save Changes"
-msgstr "Guardar Cambios"
-
 #: app/templates/main/profile.html:74
 msgid "Header Preview"
 msgstr "Vista Previa del Encabezado"
@@ -1589,3 +1638,4 @@ msgstr "Sin notificaciones."
 
 #~ msgid "No drafts yet."
 #~ msgstr "Aún no hay borradores."
+

@@ -285,41 +285,42 @@
                             <button type="submit" class="btn btn-primary">{{ _('Share Account') }}</button>
                         {% endif %}
                     </div>
-                </div>
+                </form>
             </div>
+        </div>
+    </div>
 
-    <!-- Group Settings Modal -->
-            <div class="modal fade" id="groupSettingsModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="{{ url_for('groups.edit_group', id=group.id) }}" method="POST">
-                            <div class="modal-header">
-                                <h5 class="modal-title">{{ _('Group Settings') }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">{{ _('Group Name') }}</label>
-                                    <input type="text" class="form-control" name="name" value="{{ group.name }}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">{{ _('Description') }}</label>
-                                    <textarea class="form-control" name="description"
-                                              rows="3">{{ group.description }}</textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="default_tags" class="form-label">{{ _('Default Tags') }}</label>
-                                    <input type="text" class="form-control" name="default_tags"
-                                           value="{{ group.default_tags or '' }}" placeholder="tag1 tag2">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel')
-                                    }}</button>
-                                <button type="submit" class="btn btn-primary">{{ _('Save Changes') }}</button>
-                            </div>
-                        </form>
+<!-- Group Settings Modal -->
+    <div class="modal fade" id="groupSettingsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ url_for('groups.edit_group', id=group.id) }}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ _('Group Settings') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ _('Group Name') }}</label>
+                            <input type="text" class="form-control" name="name" value="{{ group.name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">{{ _('Description') }}</label>
+                            <textarea class="form-control" name="description" rows="3">{{ group.description }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="default_tags" class="form-label">{{ _('Default Tags') }}</label>
+                            <input type="text" class="form-control" name="default_tags"
+                                   value="{{ group.default_tags or '' }}" placeholder="tag1 tag2">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel')
+                            }}</button>
+                        <button type="submit" class="btn btn-primary">{{ _('Save Changes') }}</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
 {% endblock %}

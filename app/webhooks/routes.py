@@ -2,7 +2,7 @@ import requests
 from flask import current_app, jsonify, request
 
 from app.extensions import db
-from app.models import PayPalOrder, User
+from app.models import PayPalOrder
 from app.webhooks import bp
 
 
@@ -111,23 +111,16 @@ def paypal_webhook():
 
     if event_type == "PAYMENT.CAPTURE.COMPLETED":
         # Refresh state
-        db.session.refresh(order)
+        # Fulfill order idempotently
+        from app.paypal.services import fulfill_order
 
-        if order.status != "COMPLETED":
-            order.status = "COMPLETED"
+        success, msg = fulfill_order(order_id)
 
-            # Credit the user
-            user = User.query.get(order.user_id)
-            if user:
-                user.account_credits += order.credits_purchased
-                current_app.logger.info(
-                    f"Credited user {user.username} with {order.credits_purchased} credits via webhook."
-                )
-
-            db.session.commit()
+        if success:
+            current_app.logger.info(f"Webhook processed for order {order_id}: {msg}")
         else:
-            current_app.logger.info(
-                f"Webhook: Order {order_id} already COMPLETED. Skipping credit."
+            current_app.logger.warning(
+                f"Webhook processing issue for order {order_id}: {msg}"
             )
 
         return jsonify({"status": "ok", "message": "Processed"}), 200

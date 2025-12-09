@@ -117,6 +117,11 @@ def capture_order(order_id):
         capture_data = response.json()
 
         if capture_data["status"] == "COMPLETED":
+            # Best Practice: Fulfill immediately for UX, but idempotent service handles safety
+            from app.paypal.services import fulfill_order
+
+            fulfill_order(order_id)
+
             return jsonify(capture_data)
         else:
             return jsonify(capture_data), 400

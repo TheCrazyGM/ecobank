@@ -14,6 +14,7 @@ def create():
     if request.method == "POST":
         name = request.form.get("name")
         description = request.form.get("description")
+        default_tags = request.form.get("default_tags")
 
         if not name:
             flash("Group name is required", "danger")
@@ -24,7 +25,12 @@ def create():
             flash("Group name already exists", "danger")
             return redirect(url_for("groups.create"))
 
-        group = Group(name=name, description=description, owner_user_id=current_user.id)
+        group = Group(
+            name=name,
+            description=description,
+            default_tags=default_tags,
+            owner_user_id=current_user.id,
+        )
         db.session.add(group)
         db.session.flush()  # Get ID
 
@@ -37,6 +43,43 @@ def create():
         return redirect(url_for("groups.view", id=group.id))
 
     return render_template("groups/create.html")
+
+
+@bp.route("/<int:id>/edit", methods=["POST"])
+@login_required
+def edit_group(id):
+    group = Group.query.get_or_404(id)
+
+    # Check auth (owner/admin only)
+    membership = GroupMember.query.filter_by(
+        group_id=id, user_id=current_user.id
+    ).first()
+    if not membership or membership.role not in ["owner", "admin"]:
+        flash("Unauthorized", "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    name = request.form.get("name")
+    description = request.form.get("description")
+    default_tags = request.form.get("default_tags")
+
+    if not name:
+        flash("Group name is required", "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    # Check name uniqueness if changed
+    if name != group.name:
+        existing = db.session.scalar(sa.select(Group).where(Group.name == name))
+        if existing:
+            flash("Group name already exists", "danger")
+            return redirect(url_for("groups.view", id=id))
+
+    group.name = name
+    group.description = description
+    group.default_tags = default_tags
+    db.session.commit()
+
+    flash("Group settings updated.", "success")
+    return redirect(url_for("groups.view", id=id))
 
 
 @bp.route("/list")

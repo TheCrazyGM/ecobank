@@ -26,168 +26,178 @@
 
         <div class="mb-3">
             <label for="hive_account" class="form-label">{{ _('Post As (Hive Account)') }}</label>
-            <select class="form-select" id="hive_account" name="hive_account" required {% if not group %}disabled{% endif %}>
-                {% if group %}
-                    {% for acc in hive_accounts %}
-                        <option value="{{ acc }}">{{ acc }}</option>
-                    {% endfor %}
-                {% else %}
-                    <option value="" disabled selected>{{ _('Select a group first') }}</option>
-                {% endif %}
-            </select>
-        </div>
+            <select class="form-select" id="hive_account" name="hive_account" required {% if not group %}disabled{% endif
+                        %}>
+                    {% if group %}
+                        {% for acc in hive_accounts %}
+                            <option value="{{ acc }}">{{ acc }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="" disabled selected>{{ _('Select a group first') }}</option>
+                    {% endif %}
+                </select>
+                </div>
 
-        <div class="mb-3">
-            <label for="body" class="form-label">{{ _('Content (Markdown)') }}</label>
-            <div class="d-flex mb-2">
-                <input type="file" class="form-control me-2" id="image-upload-input" accept="image/*" style="display: none;">
-                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('image-upload-input').click();">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
-                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                        <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
-                    </svg>
-                    {{ _('Insert Image') }}
-                </button>
-            </div>
-            <textarea class="form-control" id="body" name="body" rows="10"></textarea>
-        </div>
+                <div class="mb-3">
+                    <label for="body" class="form-label">{{ _('Content (Markdown)') }}</label>
+                    <div class="d-flex mb-2">
+                        <input type="file" class="form-control me-2" id="image-upload-input" accept="image/*"
+                               style="display: none;">
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                onclick="document.getElementById('image-upload-input').click();">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image"
+                                 viewBox="0 0 16 16">
+                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                <path
+                                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                            </svg>
+                            {{ _('Insert Image') }}
+                        </button>
+                    </div>
+                    <textarea class="form-control" id="body" name="body" rows="10"></textarea>
+                </div>
 
-        <div class="mb-3">
-            <label for="tags" class="form-label">{{ _('Tags (space separated)') }}</label>
-            <input type="text" class="form-control" id="tags" name="tags" placeholder="ecobank hive blog">
-        </div>
+                <div class="mb-3">
+                    <label for="tags" class="form-label">{{ _('Tags (space separated)') }}</label>
+                    <input type="text" class="form-control" id="tags" name="tags" placeholder="ecobank hive blog">
+                </div>
 
-        <button type="submit" class="btn btn-primary">{{ _('Save Draft') }}</button>
-        <a href="{{ url_for('groups.list_groups') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
-    </form>
+                <button type="submit" class="btn btn-primary">{{ _('Save Draft') }}</button>
+                <a href="{{ url_for('groups.list_groups') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
+                </form>
 
-    <script>
-        // Function to load hive accounts via API when group changes
-        function loadHiveAccounts() {
-            const groupSelect = document.getElementById('group_id');
-            const accountSelect = document.getElementById('hive_account');
-            const groupId = groupSelect.value;
+                <script>
+                    function loadHiveAccounts() {
+                        const groupSelect = document.getElementById('group_id');
+                        const accountSelect = document.getElementById('hive_account');
+                        const tagsInput = document.getElementById('tags');
+                        const groupId = groupSelect.value;
 
-            if (!groupId) return;
+                        if (!groupId) return;
 
-            accountSelect.disabled = true;
-            accountSelect.innerHTML = '<option>{{ _("Loading...") }}</option>';
+                        accountSelect.disabled = true;
+                        accountSelect.innerHTML = '<option>{{ _("Loading...") }}</option>';
 
-            fetch(`/api/group/${groupId}/accounts`)
-                .then(response => response.json())
-                .then(data => {
-                    accountSelect.innerHTML = '';
-                    if (data.accounts && data.accounts.length > 0) {
-                        data.accounts.forEach(acc => {
-                            const option = document.createElement('option');
-                            option.value = acc;
-                            option.text = acc;
-                            accountSelect.appendChild(option);
-                        });
-                        accountSelect.disabled = false;
-                    } else {
-                        accountSelect.innerHTML = '<option disabled selected>{{ _("No shared accounts found") }}</option>';
+                        fetch(`/api/group/${groupId}/accounts`)
+                            .then(response => response.json())
+                            .then(data => {
+                                accountSelect.innerHTML = '';
+                                if (data.accounts && data.accounts.length > 0) {
+                                    data.accounts.forEach(acc => {
+                                        const option = document.createElement('option');
+                                        option.value = acc;
+                                        option.text = acc;
+                                        accountSelect.appendChild(option);
+                                    });
+                                    accountSelect.disabled = false;
+                                } else {
+                                    accountSelect.innerHTML = '<option disabled selected>{{ _("No shared accounts found") }}</option>';
+                                }
+
+                // Auto-fill tags if empty
+                                if (data.default_tags && !tagsInput.value) {
+                                    tagsInput.value = data.default_tags;
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                accountSelect.innerHTML = '<option disabled selected>{{ _("Error loading accounts") }}</option>';
+                            });
                     }
-                })
-                .catch(err => {
-                    console.error(err);
-                    accountSelect.innerHTML = '<option disabled selected>{{ _("Error loading accounts") }}</option>';
-                });
-        }
 
-        window.addEventListener('load', function() {
-            const easyMDE = new EasyMDE({
-                element: document.getElementById('body'),
-                previewRender: function(plainText) {
-                    // Use EasyMDE's default markdown renderer (marked) then sanitize
-                    const preview = this.parent.markdown(plainText);
-                    return DOMPurify.sanitize(preview);
-                },
-                uploadImage: true,
-                imageUploadFunction: function(file, onSuccess, onError) {
-                    uploadImage(file, onSuccess, onError);
-                },
-            });
+                    window.addEventListener('load', function () {
+                        const easyMDE = new EasyMDE({
+                            element: document.getElementById('body'),
+                            previewRender: function (plainText) {
+                // Use EasyMDE's default markdown renderer (marked) then sanitize
+                                const preview = this.parent.markdown(plainText);
+                                return DOMPurify.sanitize(preview);
+                            },
+                            uploadImage: true,
+                            imageUploadFunction: function (file, onSuccess, onError) {
+                                uploadImage(file, onSuccess, onError);
+                            },
+                        });
 
-            function uploadImage(file, onSuccess, onError) {
-                const formData = new FormData();
-                formData.append('image', file);
+                        function uploadImage(file, onSuccess, onError) {
+                            const formData = new FormData();
+                            formData.append('image', file);
 
-                // Get Group ID either from hidden input or select
-                let groupId = null;
-                const groupInput = document.querySelector('input[name="group_id"]');
-                const groupSelect = document.getElementById('group_id');
+            // Get Group ID either from hidden input or select
+                            let groupId = null;
+                            const groupInput = document.querySelector('input[name="group_id"]');
+                            const groupSelect = document.getElementById('group_id');
 
-                if (groupInput) {
-                    groupId = groupInput.value;
-                } else if (groupSelect) {
-                    groupId = groupSelect.value;
-                }
+                            if (groupInput) {
+                                groupId = groupInput.value;
+                            } else if (groupSelect) {
+                                groupId = groupSelect.value;
+                            }
 
-                if (!groupId) {
-                    onError("Please select a group first.");
-                    return;
-                }
+                            if (!groupId) {
+                                onError("Please select a group first.");
+                                return;
+                            }
 
-                formData.append('group_id', groupId);
+                            formData.append('group_id', groupId);
 
-                const hiveAccountSelect = document.getElementById('hive_account');
-                if (hiveAccountSelect && hiveAccountSelect.value) {
-                    formData.append('hive_username', hiveAccountSelect.value);
-                }
+                            const hiveAccountSelect = document.getElementById('hive_account');
+                            if (hiveAccountSelect && hiveAccountSelect.value) {
+                                formData.append('hive_username', hiveAccountSelect.value);
+                            }
 
-                fetch('{{ url_for("api.upload_image") }}', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(err => { throw new Error(err.error || 'Upload failed') });
+                            fetch('{{ url_for("api.upload_image") }}', {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        return response.json().then(err => { throw new Error(err.error || 'Upload failed') });
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    onSuccess(data.url);
+                                })
+                                .catch(error => {
+                                    onError(error.message);
+                                });
                         }
-                        return response.json();
-                    })
-                    .then(data => {
-                        onSuccess(data.url);
-                    })
-                    .catch(error => {
-                        onError(error.message);
+
+        // Manual Image Upload Handler
+                        document.getElementById('image-upload-input').addEventListener('change', function (e) {
+                            if (this.files && this.files[0]) {
+                                const file = this.files[0];
+                // Show loading state if desired, or just upload
+                                const btn = this.nextElementSibling;
+                                const originalText = btn.innerHTML;
+                                btn.disabled = true;
+                                btn.innerHTML = 'Uploading...';
+
+                                uploadImage(file, (url) => {
+                                    const cm = easyMDE.codemirror;
+                                    const doc = cm.getDoc();
+                                    const cursor = doc.getCursor();
+                                    const text = `![${file.name}](${url})`;
+                                    doc.replaceRange(text, cursor);
+
+                                    btn.disabled = false;
+                                    btn.innerHTML = originalText;
+                    // Clear input
+                                    this.value = '';
+                                }, (err) => {
+                                    alert('Image upload failed: ' + err);
+                                    btn.disabled = false;
+                                    btn.innerHTML = originalText;
+                                    this.value = '';
+                                });
+                            }
+                        });
+
+        // Ensure text area is updated on submit
+                        document.querySelector('form').addEventListener('submit', () => {
+                            document.getElementById('body').value = easyMDE.value();
+                        });
                     });
-            }
-
-            // Manual Image Upload Handler
-            document.getElementById('image-upload-input').addEventListener('change', function(e) {
-                if (this.files && this.files[0]) {
-                    const file = this.files[0];
-                    // Show loading state if desired, or just upload
-                    const btn = this.nextElementSibling;
-                    const originalText = btn.innerHTML;
-                    btn.disabled = true;
-                    btn.innerHTML = 'Uploading...';
-
-                    uploadImage(file, (url) => {
-                        const cm = easyMDE.codemirror;
-                        const doc = cm.getDoc();
-                        const cursor = doc.getCursor();
-                        const text = `![${file.name}](${url})`;
-                        doc.replaceRange(text, cursor);
-
-                        btn.disabled = false;
-                        btn.innerHTML = originalText;
-                        // Clear input
-                        this.value = '';
-                    }, (err) => {
-                        alert('Image upload failed: ' + err);
-                        btn.disabled = false;
-                        btn.innerHTML = originalText;
-                        this.value = '';
-                    });
-                }
-            });
-
-            // Ensure text area is updated on submit
-            document.querySelector('form').addEventListener('submit', () => {
-                document.getElementById('body').value = easyMDE.value();
-            });
-        });
-    </script>
-{% endblock %}
+                </script>
+            {% endblock %}

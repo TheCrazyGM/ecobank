@@ -21,7 +21,12 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>{{ _('Members') }}</span>
                     {% if membership.role in ['owner', 'admin'] %}
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">{{ _('Add') }}</button>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#groupSettingsModal">{{ _('Settings') }}</button>
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addMemberModal">{{ _('Add') }}</button>
+                        </div>
                     {% endif %}
                 </div>
                 <ul class="list-group list-group-flush">
@@ -35,29 +40,38 @@
                             {% if membership.role == 'owner' and m.user_id != group.owner_user_id %}
                                 <div class="d-flex gap-1">
                                     {% if m.role != 'moderator' %}
-                                        <form action="{{ url_for('groups.promote_member', id=group.id, user_id=m.user_id) }}" method="POST">
+                                        <form action="{{ url_for('groups.promote_member', id=group.id, user_id=m.user_id) }}"
+                                              method="POST">
                                             <button type="submit" class="btn btn-sm btn-outline-success" title="{{ _('Promote') }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                     class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
                                                 </svg>
                                             </button>
                                         </form>
                                     {% endif %}
 
                                     {% if m.role != 'member' %}
-                                        <form action="{{ url_for('groups.demote_member', id=group.id, user_id=m.user_id) }}" method="POST">
+                                        <form action="{{ url_for('groups.demote_member', id=group.id, user_id=m.user_id) }}"
+                                              method="POST">
                                             <button type="submit" class="btn btn-sm btn-outline-warning" title="{{ _('Demote') }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                     class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
                                                 </svg>
                                             </button>
                                         </form>
                                     {% endif %}
 
-                                    <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}" method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
+                                    <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}"
+                                          method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
                                         <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ _('Remove') }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                 class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                             </svg>
                                         </button>
                                     </form>
@@ -74,7 +88,8 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>{{ _('Shared Resources') }}</span>
-                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addResourceModal">{{ _('Share Hive Account') }}</button>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#addResourceModal">{{ _('Share Hive Account') }}</button>
                 </div>
                 <div class="card-body">
                     {% if resources %}
@@ -90,7 +105,8 @@
                                         <strong>{{ r.resource_id }}</strong>
                                     </div>
 
-                                    <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}" method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');">
+                                    <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}"
+                                          method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');">
                                         <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Unlink') }}</button>
                                     </form>
                                 </li>
@@ -111,19 +127,25 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <ul class="nav nav-tabs card-header-tabs" id="draftTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active-drafts" type="button" role="tab" aria-controls="active-drafts" aria-selected="true">{{ _('Active Drafts') }}</button>
+                            <button class="nav-link active" id="active-tab" data-bs-toggle="tab"
+                                    data-bs-target="#active-drafts" type="button" role="tab" aria-controls="active-drafts"
+                                    aria-selected="true">{{ _('Active Drafts') }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="published-tab" data-bs-toggle="tab" data-bs-target="#published-drafts" type="button" role="tab" aria-controls="published-drafts" aria-selected="false">{{ _('Published History') }}</button>
+                            <button class="nav-link" id="published-tab" data-bs-toggle="tab"
+                                    data-bs-target="#published-drafts" type="button" role="tab" aria-controls="published-drafts"
+                                    aria-selected="false">{{ _('Published History') }}</button>
                         </li>
                     </ul>
-                    <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create New Draft') }}</a>
+                    <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create
+                        New Draft') }}</a>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="draftTabsContent">
 
-                        <!-- Active Drafts Tab -->
-                        <div class="tab-pane fade show active" id="active-drafts" role="tabpanel" aria-labelledby="active-tab">
+                    <!-- Active Drafts Tab -->
+                        <div class="tab-pane fade show active" id="active-drafts" role="tabpanel"
+                             aria-labelledby="active-tab">
                             {% set active_drafts = group.drafts | selectattr("status", "equalto", "draft") | list %}
                             {% if active_drafts %}
                                 <table class="table table-hover">
@@ -139,12 +161,14 @@
                                     <tbody>
                                         {% for draft in active_drafts %}
                                             <tr>
-                                                <td><a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="fw-bold text-decoration-none">{{ draft.title }}</a></td>
+                                                <td><a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
+                                                       class="fw-bold text-decoration-none">{{ draft.title }}</a></td>
                                                 <td>{{ draft.author.display_name }}</td>
                                                 <td>@{{ draft.hive_account_username }}</td>
                                                 <td>{{ draft.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
                                                 <td>
-                                                    <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-sm btn-outline-primary">{{ _('Edit / View') }}</a>
+                                                    <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
+                                                       class="btn btn-sm btn-outline-primary">{{ _('Edit / View') }}</a>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -155,7 +179,7 @@
                             {% endif %}
                         </div>
 
-                        <!-- Published Drafts Tab -->
+                    <!-- Published Drafts Tab -->
                         <div class="tab-pane fade" id="published-drafts" role="tabpanel" aria-labelledby="published-tab">
                             {% set published_drafts = group.drafts | selectattr("status", "equalto", "published") | list %}
                             {% if published_drafts %}
@@ -175,10 +199,14 @@
                                                 <td>{{ draft.title }}</td>
                                                 <td>{{ draft.author.display_name }}</td>
                                                 <td>@{{ draft.hive_account_username }}</td>
-                                                <td>{{ draft.published_at.strftime('%Y-%m-%d %H:%M') if draft.published_at else '-' }}</td>
+                                                <td>{{ draft.published_at.strftime('%Y-%m-%d %H:%M') if draft.published_at else '-'
+                                                    }}</td>
                                                 <td>
-                                                    <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank" class="btn btn-sm btn-outline-info">{{ _('View on Hive') }}</a>
-                                                    <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-sm btn-outline-secondary">{{ _('Local Record') }}</a>
+                                                    <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}"
+                                                       target="_blank" class="btn btn-sm btn-outline-info">{{ _('View on Hive')
+                                                        }}</a>
+                                                    <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
+                                                       class="btn btn-sm btn-outline-secondary">{{ _('Local Record') }}</a>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -206,7 +234,8 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="username" class="form-label">{{ _('Username of User to Add') }}</label>
-                            <input type="text" class="form-control" name="username" list="user-list" required autocomplete="off">
+                            <input type="text" class="form-control" name="username" list="user-list" required
+                                   autocomplete="off">
                             <datalist id="user-list">
                                 {% for u in available_users_to_add %}
                                     <option value="{{ u.username }}">
@@ -233,7 +262,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="small text-muted">{{ _('Share one of your Hive accounts with this group. Members will be able to use it for drafting (and posting, if permissions allow).') }}</p>
+                        <p class="small text-muted">{{ _('Share one of your Hive accounts with this group. Members will be
+                            able to use it for drafting (and posting, if permissions allow).') }}</p>
                         {% if available_accounts %}
                             <div class="mb-3">
                                 <label for="resource_id" class="form-label">{{ _('Select Account') }}</label>
@@ -245,7 +275,8 @@
                                 <input type="hidden" name="resource_type" value="hive_account">
                             </div>
                         {% else %}
-                            <div class="alert alert-warning">{{ _('You have no available Hive accounts to share.') }} <a href="{{ url_for('account.create') }}">{{ _('Create one?') }}</a></div>
+                            <div class="alert alert-warning">{{ _('You have no available Hive accounts to share.') }} <a
+                                href="{{ url_for('account.create') }}">{{ _('Create one?') }}</a></div>
                         {% endif %}
                     </div>
                     <div class="modal-footer">
@@ -254,8 +285,41 @@
                             <button type="submit" class="btn btn-primary">{{ _('Share Account') }}</button>
                         {% endif %}
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
+
+    <!-- Group Settings Modal -->
+            <div class="modal fade" id="groupSettingsModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="{{ url_for('groups.edit_group', id=group.id) }}" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ _('Group Settings') }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">{{ _('Group Name') }}</label>
+                                    <input type="text" class="form-control" name="name" value="{{ group.name }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">{{ _('Description') }}</label>
+                                    <textarea class="form-control" name="description"
+                                              rows="3">{{ group.description }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="default_tags" class="form-label">{{ _('Default Tags') }}</label>
+                                    <input type="text" class="form-control" name="default_tags"
+                                           value="{{ group.default_tags or '' }}" placeholder="tag1 tag2">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel')
+                                    }}</button>
+                                <button type="submit" class="btn btn-primary">{{ _('Save Changes') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 {% endblock %}

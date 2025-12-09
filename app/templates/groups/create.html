@@ -11,6 +11,10 @@
             <label for="description" class="form-label">{{ _('Description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="3"></textarea>
         </div>
+        <div class="mb-3">
+            <label for="default_tags" class="form-label">{{ _('Default Tags (space separated)') }}</label>
+            <input type="text" class="form-control" id="default_tags" name="default_tags" placeholder="tag1 tag2">
+        </div>
         <button type="submit" class="btn btn-primary">{{ _('Create Group') }}</button>
     </form>
 {% endblock %}

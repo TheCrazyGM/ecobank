@@ -123,6 +123,7 @@ class Group(db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True, nullable=False)
     description = db.Column(db.Text)
+    default_tags = db.Column(db.String(256))
     owner_user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     created_at = db.Column(
         db.DateTime, default=datetime.now(timezone.utc), nullable=False

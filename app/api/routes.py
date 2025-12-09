@@ -6,7 +6,7 @@ from nectar import Hive
 from nectar.imageuploader import ImageUploader
 
 from app.api import bp
-from app.models import GroupMember, GroupResource, HiveAccount
+from app.models import Group, GroupMember, GroupResource, HiveAccount
 
 
 @bp.route("/upload_image", methods=["POST"])
@@ -112,4 +112,6 @@ def get_group_accounts(group_id):
         group_id=group_id, resource_type="hive_account"
     ).all()
     accounts = [r.resource_id for r in resources]
-    return jsonify({"accounts": accounts})
+
+    group = Group.query.get(group_id)
+    return jsonify({"accounts": accounts, "default_tags": group.default_tags})

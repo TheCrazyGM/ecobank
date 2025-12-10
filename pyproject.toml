@@ -5,27 +5,27 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "bleach>=6.3.0",
-    "cryptography>=46.0.3",
-    "email-validator>=2.3.0",
-    "flask>=3.1.2",
-    "flask-apscheduler>=1.13.1",
-    "flask-babel>=4.0.0",
-    "flask-login>=0.6.3",
-    "flask-mail>=0.10.0",
-    "flask-migrate>=4.1.0",
-    "flask-sqlalchemy>=3.1.1",
-    "flask-wtf>=1.2.2",
-    "hive-nectar>=0.1.5",
-    "markdown>=3.10",
-    "markupsafe>=3.0.3",
-    "mdformat>=1.0.0",
-    "mdformat-gfm>=1.0.0",
-    "mongoengine>=0.29.1",
-    "pyjwt>=2.10.1",
-    "python-dotenv>=1.2.1",
-    "requests>=2.32.5",
+  "bleach>=6.3.0",
+  "cryptography>=46.0.3",
+  "email-validator>=2.3.0",
+  "flask>=3.1.2",
+  "flask-apscheduler>=1.13.1",
+  "flask-babel>=4.0.0",
+  "flask-login>=0.6.3",
+  "flask-mail>=0.10.0",
+  "flask-migrate>=4.1.0",
+  "flask-sqlalchemy>=3.1.1",
+  "flask-wtf>=1.2.2",
+  "hive-nectar>=0.1.5",
+  "markdown>=3.10",
+  "markupsafe>=3.0.3",
+  "mdformat>=1.0.0",
+  "mdformat-gfm>=1.0.0",
+  "mongoengine>=0.29.1",
+  "pyjwt>=2.10.1",
+  "python-dotenv>=1.2.1",
+  "requests>=2.32.5",
 ]
 
 [tool.uv.sources]
-hive-nectar = { git = "https://github.com/thecrazygm/hive-nectar", rev = "v0.2.0" }
+hive-nectar = { path = "../../hive-nectar" }

@@ -8,7 +8,6 @@ from cryptography.fernet import Fernet
 from flask import abort, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from nectar import Hive
-from nectar.comment import Comment  # Import Comment
 
 from app.drafts import bp
 from app.extensions import db
@@ -511,16 +510,6 @@ def submit(draft_id):
             },
         }
 
-        # Post content
-        tx = hive.post(
-            title=draft.title,
-            body=final_body,
-            author=draft.hive_account_username,
-            permlink=draft.permlink,
-            json_metadata=json_metadata,
-            tags=tag_list,
-        )
-
         # Apply Comment Options (Beneficiaries) if any
         beneficiaries_list = []
         platform_account = current_app.config.get(
@@ -535,12 +524,16 @@ def submit(draft_id):
 
         # We enforce our platform fee. The draft.beneficiaries column is no longer used for dynamic user input.
 
-        if beneficiaries_list:
-            c = Comment(
-                f"@{draft.hive_account_username}/{draft.permlink}",
-                blockchain_instance=hive,
-            )
-            c.set_comment_options(beneficiaries=beneficiaries_list)
+        # Post content
+        tx = hive.post(
+            title=draft.title,
+            body=final_body,
+            author=draft.hive_account_username,
+            permlink=draft.permlink,
+            json_metadata=json_metadata,
+            tags=tag_list,
+            beneficiaries=beneficiaries_list,
+        )
 
         # Update Draft Status
         draft.status = "published"

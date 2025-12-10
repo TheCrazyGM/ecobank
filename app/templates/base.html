@@ -54,11 +54,11 @@
                 <a class="nav-link" aria-current="page" href="{{ url_for('main.index') }}">{{ _('Home') }}</a>
               </li>
             </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-md-0 align-items-center">
+            <ul class="navbar-nav ms-auto mb-1 mb-md-0 align-items-center flex-row gap-3">
               {% if current_user.is_authenticated %}
 
             <!-- New Post Action -->
-                <li class="nav-item me-2">
+                <li class="nav-item">
                   <a class="btn btn-success btn-sm" href="{{ url_for('drafts.create') }}">
                     <i class="bi bi-pencil-square"></i> <span class="d-none d-lg-inline">{{ _('New Post') }}</span>
                   </a>
@@ -66,7 +66,7 @@
 
             <!-- Notifications -->
                 {% set unread_count = current_user.notifications.filter_by(is_read=False).count() %}
-                <li class="nav-item me-3">
+                <li class="nav-item">
                   <a class="nav-link position-relative p-1" href="{{ url_for('notifications.index') }}"
                      title="{{ _('Notifications') }}">
                     <i class="bi bi-bell fs-5"></i>

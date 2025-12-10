@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-09 11:25-0500\n"
+"POT-Creation-Date: 2025-12-10 10:50-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -316,6 +316,23 @@ msgstr "Restablecer Contraseña"
 msgid "Your password has been reset."
 msgstr "Tu contraseña ha sido restablecida."
 
+#: app/drafts/routes.py:292
+msgid "Unauthorized to assign author."
+msgstr "No autorizado para asignar autor."
+
+#: app/drafts/routes.py:297
+msgid "Invalid author selected."
+msgstr "Autor seleccionado inválido."
+
+#: app/drafts/routes.py:305
+msgid "Selected user has not contributed to this draft."
+msgstr "El usuario seleccionado no ha contribuido a este borrador."
+
+#: app/drafts/routes.py:316
+#, python-format
+msgid "Draft authorship reassigned from %(old)s to %(new)s."
+msgstr "Autoría del borrador reasignada de %(old)s a %(new)s."
+
 #: app/groups/routes.py:21 app/groups/routes.py:67
 msgid "Group name is required"
 msgstr "El nombre del grupo es obligatorio."
@@ -346,84 +363,84 @@ msgstr "Feed de la Comunidad"
 msgid "About Ecobank"
 msgstr "Acerca de Ecobank"
 
-#: app/main/routes.py:213 app/templates/base.html:144
+#: app/main/routes.py:213 app/templates/base.html:175
 #: app/templates/main/privacy.html:3 app/templates/main/privacy.html:6
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
-#: app/templates/base.html:9 app/templates/base.html:16
-#: app/templates/base.html:23
+#: app/templates/base.html:10 app/templates/base.html:18
+#: app/templates/base.html:26
 msgid "Ecobank - Your decentralized finance hub and Hive blogging platform."
 msgstr ""
 "Ecobank - Tu centro de finanzas descentralizadas y plataforma de blogging"
 " en Hive."
 
-#: app/templates/base.html:29
+#: app/templates/base.html:32
 msgid "Ecobank Development"
 msgstr "Desarrollo Ecobank"
 
-#: app/templates/base.html:41
+#: app/templates/base.html:45
 msgid "Ecobank"
 msgstr "Ecobank"
 
-#: app/templates/base.html:49
+#: app/templates/base.html:54
 msgid "Home"
 msgstr "Inicio"
 
-#: app/templates/base.html:58
+#: app/templates/base.html:63
 msgid "New Post"
 msgstr "Nueva Publicación"
 
-#: app/templates/base.html:65 app/templates/notifications/index.html:5
+#: app/templates/base.html:71 app/templates/notifications/index.html:5
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: app/templates/base.html:88
+#: app/templates/base.html:97
 msgid "Hive Management"
 msgstr "Gestión Hive"
 
-#: app/templates/base.html:89
+#: app/templates/base.html:100
 msgid "My Accounts"
 msgstr "Mis Cuentas"
 
-#: app/templates/base.html:90
+#: app/templates/base.html:102
 msgid "Create Account"
 msgstr "Crear Cuenta"
 
-#: app/templates/base.html:93
+#: app/templates/base.html:108
 msgid "Collaboration"
 msgstr "Colaboración"
 
-#: app/templates/base.html:94 app/templates/groups/list.html:5
+#: app/templates/base.html:111 app/templates/groups/list.html:5
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:97 app/templates/groups/view.html:156
+#: app/templates/base.html:117 app/templates/groups/view.html:156
 #: app/templates/groups/view.html:191
 msgid "Account"
 msgstr "Cuenta"
 
-#: app/templates/base.html:98
+#: app/templates/base.html:120
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/account/create.html:27 app/templates/base.html:99
+#: app/templates/account/create.html:27 app/templates/base.html:122
 msgid "Buy Credits"
 msgstr "Comprar Créditos"
 
-#: app/templates/base.html:103
+#: app/templates/base.html:129
 msgid "Admin"
 msgstr "Administrador"
 
-#: app/templates/base.html:107
+#: app/templates/base.html:136
 msgid "Logout"
 msgstr "Cerrar Sesión"
 
-#: app/templates/base.html:112
+#: app/templates/base.html:142
 msgid "Login"
 msgstr "Iniciar Sesión"
 
-#: app/templates/base.html:143
+#: app/templates/base.html:174
 #, fuzzy
 msgid "About"
 msgstr "Monto"
@@ -587,8 +604,8 @@ msgstr "Importar Cuenta"
 #: app/templates/account/view.html:55
 #: app/templates/auth/change_password.html:36
 #: app/templates/drafts/create.html:66 app/templates/drafts/edit.html:43
-#: app/templates/groups/view.html:247 app/templates/groups/view.html:283
-#: app/templates/groups/view.html:318
+#: app/templates/drafts/view.html:117 app/templates/groups/view.html:247
+#: app/templates/groups/view.html:283 app/templates/groups/view.html:318
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -789,7 +806,7 @@ msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
-#: app/templates/drafts/view.html:45
+#: app/templates/drafts/view.html:25
 msgid "Back"
 msgstr "Volver"
 
@@ -822,7 +839,7 @@ msgid "Members"
 msgstr "Miembros"
 
 #: app/templates/admin/groups.html:31 app/templates/admin/users.html:28
-#: app/templates/drafts/view.html:26
+#: app/templates/drafts/view.html:32
 msgid "Edit"
 msgstr "Editar"
 
@@ -1045,25 +1062,30 @@ msgstr "Volver al Borrador"
 msgid "Version"
 msgstr "Versión"
 
-#: app/templates/drafts/history.html:18
+#: app/templates/drafts/history.html:19
+#, fuzzy
+msgid "by"
+msgstr "Por"
+
+#: app/templates/drafts/history.html:24
 msgid "Tags:"
 msgstr "Etiquetas:"
 
-#: app/templates/drafts/history.html:20
+#: app/templates/drafts/history.html:28
 msgid "Restore this version? Current content will be saved as a new version."
 msgstr ""
 "¿Restaurar esta versión? El contenido actual se guardará como una nueva "
 "versión."
 
-#: app/templates/drafts/history.html:22
+#: app/templates/drafts/history.html:30
 msgid "Restore"
 msgstr "Restaurar"
 
-#: app/templates/drafts/history.html:30
+#: app/templates/drafts/history.html:38
 msgid "Show Content"
 msgstr "Mostrar Contenido"
 
-#: app/templates/drafts/history.html:44
+#: app/templates/drafts/history.html:52
 msgid "No history available."
 msgstr "No hay historial disponible."
 
@@ -1080,50 +1102,72 @@ msgstr "Esta es una publicación en borrador en Ecobank."
 msgid "For account:"
 msgstr "Para cuenta:"
 
-#: app/templates/drafts/view.html:30
+#: app/templates/drafts/view.html:38
 msgid "Are you sure you want to publish this to Hive? This cannot be undone."
 msgstr ""
 "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
 "deshacer."
 
-#: app/templates/drafts/view.html:31
+#: app/templates/drafts/view.html:40
 msgid "Publish"
 msgstr "Publicar"
 
-#: app/templates/drafts/view.html:36
-msgid "Are you sure you want to reject/delete this draft?"
-msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
-
-#: app/templates/drafts/view.html:37
-msgid "Reject"
-msgstr "Rechazar"
-
-#: app/templates/drafts/view.html:42 app/templates/groups/view.html:206
+#: app/templates/drafts/view.html:46 app/templates/groups/view.html:206
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
-#: app/templates/drafts/view.html:44
+#: app/templates/drafts/view.html:59
 msgid "History"
-msgstr "Historial"
+msgstr "Historial de Versiones"
 
-#: app/templates/drafts/view.html:55
+#: app/templates/drafts/view.html:67
+msgid "Change Author"
+msgstr "Cambiar Autor"
+
+#: app/templates/drafts/view.html:79
+msgid "Are you sure you want to reject/delete this draft?"
+msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
+
+#: app/templates/drafts/view.html:81
+msgid "Reject"
+msgstr "Rechazar"
+
+#: app/templates/drafts/view.html:99
+msgid "Reassign Authorship"
+msgstr "Reasignar Autoría"
+
+#: app/templates/drafts/view.html:104
+msgid "Select a user from the list of contributors to assign as the new author."
+msgstr ""
+"Selecciona un usuario de la lista de colaboradores para asignarlo como el"
+" nuevo autor."
+
+#: app/templates/drafts/view.html:106
+msgid "New Author"
+msgstr "Nuevo Autor"
+
+#: app/templates/drafts/view.html:118
+msgid "Assign Author"
+msgstr "Asignar Autor"
+
+#: app/templates/drafts/view.html:131
 msgid "Automatic Header Preview"
 msgstr "Vista Previa del Encabezado Automático"
 
-#: app/templates/drafts/view.html:56
+#: app/templates/drafts/view.html:132
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:63 app/templates/main/profile.html:84
+#: app/templates/drafts/view.html:142 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
-#: app/templates/drafts/view.html:65
+#: app/templates/drafts/view.html:145
 #, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
-#: app/templates/drafts/view.html:73
+#: app/templates/drafts/view.html:154
 msgid "Content Preview"
 msgstr "Vista Previa del Contenido"
 
@@ -1627,8 +1671,8 @@ msgstr "Sin notificaciones."
 #~ msgid "View Wallet"
 #~ msgstr "Ver Billetera"
 
-#~ msgid "Open in Hive.blog"
-#~ msgstr "Abrir en Hive.blog"
+#~ msgid "Open in peakd.com"
+#~ msgstr "Abrir en peakd.com"
 
 #~ msgid "Hive"
 #~ msgstr "Hive"

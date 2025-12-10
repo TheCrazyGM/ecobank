@@ -13,44 +13,115 @@
 
 {% block content %}
     <div class="row mb-3">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <h2>{{ draft.title }} <span class="badge bg-secondary">{{ draft.status }}</span></h2>
             <p class="text-muted">
                 {{ _('By') }} {{ author.display_name }} | {{ _('For account:') }} @{{ draft.hive_account_username }}
             </p>
         </div>
-        <div class="col-md-4 text-end">
-            <div class="btn-group" role="group">
-                {% if draft.status == 'draft' %}
-                    {% if can_edit %}
-                        <a href="{{ url_for('drafts.edit', draft_id=draft.id) }}" class="btn btn-outline-primary">{{ _('Edit')
-                            }}</a>
-                    {% endif %}
+        <div class="col-md-5 text-end">
+            <div class="d-flex justify-content-end align-items-start gap-2">
+                <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> {{ _('Back') }}
+                </a>
 
-                    {% if can_submit %}
-                        <form action="{{ url_for('drafts.submit', draft_id=draft.id) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('{{ _('Are you sure you want to publish this to Hive? This cannot be undone.') }}');">
-                            <button type="submit" class="btn btn-success">{{ _('Publish') }}</button>
-                        </form>
-                    {% endif %}
+                <div class="btn-group" role="group">
+                    {% if draft.status == 'draft' %}
+                        {% if can_edit %}
+                            <a href="{{ url_for('drafts.edit', draft_id=draft.id) }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i> {{ _('Edit') }}
+                            </a>
+                        {% endif %}
 
-                    {% if can_delete %}
-                        <form action="{{ url_for('drafts.reject', draft_id=draft.id) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('{{ _('Are you sure you want to reject/delete this draft?') }}');">
-                            <button type="submit" class="btn btn-danger">{{ _('Reject') }}</button>
-                        </form>
+                        {% if can_submit %}
+                            <form action="{{ url_for('drafts.submit', draft_id=draft.id) }}" method="POST" class="d-inline"
+                                  onsubmit="return confirm('{{ _('Are you sure you want to publish this to Hive? This cannot be undone.') }}');">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="bi bi-send"></i> {{ _('Publish') }}
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% elif draft.status == 'published' %}
+                        <a href="https://peakd.com/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank"
+                           class="btn btn-info text-white btn-sm"><i class="bi bi-eye"></i> {{ _('View on Hive') }}</a>
                     {% endif %}
+                </div>
 
-                {% elif draft.status == 'published' %}
-                    <a href="https://hive.blog/@{{ draft.hive_account_username }}/{{ draft.permlink }}" target="_blank"
-                       class="btn btn-info">{{ _('View on Hive') }}</a>
-                {% endif %}
-                <a href="{{ url_for('drafts.history', draft_id=draft.id) }}" class="btn btn-secondary">{{ _('History')
-                    }}</a>
-                <a href="{{ url_for('groups.view', id=draft.group_id) }}" class="btn btn-secondary">{{ _('Back') }}</a>
+            <!-- More Options Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="draftActionsDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-gear"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="draftActionsDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ url_for('drafts.history', draft_id=draft.id) }}">
+                                <i class="bi bi-clock-history"></i> {{ _('History') }}
+                            </a>
+                        </li>
+
+                        {% if can_assign_author %}
+                            <li>
+                                <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#assignAuthorModal">
+                                    <i class="bi bi-person-badge"></i> {{ _('Change Author') }}
+                                </button>
+                            </li>
+                        {% endif %}
+
+                        {% if draft.status == 'draft' and can_delete %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form action="{{ url_for('drafts.reject', draft_id=draft.id) }}" method="POST"
+                                      class="d-block w-100"
+                                      onsubmit="return confirm('{{ _('Are you sure you want to reject/delete this draft?') }}');">
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-trash"></i> {{ _('Reject') }}
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+
+    {% if can_assign_author %}
+<!-- Assign Author Modal -->
+        <div class="modal fade" id="assignAuthorModal" tabindex="-1" aria-labelledby="assignAuthorModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="assignAuthorModalLabel">{{ _('Reassign Authorship') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ url_for('drafts.assign_author', draft_id=draft.id) }}" method="POST">
+                        <div class="modal-body">
+                            <p>{{ _('Select a user from the list of contributors to assign as the new author.') }}</p>
+                            <div class="mb-3">
+                                <label for="new_author_id" class="form-label">{{ _('New Author') }}</label>
+                                <select class="form-select" id="new_author_id" name="new_author_id" required>
+                                    {% for user in contributors %}
+                                        <option value="{{ user.id }}" {% if user.id==draft.author_user_id %}selected{% endif %}>
+                                            {{ user.display_name }} (@{{ user.username }})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ _('Assign Author') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <hr>
 

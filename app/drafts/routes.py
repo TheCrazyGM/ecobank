@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from cryptography.fernet import Fernet
 from flask import abort, current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+from flask_babel import gettext as _
 from nectar import Hive
 
 from app.drafts import bp
@@ -262,6 +263,65 @@ def history(draft_id):
     )
 
 
+def _get_contributors(draft):
+    """Returns a list of User objects who have contributed to this draft."""
+    versions = DraftVersion.objects(draft_id=draft.id).only("saved_by_user_id")
+    user_ids = {v.saved_by_user_id for v in versions}
+    user_ids.add(draft.author_user_id)
+    return db.session.scalars(sa.select(User).where(User.id.in_(list(user_ids)))).all()
+
+
+@bp.route("/assign_author/<int:draft_id>", methods=["POST"])
+@login_required
+def assign_author(draft_id):
+    draft = Draft.query.get_or_404(draft_id)
+    group = Group.query.get(draft.group_id)
+
+    # Check Permissions (Same as submit: Owner/Mod/Admin)
+    membership = GroupMember.query.filter_by(
+        group_id=group.id, user_id=current_user.id
+    ).first()
+
+    allowed = False
+    if current_user.is_admin:
+        allowed = True
+    elif membership and membership.role in ["owner", "moderator", "admin"]:
+        allowed = True
+
+    if not allowed:
+        flash(_("Unauthorized to assign author."), "danger")
+        return redirect(url_for("drafts.view", draft_id=draft_id))
+
+    new_author_id = request.form.get("new_author_id", type=int)
+    if not new_author_id:
+        flash(_("Invalid author selected."), "warning")
+        return redirect(url_for("drafts.view", draft_id=draft_id))
+
+    # Verify new author is a contributor
+    contributors = _get_contributors(draft)
+    contributor_ids = [u.id for u in contributors]
+
+    if new_author_id not in contributor_ids:
+        flash(_("Selected user has not contributed to this draft."), "danger")
+        return redirect(url_for("drafts.view", draft_id=draft_id))
+
+    # Update Author
+    old_author = draft.author
+    draft.author_user_id = new_author_id
+    db.session.commit()
+
+    new_author = User.query.get(new_author_id)
+    flash(
+        _(
+            "Draft authorship reassigned from %(old)s to %(new)s.",
+            old=old_author.display_name,
+            new=new_author.display_name,
+        ),
+        "success",
+    )
+    return redirect(url_for("drafts.view", draft_id=draft_id))
+
+
 @bp.route("/versions/<int:draft_id>/restore/<int:version_num>", methods=["POST"])
 @login_required
 def restore(draft_id, version_num):
@@ -329,6 +389,12 @@ def view(draft_id):
     ):
         can_submit = True
 
+    # Permission to reassign author (Same as submit)
+    can_assign_author = can_submit
+    contributors = []
+    if can_assign_author:
+        contributors = _get_contributors(draft)
+
     # Permissions to edit
     can_edit = False
     if (
@@ -350,11 +416,14 @@ def view(draft_id):
     return render_template(
         "drafts/view.html",
         draft=draft,
-        rendered_body=rendered_body,
-        can_submit=can_submit,
-        can_edit=can_edit,
-        can_delete=can_delete,
+        group=group,
         author=draft.author,
+        rendered_body=rendered_body,
+        can_edit=can_edit,
+        can_submit=can_submit,
+        can_delete=can_delete,
+        can_assign_author=can_assign_author,
+        contributors=contributors,
     )
 
 
@@ -545,7 +614,7 @@ def submit(draft_id):
             create_notification(
                 user_id=draft.author_user_id,
                 message=f"Your draft '{draft.title}' has been published to Hive!",
-                link=f"https://hive.blog/@{draft.hive_account_username}/{draft.permlink}",
+                link=f"https://peakd.com/@{draft.hive_account_username}/{draft.permlink}",
                 type="publish",
             )
 

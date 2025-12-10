@@ -485,14 +485,16 @@ def submit(draft_id):
         flash("Already published.", "warning")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
-    # 1. Construct Header
+    # 1. Construct Footer (Moved from Header)
     author = draft.author
     avatar_url = author.avatar_url or "https://via.placeholder.com/100"
 
     # Default bio if not set
     bio_text = author.bio or f"Member of {group.name}"
 
-    header_html = f"""<table>
+    footer_html = f"""
+<hr/>
+<table>
 <tr>
 <td>
 <center><img src="{avatar_url}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
@@ -504,9 +506,8 @@ def submit(draft_id):
 </td>
 </tr>
 </table>
-<hr/>
 """
-    final_body = header_html + draft.body
+    final_body = draft.body + footer_html
 
     # 2. Get Hive Credentials for the Group's Shared Account
     # We need to find the HiveAccount object that corresponds to draft.hive_account_username
@@ -566,11 +567,26 @@ def submit(draft_id):
         if not tag_list:
             tag_list = ["ecobank"]
 
+        # Extract images from body
+        # Matches: ![alt](url) OR <img src="url">
+        import re
+
+        image_urls = []
+
+        # Markdown images: ![alt](url)
+        md_images = re.findall(r"!\[.*?\]\((https?://.*?)\)", draft.body)
+        image_urls.extend(md_images)
+
+        # HTML images: <img src="url">
+        html_images = re.findall(r'<img.*?src=["\'](https?://.*?)["\']', draft.body)
+        image_urls.extend(html_images)
+
         # Construct metadata
         json_metadata = {
             "app": "ecobank/0.1",
             "format": "markdown",
             "tags": tag_list,
+            "image": image_urls,
             "ecobank": {
                 "author_id": draft.author_user_id,
                 "author_username": author.username,

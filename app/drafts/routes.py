@@ -80,7 +80,7 @@ def create(group_id):
         membership = GroupMember.query.filter_by(
             group_id=group_id, user_id=current_user.id
         ).first()
-        if not membership:
+        if not membership and not current_user.is_admin:
             flash("Unauthorized", "danger")
             return redirect(url_for("groups.list_groups"))
 
@@ -111,7 +111,7 @@ def create(group_id):
                 membership = GroupMember.query.filter_by(
                     group_id=group_id, user_id=current_user.id
                 ).first()
-                if not membership:
+                if not membership and not current_user.is_admin:
                     abort(403)
             except (ValueError, TypeError):
                 flash("Invalid group selected", "danger")
@@ -180,12 +180,14 @@ def edit(draft_id):
     membership = GroupMember.query.filter_by(
         group_id=group.id, user_id=current_user.id
     ).first()
-    if not membership:
+    if not membership and not current_user.is_admin:
         abort(403)
 
     can_edit = False
     # Roles that can edit ANY draft
-    if membership.role in ["owner", "admin", "moderator", "editor"]:
+    if current_user.is_admin or (
+        membership and membership.role in ["owner", "admin", "moderator", "editor"]
+    ):
         can_edit = True
     # Authors can always edit their own
     elif draft.author_user_id == current_user.id:
@@ -244,7 +246,7 @@ def history(draft_id):
     membership = GroupMember.query.filter_by(
         group_id=group.id, user_id=current_user.id
     ).first()
-    if not membership:
+    if not membership and not current_user.is_admin:
         abort(403)
 
     versions = DraftVersion.objects(draft_id=draft_id).order_by("-version_number")
@@ -263,9 +265,12 @@ def restore(draft_id, version_num):
         group_id=group.id, user_id=current_user.id
     ).first()
     can_edit = False
-    if membership and (
-        membership.role in ["owner", "admin", "moderator", "editor"]
-        or draft.author_user_id == current_user.id
+    if current_user.is_admin or (
+        membership
+        and (
+            membership.role in ["owner", "admin", "moderator", "editor"]
+            or draft.author_user_id == current_user.id
+        )
     ):
         can_edit = True
 
@@ -304,20 +309,23 @@ def view(draft_id):
     membership = GroupMember.query.filter_by(
         group_id=group.id, user_id=current_user.id
     ).first()
-    if not membership:
+    if not membership and not current_user.is_admin:
         abort(403)
 
     rendered_body = render_markdown(draft.body)
 
     # Permissions to submit: Owner or Moderator only
     can_submit = False
-    if membership.role in ["owner", "moderator", "admin"]:
+    if current_user.is_admin or (
+        membership and membership.role in ["owner", "moderator", "admin"]
+    ):
         can_submit = True
 
     # Permissions to edit
     can_edit = False
     if (
-        membership.role in ["owner", "admin", "moderator", "editor"]
+        current_user.is_admin
+        or (membership and membership.role in ["owner", "admin", "moderator", "editor"])
         or draft.author_user_id == current_user.id
     ):
         can_edit = True
@@ -325,7 +333,8 @@ def view(draft_id):
     # Permissions to delete/reject (Owner, Moderator, or Author)
     can_delete = False
     if (
-        membership.role in ["owner", "admin", "moderator"]
+        current_user.is_admin
+        or (membership and membership.role in ["owner", "admin", "moderator"])
         or draft.author_user_id == current_user.id
     ):
         can_delete = True
@@ -353,9 +362,12 @@ def reject(draft_id):
     ).first()
 
     can_delete = False
-    if membership and (
-        membership.role in ["owner", "admin", "moderator"]
-        or draft.author_user_id == current_user.id
+    if current_user.is_admin or (
+        membership
+        and (
+            membership.role in ["owner", "admin", "moderator"]
+            or draft.author_user_id == current_user.id
+        )
     ):
         can_delete = True
 
@@ -383,7 +395,9 @@ def submit(draft_id):
     membership = GroupMember.query.filter_by(
         group_id=group.id, user_id=current_user.id
     ).first()
-    if not membership or membership.role not in ["owner", "admin", "moderator"]:
+    if not current_user.is_admin and (
+        not membership or membership.role not in ["owner", "admin", "moderator"]
+    ):
         flash(
             "Unauthorized to submit drafts. Only Owners and Moderators can publish.",
             "danger",

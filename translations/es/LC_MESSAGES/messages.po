@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-10 10:50-0500\n"
+"POT-Creation-Date: 2025-12-10 11:46-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -363,7 +363,7 @@ msgstr "Feed de la Comunidad"
 msgid "About Ecobank"
 msgstr "Acerca de Ecobank"
 
-#: app/main/routes.py:213 app/templates/base.html:175
+#: app/main/routes.py:213 app/templates/base.html:180
 #: app/templates/main/privacy.html:3 app/templates/main/privacy.html:6
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
@@ -383,64 +383,65 @@ msgstr "Desarrollo Ecobank"
 msgid "Ecobank"
 msgstr "Ecobank"
 
-#: app/templates/base.html:54
+#: app/templates/base.html:68
+msgid "Menu"
+msgstr ""
+
+#: app/templates/base.html:78
 msgid "Home"
 msgstr "Inicio"
 
-#: app/templates/base.html:63
+#: app/templates/base.html:86
 msgid "New Post"
 msgstr "Nueva Publicación"
 
-#: app/templates/base.html:71 app/templates/notifications/index.html:5
+#: app/templates/base.html:93 app/templates/notifications/index.html:5
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: app/templates/base.html:97
-msgid "Hive Management"
-msgstr "Gestión Hive"
-
-#: app/templates/base.html:100
-msgid "My Accounts"
-msgstr "Mis Cuentas"
-
-#: app/templates/base.html:102
-msgid "Create Account"
-msgstr "Crear Cuenta"
-
-#: app/templates/base.html:108
+#: app/templates/base.html:104
 msgid "Collaboration"
 msgstr "Colaboración"
 
-#: app/templates/base.html:111 app/templates/groups/list.html:5
+#: app/templates/base.html:107 app/templates/groups/list.html:5
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:117 app/templates/groups/view.html:156
+#: app/templates/base.html:112 app/templates/groups/view.html:156
 #: app/templates/groups/view.html:191
 msgid "Account"
 msgstr "Cuenta"
 
-#: app/templates/base.html:120
+#: app/templates/base.html:115
 msgid "Profile"
 msgstr "Perfil"
 
-#: app/templates/account/create.html:27 app/templates/base.html:122
+#: app/templates/base.html:119
+msgid "Wallet Management"
+msgstr "Gestión de Billetera"
+
+#: app/templates/account/create.html:27 app/templates/base.html:123
 msgid "Buy Credits"
 msgstr "Comprar Créditos"
 
-#: app/templates/base.html:129
+#: app/templates/base.html:128
 msgid "Admin"
 msgstr "Administrador"
 
-#: app/templates/base.html:136
+#: app/templates/base.html:131
+#, fuzzy
+msgid "Dashboard"
+msgstr "Panel de Administración"
+
+#: app/templates/base.html:139
 msgid "Logout"
 msgstr "Cerrar Sesión"
 
-#: app/templates/base.html:142
+#: app/templates/base.html:146
 msgid "Login"
 msgstr "Iniciar Sesión"
 
-#: app/templates/base.html:174
+#: app/templates/base.html:179
 #, fuzzy
 msgid "About"
 msgstr "Monto"
@@ -1275,7 +1276,7 @@ msgstr "Historial de Publicaciones"
 #, fuzzy
 msgid ""
 "Create\n"
-"                    New Draft"
+"                        New Draft"
 msgstr "Crear Nuevo Borrador"
 
 #: app/templates/groups/view.html:171
@@ -1310,7 +1311,7 @@ msgstr "Usuario a Agregar"
 #, fuzzy
 msgid ""
 "Share one of your Hive accounts with this group. Members will be\n"
-"                        able to use it for drafting (and posting, if "
+"                            able to use it for drafting (and posting, if "
 "permissions allow)."
 msgstr ""
 "Comparte una de tus cuentas Hive con este grupo. Los miembros podrán "
@@ -1682,4 +1683,10 @@ msgstr "Sin notificaciones."
 
 #~ msgid "No drafts yet."
 #~ msgstr "Aún no hay borradores."
+
+#~ msgid "My Accounts"
+#~ msgstr "Mis Cuentas"
+
+#~ msgid "Create Account"
+#~ msgstr "Crear Cuenta"
 

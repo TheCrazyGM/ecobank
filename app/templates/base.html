@@ -99,18 +99,6 @@
 
                   <hr class="border-secondary my-2">
 
-              <!-- Hive Management -->
-                  <li class="nav-item"><span class="text-uppercase text-white-50 fw-bold d-block mt-3 mb-1"
-                                             style="font-size: 0.75rem;">{{ _('Hive Management') }}</span></li>
-                  <li class="nav-item">
-                    <a class="nav-link py-2" href="{{ url_for('account.list_accounts') }}"><i
-                      class="bi bi-list-ul me-2"></i> {{ _('My Accounts') }}</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-2" href="{{ url_for('account.create') }}"><i class="bi bi-plus-circle me-2"></i>
-                      {{ _('Create Account') }}</a>
-                  </li>
-
               <!-- Collaboration -->
                   <li class="nav-item"><span class="text-uppercase text-white-50 fw-bold d-block mt-3 mb-1"
                                              style="font-size: 0.75rem;">{{ _('Collaboration') }}</span></li>
@@ -125,6 +113,10 @@
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('main.profile') }}"><i class="bi bi-person me-2"></i> {{
                       _('Profile') }}</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link py-2" href="{{ url_for('account.list_accounts') }}"><i
+                      class="bi bi-wallet2 me-2"></i> {{ _('Wallet Management') }}</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('account.buy_credits') }}"><i

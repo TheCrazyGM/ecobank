@@ -12,12 +12,20 @@
                 <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ _('Version') }} {{ v.version_number }}</h5>
-                        <small>{{ v.saved_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <div class="text-end">
+                            <small class="d-block">{{ v.saved_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                            <small class="d-block text-muted">
+                                {% set editor = user_map.get(v.saved_by_user_id) %}
+                                {{ _('by') }} {{ editor.username if editor else 'Unknown' }}
+                            </small>
+                        </div>
                     </div>
                     <p class="mb-1">{{ v.title }}</p>
                     <small class="text-muted">{{ _('Tags:') }} {{ v.tags }}</small>
 
-                    <form action="{{ url_for('drafts.restore', draft_id=draft.id, version_num=v.version_number) }}" method="POST" class="mt-2" onsubmit="return confirm('{{ _('Restore this version? Current content will be saved as a new version.') }}');">
+                    <form action="{{ url_for('drafts.restore', draft_id=draft.id, version_num=v.version_number) }}" method="POST"
+                          class="mt-2"
+                          onsubmit="return confirm('{{ _('Restore this version? Current content will be saved as a new version.') }}');">
 
                         <button type="submit" class="btn btn-sm btn-warning">{{ _('Restore') }}</button>
 
@@ -29,7 +37,7 @@
 
                         <summary class="text-info history-summary">{{ _('Show Content') }}</summary>
 
-                                <pre class="bg-light p-2 border rounded mt-2"><code>{{ v.body }}</code></pre>
+            <pre class="bg-light p-2 border rounded mt-2"><code>{{ v.body }}</code></pre>
 
                     </details>
 

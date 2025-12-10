@@ -47,3 +47,33 @@ def run_paypal_maintenance():
             )
         else:
             logging.info("PayPal Maintenance: No actions needed.")
+
+
+def cleanup_draft_versions():
+    """
+    Scheduled task to remove version history for published drafts.
+    """
+    from flask import current_app
+    from app.models import Draft, DraftVersion
+
+    app = scheduler.app or current_app
+    with app.app_context():
+        # Find all published drafts
+        published_drafts = Draft.query.filter_by(status="published").all()
+
+        cleanup_count = 0
+        version_count = 0
+
+        for draft in published_drafts:
+            # Delete versions for this draft
+            deleted = DraftVersion.objects(draft_id=draft.id).delete()
+            if deleted > 0:
+                cleanup_count += 1
+                version_count += deleted
+
+        if version_count > 0:
+            logging.info(
+                f"Draft Cleanup: Removed {version_count} versions from {cleanup_count} published drafts."
+            )
+        else:
+            logging.info("Draft Cleanup: No versions to clean up.")

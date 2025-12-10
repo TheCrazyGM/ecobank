@@ -33,7 +33,10 @@ def create_app(config_class=Config):
     # Only run scheduler in production or if explicitly enabled, to avoid double-runs in debug reloader
     if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         scheduler.init_app(app)
-        from app.tasks import run_paypal_maintenance  # Import function directly
+        from app.tasks import (
+            run_paypal_maintenance,
+            cleanup_draft_versions,
+        )  # Import function directly
 
         scheduler.start()
 
@@ -43,6 +46,13 @@ def create_app(config_class=Config):
             func=run_paypal_maintenance,
             trigger="interval",
             hours=1,
+        )
+
+        scheduler.add_job(
+            id="cleanup_draft_versions",
+            func=cleanup_draft_versions,
+            trigger="interval",
+            hours=24,
         )
 
         import atexit

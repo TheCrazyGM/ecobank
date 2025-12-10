@@ -12,6 +12,7 @@ from nectar.comment import Comment  # Import Comment
 
 from app.drafts import bp
 from app.extensions import db
+import sqlalchemy as sa
 from app.models import (
     Draft,
     DraftVersion,
@@ -19,6 +20,7 @@ from app.models import (
     GroupMember,
     GroupResource,
     HiveAccount,
+    User,
 )
 from app.utils.markdown_render import render_markdown
 from app.utils.notifications import create_notification
@@ -251,7 +253,14 @@ def history(draft_id):
 
     versions = DraftVersion.objects(draft_id=draft_id).order_by("-version_number")
 
-    return render_template("drafts/history.html", draft=draft, versions=versions)
+    # Fetch users associated with versions
+    user_ids = list(set([v.saved_by_user_id for v in versions]))
+    users = db.session.scalars(sa.select(User).where(User.id.in_(user_ids))).all()
+    user_map = {u.id: u for u in users}
+
+    return render_template(
+        "drafts/history.html", draft=draft, versions=versions, user_map=user_map
+    )
 
 
 @bp.route("/versions/<int:draft_id>/restore/<int:version_num>", methods=["POST"])

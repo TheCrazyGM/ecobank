@@ -485,7 +485,16 @@ def submit(draft_id):
         flash("Already published.", "warning")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
-    # 1. Construct Footer (Moved from Header)
+    import mdformat
+
+    # "Doctor" the markdown: Fix unclosed tags and standardize formatting
+    try:
+        clean_body = mdformat.text(draft.body)
+    except Exception as e:
+        current_app.logger.warning(f"mdformat failed to clean body: {e}")
+        clean_body = draft.body  # Fallback to original
+
+    # 1. Construct Footer
     author = draft.author
     avatar_url = author.avatar_url or "https://via.placeholder.com/100"
 
@@ -507,7 +516,7 @@ def submit(draft_id):
 </tr>
 </table>
 """
-    final_body = draft.body + footer_html
+    final_body = clean_body + footer_html
 
     # 2. Get Hive Credentials for the Group's Shared Account
     # We need to find the HiveAccount object that corresponds to draft.hive_account_username
@@ -567,18 +576,18 @@ def submit(draft_id):
         if not tag_list:
             tag_list = ["ecobank"]
 
-        # Extract images from body
+        # Extract images from body (Use the CLEAN body now)
         # Matches: ![alt](url) OR <img src="url">
         import re
 
         image_urls = []
 
         # Markdown images: ![alt](url)
-        md_images = re.findall(r"!\[.*?\]\((https?://.*?)\)", draft.body)
+        md_images = re.findall(r"!\[.*?\]\((https?://.*?)\)", clean_body)
         image_urls.extend(md_images)
 
         # HTML images: <img src="url">
-        html_images = re.findall(r'<img.*?src=["\'](https?://.*?)["\']', draft.body)
+        html_images = re.findall(r'<img.*?src=["\'](https?://.*?)["\']', clean_body)
         image_urls.extend(html_images)
 
         # Construct metadata

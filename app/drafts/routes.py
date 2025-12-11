@@ -213,7 +213,13 @@ def edit(draft_id):
         # Save current state as a version before updating
         _save_draft_version(draft, current_user.id, "updated")
 
-        draft.title = request.form.get("title")
+        new_title = request.form.get("title")
+        if new_title and new_title != draft.title:
+            # If title changed and not published, update permlink
+            if draft.status != "published":
+                draft.permlink = generate_permlink(new_title)
+
+        draft.title = new_title
         draft.body = request.form.get("body")
         draft.tags = request.form.get("tags")
         draft.hive_account_username = request.form.get("hive_account")

@@ -16,7 +16,7 @@
         <div class="col-md-7">
             <h2>{{ draft.title }} <span class="badge bg-secondary">{{ draft.status }}</span></h2>
             <p class="text-muted">
-                {{ _('By') }} {{ author.display_name }} | {{ _('For account:') }} @{{ draft.hive_account_username }}
+                {{ _('By') }} {{ author.display_name }} | {{ _('For account:') }} @{{ draft.hive_account_username }} | {{ _('Permlink:') }} {{ draft.permlink }}
             </p>
         </div>
         <div class="col-md-5 text-end">

@@ -29,9 +29,19 @@
                         </div>
 
                         <div class="mb-3">
+                            {{ form.default_tags.label(class="form-label") }}
+                            {{ form.default_tags(class="form-control") }}
+                            <div class="form-text">{{ _('Space separated tags (e.g. tag1 tag2)') }}</div>
+                            {% for error in form.default_tags.errors %}
+                                <span class="text-danger small">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
                             {{ form.owner_username.label(class="form-label") }}
                             {{ form.owner_username(class="form-control") }}
-                            <div class="form-text">{{ _('Enter the username of the new owner. Must be a valid registered user.') }}</div>
+                            <div class="form-text">{{ _('Enter the username of the new owner. Must be a valid registered
+                                user.') }}</div>
                             {% for error in form.owner_username.errors %}
                                 <span class="text-danger small">{{ error }}</span>
                             {% endfor %}

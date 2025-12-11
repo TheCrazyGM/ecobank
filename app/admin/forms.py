@@ -20,5 +20,6 @@ class AdminUserEditForm(FlaskForm):
 class AdminGroupEditForm(FlaskForm):
     name = StringField(_l("Group Name"), validators=[DataRequired()])
     description = TextAreaField(_l("Description"))
+    default_tags = StringField(_l("Default Tags"), validators=[Optional()])
     owner_username = StringField(_l("Owner Username"), validators=[DataRequired()])
     submit = SubmitField(_l("Update Group"))

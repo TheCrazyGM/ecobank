@@ -93,6 +93,7 @@ def edit_group(group_id):
     if form.validate_on_submit():
         group.name = form.name.data
         group.description = form.description.data
+        group.default_tags = form.default_tags.data
 
         # Handle owner change
         new_owner = User.query.filter_by(username=form.owner_username.data).first()

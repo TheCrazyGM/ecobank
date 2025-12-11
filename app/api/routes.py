@@ -1,4 +1,6 @@
 import json
+import io
+from PIL import Image
 from cryptography.fernet import Fernet
 from flask import jsonify, request, current_app
 from flask_login import current_user, login_required
@@ -86,8 +88,24 @@ def upload_image():
         # ImageUploader(blockchain_instance=...)
         uploader = ImageUploader(blockchain_instance=hive)
 
-        # Read file content to bytes, as ImageUploader might try to concat it with bytes
-        image_data = file.read()
+        # Resize image if larger than 2048px on either side
+        img = Image.open(file)
+
+        # Convert to RGB if necessary (e.g. for PNGs with transparency if saving as JPEG, though we'll keep format if possible or stick to JPEG for optimization)
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        max_size = 2048
+        if max(img.size) > max_size:
+            ratio = max_size / max(img.size)
+            new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
+            img = img.resize(new_size, Image.Resampling.LANCZOS)
+
+        # Save to BytesIO
+        output = io.BytesIO()
+        # default to JPEG for efficiency
+        img.save(output, format="JPEG", quality=85)
+        image_data = output.getvalue()
 
         # The upload method signature is: upload(self, image, account, image_name=None)
         url = uploader.upload(image_data, target_username, image_name=file.filename)

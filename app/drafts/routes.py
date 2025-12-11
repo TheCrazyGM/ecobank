@@ -650,7 +650,7 @@ def submit(draft_id):
             )
 
         flash("Post published successfully to Hive!", "success")
-        return redirect(url_for("groups.view", id=group.id))
+        return redirect(url_for("groups.view", id=group.id, tab="history"))
 
     except Exception as e:
         current_app.logger.exception("Hive posting failed")

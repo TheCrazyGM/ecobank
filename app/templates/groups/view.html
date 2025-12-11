@@ -127,14 +127,18 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <ul class="nav nav-tabs card-header-tabs" id="draftTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="active-tab" data-bs-toggle="tab"
-                                    data-bs-target="#active-drafts" type="button" role="tab" aria-controls="active-drafts"
-                                    aria-selected="true">{{ _('Active Drafts') }}</button>
+                            <button class="nav-link {{ 'active' if request.args.get('tab') != 'history' else '' }}"
+                                    id="active-tab" data-bs-toggle="tab" data-bs-target="#active-drafts" type="button"
+                                    role="tab" aria-controls="active-drafts"
+                                    aria-selected="{{ 'true' if request.args.get('tab') != 'history' else 'false' }}">{{
+                                _('Active Drafts') }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="published-tab" data-bs-toggle="tab"
-                                    data-bs-target="#published-drafts" type="button" role="tab" aria-controls="published-drafts"
-                                    aria-selected="false">{{ _('Published History') }}</button>
+                            <button class="nav-link {{ 'active' if request.args.get('tab') == 'history' else '' }}"
+                                    id="published-tab" data-bs-toggle="tab" data-bs-target="#published-drafts" type="button"
+                                    role="tab" aria-controls="published-drafts"
+                                    aria-selected="{{ 'true' if request.args.get('tab') == 'history' else 'false' }}">{{
+                                _('Published History') }}</button>
                         </li>
                     </ul>
                     <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create
@@ -144,8 +148,8 @@
                     <div class="tab-content" id="draftTabsContent">
 
                     <!-- Active Drafts Tab -->
-                        <div class="tab-pane fade show active" id="active-drafts" role="tabpanel"
-                             aria-labelledby="active-tab">
+                        <div class="tab-pane fade {{ 'show active' if request.args.get('tab') != 'history' else '' }}"
+                             id="active-drafts" role="tabpanel" aria-labelledby="active-tab">
                             {% set active_drafts = group.drafts | selectattr("status", "equalto", "draft") | list %}
                             {% if active_drafts %}
                                 <table class="table table-hover">
@@ -180,7 +184,8 @@
                         </div>
 
                     <!-- Published Drafts Tab -->
-                        <div class="tab-pane fade" id="published-drafts" role="tabpanel" aria-labelledby="published-tab">
+                        <div class="tab-pane fade {{ 'show active' if request.args.get('tab') == 'history' else '' }}"
+                             id="published-drafts" role="tabpanel" aria-labelledby="published-tab">
                             {% set published_drafts = group.drafts | selectattr("status", "equalto", "published") | list %}
                             {% if published_drafts %}
                                 <table class="table table-hover">

@@ -32,40 +32,50 @@ def create_app(config_class=Config):
 
     # Only run scheduler in production or if explicitly enabled, to avoid double-runs in debug reloader
     if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
-        scheduler.init_app(app)
-        from app.tasks import (
-            run_paypal_maintenance,
-            cleanup_draft_versions,
-            backup_database,
-        )  # Import function directly
+        try:
+            import fcntl
+            import atexit
 
-        scheduler.start()
+            lock_file = open("/tmp/ecobank_scheduler.lock", "w")
+            fcntl.lockf(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
-        # Add jobs here or via configuration
-        scheduler.add_job(
-            id="paypal_maintenance",
-            func=run_paypal_maintenance,
-            trigger="interval",
-            hours=1,
-        )
+            # If we acquire the lock, we are the designated scheduler worker
+            scheduler.init_app(app)
+            from app.tasks import (
+                run_paypal_maintenance,
+                cleanup_draft_versions,
+                backup_database,
+            )  # Import function directly
 
-        scheduler.add_job(
-            id="cleanup_draft_versions",
-            func=cleanup_draft_versions,
-            trigger="interval",
-            hours=24,
-        )
+            scheduler.start()
 
-        scheduler.add_job(
-            id="backup_database",
-            func=backup_database,
-            trigger="interval",
-            hours=24,
-        )
+            scheduler.add_job(
+                id="paypal_maintenance",
+                func=run_paypal_maintenance,
+                trigger="interval",
+                hours=1,
+            )
 
-        import atexit
+            scheduler.add_job(
+                id="cleanup_draft_versions",
+                func=cleanup_draft_versions,
+                trigger="interval",
+                hours=24,
+            )
 
-        atexit.register(lambda: scheduler.shutdown(wait=False))
+            scheduler.add_job(
+                id="backup_database",
+                func=backup_database,
+                trigger="interval",
+                hours=24,
+            )
+
+            atexit.register(lambda: scheduler.shutdown(wait=False))
+            # Lock is automatically released when the process exits and file identifier is closed
+
+        except IOError:
+            # Failed to acquire lock, another worker is running the scheduler
+            pass
 
         # Initialize MongoEngine
 

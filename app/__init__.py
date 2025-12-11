@@ -36,6 +36,7 @@ def create_app(config_class=Config):
         from app.tasks import (
             run_paypal_maintenance,
             cleanup_draft_versions,
+            backup_database,
         )  # Import function directly
 
         scheduler.start()
@@ -51,6 +52,13 @@ def create_app(config_class=Config):
         scheduler.add_job(
             id="cleanup_draft_versions",
             func=cleanup_draft_versions,
+            trigger="interval",
+            hours=24,
+        )
+
+        scheduler.add_job(
+            id="backup_database",
+            func=backup_database,
             trigger="interval",
             hours=24,
         )

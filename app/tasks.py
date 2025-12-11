@@ -85,13 +85,15 @@ def backup_database():
     Supports SQLite (file copy) and Postgres (pg_dump).
     """
     import os
-    import shutil
     import subprocess
     from flask import current_app
+    from sqlalchemy.engine.url import make_url
 
     app = scheduler.app or current_app
     with app.app_context():
         db_uri = app.config.get("SQLALCHEMY_DATABASE_URI", "")
+        # Normalize URI for parsing (SQLAlchemy handles some quirks)
+
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         backup_dir = os.path.join(base_dir, "backups", "db")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -99,43 +101,68 @@ def backup_database():
         logging.info("Starting database backup...")
 
         try:
+            # Parse URI
+            # Example: mysql://user:pass@host:port/dbname
+            # Example: postgresql://user:pass@host:port/dbname
+
             if db_uri.startswith("sqlite"):
-                # SQLite Backup
-                target_dir = os.path.join(backup_dir, "sqlite")
+                logging.info("SQLite backup skipped (dev only).")
+                return
+
+            u = make_url(db_uri)
+            # SQLAlchemy < 1.4 uses drivername, >= 1.4 has easier methods but make_url returns URL object
+            # u.drivername usually 'mysql', 'postgresql', 'mysql+pymysql' etc.
+
+            # Simple check based on prefix of drivername
+            is_mysql = u.drivername.startswith("mysql")
+            is_postgres = u.drivername.startswith(
+                "postgresql"
+            ) or u.drivername.startswith("postgres")
+
+            env = os.environ.copy()
+            cmd = None
+            backup_file = None
+
+            if is_mysql:
+                target_dir = os.path.join(backup_dir, "mysql")
                 if not os.path.exists(target_dir):
                     os.makedirs(target_dir)
 
-                # Extract file path from URI (sqlite:///path/to/db)
-                db_path = db_uri.replace("sqlite:///", "")
-                if not os.path.isabs(db_path):
-                    db_path = os.path.join(base_dir, db_path)
+                backup_file = os.path.join(
+                    target_dir, f"ecobank_backup_{timestamp}.sql.gz"
+                )
 
-                if os.path.exists(db_path):
-                    backup_file = os.path.join(
-                        target_dir, f"ecobank_backup_{timestamp}.db"
-                    )
-                    shutil.copy2(db_path, backup_file)
-                    logging.info(f"Database backup successful: {backup_file}")
-                else:
-                    # Fallback: Check instance folder
-                    instance_path = os.path.join(
-                        base_dir, "instance", os.path.basename(db_path)
-                    )
-                    if os.path.exists(instance_path):
-                        backup_file = os.path.join(
-                            target_dir, f"ecobank_backup_{timestamp}.db"
-                        )
-                        shutil.copy2(instance_path, backup_file)
-                        logging.info(
-                            f"Database backup successful (from instance): {backup_file}"
-                        )
-                    else:
-                        logging.error(
-                            f"Database file not found at: {db_path} or {instance_path}"
-                        )
+                # Construct mysqldump command
+                # mysqldump -h host -P port -u user dbname | gzip > file
+                cmd_parts = ["mysqldump"]
+                if u.host:
+                    cmd_parts.extend(["-h", u.host])
+                if u.port:
+                    cmd_parts.extend(["-P", str(u.port)])
+                if u.username:
+                    cmd_parts.extend(["-u", u.username])
 
-            elif db_uri.startswith("postgresql"):
-                # Postgres Backup
+                # Password via env
+                if u.password:
+                    env["MYSQL_PWD"] = u.password
+
+                cmd_parts.append(u.database)
+
+                # We construct the shell command string manually to handle the pipe
+                # safely quoting args is tricky in shell=True, but these are from config.
+                # Let's trust config for now or use Popen with list for first part?
+                # Popen with pipe requires shell=True for the pipe part usually or manual piping.
+                # Let's stick to the previous shell=True pattern for simplicity but be careful.
+
+                # Re-construct command string safely-ish
+                defs = f"mysqldump -h '{u.host or 'localhost'}' -u '{u.username or 'root'}'"
+                if u.port:
+                    defs += f" -P {u.port}"
+
+                # Don't include -p in command string, utilize MYSQL_PWD env var
+                cmd = f"{defs} '{u.database}' | gzip > '{backup_file}'"
+
+            elif is_postgres:
                 target_dir = os.path.join(backup_dir, "postgres")
                 if not os.path.exists(target_dir):
                     os.makedirs(target_dir)
@@ -144,14 +171,22 @@ def backup_database():
                     target_dir, f"ecobank_backup_{timestamp}.sql.gz"
                 )
 
-                # Use pg_dump
-                # Assumes pg_dump is in PATH and .pgpass or trust auth is configured for non-interactive
-                cmd = f"pg_dump '{db_uri}' | gzip > '{backup_file}'"
+                if u.password:
+                    env["PGPASSWORD"] = u.password
 
-                # Security note: Passing password via URI in command line might be visible to ps.
-                # Ideally use PGPASSWORD env var if needed.
-                env = os.environ.copy()
+                # pg_dump -h host -p port -U user -d db
+                defs = f"pg_dump -h '{u.host or 'localhost'}' -U '{u.username or 'postgres'}'"
+                if u.port:
+                    defs += f" -p {u.port}"
 
+                cmd = f"{defs} -d '{u.database}' | gzip > '{backup_file}'"
+
+            else:
+                logging.warning(f"Unsupported database type for backup: {u.drivername}")
+                return
+
+            # Execute
+            if cmd:
                 process = subprocess.Popen(
                     cmd,
                     shell=True,
@@ -166,22 +201,16 @@ def backup_database():
                 else:
                     logging.error(f"Database backup failed: {stderr.decode()}")
 
-            else:
-                logging.warning(f"Unlock database type for backup: {db_uri}")
-
         except Exception as e:
             logging.error(f"Backup failed with error: {e}")
 
         # Prune old backups (keep last 7 days)
         try:
-            target_dir = None
-            if db_uri.startswith("sqlite"):
-                target_dir = os.path.join(backup_dir, "sqlite")
-            elif db_uri.startswith("postgresql"):
-                target_dir = os.path.join(backup_dir, "postgres")
+            for subdir in ["mysql", "postgres"]:
+                target_dir = os.path.join(backup_dir, subdir)
+                if os.path.exists(target_dir):
+                    purge_old_backups(target_dir, days=7)
 
-            if target_dir and os.path.exists(target_dir):
-                purge_old_backups(target_dir, days=7)
         except Exception as e:
             logging.error(f"Pruning old backups failed: {e}")
 

@@ -13,7 +13,7 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(256))
     locale = db.Column(db.String(2), default="en")
     account_credits = db.Column(db.Integer, default=0, nullable=False)
     is_verified = db.Column(db.Boolean, default=False)

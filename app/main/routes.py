@@ -170,6 +170,7 @@ def hive_view_post(username, permlink):
             reblogged_by=post.get("reblogged_by"),
             payout=post.get("payout"),
         )
+    abort(404)
 
 
 @bp.route("/<community>/@<username>/<permlink>")

@@ -42,7 +42,10 @@ def login():
 
         if user is None or not user.check_password(form.password.data):
             flash(_("Invalid username or password"), "danger")
+            return redirect(url_for("auth.login"))
 
+        if not user.is_verified:
+            flash(_("Please verify your email address before logging in."), "warning")
             return redirect(url_for("auth.login"))
 
         login_user(user, remember=form.remember_me.data)

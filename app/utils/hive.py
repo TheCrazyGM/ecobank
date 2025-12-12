@@ -545,35 +545,35 @@ def update_account_profile(
         hive = Hive(keys=[wif])
         acc = Account(username, blockchain_instance=hive)
 
-        # 2. Get current metadata to preserve other fields
-        # Note: posting_json_metadata is often preferred for profile, but some use json_metadata.
-        # We will target posting_json_metadata as it only requires Posting Key.
-        current_meta_str = acc.get("posting_json_metadata", "{}")
-        current_meta = {}
+        # 2. Get current posting metadata
+        current_posting_meta_str = acc.get("posting_json_metadata") or "{}"
         try:
-            current_meta = json.loads(current_meta_str) if current_meta_str else {}
+            current_posting_meta = json.loads(current_posting_meta_str)
         except json.JSONDecodeError:
-            pass
+            current_posting_meta = {}
+
+        if not isinstance(current_posting_meta, dict):
+            current_posting_meta = {}
 
         # 3. Update 'profile' key
-        if "profile" not in current_meta:
-            current_meta["profile"] = {}
+        if "profile" not in current_posting_meta:
+            current_posting_meta["profile"] = {}
 
-        # Merge new data
+        if not isinstance(current_posting_meta["profile"], dict):
+            current_posting_meta["profile"] = {}
+
         for k, v in profile_data.items():
-            current_meta["profile"][k] = v
+            current_posting_meta["profile"][k] = v
 
-        # 4. Broadcast
-        # account_update2(account, json_metadata, posting_json_metadata, extensions)
-        # We only update posting_json_metadata.
-        hive.account_update2(
-            account=username,
-            posting_json_metadata=current_meta,
-            json_metadata=None,  # Do not touch active key metadata
-        )
+        # 4. Update using update_account_jsonmetadata (uses Posting Key)
+        acc.update_account_jsonmetadata(current_posting_meta)
+
         logger.info(f"Updated profile for {username}")
         return True
 
     except Exception as e:
+        import traceback
+
         logger.error(f"Failed to update profile for {username}: {e}")
+        logger.error(traceback.format_exc())
         return False

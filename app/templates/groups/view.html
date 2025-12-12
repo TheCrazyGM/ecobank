@@ -156,13 +156,33 @@
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">{{ _('Profile Image URL') }}</label>
-                                                                <input type="url" class="form-control" name="profile_image"
-                                                                       value="{{ profile.profile_image or '' }}">
+                                                                <div class="input-group">
+                                                                    <input type="url" class="form-control" name="profile_image"
+                                                                           id="profile_image_{{ r.resource_id }}"
+                                                                           value="{{ profile.profile_image or '' }}">
+                                                                    <button type="button" class="btn btn-outline-secondary"
+                                                                            onclick="triggerUpload('{{ r.resource_id }}', 'profile')">
+                                                                        <i class="fas fa-upload"></i> {{ _('Upload') }}
+                                                                    </button>
+                                                                </div>
+                                                                <input type="file" id="upload_profile_{{ r.resource_id }}"
+                                                                       class="d-none" accept="image/*"
+                                                                       onchange="uploadImage(this, '{{ group.id }}', '{{ r.resource_id }}', 'profile')">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">{{ _('Cover Image URL') }}</label>
-                                                                <input type="url" class="form-control" name="cover_image"
-                                                                       value="{{ profile.cover_image or '' }}">
+                                                                <div class="input-group">
+                                                                    <input type="url" class="form-control" name="cover_image"
+                                                                           id="cover_image_{{ r.resource_id }}"
+                                                                           value="{{ profile.cover_image or '' }}">
+                                                                    <button type="button" class="btn btn-outline-secondary"
+                                                                            onclick="triggerUpload('{{ r.resource_id }}', 'cover')">
+                                                                        <i class="fas fa-upload"></i> {{ _('Upload') }}
+                                                                    </button>
+                                                                </div>
+                                                                <input type="file" id="upload_cover_{{ r.resource_id }}" class="d-none"
+                                                                       accept="image/*"
+                                                                       onchange="uploadImage(this, '{{ group.id }}', '{{ r.resource_id }}', 'cover')">
                                                             </div>
                                                             <div class="alert alert-info small">
                                                                 {{ _('Note: Updates are broadcast to the Hive blockchain immediately
@@ -399,4 +419,60 @@
             </div>
         </div>
     </div>
+    <script>
+        function triggerUpload(resourceId, type) {
+            const fileInput = document.getElementById(`upload_${type}_${resourceId}`);
+            if (fileInput) fileInput.click();
+        }
+
+        async function uploadImage(input, groupId, resourceId, type) {
+            if (!input.files || !input.files[0]) return;
+
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('group_id', groupId);
+            formData.append('hive_username', resourceId);
+
+        // Find the button to toggle loading state
+        // structure: div.input-group > input, button
+        // input element is outside the input-group.
+        // We need to find the button locally.
+        // The input 'onchange' is on the hidden file input.
+        // The visible text input id is `${type}_image_${resourceId}`.
+        // The button is next to that text input within the .input-group div.
+
+            const urlInput = document.getElementById(`${type}_image_${resourceId}`);
+            const btn = urlInput.nextElementSibling;
+
+            const originalInfo = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("{{ url_for('api.upload_image') }}", {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                // Update the URL input
+                    urlInput.value = data.url;
+                } else {
+                    alert(data.error || 'Upload failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during upload');
+            } finally {
+            // Restore button state
+                btn.innerHTML = originalInfo;
+                btn.disabled = false;
+            // Clear input so selecting same file works again
+                input.value = '';
+            }
+        }
+    </script>
 {% endblock %}

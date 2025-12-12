@@ -32,7 +32,7 @@ msgstr "Se requiere contraseña."
 
 #: app/account/routes.py:77
 msgid "Username already exists on Hive."
-msgstr "El usuario ya existe en Hive."
+msgstr "El usuario escogido ya existe en Hive."
 
 #: app/account/routes.py:87
 msgid "Account creator not configured."

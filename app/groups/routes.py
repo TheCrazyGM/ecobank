@@ -1,5 +1,7 @@
+import json
 import sqlalchemy as sa
-from flask import abort, flash, redirect, render_template, request, url_for
+from cryptography.fernet import Fernet
+from flask import abort, flash, redirect, render_template, request, url_for, current_app
 from flask_babel import _
 from flask_login import current_user, login_required
 
@@ -118,14 +120,20 @@ def view(id):
         acc for acc in my_hive_accounts if acc.username not in linked_usernames
     ]
 
-    # Fetch potential members (users not already in the group)
-    # If user base grows large, this should be AJAX based, but fine for small scale
     existing_member_ids = [m.user_id for m in members]
     available_users_to_add = db.session.scalars(
         sa.select(User)
         .where(User.id.notin_(existing_member_ids))
         .order_by(User.username)
     ).all()
+
+    # Fetch existing profile data for Hive Accounts
+    from app.utils.hive import fetch_raw_profile_data
+
+    account_profiles = {}
+    for r in resources:
+        if r.resource_type == "hive_account":
+            account_profiles[r.resource_id] = fetch_raw_profile_data(r.resource_id)
 
     return render_template(
         "groups/view.html",
@@ -135,6 +143,7 @@ def view(id):
         resources=resources,
         available_accounts=available_accounts,
         available_users_to_add=available_users_to_add,
+        account_profiles=account_profiles,
     )
 
 
@@ -330,5 +339,97 @@ def unlink_resource(id, resource_id):
         flash("Resource unlinked.", "success")
     else:
         flash("Unauthorized to unlink this resource.", "danger")
+
+    return redirect(url_for("groups.view", id=id))
+
+
+@bp.route("/<int:id>/update_resource_profile/<int:resource_id>", methods=["POST"])
+@login_required
+def update_resource_profile(id, resource_id):
+    group = Group.query.get_or_404(id)
+
+    # Auth check: Owner or Admin
+    membership = GroupMember.query.filter_by(
+        group_id=id, user_id=current_user.id
+    ).first()
+    if not membership or membership.role not in ["owner", "admin"]:
+        flash(_("Unauthorized"), "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    resource = GroupResource.query.get_or_404(resource_id)
+    if resource.group_id != group.id:
+        abort(404)
+
+    if resource.resource_type != "hive_account":
+        flash(_("This resource type does not support profile updates."), "warning")
+        return redirect(url_for("groups.view", id=id))
+
+    # Retrieve HiveAccount to get keys
+    # Note: resource.resource_id is the username
+    hive_account = HiveAccount.query.filter_by(
+        username=resource.resource_id, created_by_id=group.owner_user_id
+    ).first()
+    # Or should we look up by the resource_id string?
+    # The resource_id in GroupResource IS the username for hive_account type.
+    # However, to get the KEYS, we need the HiveAccount object.
+    # We must ensure we find the correct HiveAccount. Since it's linked, it exists.
+    # But wait, who owns the HiveAccount? The group owner? Or the person who linked it?
+    # Our HiveAccount model has `created_by_id`. The GroupResource doesn't track who linked it.
+    # But `HiveAccount.username` is unique. So we can just find it.
+
+    hive_account = HiveAccount.query.filter_by(username=resource.resource_id).first()
+
+    if not hive_account:
+        flash(_("Hive Account not found in local database."), "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    # Decrypt keys
+    encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
+    if not encryption_key:
+        flash(_("Server configuration error: Encryption key missing."), "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    try:
+        fernet = Fernet(encryption_key)
+        keys = json.loads(fernet.decrypt(hive_account.keys_enc.encode()).decode())
+        posting_key = keys.get("posting", {}).get("private")
+        if not posting_key:
+            raise ValueError("No posting key found")
+    except Exception as e:
+        flash(_("Failed to retrieve account keys."), "danger")
+        current_app.logger.error(
+            f"Key decryption failed for {hive_account.username}: {e}"
+        )
+        return redirect(url_for("groups.view", id=id))
+
+    # Get form data
+    display_name = request.form.get("display_name")
+    about = request.form.get("about")
+    location = request.form.get("location")
+    website = request.form.get("website")
+    profile_image = request.form.get("profile_image")
+    cover_image = request.form.get("cover_image")
+
+    profile_data = {
+        "name": display_name,
+        "about": about,
+        "location": location,
+        "website": website,
+        "profile_image": profile_image,
+        "cover_image": cover_image,
+    }
+    # Filter out empty/None if we want partial updates?
+    # Or do we want to clear fields if empty?
+    # If the user empties the form, we should probably clear it on chain.
+    # So we keep empty strings.
+
+    from app.utils.hive import update_account_profile
+
+    success = update_account_profile(hive_account.username, posting_key, profile_data)
+
+    if success:
+        flash(_("Profile updated successfully on Hive!"), "success")
+    else:
+        flash(_("Failed to update profile. Check server logs."), "danger")
 
     return redirect(url_for("groups.view", id=id))

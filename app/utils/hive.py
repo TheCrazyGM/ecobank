@@ -514,3 +514,66 @@ def claim_account(claimer_account: str, claimer_key: str) -> bool:
     except Exception as e:
         logger.error(f"Failed to claim account ticket for {claimer_account}: {e}")
         return False
+
+
+def fetch_raw_profile_data(username: str) -> Dict[str, Any]:
+    """Fetch raw profile data from posting_json_metadata or json_metadata."""
+    try:
+        acc = Account(username)
+        # Prioritize posting_json_metadata for profile info
+        meta_str = acc.get("posting_json_metadata") or acc.get("json_metadata") or "{}"
+        try:
+            meta = json.loads(meta_str)
+        except json.JSONDecodeError:
+            meta = {}
+
+        return meta.get("profile", {})
+    except Exception as e:
+        logger.error(f"Failed to fetch raw profile for {username}: {e}")
+        return {}
+
+
+def update_account_profile(
+    username: str, wif: str, profile_data: Dict[str, Any]
+) -> bool:
+    """Update user profile metadata (posting_json_metadata).
+
+    profile_data keys: name, about, location, website, profile_image, cover_image
+    """
+    try:
+        # 1. Connect
+        hive = Hive(keys=[wif])
+        acc = Account(username, blockchain_instance=hive)
+
+        # 2. Get current metadata to preserve other fields
+        # Note: posting_json_metadata is often preferred for profile, but some use json_metadata.
+        # We will target posting_json_metadata as it only requires Posting Key.
+        current_meta_str = acc.get("posting_json_metadata", "{}")
+        current_meta = {}
+        try:
+            current_meta = json.loads(current_meta_str) if current_meta_str else {}
+        except json.JSONDecodeError:
+            pass
+
+        # 3. Update 'profile' key
+        if "profile" not in current_meta:
+            current_meta["profile"] = {}
+
+        # Merge new data
+        for k, v in profile_data.items():
+            current_meta["profile"][k] = v
+
+        # 4. Broadcast
+        # account_update2(account, json_metadata, posting_json_metadata, extensions)
+        # We only update posting_json_metadata.
+        hive.account_update2(
+            account=username,
+            posting_json_metadata=current_meta,
+            json_metadata=None,  # Do not touch active key metadata
+        )
+        logger.info(f"Updated profile for {username}")
+        return True
+
+    except Exception as e:
+        logger.error(f"Failed to update profile for {username}: {e}")
+        return False

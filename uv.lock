@@ -276,12 +276,10 @@ dependencies = [
     { name = "flask-login" },
     { name = "flask-mail" },
     { name = "flask-migrate" },
-    { name = "flask-mysqldb" },
     { name = "flask-sqlalchemy" },
     { name = "flask-wtf" },
     { name = "gunicorn", extra = ["gevent"] },
     { name = "hive-nectar" },
-    { name = "mariadb" },
     { name = "markdown" },
     { name = "markupsafe" },
     { name = "mdformat" },
@@ -304,12 +302,10 @@ requires-dist = [
     { name = "flask-login", specifier = ">=0.6.3" },
     { name = "flask-mail", specifier = ">=0.10.0" },
     { name = "flask-migrate", specifier = ">=4.1.0" },
-    { name = "flask-mysqldb", specifier = ">=2.0.0" },
     { name = "flask-sqlalchemy", specifier = ">=3.1.1" },
     { name = "flask-wtf", specifier = ">=1.2.2" },
     { name = "gunicorn", extras = ["gevent"], specifier = ">=23.0.0" },
     { name = "hive-nectar", git = "https://github.com/thecrazygm/hive-nectar?rev=v0.2.0" },
-    { name = "mariadb", specifier = ">=1.1.14" },
     { name = "markdown", specifier = ">=3.10" },
     { name = "markupsafe", specifier = ">=3.0.3" },
     { name = "mdformat", specifier = ">=1.0.0" },
@@ -415,19 +411,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/5a/8e/47c7b3c93855ceffc2eabfa271782332942443321a07de193e4198f920cf/flask_migrate-4.1.0.tar.gz", hash = "sha256:1a336b06eb2c3ace005f5f2ded8641d534c18798d64061f6ff11f79e1434126d", size = 21965, upload-time = "2025-01-10T18:51:11.848Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d2/c4/3f329b23d769fe7628a5fc57ad36956f1fb7132cf8837be6da762b197327/Flask_Migrate-4.1.0-py3-none-any.whl", hash = "sha256:24d8051af161782e0743af1b04a152d007bad9772b2bca67b7ec1e8ceeb3910d", size = 21237, upload-time = "2025-01-10T18:51:09.527Z" },
-]
-
-[[package]]
-name = "flask-mysqldb"
-version = "2.0.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "flask" },
-    { name = "mysqlclient" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/b4/80/afdc313a3875d15c3ba32de302fa161890ceae762576f890fde74f29a01d/Flask-MySQLdb-2.0.0.tar.gz", hash = "sha256:4f3e15013a2d48c8eaccdebcfedc3b1c4a29be77de6e7c746ad589ab5afcd3ef", size = 4485, upload-time = "2023-10-04T22:48:15.346Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/c4/c91b4a704c1e2467ecfd2c47a9c6f609af37cde7380698aace19dce24f53/Flask_MySQLdb-2.0.0-py3-none-any.whl", hash = "sha256:84ad09c862a408709538d237712426a6d34ed3e7e971effd6c7186023cd2f2f5", size = 4869, upload-time = "2023-10-04T22:48:13.403Z" },
 ]
 
 [[package]]
@@ -620,19 +603,6 @@ wheels = [
 ]
 
 [[package]]
-name = "mariadb"
-version = "1.1.14"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "packaging" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/ba/cedef19833be88e07bfff11964441cda8a998f1628dd3b2fa3e7751d36e0/mariadb-1.1.14.tar.gz", hash = "sha256:e6d702a53eccf20922e47f2f45cfb5c7a0c2c6c0a46e4ee2d8a80d0ff4a52f34", size = 111715, upload-time = "2025-10-07T06:45:48.017Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e7/f2/7059f83543a4264b98777d7cc8aa203e1ca6a13a461f730d1c97f29628d4/mariadb-1.1.14-cp314-cp314-win32.whl", hash = "sha256:1a50b4612c0dd5b69690cebb34cef552a7f64dcadeb5aa91d70cd99bf01bc5b3", size = 190620, upload-time = "2025-10-07T06:45:41.349Z" },
-    { url = "https://files.pythonhosted.org/packages/f8/7c/7e094b0b396d742494f6346f2ffa9709e429970b0461aca50526f5f02f12/mariadb-1.1.14-cp314-cp314-win_amd64.whl", hash = "sha256:6659725837e48fa6af05e20128fb525029f706f1921d5dbf639a25b2f80b9f93", size = 206263, upload-time = "2025-10-07T06:45:43.227Z" },
-]
-
-[[package]]
 name = "markdown"
 version = "3.10"
 source = { registry = "https://pypi.org/simple" }
@@ -742,12 +712,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/32/0b/f0bd3da47c77b2d48
 wheels = [
     { url = "https://files.pythonhosted.org/packages/97/52/a0788a31f8ec2cfb508e1fb29c321d5082f0aa58bc88ba118c898e72f612/mongoengine-0.29.1-py3-none-any.whl", hash = "sha256:9302ec407dd60f47f62cc07684d9f6cac87f1e93283c54203851788104d33df4", size = 112377, upload-time = "2024-09-19T08:41:20.626Z" },
 ]
-
-[[package]]
-name = "mysqlclient"
-version = "2.2.7"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/61/68/810093cb579daae426794bbd9d88aa830fae296e85172d18cb0f0e5dd4bc/mysqlclient-2.2.7.tar.gz", hash = "sha256:24ae22b59416d5fcce7e99c9d37548350b4565baac82f95e149cac6ce4163845", size = 91383, upload-time = "2025-01-10T12:06:00.763Z" }
 
 [[package]]
 name = "packaging"

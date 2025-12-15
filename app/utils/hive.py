@@ -195,18 +195,19 @@ def fetch_user_blog(
                 "https://anyx.io",
             ]
         )
-        acc = Account(username.strip(), blockchain_instance=hive)
 
-        # Use get_account_posts (Bridge API)
-        # Only pass pagination params if set
-        post_kwargs = {"sort": "blog", "limit": fetch_limit, "raw_data": True}
+        # Account.get_account_posts does not support pagination in this version of nectar (v0.2.0).
+        # We switch to using Discussions.get_discussions("blog", ...) which supports pagination via start_author/start_permlink.
+
+        d = Discussions(blockchain_instance=hive)
+        query = Query(limit=fetch_limit, tag=username.strip())
 
         if start_author:
-            post_kwargs["start_author"] = start_author
+            query["start_author"] = start_author
         if start_permlink:
-            post_kwargs["start_permlink"] = start_permlink
+            query["start_permlink"] = start_permlink
 
-        entries = list(acc.get_account_posts(**post_kwargs))
+        entries = list(d.get_discussions("blog", query, limit=fetch_limit))
 
     except Exception as e:
         logger.error(f"fetch_user_blog: Error fetching blog for {username}: {e}")
@@ -219,12 +220,10 @@ def fetch_user_blog(
     target_username = username.lower()
 
     # Bridge API returns posts. If paginating, the first item might be the previous last item.
-    if start_author and start_permlink and entries:
+    if start_permlink and entries:
         first = entries[0]
-        if (
-            _extract_val(first, "author") == start_author
-            and _extract_val(first, "permlink") == start_permlink
-        ):
+        # We can't check start_author easily if we didn't pass it, but permlink check is fairly robust
+        if _extract_val(first, "permlink") == start_permlink:
             entries.pop(0)
 
     count = 0
@@ -348,8 +347,11 @@ def fetch_posts_by_tag(
         d = Discussions()
         # Use 'created' to get latest posts in that tag
         query = Query(limit=limit, tag=tag)
-        if start_author and start_permlink:
+
+        # Ensure we don't pass None values to Query if that's what causes "Invalid parameters"
+        if start_author:
             query["start_author"] = start_author
+        if start_permlink:
             query["start_permlink"] = start_permlink
 
         posts = list(d.get_discussions("created", query, limit=limit))

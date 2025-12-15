@@ -3,7 +3,7 @@
 {% block content %}
     <div class="jumbotron p-4 p-md-5 rounded bg-light mb-4">
         <h1>{{ _('Welcome to EcoBank') }}</h1>
-        <p class="lead">{{ _('Your decentralized finance hub.') }}</p>
+        <p class="lead">{{ _('Your decentralized hub.') }}</p>
     </div>
 
     <div class="row">
@@ -16,16 +16,19 @@
                         <div class="col">
                             <div class="card h-100 shadow-sm">
                                 {% if post.thumbnail %}
-                                    <img src="{{ post.thumbnail }}" class="card-img-top" alt="{{ post.title }}" loading="lazy" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ post.thumbnail }}" class="card-img-top" alt="{{ post.title }}" loading="lazy"
+                                         style="height: 200px; object-fit: cover;">
                                 {% endif %}
                                 <div class="card-body">
                                     <h5 class="card-title"><a
                                         href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}">{{
                                         post.title }}</a></h5>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        {{ _('By') }} <a href="{{ url_for('main.hive_user_blog', username=post.author) }}">@{{ post.author }}</a>
+                                        {{ _('By') }} <a href="{{ url_for('main.hive_user_blog', username=post.author) }}">@{{
+                                            post.author }}</a>
                                         {% if post.ecobank_metadata and post.ecobank_metadata.author_username %}
-                                            <br><small class="text-secondary">{{ _('Originally by') }} <strong>@{{ post.ecobank_metadata.author_username }}</strong></small>
+                                            <br><small class="text-secondary">{{ _('Originally by') }} <strong>@{{
+                                                post.ecobank_metadata.author_username }}</strong></small>
                                         {% endif %}
                                         &bull; <small>{{ post.created }}</small>
                                     </h6>

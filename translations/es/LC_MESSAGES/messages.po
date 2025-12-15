@@ -399,10 +399,9 @@ msgstr "Política de Privacidad"
 
 #: app/templates/base.html:10 app/templates/base.html:18
 #: app/templates/base.html:26
-msgid "Ecobank - Your decentralized finance hub and Hive blogging platform."
-msgstr ""
-"Ecobank - Tu centro de finanzas descentralizadas y plataforma de blogging"
-" en Hive."
+msgid "Ecobank - Your decentralized writing platform."
+msgstr "Ecobank - Tu plataforma descentralizada de escribir"
+
 
 #: app/templates/base.html:32
 msgid "Ecobank Development"
@@ -480,8 +479,8 @@ msgid "Welcome to EcoBank"
 msgstr "Bienvenido a EcoBank"
 
 #: app/templates/index.html:6
-msgid "Your decentralized finance hub."
-msgstr "Tu centro de finanzas descentralizadas."
+msgid "Your decentralized hub."
+msgstr "Tu hub de descentralización."
 
 #: app/templates/drafts/view.html:19 app/templates/hive/post.html:46
 #: app/templates/hive/tag_feed.html:36 app/templates/index.html:26
@@ -504,7 +503,7 @@ msgstr "No se encontraron publicaciones en este momento."
 
 #: app/templates/index.html:45
 msgid "Register a Hive account or create one to start seeing content here!"
-msgstr "¡Registra una cuenta Hive o crea una para comenzar a ver contenido aquí!"
+msgstr "¡Crea una cuenta para comenzar a ver contenido aquí!"
 
 #: app/templates/index.html:47
 msgid "Join Now"
@@ -515,12 +514,12 @@ msgid "Create Hive Account"
 msgstr "Crear Cuenta Hive"
 
 #: app/templates/account/buy_credits.html:4
-msgid "Buy Account Creation Credits"
-msgstr "Comprar Créditos de Creación de Cuenta"
+msgid "Buy Key Creation Credits"
+msgstr "Comprar Créditos de Creación de Claves"
 
 #: app/templates/account/buy_credits.html:5
-msgid "Each credit allows you to create one Hive account."
-msgstr "Cada crédito te permite crear una cuenta Hive."
+msgid "Each credit allows you to create one set of Hive keys."
+msgstr "Cada crédito te permite crear un llavero de Hive."
 
 #: app/templates/account/buy_credits.html:6
 msgid "Price:"
@@ -532,18 +531,18 @@ msgstr "por crédito"
 
 #: app/templates/account/buy_credits.html:10
 msgid ""
-"Currently, no account creation tickets are available. Please check back "
+"Currently, no key creation tickets are available. Please check back "
 "later!"
 msgstr ""
-"Actualmente no hay tickets de creación de cuenta disponibles. ¡Por favor "
+"Actualmente no hay tickets de creación de claves disponibles. ¡Por favor "
 "vuelve a intentar más tarde!"
 
 #: app/templates/account/buy_credits.html:14
 msgid ""
-"Only single account creation tickets are available at the moment. More "
+"Only single key creation tickets are available at the moment. More "
 "will be available soon!"
 msgstr ""
-"Solo hay tickets de creación de cuenta individuales disponibles por el "
+"Solo hay tickets de creación de claves individuales disponibles por el "
 "momento. ¡Pronto habrá más disponibles!"
 
 #: app/templates/account/buy_credits.html:20
@@ -553,8 +552,8 @@ msgstr "Un Solo Crédito"
 
 #: app/templates/account/buy_credits.html:21
 #: app/templates/account/buy_credits.html:33
-msgid "Perfect for creating your first account."
-msgstr "Perfecto para crear tu primera cuenta."
+msgid "Perfect for creating your first keys."
+msgstr "Perfecto para crear tus primeras claves."
 
 #: app/templates/account/buy_credits.html:41
 msgid "Pack of 5"
@@ -566,8 +565,8 @@ msgstr "¡Invita a tus amigos y familia!"
 
 #: app/templates/account/create.html:7
 #, python-format
-msgid "You have <strong>%(credits)s</strong> account creation credit(s)."
-msgstr "Tienes <strong>%(credits)s</strong> crédito(s) de creación de cuenta."
+msgid "You have <strong>%(credits)s</strong> account creation key(s)."
+msgstr "Tienes <strong>%(credits)s</strong> crédito(s) de creación de claves."
 
 #: app/templates/account/create.html:15
 msgid "3-16 chars, lowercase, numbers, . -"
@@ -578,20 +577,20 @@ msgid "Generate Random"
 msgstr "Generar Aleatorio"
 
 #: app/templates/account/create.html:22
-msgid "Create Account (Costs 1 Credit)"
-msgstr "Crear Cuenta (Cuesta 1 Crédito)"
+msgid "Create Keys (Costs 1 Credit)"
+msgstr "Crear Claves (Cuesta 1 Crédito)"
 
 #: app/templates/account/create.html:26
-msgid "You need a credit to create a Hive account."
-msgstr "Necesitas un crédito para crear una cuenta Hive."
+msgid "You need a credit to create a Hive key."
+msgstr "Necesitas un crédito para crear unas claves Hive."
 
 #: app/templates/account/import.html:4
-msgid "Import Hive Account"
-msgstr "Importar Cuenta Hive"
+msgid "Import Hive Keys"
+msgstr "Importar Claves Hive"
 
 #: app/templates/account/import.html:5
-msgid "Import an existing Hive account to manage it here."
-msgstr "Importa una cuenta Hive existente para gestionarla aquí."
+msgid "Import an existing Hive key to manage it here."
+msgstr "Importa unas claves Hive existente para gestionarlas aquí."
 
 #: app/templates/account/import.html:15 app/templates/account/import.html:26
 #: app/templates/account/view.html:6
@@ -627,8 +626,8 @@ msgid "Memo Key (Private)"
 msgstr "Clave Memo (Privada)"
 
 #: app/templates/account/import.html:54
-msgid "Import Account"
-msgstr "Importar Cuenta"
+msgid "Import Key(s)"
+msgstr "Importar Clave(s)"
 
 #: app/templates/account/import.html:55 app/templates/account/verify.html:20
 #: app/templates/account/view.html:55
@@ -642,7 +641,7 @@ msgstr "Cancelar"
 
 #: app/templates/account/list.html:4
 msgid "My Hive Accounts"
-msgstr "Mis Cuentas Hive"
+msgstr "Mis Claves Hive"
 
 #: app/templates/account/list.html:6
 msgid "Create New"
@@ -683,16 +682,16 @@ msgid "Security Check"
 msgstr "Verificación de Seguridad"
 
 #: app/templates/account/verify.html:11
-msgid "Please enter your password to view the keys for account:"
-msgstr "Por favor ingresa tu contraseña para ver las claves de la cuenta:"
+msgid "Please enter your password to view the keys for group:"
+msgstr "Por favor ingresa tu contraseña para ver las claves del grupo:"
 
 #: app/templates/account/verify.html:19
 msgid "Verify & View Keys"
 msgstr "Verificar y Ver Claves"
 
 #: app/templates/account/view.html:4
-msgid "Account Details:"
-msgstr "Detalles de la Cuenta:"
+msgid "Group Details:"
+msgstr "Detalles del Grupo:"
 
 #: app/templates/account/view.html:13
 msgid "Keys"
@@ -715,24 +714,24 @@ msgid "Download Keys"
 msgstr "Descargar Claves"
 
 #: app/templates/account/view.html:29
-msgid "Delete Account from EcoBank"
-msgstr "Eliminar Cuenta de EcoBank"
+msgid "Delete Keys from EcoBank"
+msgstr "Eliminar Claves del EcoBank"
 
 #: app/templates/account/view.html:36
-msgid "Confirm Account Deletion"
-msgstr "Confirmar Eliminación de Cuenta"
+msgid "Confirm Keys Deletion"
+msgstr "Confirmar Eliminación de las Claves"
 
 #: app/templates/account/view.html:40
 msgid ""
-"WARNING: This action will permanently remove this Hive account from "
-"EcoBank's management. The account will remain on the Hive blockchain, but"
-" EcoBank will no longer store your keys or manage it. You MUST download "
-"your keys if you wish to retain access to this account."
+"WARNING: This action will permanently remove these Hive keys from "
+"EcoBank's management. The wallet will remain valid on the Hive blockchain, but"
+" EcoBank will no longer store your keys or manage them. You MUST download "
+"your keys if you wish to retain access to this wallet."
 msgstr ""
-"ADVERTENCIA: Esta acción eliminará permanentemente esta cuenta Hive de la"
-" gestión de EcoBank. La cuenta permanecerá en la blockchain Hive, pero "
-"EcoBank ya no almacenará tus claves ni la gestionará. DEBES descargar tus"
-" claves si deseas conservar el acceso a esta cuenta."
+"ADVERTENCIA: Esta acción eliminará permanentemente estas claves de Hive de la"
+" gestión de EcoBank. La billetera permanecerá en la blockchain Hive, pero "
+"EcoBank ya no almacenará tus claves ni las gestionará. DEBES descargar tus"
+" claves si deseas conservar el acceso a esta billetera."
 
 #: app/templates/account/view.html:44
 msgid ""
@@ -755,8 +754,8 @@ msgid "Delete Permanently"
 msgstr "Eliminar Permanentemente"
 
 #: app/templates/account/view.html:113
-msgid "Failed to delete account. Please try again."
-msgstr "Fallo al eliminar la cuenta. Por favor inténtalo de nuevo."
+msgid "Failed to delete keys. Please try again."
+msgstr "Fallo al eliminar las claves. Por favor inténtalo de nuevo."
 
 #: app/templates/account/view.html:120
 msgid "An error occurred. Please try again."
@@ -808,12 +807,12 @@ msgid "Total drafts created"
 msgstr "Total de borradores creados"
 
 #: app/templates/admin/dashboard.html:50
-msgid "Hive Accounts"
-msgstr "Cuentas Hive"
+msgid "Groups"
+msgstr "Grupos"
 
 #: app/templates/admin/dashboard.html:53
-msgid "Accounts managed"
-msgstr "Cuentas gestionadas"
+msgid "Groups managed"
+msgstr "Groups gestionadas"
 
 #: app/templates/admin/dashboard.html:54
 msgid "View Logs"
@@ -828,8 +827,8 @@ msgid "View PayPal Logs"
 msgstr "Ver Registros PayPal"
 
 #: app/templates/admin/dashboard.html:66
-msgid "View Account Creation Logs"
-msgstr "Ver Registros de Creación de Cuentas"
+msgid "View Key Creation Logs"
+msgstr "Ver Registros de Creación de Claves"
 
 #: app/templates/admin/group_edit.html:8
 #, python-format
@@ -881,16 +880,16 @@ msgid "Edit"
 msgstr "Editar"
 
 #: app/templates/admin/logs_hive.html:5
-msgid "Hive Account Creation Logs"
-msgstr "Registros de Creación de Cuentas Hive"
+msgid "Hive Key Creation Logs"
+msgstr "Registros de Creación de Claves de Hive"
 
 #: app/templates/admin/logs_hive.html:15
 msgid "System Account Status"
 msgstr "Estado de la Cuenta del Sistema"
 
 #: app/templates/admin/logs_hive.html:23
-msgid "Pending Claimed Accounts:"
-msgstr "Cuentas Reclamadas Pendientes:"
+msgid "Pending Claimed Keys:"
+msgstr "Claves Reclamadas Pendientes:"
 
 #: app/templates/admin/logs_hive.html:33
 msgid "Claim New Ticket (Uses RC)"
@@ -1040,8 +1039,8 @@ msgid "Choose a group..."
 msgstr "Elige un grupo..."
 
 #: app/templates/drafts/create.html:28 app/templates/drafts/edit.html:16
-msgid "Post As (Hive Account)"
-msgstr "Publicar Como (Cuenta Hive)"
+msgid "Post As (Hive Keys)"
+msgstr "Publicar Como (Claves Hive)"
 
 #: app/templates/drafts/create.html:36
 msgid "Select a group first"
@@ -1288,12 +1287,12 @@ msgid "Shared Resources"
 msgstr "Recursos Compartidos"
 
 #: app/templates/groups/view.html:92 app/templates/groups/view.html:357
-msgid "Share Hive Account"
-msgstr "Compartir Cuenta Hive"
+msgid "Share Hive Key"
+msgstr "Compartir Clave Hive"
 
 #: app/templates/groups/view.html:101
-msgid "Hive Account"
-msgstr "Cuenta Hive"
+msgid "Hive Key"
+msgstr "Clave Hive"
 
 #: app/templates/groups/view.html:109
 msgid "Unlink this resource?"
@@ -1344,10 +1343,10 @@ msgstr "URL de Imagen de Portada"
 msgid ""
 "Note: Updates are broadcast to the Hive blockchain immediately\n"
 "                                                                using the"
-" account's Posting Key."
+" Posting Key."
 msgstr ""
 "Nota: Las actualizaciones se transmiten a la blockchain de Hive "
-"inmediatamente usando la Clave Posting de la cuenta."
+"inmediatamente usando la Clave Posting."
 
 #: app/templates/groups/view.html:195
 msgid "Update Profile"
@@ -1403,11 +1402,11 @@ msgstr "Usuario a Agregar"
 
 #: app/templates/groups/view.html:361
 msgid ""
-"Share one of your Hive accounts with this group. Members will be\n"
+"Share one of your Hive keys with this group. Members will be\n"
 "                            able to use it for drafting (and posting, if "
 "permissions allow)."
 msgstr ""
-"Comparte una de tus cuentas Hive con este grupo. Los miembros podrán "
+"Comparte una de tus claves Hive con este grupo. Los miembros podrán "
 "usarla para redactar (y publicar, si los permisos lo permiten)."
 
 #: app/templates/groups/view.html:365
@@ -1773,9 +1772,9 @@ msgstr "Sin notificaciones."
 #~ msgid "No drafts yet."
 #~ msgstr "Aún no hay borradores."
 
-#~ msgid "My Accounts"
-#~ msgstr "Mis Cuentas"
+#~ msgid "My Keys"
+#~ msgstr "Mis Claves"
 
-#~ msgid "Create Account"
-#~ msgstr "Crear Cuenta"
+#~ msgid "Create Key"
+#~ msgstr "Crear Clave"
 

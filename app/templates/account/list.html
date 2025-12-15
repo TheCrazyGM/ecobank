@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('My Hive Accounts') }}</h2>
+    <h2>{{ _('My Hive Keys') }}</h2>
     <div class="mb-3">
         <a href="{{ url_for('account.create') }}" class="btn btn-primary">{{ _('Create New') }}</a>
         <a href="{{ url_for('account.import_account') }}" class="btn btn-outline-secondary">{{ _('Import Existing') }}</a>
@@ -28,7 +28,8 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ url_for('account.view_account', id=account.id) }}" class="btn btn-sm btn-info">{{ _('View Keys') }}</a>
+                        <a href="{{ url_for('account.view_account', id=account.id) }}" class="btn btn-sm btn-info">{{ _('View
+                            Keys') }}</a>
                     </td>
                 </tr>
             {% endfor %}

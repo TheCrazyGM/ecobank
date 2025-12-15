@@ -1,21 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('Import Hive Account') }}</h2>
-    <p class="lead">{{ _('Import an existing Hive account to manage it here.') }}</p>
+    <h2>{{ _('Import Hive Keys') }}</h2>
+    <p class="lead">{{ _('Import an existing Hive key to manage it here.') }}</p>
 
     <form method="POST">
         <div class="mb-3">
             <label for="username" class="form-label">{{ _('Username') }}</label>
-            <input type="text" class="form-control" id="username" name="username" required pattern="^[a-z0-9.-]+$" title="Lowercase letters, numbers, dots, hyphens only">
+            <input type="text" class="form-control" id="username" name="username" required pattern="^[a-z0-9.-]+$"
+                   title="Lowercase letters, numbers, dots, hyphens only">
         </div>
 
         <ul class="nav nav-tabs mb-3" id="importTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-content" type="button" role="tab">{{ _('Master Password') }}</button>
+                <button class="nav-link active" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-content"
+                        type="button" role="tab">{{ _('Master Password') }}</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="keys-tab" data-bs-toggle="tab" data-bs-target="#keys-content" type="button" role="tab">{{ _('Individual Keys') }}</button>
+                <button class="nav-link" id="keys-tab" data-bs-toggle="tab" data-bs-target="#keys-content" type="button"
+                        role="tab">{{ _('Individual Keys') }}</button>
             </li>
         </ul>
 
@@ -25,7 +28,8 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">{{ _('Master Password') }}</label>
                     <input type="password" class="form-control" id="password" name="password">
-                    <div class="form-text text-warning">{{ _('We will derive all keys from this password and verify them against the blockchain.') }}</div>
+                    <div class="form-text text-warning">{{ _('We will derive all keys from this password and verify them
+                        against the blockchain.') }}</div>
                 </div>
             </div>
 
@@ -41,7 +45,7 @@
                     <input type="text" class="form-control" id="active_key" name="active_key">
                 </div>
 
-        <!-- Owner Key removed for security - EcoBank does not hold Owner keys for imported accounts -->
+            <!-- Owner Key removed for security - EcoBank does not hold Owner keys for imported accounts -->
 
                 <div class="mb-3">
                     <label for="memo_key" class="form-label">{{ _('Memo Key (Private)') }}</label>
@@ -51,7 +55,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">{{ _('Import Account') }}</button>
+        <button type="submit" class="btn btn-primary mt-3">{{ _('Import Key(s)') }}</button>
         <a href="{{ url_for('account.list_accounts') }}" class="btn btn-secondary mt-3">{{ _('Cancel') }}</a>
     </form>
 {% endblock %}

@@ -8,7 +8,8 @@
                     <h4 class="mb-0">{{ _('Security Check') }}</h4>
                 </div>
                 <div class="card-body">
-                    <p>{{ _('Please enter your password to view the keys for account:') }} <strong>{{ account.username }}</strong></p>
+                    <p>{{ _('Please enter your password to view the keys for group:') }} <strong>{{ account.username
+                        }}</strong></p>
 
                     <form method="POST">
                         <div class="mb-3">
@@ -17,7 +18,8 @@
                         </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">{{ _('Verify & View Keys') }}</button>
-                            <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary">{{ _('Cancel') }}</a>
+                            <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary">{{
+                                _('Cancel') }}</a>
                         </div>
                     </form>
                 </div>

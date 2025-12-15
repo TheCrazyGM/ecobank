@@ -89,7 +89,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>{{ _('Shared Resources') }}</span>
                     <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#addResourceModal">{{ _('Share Hive Account') }}</button>
+                            data-bs-target="#addResourceModal">{{ _('Share Hive Key') }}</button>
                 </div>
                 <div class="card-body">
                     {% if resources %}
@@ -98,7 +98,7 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <div>
                                         {% if r.resource_type == 'hive_account' %}
-                                            <span class="badge bg-warning text-dark">{{ _('Hive Account') }}</span>
+                                            <span class="badge bg-warning text-dark">{{ _('Hive Key') }}</span>
                                         {% else %}
                                             <span class="badge bg-secondary">{{ r.resource_type }}</span>
                                         {% endif %}
@@ -186,7 +186,7 @@
                                                             </div>
                                                             <div class="alert alert-info small">
                                                                 {{ _('Note: Updates are broadcast to the Hive blockchain immediately
-                                                                using the account\'s Posting Key.') }}
+                                                                using the Posting Key.') }}
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -354,11 +354,11 @@
             <div class="modal-content">
                 <form action="{{ url_for('groups.link_resource', id=group.id) }}" method="POST">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ _('Share Hive Account') }}</h5>
+                        <h5 class="modal-title">{{ _('Share Hive Key') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <p class="small text-muted">{{ _('Share one of your Hive accounts with this group. Members will be
+                        <p class="small text-muted">{{ _('Share one of your Hive keys with this group. Members will be
                             able to use it for drafting (and posting, if permissions allow).') }}</p>
                         {% if available_accounts %}
                             <div class="mb-3">

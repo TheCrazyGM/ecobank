@@ -47,10 +47,10 @@
     <!-- Hive Accounts -->
         <div class="col-md-3">
             <div class="card text-white bg-warning mb-3">
-                <div class="card-header">{{ _('Hive Accounts') }}</div>
+                <div class="card-header">{{ _('Groups') }}</div>
                 <div class="card-body">
                     <h5 class="card-title">{{ hive_account_count }}</h5>
-                    <p class="card-text">{{ _('Accounts managed') }}</p>
+                    <p class="card-text">{{ _('Groups managed') }}</p>
                     <a href="{{ url_for('admin.logs_hive') }}" class="btn btn-light btn-sm">{{ _('View Logs') }}</a>
                 </div>
             </div>
@@ -62,8 +62,10 @@
             <div class="card">
                 <div class="card-header">{{ _('Quick Links') }}</div>
                 <div class="list-group list-group-flush">
-                    <a href="{{ url_for('admin.logs_paypal') }}" class="list-group-item list-group-item-action">{{ _('View PayPal Logs') }}</a>
-                    <a href="{{ url_for('admin.logs_hive') }}" class="list-group-item list-group-item-action">{{ _('View Account Creation Logs') }}</a>
+                    <a href="{{ url_for('admin.logs_paypal') }}" class="list-group-item list-group-item-action">{{ _('View
+                        PayPal Logs') }}</a>
+                    <a href="{{ url_for('admin.logs_hive') }}" class="list-group-item list-group-item-action">{{ _('View Key
+                        Creation Logs') }}</a>
                 </div>
             </div>
         </div>

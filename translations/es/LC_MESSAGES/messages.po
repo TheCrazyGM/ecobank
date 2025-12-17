@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-15 06:14-0500\n"
+"POT-Creation-Date: 2025-12-17 11:46-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -391,12 +391,12 @@ msgstr "Mi Feed"
 msgid "Community Feed"
 msgstr "Feed de la Comunidad"
 
-#: app/main/routes.py:209 app/templates/main/about.html:3
+#: app/main/routes.py:216 app/templates/main/about.html:3
 #: app/templates/main/about.html:6
 msgid "About Ecobank"
 msgstr "Acerca de Ecobank"
 
-#: app/main/routes.py:214 app/templates/base.html:180
+#: app/main/routes.py:221 app/templates/base.html:180
 #: app/templates/main/privacy.html:3 app/templates/main/privacy.html:6
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
@@ -486,8 +486,8 @@ msgid "Welcome to EcoBank"
 msgstr "Bienvenido a EcoBank"
 
 #: app/templates/index.html:6
-msgid "Your decentralized hub."
-msgstr "Tu hub de descentralización."
+msgid "Your Your decentralized restoration hub."
+msgstr "Tu hub de restauración descentralizada."
 
 #: app/templates/drafts/view.html:19 app/templates/hive/post.html:46
 #: app/templates/hive/tag_feed.html:36 app/templates/index.html:27
@@ -1542,29 +1542,32 @@ msgid "Memo Key"
 msgstr "Clave Memo"
 
 #: app/templates/main/about.html:7
+#, fuzzy
 msgid ""
 "Ecobank is a community of people who believe that conscious action can "
 "make the world a better\n"
-"    place."
+"        place."
 msgstr ""
 "Ecobank es una comunidad de personas que creen que la acción consciente "
 "puede hacer del mundo un lugar mejor."
 
 #: app/templates/main/about.html:9
+#, fuzzy
 msgid ""
 "We have created a series of tools to use cutting edge technology for "
 "sharing and storage, and want to share it\n"
-"    with all positive-minded people in the world!"
+"        with all positive-minded people in the world!"
 msgstr ""
 "¡Hemos creado una serie de herramientas para utilizar tecnología de "
 "vanguardia para compartir y almacenar, y queremos compartirla con todas "
 "las personas de mentalidad positiva del mundo!"
 
 #: app/templates/main/about.html:11
+#, fuzzy
 msgid ""
 "Our aim to simplify the complexities of modern, decentralized technology,"
 " making it easier for everyone to\n"
-"    participate in decentralization, making the world a better place."
+"        participate in decentralization, making the world a better place."
 msgstr ""
 "Nuestro objetivo es simplificar las complejidades de la tecnología "
 "moderna y descentralizada, haciendo que sea más fácil para todos "

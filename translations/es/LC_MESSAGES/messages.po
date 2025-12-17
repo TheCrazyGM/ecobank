@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-17 11:46-0500\n"
+"POT-Creation-Date: 2025-12-17 12:00-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -486,7 +486,7 @@ msgid "Welcome to EcoBank"
 msgstr "Bienvenido a EcoBank"
 
 #: app/templates/index.html:6
-msgid "Your Your decentralized restoration hub."
+msgid "Your decentralized restoration hub."
 msgstr "Tu hub de restauración descentralizada."
 
 #: app/templates/drafts/view.html:19 app/templates/hive/post.html:46

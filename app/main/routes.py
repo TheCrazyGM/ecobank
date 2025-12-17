@@ -65,6 +65,13 @@ def index():
         entries, _next_cursor = fetch_user_blog(username, limit=4)
         aggregated_posts.extend(entries)
 
+    # ------------------ FALLBACK LOGIC ------------------
+    # If no posts found (e.g. empty feed or no accounts), fetch posts from "@restore.world"
+    if not aggregated_posts:
+        entries, _fallback_cursor = fetch_user_blog("restore.world", limit=20)
+        aggregated_posts.extend(entries)
+    # ----------------------------------------------------
+
     # Sort by created date desc (if we can parse it, otherwise simple string sort might be off but okay)
     # The utils return normalized string, so let's try to just show them.
     # Ideal would be parsing ISO format back to datetime for sort.

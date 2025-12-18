@@ -33,7 +33,8 @@
                     {% for m in members %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <span>
-                                <strong>{{ m.user.username }}</strong>
+                                <strong><a href="{{ url_for('main.hive_user_blog', username=m.user.username) }}"
+                                           class="text-decoration-none">{{ m.user.username }}</a></strong>
                                 <span class="badge bg-light text-dark border">{{ m.role }}</span>
                             </span>
 

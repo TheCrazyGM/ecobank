@@ -7,24 +7,22 @@
 
   <!-- SEO & Social Meta Tags -->
     {% block meta %}
-      <meta name="description" content="{{ _('Ecobank - Your decentralized finance hub and Hive blogging platform.') }}">
+      <meta name="description" content="{{ _('Ecobank - Your decentralized restoration hub and blogging platform.') }}">
       <meta name="author" content="Ecobank">
 
   <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website">
       <meta property="og:url" content="{{ request.url }}">
       <meta property="og:title" content="{{ self.title() }}">
-      <meta property="og:description"
-            content="{{ _('Ecobank - Your decentralized writing platform.') }}">
-      <meta property="og:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+      <meta property="og:description" content="{{ _('Ecobank - Your decentralized writing platform.') }}">
+      <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
 
   <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
       <meta property="twitter:url" content="{{ request.url }}">
       <meta property="twitter:title" content="{{ self.title() }}">
-      <meta property="twitter:description"
-            content="{{ _('Ecobank - Your decentralized writing platform.') }}">
-      <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+      <meta property="twitter:description" content="{{ _('Ecobank - Your decentralized writing platform.') }}">
+      <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
     {% endblock %}
 
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">

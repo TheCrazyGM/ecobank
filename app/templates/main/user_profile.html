@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container py-4">
+    <!-- Profile Header -->
+        <div class="row align-items-center mb-5">
+            <div class="col-md-3 text-center">
+                <img src="{{ user.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}"
+                     alt="{{ user.username }}" class="rounded-circle img-fluid border shadow-sm"
+                     style="width: 150px; height: 150px; object-fit: cover;">
+            </div>
+            <div class="col-md-9">
+                <h1 class="display-5 fw-bold">{{ user.display_name }}</h1>
+                <p class="lead text-muted">@{{ user.username }}</p>
+                {% if user.bio %}
+                    <p class="fs-5">{{ user.bio }}</p>
+                {% endif %}
+
+                <div class="d-flex gap-2">
+                    {% if user.is_verified %}
+                        <span class="badge bg-success"><i class="fas fa-check-circle"></i> {{ _('Verified') }}</span>
+                    {% endif %}
+                    <span class="badge bg-secondary">{{ _('Joined') }} {{ user.created_at.strftime('%Y-%m-%d') if
+                        user.created_at else '' }}</span>
+                </div>
+            </div>
+        </div>
+
+    <!-- Content Row -->
+        <div class="row">
+        <!-- Main Feed -->
+            <div class="col-md-8">
+                <h3 class="mb-4 border-bottom pb-2">{{ _('Recent Activity') }}</h3>
+
+                {% if posts %}
+                    <div class="d-flex flex-column gap-4">
+                        {% for post in posts %}
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div class="d-flex align-items-center gap-2">
+                                            {% if post.json_metadata and post.json_metadata.image %}
+                                                <img src="{{ post.json_metadata.image[0] }}" class="rounded-circle"
+                                                     style="width: 32px; height: 32px; object-fit: cover;"
+                                                     onerror="this.style.display='none'">
+                                            {% endif %}
+                                            <div>
+                                                <a href="{{ url_for('main.hive_user_blog', username=post.author) }}"
+                                                   class="fw-bold text-decoration-none text-dark">
+                                                    {{ post.author }}
+                                                </a>
+                                                <span class="text-muted small mx-1">•</span>
+                                                <span class="text-muted small">{{ post.created }}</span>
+                                            </div>
+                                        </div>
+                                        <span class="badge bg-light text-dark border">{{ post.category }}</span>
+                                    </div>
+
+                                    <h4 class="card-title">
+                                        <a href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}"
+                                           class="text-decoration-none text-dark">
+                                            {{ post.title }}
+                                        </a>
+                                    </h4>
+
+                                    <p class="card-text text-muted">
+                                        {{ post.body | striptags | truncate(200) }}
+                                    </p>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div class="btn-group">
+                                            <a href="{{ url_for('main.hive_view_post', username=post.author, permlink=post.permlink) }}"
+                                               class="btn btn-sm btn-outline-primary">
+                                                {{ _('Read More') }}
+                                            </a>
+                                            <a href="https://peakd.com/@{{ post.author }}/{{ post.permlink }}" target="_blank"
+                                               class="btn btn-sm btn-outline-secondary">
+                                                <i class="fas fa-external-link-alt"></i> Hive
+                                            </a>
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fas fa-heart text-danger"></i> {{ post.active_votes | length }}
+                                            <span class="mx-2">|</span>
+                                            <i class="fas fa-comment text-primary"></i> {{ post.children }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-light text-center py-5">
+                        <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                        <p class="lead">{{ _('No recent posts found.') }}</p>
+                    </div>
+                {% endif %}
+            </div>
+
+        <!-- Sidebar: Linked Accounts -->
+            <div class="col-md-4">
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-transparent fw-bold">
+                        {{ _('Linked Hive Accounts') }}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for account in linked_accounts %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{{ url_for('main.hive_user_blog', username=account.username) }}"
+                                   class="text-decoration-none">
+                                    @{{ account.username }}
+                                </a>
+                                <a href="{{ url_for('main.hive_view_wallet', username=account.username) }}"
+                                   class="btn btn-sm btn-light" title="Wallet">
+                                    <i class="fas fa-wallet"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="list-group-item text-muted">{{ _('No linked accounts.') }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

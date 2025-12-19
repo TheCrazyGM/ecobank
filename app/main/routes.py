@@ -14,7 +14,7 @@ from flask_login import current_user, login_required
 
 from app.extensions import db
 from app.main import bp
-from app.models import HiveAccount
+from app.models import HiveAccount, User
 from app.utils.hive import (
     fetch_post,
     fetch_user_blog,
@@ -26,6 +26,8 @@ from app.utils.hive import (
 
 @bp.route("/robots.txt")
 def robots_txt():
+    if not current_app.static_folder:
+        abort(404)
     return send_from_directory(current_app.static_folder, "robots.txt")
 
 
@@ -100,6 +102,38 @@ def profile():
         return redirect(url_for("main.profile"))
 
     return render_template("main/profile.html", user=current_user)
+
+
+@bp.route("/u/<username>")
+def user_profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+
+    aggregated_posts = []
+
+    # Get all linked Hive Accounts
+    # user.hive_accounts is a dynamic relationship, so we can use .all()
+    # But wait, looking at models.py: hive_accounts = db.relationship("HiveAccount", backref="creator", lazy="dynamic")
+    # Yes, .all() works.
+    linked_accounts = user.hive_accounts.all()
+
+    for account in linked_accounts:
+        # Fetch recent posts for each account
+        # Utilizing fetch_user_blog as used in index()
+        entries, _ = fetch_user_blog(account.username, limit=5)
+        aggregated_posts.extend(entries)
+
+    # Sort aggregated posts by 'created' date desc
+    # Note: 'created' is a string in the current fetch_user_blog implementation usually
+    # To be safe and consistent with index(), we use same sort key.
+    # Ideally we'd parse dates, but string sort is "good enough" for ISO-like strings often returned by Hive APIs.
+    aggregated_posts.sort(key=lambda x: x.get("created", ""), reverse=True)
+
+    return render_template(
+        "main/user_profile.html",
+        user=user,
+        posts=aggregated_posts,
+        linked_accounts=linked_accounts,
+    )
 
 
 # -------------------- Hive Social Endpoints --------------------

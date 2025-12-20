@@ -18,6 +18,13 @@
                 <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+
+    <!-- Honeypot field (hidden) -->
+        <div style="display:none;">
+            {{ form.hp_field.label }}
+            {{ form.hp_field(size=64, class="form-control", autocomplete="off", tabindex="-1") }}
+        </div>
+
         <p>
             {{ form.password.label }}<br>
             {{ form.password(size=32, class="form-control") }}<br>

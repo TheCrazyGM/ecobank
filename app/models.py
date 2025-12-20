@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
     account_credits = db.Column(db.Integer, default=0, nullable=False)
     is_verified = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     # Profile info for "About the Author"
     first_name = db.Column(db.String(64))

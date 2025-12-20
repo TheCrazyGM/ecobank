@@ -167,4 +167,11 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info("EcoBank startup")
 
+        app.logger.setLevel(logging.INFO)
+        app.logger.info("EcoBank startup")
+
+    from app.cli import cleanup_spam
+
+    app.cli.add_command(cleanup_spam)
+
     return app

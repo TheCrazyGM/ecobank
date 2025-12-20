@@ -24,7 +24,13 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField(
         _l("Repeat Password"), validators=[DataRequired(), EqualTo("password")]
     )
+    # Honeypot field - should be left empty by humans
+    hp_field = StringField(_l("Middle Name"), validators=[Length(max=64)])
     submit = SubmitField(_l("Register"))
+
+    def validate_hp_field(self, hp_field):
+        if hp_field.data:
+            raise ValidationError(_l("Spam detected."))
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()

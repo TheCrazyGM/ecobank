@@ -11,7 +11,9 @@ from app.auth.forms import (
     RegistrationForm,
     ResetPasswordRequestForm,
     ResetPasswordForm,
+    ResendVerificationRequestForm,
 )
+from markupsafe import Markup
 from app.extensions import db
 from app.models import User
 from app.utils.email import send_email
@@ -45,7 +47,13 @@ def login():
             return redirect(url_for("auth.login"))
 
         if not user.is_verified:
-            flash(_("Please verify your email address before logging in."), "warning")
+            message = Markup(
+                _(
+                    "Please verify your email address before logging in. <a href='%(url)s'>Resend Email</a>",
+                    url=url_for("auth.resend_verification_request"),
+                )
+            )
+            flash(message, "warning")
             return redirect(url_for("auth.login"))
 
         login_user(user, remember=form.remember_me.data)
@@ -174,3 +182,27 @@ def reset_password(token):
         flash(_("Your password has been reset."), "success")
         return redirect(url_for("auth.login"))
     return render_template("auth/reset_password.html", form=form)
+
+
+@bp.route("/resend_verification_request", methods=["GET", "POST"])
+def resend_verification_request():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.index"))
+    form = ResendVerificationRequestForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(sa.select(User).where(User.email == form.email.data))
+        if user:
+            if user.is_verified:
+                flash(_("This account is already verified."), "info")
+            else:
+                send_verification_email(user)
+                flash(_("Check your email for the verification link."), "success")
+            return redirect(url_for("auth.login"))
+        else:
+            flash(_("Check your email for the verification link."), "success")
+            return redirect(url_for("auth.login"))
+    return render_template(
+        "auth/resend_verification_request.html",
+        title=_("Resend Verification Email"),
+        form=form,
+    )

@@ -20,21 +20,21 @@ from app.models import User
 )
 @with_appcontext
 def cleanup_spam(force_legacy, dry_run):
-    """Deletes unverified users older than 24 hours."""
+    """Deletes unverified users older than 7 days."""
     now = datetime.now(timezone.utc)
-    cutoff = now - timedelta(hours=24)
+    cutoff = now - timedelta(days=7)
 
     # Base query: Unverified users
     query = User.query.filter_by(is_verified=False)
 
-    # Filter: created_at < 24h ago OR (created_at is NULL AND force_legacy is True)
+    # Filter: created_at < 7 days ago OR (created_at is NULL AND force_legacy is True)
     if force_legacy:
         # Delete if too old OR if None
         users_to_delete = query.filter(
             or_(User.created_at < cutoff, User.created_at.is_(None))
         ).all()
     else:
-        # Only delete if specifically older than 24h (ignores None)
+        # Only delete if specifically older than 7 days (ignores None)
         users_to_delete = query.filter(User.created_at < cutoff).all()
 
     count = len(users_to_delete)

@@ -13,6 +13,7 @@ from app.auth.forms import (
     ResetPasswordForm,
     ResendVerificationRequestForm,
 )
+from itsdangerous import URLSafeTimedSerializer
 from markupsafe import Markup
 from app.extensions import db
 from app.models import User
@@ -97,6 +98,12 @@ def register():
         return redirect(url_for("main.index"))
 
     form = RegistrationForm()
+
+    if not form.timestamp.data:
+        s = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+        import time
+
+        form.timestamp.data = s.dumps(time.time())
 
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)

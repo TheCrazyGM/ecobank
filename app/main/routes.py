@@ -253,3 +253,14 @@ def about():
 @bp.route("/privacy")
 def privacy():
     return render_template("main/privacy.html", title=_("Privacy Policy"))
+
+
+@bp.route("/honey/trap")
+def honey_trap():
+    """Honeypot route. Logs IP and returns 403."""
+    client_ip = request.remote_addr
+    # Log specifically so UFW/Fail2Ban can pick it up
+    current_app.logger.warning(
+        f"HONEYPOT TRIGGERED: Client IP {client_ip} accessed the honeypot."
+    )
+    abort(403)

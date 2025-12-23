@@ -59,7 +59,7 @@
 
                 <div class="mb-3">
                     <label for="tags" class="form-label">{{ _('Tags (space separated)') }}</label>
-                    <input type="text" class="form-control" id="tags" name="tags" placeholder="ecobank hive blog">
+                    <input type="text" class="form-control" id="tags" name="tags" value="{% if group and group.default_tags %}{{ group.default_tags }}{% endif %}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">{{ _('Save Draft') }}</button>

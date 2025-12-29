@@ -39,14 +39,14 @@ wheels = [
 
 [[package]]
 name = "apscheduler"
-version = "3.11.1"
+version = "3.11.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "tzlocal" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d0/81/192db4f8471de5bc1f0d098783decffb1e6e69c4f8b4bc6711094691950b/apscheduler-3.11.1.tar.gz", hash = "sha256:0db77af6400c84d1747fe98a04b8b58f0080c77d11d338c4f507a9752880f221", size = 108044, upload-time = "2025-10-31T18:55:42.819Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/07/12/3e4389e5920b4c1763390c6d371162f3784f86f85cd6d6c1bfe68eef14e2/apscheduler-3.11.2.tar.gz", hash = "sha256:2a9966b052ec805f020c8c4c3ae6e6a06e24b1bf19f2e11d91d8cca0473eef41", size = 108683, upload-time = "2025-12-22T00:39:34.884Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/58/9f/d3c76f76c73fcc959d28e9def45b8b1cc3d7722660c5003b19c1022fd7f4/apscheduler-3.11.1-py3-none-any.whl", hash = "sha256:6162cb5683cb09923654fa9bdd3130c4be4bfda6ad8990971c9597ecd52965d2", size = 64278, upload-time = "2025-10-31T18:55:41.186Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/64/2e54428beba8d9992aa478bb8f6de9e4ecaa5f8f513bcfd567ed7fb0262d/apscheduler-3.11.2-py3-none-any.whl", hash = "sha256:ce005177f741409db4e4dd40a7431b76feb856b9dd69d57e0da49d6715bfd26d", size = 64439, upload-time = "2025-12-22T00:39:33.303Z" },
 ]
 
 [[package]]
@@ -530,7 +530,7 @@ wheels = [
 
 [[package]]
 name = "hive-nectar"
-version = "0.2.3"
+version = "0.2.13"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "appdirs" },
@@ -547,9 +547,9 @@ dependencies = [
     { name = "scrypt" },
     { name = "types-requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/70/5668904633e169affb378ca75c053bc910815732ac3d69380cce97e2a093/hive_nectar-0.2.3.tar.gz", hash = "sha256:27df28fbd171d7b9f0b71625dc0cf059b35df1c60962755c6cfbb719917799ae", size = 740522, upload-time = "2025-12-19T14:16:51.795Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9f/8c/18d6af16ab5ab9a4af3947dd5d8c4805e6ecf84603d8a365d61ff96da344/hive_nectar-0.2.13.tar.gz", hash = "sha256:02964546279c832eb2692570188dee9af0fa0dbda073caa38ca734173e5f0e3c", size = 744569, upload-time = "2025-12-24T11:05:04.368Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/28/4f3448dd5fccf584340296546eb6da715af70f16284b00e9ff847e93bbdc/hive_nectar-0.2.3-py3-none-any.whl", hash = "sha256:f2bcce25ec0636a91f3c6df3f2f5e71e6e5e55ab3bd2193d501521e515cbf540", size = 455612, upload-time = "2025-12-19T14:16:48.704Z" },
+    { url = "https://files.pythonhosted.org/packages/d9/21/9de0cbf99aceb125fb744b6d90fd3f444e2626e4cf797951fb49b2ff1b5b/hive_nectar-0.2.13-py3-none-any.whl", hash = "sha256:bfeba5527c06c196a5101525c7e9e551a4fda7cb69d9c6d59251d17c6dbade3b", size = 458005, upload-time = "2025-12-24T11:05:01.269Z" },
 ]
 
 [[package]]

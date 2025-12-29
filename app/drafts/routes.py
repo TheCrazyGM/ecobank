@@ -231,7 +231,11 @@ def edit(draft_id):
         if draft.author_user_id != current_user.id:
             create_notification(
                 user_id=draft.author_user_id,
-                message=f"Your draft '{draft.title}' was updated by {current_user.username}",
+                message=_(
+                    "Your draft '%(title)s' was updated by %(username)s",
+                    title=draft.title,
+                    username=current_user.username,
+                ),
                 link=url_for("drafts.view", draft_id=draft.id),
                 type="edit",
             )
@@ -644,7 +648,10 @@ def submit(draft_id):
         if draft.author_user_id != current_user.id:
             create_notification(
                 user_id=draft.author_user_id,
-                message=f"Your draft '{draft.title}' has been published to Hive!",
+                message=_(
+                    "Your draft '%(title)s' has been published to Hive!",
+                    title=draft.title,
+                ),
                 link=f"https://peakd.com/@{draft.hive_account_username}/{draft.permlink}",
                 type="publish",
             )

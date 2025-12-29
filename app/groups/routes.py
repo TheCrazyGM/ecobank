@@ -179,7 +179,9 @@ def add_member(id):
 
     create_notification(
         user_id=user_to_add.id,
-        message=f"You have been added to group '{Group.query.get(id).name}'",
+        message=_(
+            "You have been added to group '%(name)s'", name=Group.query.get(id).name
+        ),
         link=url_for("groups.view", id=id),
         type="invite",
     )

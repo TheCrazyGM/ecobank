@@ -1442,9 +1442,7 @@ msgid "Published Posts"
 msgstr "Publicaciones Publicadas"
 
 #: app/templates/groups/view.html:236
-msgid ""
-"Create\n"
-"                    New Post"
+msgid "Create New Post"
 msgstr "Crear Nueva Publicación"
 
 #: app/templates/groups/view.html:267

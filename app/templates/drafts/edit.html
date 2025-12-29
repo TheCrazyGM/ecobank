@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('Edit Draft') }}</h2>
+    <h2>{{ _('Edit Post') }}</h2>
     <p class="text-muted">{{ _('Group:') }} {{ group.name }}</p>
 
     <form method="POST">
@@ -45,7 +45,7 @@
             <input type="text" class="form-control" id="tags" name="tags" value="{{ draft.tags or '' }}">
         </div>
 
-        <button type="submit" class="btn btn-primary">{{ _('Update Draft') }}</button>
+        <button type="submit" class="btn btn-primary">{{ _('Update Post') }}</button>
         <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
     </form>
 

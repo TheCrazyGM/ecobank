@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-29 08:15-0500\n"
+"POT-Creation-Date: 2025-12-29 08:49-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -695,8 +695,8 @@ msgstr "Importar Clave(s)"
 #: app/templates/account/import.html:59 app/templates/account/verify.html:22
 #: app/templates/account/view.html:60
 #: app/templates/auth/change_password.html:36
-#: app/templates/drafts/create.html:66 app/templates/drafts/edit.html:49
-#: app/templates/drafts/view.html:117 app/templates/groups/view.html:195
+#: app/templates/drafts/create.html:67 app/templates/drafts/edit.html:49
+#: app/templates/drafts/view.html:118 app/templates/groups/view.html:195
 #: app/templates/groups/view.html:344 app/templates/groups/view.html:380
 #: app/templates/groups/view.html:415
 msgid "Cancel"
@@ -918,7 +918,7 @@ msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
-#: app/templates/drafts/view.html:25
+#: app/templates/drafts/view.html:26
 msgid "Back"
 msgstr "Volver"
 
@@ -957,7 +957,7 @@ msgid "Members"
 msgstr "Miembros"
 
 #: app/templates/admin/groups.html:31 app/templates/admin/users.html:28
-#: app/templates/drafts/view.html:32
+#: app/templates/drafts/view.html:33
 msgid "Edit"
 msgstr "Editar"
 
@@ -1105,8 +1105,8 @@ msgid "Already have an account?"
 msgstr "¿Ya tienes una cuenta?"
 
 #: app/templates/drafts/create.html:4
-msgid "Create Draft"
-msgstr "Crear Borrador"
+msgid "Create Post"
+msgstr "Crear Publicación"
 
 #: app/templates/drafts/create.html:8
 msgid "For Group:"
@@ -1140,31 +1140,31 @@ msgstr "Insertar Imagen"
 msgid "Tags (space separated)"
 msgstr "Etiquetas (separadas por espacio)"
 
-#: app/templates/drafts/create.html:65
-msgid "Save Draft"
-msgstr "Guardar Borrador"
+#: app/templates/drafts/create.html:66
+msgid "Save Post"
+msgstr "Guardar Publicación"
 
-#: app/templates/drafts/create.html:79
+#: app/templates/drafts/create.html:80
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: app/templates/drafts/create.html:94
+#: app/templates/drafts/create.html:95
 msgid "No shared accounts found"
 msgstr "No se encontraron cuentas compartidas"
 
-#: app/templates/drafts/create.html:104
+#: app/templates/drafts/create.html:105
 msgid "Error loading accounts"
 msgstr "Error cargando cuentas"
 
 #: app/templates/drafts/edit.html:4
-msgid "Edit Draft"
-msgstr "Editar Borrador"
+msgid "Edit Post"
+msgstr "Editar Publicación"
 
 #: app/templates/drafts/edit.html:5
 msgid "Group:"
 msgstr "Grupo:"
 
-#: app/templates/drafts/edit.html:11 app/templates/drafts/view.html:19
+#: app/templates/drafts/edit.html:11 app/templates/drafts/view.html:20
 msgid "Permlink:"
 msgstr "Enlace permanente:"
 
@@ -1173,16 +1173,16 @@ msgid "updates automatically on save"
 msgstr "se actualiza automáticamente al guardar"
 
 #: app/templates/drafts/edit.html:48
-msgid "Update Draft"
-msgstr "Actualizar Borrador"
+msgid "Update Post"
+msgstr "Actualizar Publicación"
 
 #: app/templates/drafts/history.html:5
 msgid "Version History"
 msgstr "Historial de Versiones"
 
 #: app/templates/drafts/history.html:6
-msgid "Back to Draft"
-msgstr "Volver al Borrador"
+msgid "Back to Post"
+msgstr "Volver a la Publicación"
 
 #: app/templates/drafts/history.html:14
 msgid "Version"
@@ -1215,84 +1215,83 @@ msgid "No history available."
 msgstr "No hay historial disponible."
 
 #: app/templates/drafts/view.html:7
-#, python-format
-msgid "Preview draft: %(title)s"
-msgstr "Previsualización de borrador: %(title)s"
+msgid "Preview post: %(title)s"
+msgstr "Previsualización de publicación: %(title)s"
 
 #: app/templates/drafts/view.html:11
-msgid "This is a draft post on Ecobank."
-msgstr "Esta es una publicación en borrador en Ecobank."
+msgid "This is an unpublished post on Ecobank."
+msgstr "Esta es una publicación no publicada en Ecobank."
 
 #: app/templates/drafts/view.html:19
 msgid "For account:"
 msgstr "Para cuenta:"
 
-#: app/templates/drafts/view.html:38
+#: app/templates/drafts/view.html:39
 msgid "Are you sure you want to publish this to Hive? This cannot be undone."
 msgstr ""
 "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
 "deshacer."
 
-#: app/templates/drafts/view.html:40
+#: app/templates/drafts/view.html:41
 msgid "Publish"
 msgstr "Publicar"
 
-#: app/templates/drafts/view.html:46 app/templates/groups/view.html:303
+#: app/templates/drafts/view.html:47 app/templates/groups/view.html:303
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
-#: app/templates/drafts/view.html:59
+#: app/templates/drafts/view.html:60
 msgid "History"
 msgstr "Historial de Versiones"
 
-#: app/templates/drafts/view.html:67
+#: app/templates/drafts/view.html:68
 msgid "Change Author"
 msgstr "Cambiar Autor"
 
-#: app/templates/drafts/view.html:79
-msgid "Are you sure you want to reject/delete this draft?"
-msgstr "¿Estás seguro de que quieres rechazar/eliminar este borrador?"
+#: app/templates/drafts/view.html:80
+msgid "Are you sure you want to reject/delete this post?"
+msgstr "¿Estás seguro de que quieres rechazar/eliminar esta publicación?"
 
-#: app/templates/drafts/view.html:81
+#: app/templates/drafts/view.html:82
 msgid "Reject"
 msgstr "Rechazar"
 
-#: app/templates/drafts/view.html:99
+#: app/templates/drafts/view.html:100
 msgid "Reassign Authorship"
 msgstr "Reasignar Autoría"
 
-#: app/templates/drafts/view.html:104
+#: app/templates/drafts/view.html:105
 msgid "Select a user from the list of contributors to assign as the new author."
 msgstr ""
 "Selecciona un usuario de la lista de colaboradores para asignarlo como el"
 " nuevo autor."
 
-#: app/templates/drafts/view.html:106
+#: app/templates/drafts/view.html:107
 msgid "New Author"
 msgstr "Nuevo Autor"
 
-#: app/templates/drafts/view.html:118
+#: app/templates/drafts/view.html:119
 msgid "Assign Author"
 msgstr "Asignar Autor"
 
-#: app/templates/drafts/view.html:131
+#: app/templates/drafts/view.html:132
 msgid "Automatic Header Preview"
 msgstr "Vista Previa del Encabezado Automático"
 
-#: app/templates/drafts/view.html:132
+#: app/templates/drafts/view.html:133
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:142 app/templates/main/profile.html:84
+#: app/templates/drafts/view.html:143 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
-#: app/templates/drafts/view.html:145
+#: app/templates/drafts/view.html:146
 #, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
-#: app/templates/drafts/view.html:154
+#: app/templates/drafts/view.html:155
 msgid "Content Preview"
 msgstr "Vista Previa del Contenido"
 
@@ -1418,10 +1417,10 @@ msgid "Cover Image URL"
 msgstr "URL de Imagen de Portada"
 
 #: app/templates/groups/view.html:189
+#, fuzzy
 msgid ""
 "Note: Updates are broadcast to the Hive blockchain immediately\n"
-"                                                                using the"
-" Posting Key."
+"                                                using the Posting Key."
 msgstr ""
 "Nota: Las actualizaciones se transmiten a la blockchain de Hive "
 "inmediatamente usando la Clave Posting."
@@ -1435,20 +1434,18 @@ msgid "No shared resources yet."
 msgstr "Aún no hay recursos compartidos."
 
 #: app/templates/groups/view.html:226
-msgid "Active Drafts"
-msgstr "Borradores Activos"
+msgid "Unpublished Posts"
+msgstr "Publicaciones No Publicadas"
 
 #: app/templates/groups/view.html:233
-msgid "Published History"
-msgstr "Historial de Publicaciones"
+msgid "Published Posts"
+msgstr "Publicaciones Publicadas"
 
 #: app/templates/groups/view.html:236
 msgid ""
 "Create\n"
-"                        New Draft"
-msgstr ""
-"Crear\n"
-"                        Nuevo Borrador"
+"                    New Post"
+msgstr "Crear Nueva Publicación"
 
 #: app/templates/groups/view.html:267
 msgid "Edit / View"
@@ -1479,9 +1476,10 @@ msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
 #: app/templates/groups/view.html:362
+#, fuzzy
 msgid ""
 "Share one of your Hive keys with this group. Members will be\n"
-"                            able to use it for drafting (and posting, if "
+"                        able to use it for drafting (and posting, if "
 "permissions allow)."
 msgstr ""
 "Comparte una de tus claves Hive con este grupo. Los miembros podrán "
@@ -1858,7 +1856,7 @@ msgstr "Error cargando cuentas"
 #, fuzzy
 msgid ""
 "Mark All\n"
-"        Read"
+"            Read"
 msgstr "Marcar Todo como Leído"
 
 #: app/templates/notifications/index.html:24
@@ -1925,4 +1923,25 @@ msgstr "Sin notificaciones."
 
 #~ msgid "Please verify your email address before logging in."
 #~ msgstr ""
+
+#~ msgid "Create Draft"
+#~ msgstr "Crear Borrador"
+
+#~ msgid "Save Draft"
+#~ msgstr "Guardar Borrador"
+
+#~ msgid "Edit Draft"
+#~ msgstr "Editar Borrador"
+
+#~ msgid "Update Draft"
+#~ msgstr "Actualizar Borrador"
+
+#~ msgid "Back to Draft"
+#~ msgstr "Volver al Borrador"
+
+#~ msgid "Active Drafts"
+#~ msgstr "Borradores Activos"
+
+#~ msgid "Published History"
+#~ msgstr "Historial de Publicaciones"
 

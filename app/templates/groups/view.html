@@ -223,18 +223,18 @@
                                     id="active-tab" data-bs-toggle="tab" data-bs-target="#active-drafts" type="button"
                                     role="tab" aria-controls="active-drafts"
                                     aria-selected="{{ 'true' if request.args.get('tab') != 'history' else 'false' }}">{{
-                                _('Active Drafts') }}</button>
+                                _('Unpublished Posts') }}</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link {{ 'active' if request.args.get('tab') == 'history' else '' }}"
                                     id="published-tab" data-bs-toggle="tab" data-bs-target="#published-drafts" type="button"
                                     role="tab" aria-controls="published-drafts"
                                     aria-selected="{{ 'true' if request.args.get('tab') == 'history' else 'false' }}">{{
-                                _('Published History') }}</button>
+                                _('Published Posts') }}</button>
                         </li>
                     </ul>
                     <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create
-                        New Draft') }}</a>
+                        New Post') }}</a>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="draftTabsContent">

@@ -3,7 +3,7 @@
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>{{ _('Version History') }}: {{ draft.title }}</h2>
-        <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-secondary">{{ _('Back to Draft') }}</a>
+        <a href="{{ url_for('drafts.view', draft_id=draft.id) }}" class="btn btn-secondary">{{ _('Back to Post') }}</a>
     </div>
 
     {% if versions %}

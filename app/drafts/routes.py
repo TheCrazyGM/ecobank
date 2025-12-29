@@ -516,7 +516,7 @@ def submit(draft_id):
 <table>
 <tr>
 <td>
-<center><img src="{avatar_url}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
+<center><img src="{avatar_url}" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover;"/></center>
 </td>
 <td>
 <span><h4>About the Author</h4></span>

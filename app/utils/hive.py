@@ -71,7 +71,9 @@ def fetch_user_profile(username: str) -> Optional[Dict[str, Any]]:
             "profile_image": profile.get("profile_image", ""),
             "cover_image": profile.get("cover_image", ""),
             "post_count": acc.get("post_count", 0),
-            "reputation": _rep_log10(acc.get("reputation", 0)),
+            "reputation": int(acc.rep)
+            if hasattr(acc, "rep")
+            else _rep_log10(acc.get("reputation", 0)),
             "created": _normalize_ts(acc.get("created")),
         }
     except Exception as e:

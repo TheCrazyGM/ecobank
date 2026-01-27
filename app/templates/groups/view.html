@@ -9,7 +9,8 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ group.name }}</li>
                 </ol>
             </nav>
-            <h2>{{ group.name }} <small class="text-muted fs-6">({{ membership.role }})</small></h2>
+            <h2>{{ group.name }} <small class="text-muted fs-6">({{ membership.role if membership else _('System Admin')
+                }})</small></h2>
             <p class="lead">{{ group.description }}</p>
         </div>
     </div>
@@ -20,7 +21,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>{{ _('Members') }}</span>
-                    {% if membership.role in ['owner', 'admin'] %}
+                    {% if current_user.is_admin or (membership and membership.role in ['owner', 'admin']) %}
                         <div class="btn-group">
                             <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
                                     data-bs-target="#groupSettingsModal">{{ _('Settings') }}</button>
@@ -38,402 +39,404 @@
                                 <span class="badge bg-light text-dark border">{{ m.role }}</span>
                             </span>
 
-                            {% if membership.role == 'owner' and m.user_id != group.owner_user_id %}
-                                <div class="d-flex gap-1">
-                                    {% if m.role != 'moderator' %}
-                                        <form action="{{ url_for('groups.promote_member', id=group.id, user_id=m.user_id) }}"
-                                              method="POST">
-                                            <button type="submit" class="btn btn-sm btn-outline-success" title="{{ _('Promote') }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                     class="bi bi-arrow-up" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    {% endif %}
-
-                                    {% if m.role != 'member' %}
-                                        <form action="{{ url_for('groups.demote_member', id=group.id, user_id=m.user_id) }}"
-                                              method="POST">
-                                            <button type="submit" class="btn btn-sm btn-outline-warning" title="{{ _('Demote') }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                     class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
-                                                </svg>
-                                            </button>
-                                        </form>
-                                    {% endif %}
-
-                                    <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}"
-                                          method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ _('Remove') }}">
+                            {% if (current_user.is_admin or (membership and membership.role == 'owner')) and m.user_id !=
+                            group.owner_user_id %}
+                            <div class="d-flex gap-1">
+                                {% if m.role != 'moderator' %}
+                                    <form action="{{ url_for('groups.promote_member', id=group.id, user_id=m.user_id) }}"
+                                          method="POST">
+                                        <button type="submit" class="btn btn-sm btn-outline-success" title="{{ _('Promote') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                 class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                                 class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
                                             </svg>
                                         </button>
                                     </form>
-                                </div>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+                                {% endif %}
+
+                                {% if m.role != 'member' %}
+                                    <form action="{{ url_for('groups.demote_member', id=group.id, user_id=m.user_id) }}"
+                                          method="POST">
+                                        <button type="submit" class="btn btn-sm btn-outline-warning" title="{{ _('Demote') }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                 class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                {% endif %}
+
+                                <form action="{{ url_for('groups.remove_member', id=group.id, user_id=m.user_id) }}"
+                                      method="POST" onsubmit="return confirm('{{ _('Are you sure?') }}');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ _('Remove') }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                             class="bi bi-x-lg" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                    {% endif %}
+                </li>
+{% endfor %}
+</ul>
+</div>
+</div>
 
     <!-- Resources Column -->
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>{{ _('Shared Resources') }}</span>
-                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#addResourceModal">{{ _('Share Hive Key') }}</button>
-                </div>
-                <div class="card-body">
-                    {% if resources %}
-                        <ul class="list-group list-group-flush">
-                            {% for r in resources %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        {% if r.resource_type == 'hive_account' %}
-                                            <span class="badge bg-warning text-dark">{{ _('Hive Key') }}</span>
-                                        {% else %}
-                                            <span class="badge bg-secondary">{{ r.resource_type }}</span>
-                                        {% endif %}
-                                        <strong>{{ r.resource_id }}</strong>
-                                    </div>
-
-                                    <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}"
-                                          method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');">
-                                        <div class="btn-group">
-                                            {% if r.resource_type == 'hive_account' and membership.role in ['owner', 'admin'] %}
-                                <!-- Manage Profile Button -->
-                                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
-                                                        data-bs-target="#editProfileModal{{ r.id }}">
-                                                    {{ _('Manage Profile') }}
-                                                </button>
-                                            {% endif %}
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Unlink') }}</button>
-                                        </div>
-                                    </form>
-
-                                    {% if r.resource_type == 'hive_account' %}
-                        <!-- Modal for this resource -->
-                                        <div class="modal fade" id="editProfileModal{{ r.id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form
-                                                        action="{{ url_for('groups.update_resource_profile', id=group.id, resource_id=r.id) }}"
-                                                        method="POST">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">{{ _('Update Profile for @%(user)s',
-                                                                user=r.resource_id) }}</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            {% set profile = account_profiles.get(r.resource_id, {}) %}
-                                                            <div class="mb-3">
-                                                                <label class="form-label">{{ _('Display Name') }}</label>
-                                                                <input type="text" class="form-control" name="display_name"
-                                                                       value="{{ profile.name or '' }}" placeholder="Enter name">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">{{ _('About (Bio)') }}</label>
-                                                                <textarea class="form-control" name="about" rows="3"
-                                                                          placeholder="Enter bio">{{ profile.about or '' }}</textarea>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">{{ _('Location') }}</label>
-                                                                <input type="text" class="form-control" name="location"
-                                                                       value="{{ profile.location or '' }}">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">{{ _('Website') }}</label>
-                                                                <input type="url" class="form-control" name="website"
-                                                                       value="{{ profile.website or '' }}" placeholder="https://">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">{{ _('Profile Image URL') }}</label>
-                                                                <div class="input-group">
-                                                                    <input type="url" class="form-control" name="profile_image"
-                                                                           id="profile_image_{{ r.resource_id }}"
-                                                                           value="{{ profile.profile_image or '' }}">
-                                                                    <button type="button" class="btn btn-outline-secondary"
-                                                                            onclick="triggerUpload('{{ r.resource_id }}', 'profile')">
-                                                                        <i class="fas fa-upload"></i> {{ _('Upload') }}
-                                                                    </button>
-                                                                </div>
-                                                                <input type="file" id="upload_profile_{{ r.resource_id }}"
-                                                                       class="d-none" accept="image/*"
-                                                                       onchange="uploadImage(this, '{{ group.id }}', '{{ r.resource_id }}', 'profile')">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">{{ _('Cover Image URL') }}</label>
-                                                                <div class="input-group">
-                                                                    <input type="url" class="form-control" name="cover_image"
-                                                                           id="cover_image_{{ r.resource_id }}"
-                                                                           value="{{ profile.cover_image or '' }}">
-                                                                    <button type="button" class="btn btn-outline-secondary"
-                                                                            onclick="triggerUpload('{{ r.resource_id }}', 'cover')">
-                                                                        <i class="fas fa-upload"></i> {{ _('Upload') }}
-                                                                    </button>
-                                                                </div>
-                                                                <input type="file" id="upload_cover_{{ r.resource_id }}" class="d-none"
-                                                                       accept="image/*"
-                                                                       onchange="uploadImage(this, '{{ group.id }}', '{{ r.resource_id }}', 'cover')">
-                                                            </div>
-                                                            <div class="alert alert-info small">
-                                                                {{ _('Note: Updates are broadcast to the Hive blockchain immediately
-                                                                using the Posting Key.') }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
-                                                                _('Cancel') }}</button>
-                                                            <button type="submit" class="btn btn-primary">{{ _('Update Profile')
-                                                                }}</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p class="text-muted small mb-0">{{ _('No shared resources yet.') }}</p>
-                    {% endif %}
-                </div>
-            </div>
+<div class="col-md-6">
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>{{ _('Shared Resources') }}</span>
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#addResourceModal">{{ _('Share Hive Key') }}</button>
         </div>
+        <div class="card-body">
+            {% if resources %}
+                <ul class="list-group list-group-flush">
+                    {% for r in resources %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                {% if r.resource_type == 'hive_account' %}
+                                    <span class="badge bg-warning text-dark">{{ _('Hive Key') }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ r.resource_type }}</span>
+                                {% endif %}
+                                <strong>{{ r.resource_id }}</strong>
+                            </div>
+
+                            <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}"
+                                  method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');">
+                                <div class="btn-group">
+                                    {% if r.resource_type == 'hive_account' and (current_user.is_admin or (membership and
+                                    membership.role in ['owner', 'admin'])) %}
+                                <!-- Manage Profile Button -->
+                                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            data-bs-target="#editProfileModal{{ r.id }}">
+                                        {{ _('Manage Profile') }}
+                                    </button>
+                    {% endif %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Unlink') }}</button>
+                </div>
+                </form>
+
+                {% if r.resource_type == 'hive_account' %}
+                        <!-- Modal for this resource -->
+                    <div class="modal fade" id="editProfileModal{{ r.id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form
+                                    action="{{ url_for('groups.update_resource_profile', id=group.id, resource_id=r.id) }}"
+                                    method="POST">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{{ _('Update Profile for @%(user)s',
+                                            user=r.resource_id) }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% set profile = account_profiles.get(r.resource_id, {}) %}
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ _('Display Name') }}</label>
+                                            <input type="text" class="form-control" name="display_name"
+                                                   value="{{ profile.name or '' }}" placeholder="Enter name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ _('About (Bio)') }}</label>
+                                            <textarea class="form-control" name="about" rows="3"
+                                                      placeholder="Enter bio">{{ profile.about or '' }}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ _('Location') }}</label>
+                                            <input type="text" class="form-control" name="location"
+                                                   value="{{ profile.location or '' }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ _('Website') }}</label>
+                                            <input type="url" class="form-control" name="website"
+                                                   value="{{ profile.website or '' }}" placeholder="https://">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ _('Profile Image URL') }}</label>
+                                            <div class="input-group">
+                                                <input type="url" class="form-control" name="profile_image"
+                                                       id="profile_image_{{ r.resource_id }}"
+                                                       value="{{ profile.profile_image or '' }}">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        onclick="triggerUpload('{{ r.resource_id }}', 'profile')">
+                                                    <i class="fas fa-upload"></i> {{ _('Upload') }}
+                                                </button>
+                                            </div>
+                                            <input type="file" id="upload_profile_{{ r.resource_id }}"
+                                                   class="d-none" accept="image/*"
+                                                   onchange="uploadImage(this, '{{ group.id }}', '{{ r.resource_id }}', 'profile')">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ _('Cover Image URL') }}</label>
+                                            <div class="input-group">
+                                                <input type="url" class="form-control" name="cover_image"
+                                                       id="cover_image_{{ r.resource_id }}"
+                                                       value="{{ profile.cover_image or '' }}">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        onclick="triggerUpload('{{ r.resource_id }}', 'cover')">
+                                                    <i class="fas fa-upload"></i> {{ _('Upload') }}
+                                                </button>
+                                            </div>
+                                            <input type="file" id="upload_cover_{{ r.resource_id }}" class="d-none"
+                                                   accept="image/*"
+                                                   onchange="uploadImage(this, '{{ group.id }}', '{{ r.resource_id }}', 'cover')">
+                                        </div>
+                                        <div class="alert alert-info small">
+                                            {{ _('Note: Updates are broadcast to the Hive blockchain immediately
+                                            using the Posting Key.') }}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
+                                            _('Cancel') }}</button>
+                                        <button type="submit" class="btn btn-primary">{{ _('Update Profile')
+                                            }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p class="text-muted small mb-0">{{ _('No shared resources yet.') }}</p>
+        {% endif %}
     </div>
+</div>
+</div>
+</div>
 
 <!-- Drafts Section -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <ul class="nav nav-tabs card-header-tabs" id="draftTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link {{ 'active' if request.args.get('tab') != 'history' else '' }}"
-                                    id="active-tab" data-bs-toggle="tab" data-bs-target="#active-drafts" type="button"
-                                    role="tab" aria-controls="active-drafts"
-                                    aria-selected="{{ 'true' if request.args.get('tab') != 'history' else 'false' }}">{{
-                                _('Unpublished Posts') }}</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link {{ 'active' if request.args.get('tab') == 'history' else '' }}"
-                                    id="published-tab" data-bs-toggle="tab" data-bs-target="#published-drafts" type="button"
-                                    role="tab" aria-controls="published-drafts"
-                                    aria-selected="{{ 'true' if request.args.get('tab') == 'history' else 'false' }}">{{
-                                _('Published Posts') }}</button>
-                        </li>
-                    </ul>
-                    <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create
-                        New Post') }}</a>
-                </div>
-                <div class="card-body">
-                    <div class="tab-content" id="draftTabsContent">
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <ul class="nav nav-tabs card-header-tabs" id="draftTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {{ 'active' if request.args.get('tab') != 'history' else '' }}"
+                                id="active-tab" data-bs-toggle="tab" data-bs-target="#active-drafts" type="button"
+                                role="tab" aria-controls="active-drafts"
+                                aria-selected="{{ 'true' if request.args.get('tab') != 'history' else 'false' }}">{{
+                            _('Unpublished Posts') }}</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {{ 'active' if request.args.get('tab') == 'history' else '' }}"
+                                id="published-tab" data-bs-toggle="tab" data-bs-target="#published-drafts" type="button"
+                                role="tab" aria-controls="published-drafts"
+                                aria-selected="{{ 'true' if request.args.get('tab') == 'history' else 'false' }}">{{
+                            _('Published Posts') }}</button>
+                    </li>
+                </ul>
+                <a href="{{ url_for('drafts.create', group_id=group.id) }}" class="btn btn-sm btn-primary">{{ _('Create
+                    New Post') }}</a>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="draftTabsContent">
 
                     <!-- Active Drafts Tab -->
-                        <div class="tab-pane fade {{ 'show active' if request.args.get('tab') != 'history' else '' }}"
-                             id="active-drafts" role="tabpanel" aria-labelledby="active-tab">
-                            {% set active_drafts = group.drafts | selectattr("status", "equalto", "draft") | list %}
-                            {% if active_drafts %}
-                                <table class="table table-hover">
-                                    <thead>
+                    <div class="tab-pane fade {{ 'show active' if request.args.get('tab') != 'history' else '' }}"
+                         id="active-drafts" role="tabpanel" aria-labelledby="active-tab">
+                        {% set active_drafts = group.drafts | selectattr("status", "equalto", "draft") | list %}
+                        {% if active_drafts %}
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('Title') }}</th>
+                                        <th>{{ _('Author') }}</th>
+                                        <th>{{ _('Account') }}</th>
+                                        <th>{{ _('Last Updated') }}</th>
+                                        <th>{{ _('Actions') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for draft in active_drafts %}
                                         <tr>
-                                            <th>{{ _('Title') }}</th>
-                                            <th>{{ _('Author') }}</th>
-                                            <th>{{ _('Account') }}</th>
-                                            <th>{{ _('Last Updated') }}</th>
-                                            <th>{{ _('Actions') }}</th>
+                                            <td><a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
+                                                   class="fw-bold text-decoration-none">{{ draft.title }}</a></td>
+                                            <td>{{ draft.author.display_name }}</td>
+                                            <td>@{{ draft.hive_account_username }}</td>
+                                            <td>{{ draft.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>
+                                                <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
+                                                   class="btn btn-sm btn-outline-primary">{{ _('Edit / View') }}</a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for draft in active_drafts %}
-                                            <tr>
-                                                <td><a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
-                                                       class="fw-bold text-decoration-none">{{ draft.title }}</a></td>
-                                                <td>{{ draft.author.display_name }}</td>
-                                                <td>@{{ draft.hive_account_username }}</td>
-                                                <td>{{ draft.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                                                <td>
-                                                    <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
-                                                       class="btn btn-sm btn-outline-primary">{{ _('Edit / View') }}</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <p class="text-muted py-3">{{ _('No active drafts. Start writing!') }}</p>
-                            {% endif %}
-                        </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p class="text-muted py-3">{{ _('No active drafts. Start writing!') }}</p>
+                        {% endif %}
+                    </div>
 
                     <!-- Published Drafts Tab -->
-                        <div class="tab-pane fade {{ 'show active' if request.args.get('tab') == 'history' else '' }}"
-                             id="published-drafts" role="tabpanel" aria-labelledby="published-tab">
-                            {% set published_drafts = group.drafts | selectattr("status", "equalto", "published") | list %}
-                            {% if published_drafts %}
-                                <table class="table table-hover">
-                                    <thead>
+                    <div class="tab-pane fade {{ 'show active' if request.args.get('tab') == 'history' else '' }}"
+                         id="published-drafts" role="tabpanel" aria-labelledby="published-tab">
+                        {% set published_drafts = group.drafts | selectattr("status", "equalto", "published") | list %}
+                        {% if published_drafts %}
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('Title') }}</th>
+                                        <th>{{ _('Author') }}</th>
+                                        <th>{{ _('Account') }}</th>
+                                        <th>{{ _('Published Date') }}</th>
+                                        <th>{{ _('Actions') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for draft in published_drafts %}
                                         <tr>
-                                            <th>{{ _('Title') }}</th>
-                                            <th>{{ _('Author') }}</th>
-                                            <th>{{ _('Account') }}</th>
-                                            <th>{{ _('Published Date') }}</th>
-                                            <th>{{ _('Actions') }}</th>
+                                            <td>{{ draft.title }}</td>
+                                            <td>{{ draft.author.display_name }}</td>
+                                            <td>@{{ draft.hive_account_username }}</td>
+                                            <td>{{ draft.published_at.strftime('%Y-%m-%d %H:%M') if draft.published_at else '-'
+                                                }}</td>
+                                            <td>
+                                                <a href="https://peakd.com/@{{ draft.hive_account_username }}/{{ draft.permlink }}"
+                                                   target="_blank" class="btn btn-sm btn-outline-info">{{ _('View on Hive')
+                                                    }}</a>
+                                                <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
+                                                   class="btn btn-sm btn-outline-secondary">{{ _('Local Record') }}</a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for draft in published_drafts %}
-                                            <tr>
-                                                <td>{{ draft.title }}</td>
-                                                <td>{{ draft.author.display_name }}</td>
-                                                <td>@{{ draft.hive_account_username }}</td>
-                                                <td>{{ draft.published_at.strftime('%Y-%m-%d %H:%M') if draft.published_at else '-'
-                                                    }}</td>
-                                                <td>
-                                                    <a href="https://peakd.com/@{{ draft.hive_account_username }}/{{ draft.permlink }}"
-                                                       target="_blank" class="btn btn-sm btn-outline-info">{{ _('View on Hive')
-                                                        }}</a>
-                                                    <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
-                                                       class="btn btn-sm btn-outline-secondary">{{ _('Local Record') }}</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <p class="text-muted py-3">{{ _('No published posts yet.') }}</p>
-                            {% endif %}
-                        </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p class="text-muted py-3">{{ _('No published posts yet.') }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <!-- Add Member Modal -->
-    <div class="modal fade" id="addMemberModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ url_for('groups.add_member', id=group.id) }}" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ _('Add Member') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="modal fade" id="addMemberModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url_for('groups.add_member', id=group.id) }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ _('Add Member') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">{{ _('Username of User to Add') }}</label>
+                        <input type="text" class="form-control" name="username" list="user-list" required
+                               autocomplete="off">
+                        <datalist id="user-list">
+                            {% for u in available_users_to_add %}
+                                <option value="{{ u.username }}">
+                            {% endfor %}
+                        </datalist>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">{{ _('Username of User to Add') }}</label>
-                            <input type="text" class="form-control" name="username" list="user-list" required
-                                   autocomplete="off">
-                            <datalist id="user-list">
-                                {% for u in available_users_to_add %}
-                                    <option value="{{ u.username }}">
-                                {% endfor %}
-                            </datalist>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ _('Add Member') }}</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ _('Add Member') }}</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 <!-- Add Resource Modal -->
-    <div class="modal fade" id="addResourceModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ url_for('groups.link_resource', id=group.id) }}" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ _('Share Hive Key') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="small text-muted">{{ _('Share one of your Hive keys with this group. Members will be
-                            able to use it for drafting (and posting, if permissions allow).') }}</p>
-                        {% if available_accounts %}
-                            <div class="mb-3">
-                                <label for="resource_id" class="form-label">{{ _('Select Account') }}</label>
-                                <select class="form-select" name="resource_id" required>
-                                    {% for acc in available_accounts %}
-                                        <option value="{{ acc.username }}">{{ acc.username }}</option>
-                                    {% endfor %}
-                                </select>
-                                <input type="hidden" name="resource_type" value="hive_account">
-                            </div>
-                        {% else %}
-                            <div class="alert alert-warning">{{ _('You have no available Hive accounts to share.') }} <a
-                                href="{{ url_for('account.create') }}">{{ _('Create one?') }}</a></div>
-                        {% endif %}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
-                        {% if available_accounts %}
-                            <button type="submit" class="btn btn-primary">{{ _('Share Account') }}</button>
-                        {% endif %}
-                    </div>
-                </form>
-            </div>
+<div class="modal fade" id="addResourceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url_for('groups.link_resource', id=group.id) }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ _('Share Hive Key') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="small text-muted">{{ _('Share one of your Hive keys with this group. Members will be
+                        able to use it for drafting (and posting, if permissions allow).') }}</p>
+                    {% if available_accounts %}
+                        <div class="mb-3">
+                            <label for="resource_id" class="form-label">{{ _('Select Account') }}</label>
+                            <select class="form-select" name="resource_id" required>
+                                {% for acc in available_accounts %}
+                                    <option value="{{ acc.username }}">{{ acc.username }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" name="resource_type" value="hive_account">
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">{{ _('You have no available Hive accounts to share.') }} <a
+                            href="{{ url_for('account.create') }}">{{ _('Create one?') }}</a></div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                    {% if available_accounts %}
+                        <button type="submit" class="btn btn-primary">{{ _('Share Account') }}</button>
+                    {% endif %}
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 <!-- Group Settings Modal -->
-    <div class="modal fade" id="groupSettingsModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ url_for('groups.edit_group', id=group.id) }}" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ _('Group Settings') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="modal fade" id="groupSettingsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url_for('groups.edit_group', id=group.id) }}" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ _('Group Settings') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">{{ _('Group Name') }}</label>
+                        <input type="text" class="form-control" name="name" value="{{ group.name }}" required>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">{{ _('Group Name') }}</label>
-                            <input type="text" class="form-control" name="name" value="{{ group.name }}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">{{ _('Description') }}</label>
-                            <textarea class="form-control" name="description" rows="3">{{ group.description }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="default_tags" class="form-label">{{ _('Default Tags') }}</label>
-                            <input type="text" class="form-control" name="default_tags"
-                                   value="{{ group.default_tags or '' }}" placeholder="tag1 tag2">
-                        </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">{{ _('Description') }}</label>
+                        <textarea class="form-control" name="description" rows="3">{{ group.description }}</textarea>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel')
-                            }}</button>
-                        <button type="submit" class="btn btn-primary">{{ _('Save Changes') }}</button>
+                    <div class="mb-3">
+                        <label for="default_tags" class="form-label">{{ _('Default Tags') }}</label>
+                        <input type="text" class="form-control" name="default_tags"
+                               value="{{ group.default_tags or '' }}" placeholder="tag1 tag2">
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel')
+                        }}</button>
+                    <button type="submit" class="btn btn-primary">{{ _('Save Changes') }}</button>
+                </div>
+            </form>
         </div>
     </div>
-    <script>
-        function triggerUpload(resourceId, type) {
-            const fileInput = document.getElementById(`upload_${type}_${resourceId}`);
-            if (fileInput) fileInput.click();
-        }
+</div>
+<script>
+    function triggerUpload(resourceId, type) {
+        const fileInput = document.getElementById(`upload_${type}_${resourceId}`);
+        if (fileInput) fileInput.click();
+    }
 
-        async function uploadImage(input, groupId, resourceId, type) {
-            if (!input.files || !input.files[0]) return;
+    async function uploadImage(input, groupId, resourceId, type) {
+        if (!input.files || !input.files[0]) return;
 
-            const file = input.files[0];
-            const formData = new FormData();
-            formData.append('image', file);
-            formData.append('group_id', groupId);
-            formData.append('hive_username', resourceId);
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('group_id', groupId);
+        formData.append('hive_username', resourceId);
 
         // Find the button to toggle loading state
         // structure: div.input-group > input, button
@@ -443,37 +446,37 @@
         // The visible text input id is `${type}_image_${resourceId}`.
         // The button is next to that text input within the .input-group div.
 
-            const urlInput = document.getElementById(`${type}_image_${resourceId}`);
-            const btn = urlInput.nextElementSibling;
+        const urlInput = document.getElementById(`${type}_image_${resourceId}`);
+        const btn = urlInput.nextElementSibling;
 
-            const originalInfo = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-            btn.disabled = true;
+        const originalInfo = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+        btn.disabled = true;
 
-            try {
-                const response = await fetch("{{ url_for('api.upload_image') }}", {
-                    method: 'POST',
-                    body: formData
-                });
+        try {
+            const response = await fetch("{{ url_for('api.upload_image') }}", {
+                method: 'POST',
+                body: formData
+            });
 
-                const data = await response.json();
+            const data = await response.json();
 
-                if (response.ok) {
+            if (response.ok) {
                 // Update the URL input
-                    urlInput.value = data.url;
-                } else {
-                    alert(data.error || 'Upload failed');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred during upload');
-            } finally {
-            // Restore button state
-                btn.innerHTML = originalInfo;
-                btn.disabled = false;
-            // Clear input so selecting same file works again
-                input.value = '';
+                urlInput.value = data.url;
+            } else {
+                alert(data.error || 'Upload failed');
             }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred during upload');
+        } finally {
+            // Restore button state
+            btn.innerHTML = originalInfo;
+            btn.disabled = false;
+            // Clear input so selecting same file works again
+            input.value = '';
         }
-    </script>
+    }
+</script>
 {% endblock %}

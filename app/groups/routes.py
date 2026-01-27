@@ -57,7 +57,9 @@ def edit_group(id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role not in ["owner", "admin"]:
+    if (
+        not membership or membership.role not in ["owner", "admin"]
+    ) and not current_user.is_admin:
         flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.view", id=id))
 
@@ -102,7 +104,7 @@ def view(id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership:
+    if not membership and not current_user.is_admin:
         flash("You are not a member of this group.", "danger")
         return redirect(url_for("groups.list_groups"))
 
@@ -156,7 +158,9 @@ def add_member(id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role not in ["owner", "admin"]:
+    if (
+        not membership or membership.role not in ["owner", "admin"]
+    ) and not current_user.is_admin:
         flash("Unauthorized", "danger")
         return redirect(url_for("groups.view", id=id))
 
@@ -199,7 +203,7 @@ def remove_member(id, user_id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role != "owner":
+    if (not membership or membership.role != "owner") and not current_user.is_admin:
         flash("Unauthorized. Only owner can remove members.", "danger")
         return redirect(url_for("groups.view", id=id))
 
@@ -225,7 +229,7 @@ def promote_member(id, user_id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role != "owner":
+    if (not membership or membership.role != "owner") and not current_user.is_admin:
         flash("Unauthorized", "danger")
         return redirect(url_for("groups.view", id=id))
 
@@ -253,7 +257,7 @@ def demote_member(id, user_id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role != "owner":
+    if (not membership or membership.role != "owner") and not current_user.is_admin:
         flash("Unauthorized", "danger")
         return redirect(url_for("groups.view", id=id))
 
@@ -281,7 +285,7 @@ def link_resource(id):
         group_id=id, user_id=current_user.id
     ).first()
 
-    if not membership:
+    if not membership and not current_user.is_admin:
         flash("Unauthorized", "danger")
         return redirect(url_for("groups.list_groups"))
 
@@ -325,7 +329,7 @@ def unlink_resource(id, resource_id):
     resource = GroupResource.query.get_or_404(resource_id)
 
     can_delete = False
-    if membership.role in ["owner", "admin"]:
+    if (membership and membership.role in ["owner", "admin"]) or current_user.is_admin:
         can_delete = True
     elif resource.resource_type == "hive_account":
         # Check if current user owns the hive account
@@ -354,7 +358,9 @@ def update_resource_profile(id, resource_id):
     membership = GroupMember.query.filter_by(
         group_id=id, user_id=current_user.id
     ).first()
-    if not membership or membership.role not in ["owner", "admin"]:
+    if (
+        not membership or membership.role not in ["owner", "admin"]
+    ) and not current_user.is_admin:
         flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.view", id=id))
 

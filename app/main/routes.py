@@ -12,7 +12,7 @@ from flask import (
 from flask_babel import gettext as _
 from flask_login import current_user, login_required
 
-from app.extensions import db
+from app.extensions import db, cache
 from app.main import bp
 from app.models import HiveAccount, User
 from app.utils.hive import (
@@ -32,6 +32,7 @@ def robots_txt():
 
 
 @bp.route("/")
+@cache.cached(timeout=300, unless=lambda: current_user.is_authenticated)
 def index():
     usernames_to_fetch = []
 

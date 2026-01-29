@@ -26,6 +26,11 @@ def create_app(config_class=Config):
     babel.init_app(app, locale_selector=get_locale)
     migrate.init_app(app, db)
     mail.init_app(app)
+    # Initialize cache and limiter
+    from app.extensions import cache, limiter
+
+    cache.init_app(app)
+    limiter.init_app(app)
 
     # Initialize Scheduler
     import os  # Move import os here to fix F823
@@ -144,6 +149,11 @@ def create_app(config_class=Config):
     from app.errors import bp as errors_bp
 
     app.register_blueprint(errors_bp)
+
+    # Activate "Under Attack" Mode (Browser Check Middleware)
+    from app.middleware import BrowserCheckMiddleware
+
+    app.wsgi_app = BrowserCheckMiddleware(app.wsgi_app)
 
     import os  # Ensure os is imported
 

@@ -15,7 +15,7 @@ from app.auth.forms import (
 )
 from itsdangerous import URLSafeTimedSerializer
 from markupsafe import Markup
-from app.extensions import db
+from app.extensions import db, limiter
 from app.models import User
 from app.utils.email import send_email
 
@@ -32,6 +32,7 @@ def send_verification_email(user):
 
 
 @bp.route("/login", methods=["GET", "POST"])
+@limiter.limit("10 per minute")
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))
@@ -93,6 +94,7 @@ def logout():
 
 
 @bp.route("/register", methods=["GET", "POST"])
+@limiter.limit("5 per minute")
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))

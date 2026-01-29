@@ -53,3 +53,10 @@ class Config:
 
     # Cost per credit in USD
     CREDIT_PRICE_USD = 3.00
+
+    # Caching & Rate Limiting (Redis)
+    REDIS_URL = os.environ.get("REDIS_URL") or "redis://localhost:6379/0"
+    CACHE_TYPE = "RedisCache"
+    CACHE_REDIS_URL = REDIS_URL
+    RATELIMIT_STORAGE_URI = REDIS_URL
+    RATELIMIT_DEFAULT = "2000 per day;500 per hour"  # Generous default

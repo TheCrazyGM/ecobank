@@ -152,7 +152,10 @@ def create_app(config_class=Config):
 
     # Activate "Under Attack" Mode (Browser Check Middleware)
     from app.middleware import BrowserCheckMiddleware
+    from werkzeug.middleware.proxy_fix import ProxyFix
 
+    # Order: Request -> BrowserCheck -> ProxyFix -> Flask
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
     app.wsgi_app = BrowserCheckMiddleware(app.wsgi_app)
 
     import os  # Ensure os is imported
@@ -173,6 +176,11 @@ def create_app(config_class=Config):
         )
         file_handler.setLevel(logging.INFO)
         app.logger.addHandler(file_handler)
+
+        # Also log to stdout so Gunicorn/Docker picks it up
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(logging.INFO)
+        app.logger.addHandler(stream_handler)
 
         app.logger.setLevel(logging.INFO)
         app.logger.info("EcoBank startup")

@@ -225,10 +225,17 @@ def edit(draft_id):
         _save_draft_version(draft, current_user.id, "updated")
 
         new_title = request.form.get("title")
+
+        # Check if we need to update the permlink (Title changed OR current permlink is invalid)
+        should_regen_permlink = False
         if new_title and new_title != draft.title:
-            # If title changed and not published, update permlink
-            if draft.status != "published":
-                draft.permlink = generate_permlink(new_title)
+            should_regen_permlink = True
+        elif not re.match(r"^[a-z0-9-]+$", draft.permlink):
+            # Existing permlink is invalid (likely contains accents or capitals from old logic)
+            should_regen_permlink = True
+
+        if should_regen_permlink and draft.status != "published":
+            draft.permlink = generate_permlink(new_title or draft.title)
 
         draft.title = new_title
         draft.body = request.form.get("body")

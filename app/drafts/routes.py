@@ -2,6 +2,7 @@ import json
 import random
 import re
 import string
+import unicodedata
 from datetime import datetime, timezone
 
 from cryptography.fernet import Fernet
@@ -56,11 +57,21 @@ def _save_draft_version(draft: Draft, user_id: int, action: str):
 
 # Helper for generating permlinks
 def generate_permlink(title):
-    # Simple permlink generation: lowercase, slugify
-    s = title.lower().strip()
-    s = re.sub(r"[^\w\s-]", "", s)
-    s = re.sub(r"[\s_-]+", "-", s)
+    # Normalize unicode characters to decompose them (e.g. 'á' -> 'a' + '´')
+    s = unicodedata.normalize("NFKD", title)
+    # Encode to ASCII, ignoring non-ascii characters (strips accents)
+    s = s.encode("ascii", "ignore").decode("utf-8")
+
+    s = s.lower().strip()
+    # Replace spaces and underscores with dashes first
+    s = re.sub(r"[\s_]+", "-", s)
+    # Now regex can be strict about a-z0-9-
+    s = re.sub(r"[^a-z0-9-]", "", s)
+    # Remove multiple dashes
+    s = re.sub(r"-+", "-", s)
+    # Remove leading/trailing dashes
     s = re.sub(r"^-+|-+$", "", s)
+
     if not s:
         s = "".join(random.choices(string.ascii_lowercase, k=10))
     return (
@@ -115,7 +126,7 @@ def create(group_id):
                 ).first()
                 if not membership and not current_user.is_admin:
                     abort(403)
-            except (ValueError, TypeError):
+            except ValueError, TypeError:
                 flash("Invalid group selected", "danger")
                 return redirect(url_for("drafts.create"))
 

@@ -98,9 +98,11 @@ def _preprocess_markdown(
 
     s = re.sub(
         r"(?:(?<=\s)|^) (https?://\S+)",
-        lambda m: _convert_bare_image_urls(m)
-        if _IMG_EXT_RE.search(m.group(1))
-        else m.group(0),
+        lambda m: (
+            _convert_bare_image_urls(m)
+            if _IMG_EXT_RE.search(m.group(1))
+            else m.group(0)
+        ),
         s,
     )
 
@@ -225,6 +227,9 @@ def render_markdown(text: Any) -> Markup:
                         "h1",
                         "h2",
                         "h3",
+                        "h4",
+                        "h5",
+                        "h6",
                         "hr",
                         "table",
                         "thead",

@@ -276,7 +276,12 @@ def hive_claim_rewards(username):
         keys = json.loads(keys_json)
 
         # Determine the posting key
-        posting_key = keys.get("posting")
+        posting_key_data = keys.get("posting")
+        if posting_key_data and isinstance(posting_key_data, dict):
+            posting_key = posting_key_data.get("private")
+        else:
+            posting_key = posting_key_data
+
         if not posting_key:
             flash(
                 _("Posting key not found for this account. Cannot claim rewards."),

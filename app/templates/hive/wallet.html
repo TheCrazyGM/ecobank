@@ -16,6 +16,23 @@
                     <span class="badge bg-light text-dark">{{ wallet.voting_power }} VP</span>
                 </div>
                 <div class="card-body">
+                    {% if owns_account and (wallet.reward_hive != '0.000 HIVE' or wallet.reward_hbd != '0.000 HBD' or wallet.reward_vests != '0.000000 VESTS') %}
+                        <div class="alert alert-success d-flex align-items-center justify-content-between mb-4">
+                            <div>
+                                <h5 class="mb-1"><strong>{{ _('Pending Rewards') }}</strong></h5>
+                                <p class="mb-0">
+                                    {% if wallet.reward_hive != '0.000 HIVE' %}{{ wallet.reward_hive }} &nbsp;{% endif %}
+                                    {% if wallet.reward_hbd != '0.000 HBD' %}{{ wallet.reward_hbd }} &nbsp;{% endif %}
+                                    {% if wallet.reward_vests != '0.000000 VESTS' %}{{ wallet.reward_hp }} &nbsp;{% endif %}
+                                </p>
+                            </div>
+                            <form action="{{ url_for('main.hive_claim_rewards', username=username) }}" method="POST">
+                                <button type="submit" class="btn btn-success fw-bold">
+                                    <i class="bi bi-gift-fill me-1"></i> {{ _('Claim Rewards') }}
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
                     <div class="row mb-3 text-center">
                         <div class="col-md-4">
                             <div class="p-3 border rounded bg-light">

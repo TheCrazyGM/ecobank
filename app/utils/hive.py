@@ -23,7 +23,7 @@ def _extract_val(obj: Any, key: str, default=None) -> Any:
     # Try dict access
     try:
         return obj[key]
-    except (TypeError, KeyError, IndexError):
+    except TypeError, KeyError, IndexError:
         pass
     # Try attribute access
     try:
@@ -332,6 +332,10 @@ def fetch_account_wallet(username: str) -> Optional[Dict[str, Any]]:
             "post_count": acc.get("post_count"),
             # get_voting_power() appears to return percentage (0-100) in this version
             "voting_power": f"{acc.get_voting_power():.2f}%",
+            "reward_hive": str(acc.get("reward_hive_balance", "0.000 HIVE")),
+            "reward_hbd": str(acc.get("reward_hbd_balance", "0.000 HBD")),
+            "reward_vests": str(acc.get("reward_vesting_balance", "0.000000 VESTS")),
+            "reward_hp": f"{Amount(acc.get('reward_vesting_hive', '0.000 HIVE')).amount:.3f} HP",
         }
     except Exception as e:
         logger.error(f"Failed to fetch wallet for {username}: {e}")
@@ -579,5 +583,35 @@ def update_account_profile(
         import traceback
 
         logger.error(f"Failed to update profile for {username}: {e}")
+        logger.error(traceback.format_exc())
+        return False
+
+
+def claim_rewards(username: str, wif: str) -> bool:
+    """Claim pending rewards for an account."""
+    try:
+        hive = Hive(keys=[wif])
+        acc = Account(username, blockchain_instance=hive)
+
+        # Determine if there are pending rewards
+        reward_hive = Amount(acc.get("reward_hive_balance", "0.000 HIVE"))
+        reward_hbd = Amount(acc.get("reward_hbd_balance", "0.000 HBD"))
+        reward_vests = Amount(acc.get("reward_vesting_balance", "0.000000 VESTS"))
+
+        if (
+            reward_hive.amount == 0
+            and reward_hbd.amount == 0
+            and reward_vests.amount == 0
+        ):
+            logger.info(f"No pending rewards to claim for {username}")
+            return False
+
+        acc.claim_reward_balance()
+        logger.info(f"Successfully claimed rewards for {username}")
+        return True
+    except Exception as e:
+        import traceback
+
+        logger.error(f"Failed to claim rewards for {username}: {e}")
         logger.error(traceback.format_exc())
         return False

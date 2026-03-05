@@ -1,27 +1,34 @@
+import json
+import logging
 import random
+
+from cryptography.fernet import Fernet
 from flask import (
+    abort,
+    current_app,
     flash,
     redirect,
     render_template,
     request,
-    url_for,
-    abort,
     send_from_directory,
-    current_app,
+    url_for,
 )
 from flask_babel import gettext as _
 from flask_login import current_user, login_required
 
-from app.extensions import db, cache
+
+from app.extensions import cache, db
 from app.main import bp
 from app.models import HiveAccount, User
 from app.utils.hive import (
+    fetch_account_wallet,
     fetch_post,
+    fetch_posts_by_tag,
     fetch_user_blog,
     fetch_user_profile,
-    fetch_account_wallet,
-    fetch_posts_by_tag,
 )
+
+logger = logging.getLogger(__name__)
 
 
 @bp.route("/robots.txt")
@@ -228,7 +235,73 @@ def hive_view_wallet(username):
     wallet = fetch_account_wallet(username)
     if not wallet:
         abort(404)
-    return render_template("hive/wallet.html", wallet=wallet, username=username)
+
+    owns_account = False
+    if current_user.is_authenticated:
+        # Check if current user owns this account
+        acc = HiveAccount.query.filter_by(
+            username=username, created_by_id=current_user.id
+        ).first()
+        if acc:
+            owns_account = True
+
+    return render_template(
+        "hive/wallet.html", wallet=wallet, username=username, owns_account=owns_account
+    )
+
+
+@bp.route("/@<username>/wallet/claim", methods=["POST"])
+@login_required
+def hive_claim_rewards(username):
+    """Claim pending Hive rewards for an owned account."""
+
+    # 1. Verify ownership
+    hive_account = HiveAccount.query.filter_by(
+        username=username, created_by_id=current_user.id
+    ).first()
+    if not hive_account:
+        flash(_("You do not own this account or it does not exist."), "danger")
+        return redirect(url_for("main.hive_view_wallet", username=username))
+
+    # 2. Get keys
+    try:
+        encryption_key = current_app.config.get("ENCRYPTION_KEY")
+        if not encryption_key:
+            logger.error("ENCRYPTION_KEY not set in config.")
+            flash(_("System configuration error."), "danger")
+            return redirect(url_for("main.hive_view_wallet", username=username))
+
+        fernet = Fernet(encryption_key)
+        keys_json = fernet.decrypt(hive_account.keys_enc.encode()).decode()
+        keys = json.loads(keys_json)
+
+        # Determine the posting key
+        posting_key = keys.get("posting")
+        if not posting_key:
+            flash(
+                _("Posting key not found for this account. Cannot claim rewards."),
+                "danger",
+            )
+            return redirect(url_for("main.hive_view_wallet", username=username))
+
+    except Exception as e:
+        logger.error(f"Error decrypting keys for claim: {e}")
+        flash(_("Failed to access account keys."), "danger")
+        return redirect(url_for("main.hive_view_wallet", username=username))
+
+    # 3. Perform the claim operation
+    from app.utils.hive import claim_rewards
+
+    success = claim_rewards(username, posting_key)
+
+    if success:
+        flash(_("Successfully claimed all pending rewards!"), "success")
+    else:
+        flash(
+            _("Failed to claim rewards, or there were no rewards pending."), "warning"
+        )
+
+    return redirect(url_for("main.hive_view_wallet", username=username))
 
 
 @bp.route("/tags/<tag>")

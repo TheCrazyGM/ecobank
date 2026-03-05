@@ -108,20 +108,27 @@
                                 <strong>{{ r.resource_id }}</strong>
                             </div>
 
-                            <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}"
-                                  method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');">
-                                <div class="btn-group">
-                                    {% if r.resource_type == 'hive_account' and (current_user.is_admin or (membership and
-                                    membership.role in ['owner', 'admin'])) %}
-                                <!-- Manage Profile Button -->
-                                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
-                                            data-bs-target="#editProfileModal{{ r.id }}">
-                                        {{ _('Manage Profile') }}
-                                    </button>
+                            <div class="d-flex align-items-center gap-2">
+                                <form action="{{ url_for('groups.unlink_resource', id=group.id, resource_id=r.id) }}"
+                                      method="POST" onsubmit="return confirm('{{ _('Unlink this resource?') }}');" class="mb-0">
+                                    <div class="btn-group">
+                                        {% if r.resource_type == 'hive_account' and (current_user.is_admin or (membership and
+                                        membership.role in ['owner', 'admin'])) %}
+                                    <!-- Manage Profile Button -->
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                                data-bs-target="#editProfileModal{{ r.id }}">
+                                            {{ _('Manage Profile') }}
+                                        </button>
                     {% endif %}
                     <button type="submit" class="btn btn-sm btn-outline-danger">{{ _('Unlink') }}</button>
                 </div>
                 </form>
+                {% if r.resource_type == 'hive_account' %}
+                    <a href="{{ url_for('main.hive_view_wallet', username=r.resource_id) }}" class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-wallet2"></i> {{ _('Wallet') }}
+                    </a>
+                {% endif %}
+                </div>
 
                 {% if r.resource_type == 'hive_account' %}
                         <!-- Modal for this resource -->

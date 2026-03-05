@@ -265,9 +265,9 @@ def hive_claim_rewards(username):
 
     # 2. Get keys
     try:
-        encryption_key = current_app.config.get("ENCRYPTION_KEY")
+        encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
         if not encryption_key:
-            logger.error("ENCRYPTION_KEY not set in config.")
+            logger.error("HIVE_ENCRYPTION_KEY not set in config.")
             flash(_("System configuration error."), "danger")
             return redirect(url_for("main.hive_view_wallet", username=username))
 

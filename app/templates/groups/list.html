@@ -14,7 +14,15 @@
                         <h5 class="mb-1">{{ m.group.name }}</h5>
                         <p class="mb-1 text-muted">{{ m.group.description }}</p>
                     </div>
-                    <span class="badge bg-secondary rounded-pill">{{ m.role }}</span>
+                    <div class="d-flex align-items-center gap-2">
+                        {% set pending_drafts = m.group.drafts | selectattr("status", "equalto", "draft") | list %}
+                        {% if pending_drafts %}
+                            <span class="badge bg-primary rounded-pill" title="{{ _('Pending Drafts') }}">
+                                <i class="bi bi-file-earmark-text"></i> {{ pending_drafts|length }}
+                            </span>
+                        {% endif %}
+                        <span class="badge bg-secondary rounded-pill">{{ m.role }}</span>
+                    </div>
                 </a>
             {% endfor %}
         </div>

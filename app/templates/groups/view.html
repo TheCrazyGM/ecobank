@@ -9,8 +9,16 @@
                     <li class="breadcrumb-item active" aria-current="page">{{ group.name }}</li>
                 </ol>
             </nav>
-            <h2>{{ group.name }} <small class="text-muted fs-6">({{ membership.role if membership else _('System Admin')
-                }})</small></h2>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>{{ group.name }} <small class="text-muted fs-6">({{ membership.role if membership else _('System Admin')
+                    }})</small></h2>
+                {% if current_user.is_admin or (membership and membership.role in ['owner', 'admin']) %}
+                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                            data-bs-target="#groupSettingsModal">
+                        {{ _('Settings') }}
+                    </button>
+                {% endif %}
+            </div>
             <p class="lead">{{ group.description }}</p>
         </div>
     </div>
@@ -23,8 +31,6 @@
                     <span>{{ _('Members') }}</span>
                     {% if current_user.is_admin or (membership and membership.role in ['owner', 'admin']) %}
                         <div class="btn-group">
-                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#groupSettingsModal">{{ _('Settings') }}</button>
                             <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                     data-bs-target="#addMemberModal">{{ _('Add') }}</button>
                         </div>

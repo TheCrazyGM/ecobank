@@ -118,7 +118,10 @@ def create(group_id):
         # If group wasn't in URL, it must be in form
         if not group_id:
             try:
-                group_id = int(request.form.get("group_id"))
+                posted_group_id = request.form.get("group_id")
+                if posted_group_id is None:
+                    raise ValueError("group_id is missing")
+                group_id = int(posted_group_id)
                 group = Group.query.get(group_id)
                 # Re-verify membership for the posted group
                 membership = GroupMember.query.filter_by(
@@ -661,6 +664,22 @@ def submit(draft_id):
         draft.status = "published"
         draft.published_at = datetime.now(timezone.utc)
         draft.tx_id = tx.get("trx_id") if tx else "unknown"
+
+        # Archive any prior published drafts for this post to avoid duplicates
+        prior_published = (
+            Draft.query.filter_by(
+                group_id=draft.group_id,
+                hive_account_username=draft.hive_account_username,
+                permlink=draft.permlink,
+                status="published",
+            )
+            .filter(Draft.id != draft.id)
+            .all()
+        )
+
+        for p_draft in prior_published:
+            p_draft.status = "archived"
+
         db.session.commit()
 
         if draft.author_user_id != current_user.id:
@@ -681,3 +700,56 @@ def submit(draft_id):
         current_app.logger.exception("Hive posting failed")
         flash(f"Posting failed: {str(e)}", "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
+
+
+@bp.route("/propose_edit/<int:draft_id>", methods=["POST"])
+@login_required
+def propose_edit(draft_id):
+    original_draft = Draft.query.get_or_404(draft_id)
+    group = Group.query.get(original_draft.group_id)
+
+    # Check Permissions
+    membership = GroupMember.query.filter_by(
+        group_id=group.id, user_id=current_user.id
+    ).first()
+
+    if not current_user.is_admin and not membership:
+        flash("Unauthorized", "danger")
+        return redirect(url_for("groups.list_groups"))
+
+    if original_draft.status != "published":
+        flash("Can only propose edits to published posts.", "warning")
+        return redirect(url_for("drafts.view", draft_id=draft_id))
+
+    # Create new draft as a copy
+    new_draft = Draft(
+        group_id=original_draft.group_id,
+        author_user_id=current_user.id,
+        hive_account_username=original_draft.hive_account_username,
+        title=original_draft.title,
+        body=original_draft.body,
+        tags=original_draft.tags,
+        permlink=original_draft.permlink,  # Keep original permlink to update the same post
+        status="draft",
+    )
+    db.session.add(new_draft)
+    db.session.commit()
+
+    # Save initial version to MongoDB
+    _save_draft_version(new_draft, current_user.id, "created (proposed edit)")
+
+    # Notify original author
+    if original_draft.author_user_id != current_user.id:
+        create_notification(
+            user_id=original_draft.author_user_id,
+            message=_(
+                "%(username)s has proposed an edit to your published post '%(title)s'",
+                username=current_user.username,
+                title=original_draft.title,
+            ),
+            link=url_for("drafts.view", draft_id=new_draft.id),
+            type="info",
+        )
+
+    flash("Draft created for proposed edit.", "success")
+    return redirect(url_for("drafts.view", draft_id=new_draft.id))

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-29 08:49-0500\n"
+"POT-Creation-Date: 2026-03-11 05:52-0400\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -111,8 +111,8 @@ msgstr "Error de clave de encriptación."
 msgid "Account %(username)s imported successfully!"
 msgstr "¡Cuenta %(username)s importada exitosamente!"
 
-#: app/account/routes.py:360 app/account/routes.py:405 app/groups/routes.py:61
-#: app/groups/routes.py:358
+#: app/account/routes.py:360 app/account/routes.py:405 app/groups/routes.py:63
+#: app/groups/routes.py:364
 msgid "Unauthorized"
 msgstr "No autorizado"
 
@@ -173,16 +173,16 @@ msgid "Update User"
 msgstr "Actualizar Usuario"
 
 #: app/admin/forms.py:21 app/templates/groups/create.html:7
-#: app/templates/groups/view.html:401
+#: app/templates/groups/view.html:422
 msgid "Group Name"
 msgstr "Nombre del Grupo"
 
 #: app/admin/forms.py:22 app/templates/admin/groups.html:14
-#: app/templates/groups/create.html:11 app/templates/groups/view.html:405
+#: app/templates/groups/create.html:11 app/templates/groups/view.html:426
 msgid "Description"
 msgstr "Descripción"
 
-#: app/admin/forms.py:23 app/templates/groups/view.html:409
+#: app/admin/forms.py:23 app/templates/groups/view.html:430
 msgid "Default Tags"
 msgstr "Etiquetas predeterminadas"
 
@@ -228,7 +228,7 @@ msgstr "Contraseña"
 msgid "Remember Me"
 msgstr "Recuérdame"
 
-#: app/auth/forms.py:15 app/auth/routes.py:65 app/templates/auth/login.html:4
+#: app/auth/forms.py:15 app/auth/routes.py:66 app/templates/auth/login.html:4
 #: app/templates/auth/register.html:49
 msgid "Sign In"
 msgstr "Iniciar Sesión"
@@ -237,11 +237,11 @@ msgstr "Iniciar Sesión"
 msgid "Repeat Password"
 msgstr "Repetir Contraseña"
 
-#: app/auth/forms.py:30 app/templates/groups/view.html:154
+#: app/auth/forms.py:30 app/templates/groups/view.html:170
 msgid "Website"
 msgstr "Sitio Web"
 
-#: app/auth/forms.py:33 app/auth/routes.py:124
+#: app/auth/forms.py:33 app/auth/routes.py:126
 #: app/templates/auth/register.html:4
 msgid "Register"
 msgstr "Registrarse"
@@ -275,7 +275,7 @@ msgstr "Contraseña Actual"
 msgid "Confirm New Password"
 msgstr "Confirmar Nueva Contraseña"
 
-#: app/auth/forms.py:94 app/auth/routes.py:147
+#: app/auth/forms.py:94 app/auth/routes.py:149
 #: app/templates/auth/change_password.html:8 app/templates/main/profile.html:65
 msgid "Change Password"
 msgstr "Cambiar Contraseña"
@@ -284,7 +284,7 @@ msgstr "Cambiar Contraseña"
 msgid "Request Password Reset"
 msgstr "Solicitar Restablecimiento de Contraseña"
 
-#: app/auth/forms.py:112 app/auth/routes.py:213
+#: app/auth/forms.py:112 app/auth/routes.py:215
 #: app/templates/auth/resend_verification_request.html:4
 msgid "Resend Verification Email"
 msgstr ""
@@ -293,30 +293,30 @@ msgstr ""
 msgid "[EcoBank] Verify Your Email"
 msgstr "[EcoBank] Verifica Tu Correo Electrónico"
 
-#: app/auth/routes.py:47
+#: app/auth/routes.py:48
 msgid "Invalid username or password"
 msgstr "Usuario o contraseña inválidos"
 
-#: app/auth/routes.py:53
+#: app/auth/routes.py:54
 #, python-format
 msgid ""
 "Please verify your email address before logging in. <a "
 "href='%(url)s'>Resend Email</a>"
 msgstr ""
 
-#: app/auth/routes.py:75
+#: app/auth/routes.py:76
 msgid "Verification link is invalid or has expired."
 msgstr "El enlace de verificación es inválido o ha expirado."
 
-#: app/auth/routes.py:79
+#: app/auth/routes.py:80
 msgid "Account already verified."
 msgstr "Cuenta ya verificada."
 
-#: app/auth/routes.py:83
+#: app/auth/routes.py:84
 msgid "Your account has been verified!"
 msgstr "¡Tu cuenta ha sido verificada!"
 
-#: app/auth/routes.py:119
+#: app/auth/routes.py:121
 msgid ""
 "Congratulations, you are now a registered user! Please check your email "
 "to verify your account."
@@ -324,77 +324,82 @@ msgstr ""
 "¡Felicidades, ahora eres un usuario registrado! Por favor revisa tu "
 "correo para verificar tu cuenta."
 
-#: app/auth/routes.py:134
+#: app/auth/routes.py:136
 msgid "Invalid current password."
 msgstr "Contraseña actual inválida."
 
-#: app/auth/routes.py:142
+#: app/auth/routes.py:144
 msgid "Your password has been updated."
 msgstr "Tu contraseña ha sido actualizada."
 
-#: app/auth/routes.py:154
+#: app/auth/routes.py:156
 msgid "[EcoBank] Reset Your Password"
 msgstr "[EcoBank] Restablece Tu Contraseña"
 
-#: app/auth/routes.py:171
+#: app/auth/routes.py:173
 msgid "Check your email for the instructions to reset your password"
 msgstr ""
 "Revisa tu correo electrónico para obtener las instrucciones para "
 "restablecer tu contraseña"
 
-#: app/auth/routes.py:174 app/templates/auth/reset_password.html:4
+#: app/auth/routes.py:176 app/templates/auth/reset_password.html:4
 #: app/templates/auth/reset_password_request.html:4
 msgid "Reset Password"
 msgstr "Restablecer Contraseña"
 
-#: app/auth/routes.py:189
+#: app/auth/routes.py:191
 msgid "Your password has been reset."
 msgstr "Tu contraseña ha sido restablecida."
 
-#: app/auth/routes.py:203
+#: app/auth/routes.py:205
 #, fuzzy
 msgid "This account is already verified."
 msgstr "Cuenta ya verificada."
 
-#: app/auth/routes.py:206 app/auth/routes.py:209
+#: app/auth/routes.py:208 app/auth/routes.py:211
 #, fuzzy
 msgid "Check your email for the verification link."
 msgstr ""
 "Revisa tu correo electrónico para obtener las instrucciones para "
 "restablecer tu contraseña"
 
-#: app/drafts/routes.py:235
+#: app/drafts/routes.py:253
 #, python-format
 msgid "Your draft '%(title)s' was updated by %(username)s"
 msgstr "Tu borrador '%(title)s' fue actualizado por %(username)s"
 
-#: app/drafts/routes.py:302
+#: app/drafts/routes.py:320
 msgid "Unauthorized to assign author."
 msgstr "No autorizado para asignar autor."
 
-#: app/drafts/routes.py:307
+#: app/drafts/routes.py:325
 msgid "Invalid author selected."
 msgstr "Autor seleccionado inválido."
 
-#: app/drafts/routes.py:315
+#: app/drafts/routes.py:333
 msgid "Selected user has not contributed to this draft."
 msgstr "El usuario seleccionado no ha contribuido a este borrador."
 
-#: app/drafts/routes.py:326
+#: app/drafts/routes.py:344
 #, python-format
 msgid "Draft authorship reassigned from %(old)s to %(new)s."
 msgstr "Autoría del borrador reasignada de %(old)s a %(new)s."
 
-#: app/drafts/routes.py:652
+#: app/drafts/routes.py:682
 #, python-format
 msgid "Your draft '%(title)s' has been published to Hive!"
 msgstr "¡Tu borrador '%(title)s' ha sido publicado en Hive!"
 
-#: app/groups/routes.py:23 app/groups/routes.py:69
+#: app/drafts/routes.py:739
+#, python-format
+msgid "%(username)s has proposed an edit to your published post '%(title)s'"
+msgstr ""
+
+#: app/groups/routes.py:23 app/groups/routes.py:71
 msgid "Group name is required"
 msgstr "El nombre del grupo es obligatorio."
 
-#: app/groups/routes.py:28 app/groups/routes.py:76
+#: app/groups/routes.py:28 app/groups/routes.py:78
 msgid "Group name already exists"
 msgstr "El nombre del grupo ya existe."
 
@@ -403,53 +408,78 @@ msgstr "El nombre del grupo ya existe."
 msgid "Group \"%(name)s\" created!"
 msgstr "¡Grupo \"%(name)s\" creado!"
 
-#: app/groups/routes.py:84
+#: app/groups/routes.py:86
 msgid "Group settings updated."
 msgstr "Configuración del grupo actualizada."
 
-#: app/groups/routes.py:183
+#: app/groups/routes.py:187
 #, python-format
 msgid "You have been added to group '%(name)s'"
 msgstr "Has sido añadido al grupo '%(name)s'"
 
-#: app/groups/routes.py:366
+#: app/groups/routes.py:372
 msgid "This resource type does not support profile updates."
 msgstr "Este tipo de recurso no admite actualizaciones de perfil."
 
-#: app/groups/routes.py:385
+#: app/groups/routes.py:391
 msgid "Hive Account not found in local database."
 msgstr "Cuenta Hive no encontrada en la base de datos local."
 
-#: app/groups/routes.py:391
+#: app/groups/routes.py:397
 msgid "Server configuration error: Encryption key missing."
 msgstr "Error de configuración del servidor: Falta la clave de encriptación."
 
-#: app/groups/routes.py:401
+#: app/groups/routes.py:407
 msgid "Failed to retrieve account keys."
 msgstr "Fallo al recuperar las claves de la cuenta."
 
-#: app/groups/routes.py:433
+#: app/groups/routes.py:439
 msgid "Profile updated successfully on Hive!"
 msgstr "¡Perfil actualizado exitosamente en Hive!"
 
-#: app/groups/routes.py:435
+#: app/groups/routes.py:441
 msgid "Failed to update profile. Check server logs."
 msgstr "Fallo al actualizar el perfil. Revisa los registros del servidor."
 
-#: app/main/routes.py:50
+#: app/main/routes.py:58
 msgid "My Feed"
 msgstr "Mi Feed"
 
-#: app/main/routes.py:57
+#: app/main/routes.py:65
 msgid "Community Feed"
 msgstr "Feed de la Comunidad"
 
-#: app/main/routes.py:250 app/templates/main/about.html:3
+#: app/main/routes.py:263
+msgid "You do not own this account or it does not exist."
+msgstr ""
+
+#: app/main/routes.py:271
+msgid "System configuration error."
+msgstr ""
+
+#: app/main/routes.py:287
+msgid "Posting key not found for this account. Cannot claim rewards."
+msgstr ""
+
+#: app/main/routes.py:294
+#, fuzzy
+msgid "Failed to access account keys."
+msgstr "Fallo al recuperar las claves de la cuenta."
+
+#: app/main/routes.py:303
+msgid "Successfully claimed all pending rewards!"
+msgstr ""
+
+#: app/main/routes.py:306
+msgid "Failed to claim rewards, or there were no rewards pending."
+msgstr ""
+
+#: app/main/routes.py:329 app/templates/main/about.html:3
 #: app/templates/main/about.html:6
 msgid "About Ecobank"
 msgstr "Acerca de Ecobank"
 
-#: app/main/routes.py:255 app/templates/base.html:178
+#: app/main/routes.py:334 app/templates/base.html:178
 #: app/templates/main/privacy.html:3 app/templates/main/privacy.html:6
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
@@ -495,8 +525,8 @@ msgstr "Colaboración"
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:110 app/templates/groups/view.html:252
-#: app/templates/groups/view.html:288
+#: app/templates/base.html:110 app/templates/groups/view.html:268
+#: app/templates/groups/view.html:304
 msgid "Account"
 msgstr "Cuenta"
 
@@ -696,9 +726,9 @@ msgstr "Importar Clave(s)"
 #: app/templates/account/view.html:60
 #: app/templates/auth/change_password.html:36
 #: app/templates/drafts/create.html:67 app/templates/drafts/edit.html:49
-#: app/templates/drafts/view.html:118 app/templates/groups/view.html:195
-#: app/templates/groups/view.html:344 app/templates/groups/view.html:380
-#: app/templates/groups/view.html:415
+#: app/templates/drafts/view.html:118 app/templates/groups/view.html:211
+#: app/templates/groups/view.html:365 app/templates/groups/view.html:401
+#: app/templates/groups/view.html:436
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -724,8 +754,8 @@ msgid "Source"
 msgstr "Fuente"
 
 #: app/templates/account/list.html:15 app/templates/admin/groups.html:18
-#: app/templates/admin/users.html:16 app/templates/groups/view.html:254
-#: app/templates/groups/view.html:290
+#: app/templates/admin/users.html:16 app/templates/groups/view.html:270
+#: app/templates/groups/view.html:306
 msgid "Actions"
 msgstr "Acciones"
 
@@ -739,12 +769,14 @@ msgstr "Creada"
 
 #: app/templates/account/list.html:31
 #, fuzzy
-msgid ""
-"View\n"
-"                            Keys"
-msgstr ""
-"Crear\n"
-"                        Nuevo Borrador"
+msgid "View Keys"
+msgstr "Clave Hive"
+
+#: app/templates/account/list.html:33 app/templates/groups/view.html:134
+#: app/templates/hive/user_blog.html:61 app/templates/hive/wallet.html:7
+#: app/templates/hive/wallet.html:15
+msgid "Wallet"
+msgstr "Billetera"
 
 #: app/templates/account/verify.html:8
 msgid "Security Check"
@@ -952,7 +984,7 @@ msgstr "Nombre"
 msgid "Owner"
 msgstr "Propietario"
 
-#: app/templates/admin/groups.html:16 app/templates/groups/view.html:22
+#: app/templates/admin/groups.html:16 app/templates/groups/view.html:31
 msgid "Members"
 msgstr "Miembros"
 
@@ -1031,13 +1063,13 @@ msgid "Post / Draft Manager"
 msgstr "Gestor de Publicaciones / Borradores"
 
 #: app/templates/admin/posts.html:13 app/templates/drafts/create.html:23
-#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:250
-#: app/templates/groups/view.html:286
+#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:266
+#: app/templates/groups/view.html:302
 msgid "Title"
 msgstr "Título"
 
-#: app/templates/admin/posts.html:14 app/templates/groups/view.html:251
-#: app/templates/groups/view.html:287
+#: app/templates/admin/posts.html:14 app/templates/groups/view.html:267
+#: app/templates/groups/view.html:303
 msgid "Author"
 msgstr "Autor"
 
@@ -1045,7 +1077,7 @@ msgstr "Autor"
 msgid "Group"
 msgstr "Grupo"
 
-#: app/templates/admin/posts.html:17 app/templates/groups/view.html:253
+#: app/templates/admin/posts.html:17 app/templates/groups/view.html:269
 msgid "Last Updated"
 msgstr "Última Actualización"
 
@@ -1215,6 +1247,7 @@ msgid "No history available."
 msgstr "No hay historial disponible."
 
 #: app/templates/drafts/view.html:7
+#, python-format
 msgid "Preview post: %(title)s"
 msgstr "Previsualización de publicación: %(title)s"
 
@@ -1236,7 +1269,7 @@ msgstr ""
 msgid "Publish"
 msgstr "Publicar"
 
-#: app/templates/drafts/view.html:47 app/templates/groups/view.html:303
+#: app/templates/drafts/view.html:47 app/templates/groups/view.html:319
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
@@ -1335,145 +1368,163 @@ msgstr "Etiquetas predeterminadas (separadas por espacio)"
 msgid "Create Group"
 msgstr "Crear Grupo"
 
-#: app/templates/groups/list.html:23
+#: app/templates/groups/list.html:20
+msgid "Pending Drafts"
+msgstr ""
+
+#: app/templates/groups/list.html:31
 msgid "You are not a member of any groups."
 msgstr "No eres miembro de ningún grupo."
 
-#: app/templates/groups/view.html:26
+#: app/templates/groups/view.html:13
+msgid "System Admin"
+msgstr ""
+
+#: app/templates/groups/view.html:18
 msgid "Settings"
 msgstr "Configuración"
 
-#: app/templates/groups/view.html:28
+#: app/templates/groups/view.html:35
 msgid "Add"
 msgstr "Agregar"
 
-#: app/templates/groups/view.html:46
+#: app/templates/groups/view.html:54
 msgid "Promote"
 msgstr "Promover"
 
-#: app/templates/groups/view.html:59
+#: app/templates/groups/view.html:67
 msgid "Demote"
 msgstr "Degradar"
 
-#: app/templates/groups/view.html:70
+#: app/templates/groups/view.html:78
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
-#: app/templates/groups/view.html:71
+#: app/templates/groups/view.html:79
 msgid "Remove"
 msgstr "Eliminar"
 
-#: app/templates/groups/view.html:91
+#: app/templates/groups/view.html:99
 msgid "Shared Resources"
 msgstr "Recursos Compartidos"
 
-#: app/templates/groups/view.html:93 app/templates/groups/view.html:358
+#: app/templates/groups/view.html:101 app/templates/groups/view.html:379
 msgid "Share Hive Key"
 msgstr "Compartir Clave Hive"
 
-#: app/templates/groups/view.html:102
+#: app/templates/groups/view.html:110
 msgid "Hive Key"
 msgstr "Clave Hive"
 
-#: app/templates/groups/view.html:110
+#: app/templates/groups/view.html:119
 msgid "Unlink this resource?"
 msgstr "¿Desvincular este recurso?"
 
-#: app/templates/groups/view.html:116
+#: app/templates/groups/view.html:126
 msgid "Manage Profile"
 msgstr "Gestionar Perfil"
 
-#: app/templates/groups/view.html:119
+#: app/templates/groups/view.html:129
 msgid "Unlink"
 msgstr "Desvincular"
 
-#: app/templates/groups/view.html:132
+#: app/templates/groups/view.html:148
 #, python-format
 msgid "Update Profile for @%(user)s"
 msgstr "Actualizar Perfil para @%(user)s"
 
-#: app/templates/groups/view.html:139
+#: app/templates/groups/view.html:155
 msgid "Display Name"
 msgstr "Nombre a Mostrar"
 
-#: app/templates/groups/view.html:144
+#: app/templates/groups/view.html:160
 msgid "About (Bio)"
 msgstr "Acerca de (Biografía)"
 
-#: app/templates/groups/view.html:149
+#: app/templates/groups/view.html:165
 msgid "Location"
 msgstr "Ubicación"
 
-#: app/templates/groups/view.html:159
+#: app/templates/groups/view.html:175
 msgid "Profile Image URL"
 msgstr "URL de Imagen de Perfil"
 
-#: app/templates/groups/view.html:166 app/templates/groups/view.html:181
+#: app/templates/groups/view.html:182 app/templates/groups/view.html:197
 msgid "Upload"
 msgstr "Subir"
 
-#: app/templates/groups/view.html:174
+#: app/templates/groups/view.html:190
 msgid "Cover Image URL"
 msgstr "URL de Imagen de Portada"
 
-#: app/templates/groups/view.html:189
+#: app/templates/groups/view.html:205
 #, fuzzy
 msgid ""
 "Note: Updates are broadcast to the Hive blockchain immediately\n"
-"                                                using the Posting Key."
+"                                            using the Posting Key."
 msgstr ""
 "Nota: Las actualizaciones se transmiten a la blockchain de Hive "
 "inmediatamente usando la Clave Posting."
 
-#: app/templates/groups/view.html:196
+#: app/templates/groups/view.html:212
 msgid "Update Profile"
 msgstr "Actualizar Perfil"
 
-#: app/templates/groups/view.html:208
+#: app/templates/groups/view.html:224
 msgid "No shared resources yet."
 msgstr "Aún no hay recursos compartidos."
 
-#: app/templates/groups/view.html:226
+#: app/templates/groups/view.html:242
 msgid "Unpublished Posts"
 msgstr "Publicaciones No Publicadas"
 
-#: app/templates/groups/view.html:233
+#: app/templates/groups/view.html:249
 msgid "Published Posts"
 msgstr "Publicaciones Publicadas"
 
-#: app/templates/groups/view.html:236
-msgid "Create New Post"
-msgstr "Crear Nueva Publicación"
+#: app/templates/groups/view.html:252
+#, fuzzy
+msgid ""
+"Create\n"
+"                    New Post"
+msgstr ""
+"Crear\n"
+"                        Nuevo Borrador"
 
-#: app/templates/groups/view.html:267
+#: app/templates/groups/view.html:283
 msgid "Edit / View"
 msgstr "Editar / Ver"
 
-#: app/templates/groups/view.html:274
+#: app/templates/groups/view.html:290
 msgid "No active drafts. Start writing!"
 msgstr "No hay borradores activos. ¡Empieza a escribir!"
 
-#: app/templates/groups/view.html:289
+#: app/templates/groups/view.html:305
 msgid "Published Date"
 msgstr "Fecha de Publicación"
 
-#: app/templates/groups/view.html:306
+#: app/templates/groups/view.html:322
 msgid "Local Record"
 msgstr "Registro Local"
 
-#: app/templates/groups/view.html:313
+#: app/templates/groups/view.html:326
+#, fuzzy
+msgid "Propose Edit"
+msgstr "por crédito"
+
+#: app/templates/groups/view.html:334
 msgid "No published posts yet."
 msgstr "Aún no hay publicaciones."
 
-#: app/templates/groups/view.html:328 app/templates/groups/view.html:345
+#: app/templates/groups/view.html:349 app/templates/groups/view.html:366
 msgid "Add Member"
 msgstr "Agregar Miembro"
 
-#: app/templates/groups/view.html:333
+#: app/templates/groups/view.html:354
 msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
-#: app/templates/groups/view.html:362
+#: app/templates/groups/view.html:383
 #, fuzzy
 msgid ""
 "Share one of your Hive keys with this group. Members will be\n"
@@ -1483,27 +1534,27 @@ msgstr ""
 "Comparte una de tus claves Hive con este grupo. Los miembros podrán "
 "usarla para redactar (y publicar, si los permisos lo permiten)."
 
-#: app/templates/groups/view.html:366
+#: app/templates/groups/view.html:387
 msgid "Select Account"
 msgstr "Seleccionar Cuenta"
 
-#: app/templates/groups/view.html:375
+#: app/templates/groups/view.html:396
 msgid "You have no available Hive accounts to share."
 msgstr "No tienes cuentas Hive disponibles para compartir."
 
-#: app/templates/groups/view.html:376
+#: app/templates/groups/view.html:397
 msgid "Create one?"
 msgstr "¿Crear una?"
 
-#: app/templates/groups/view.html:382
+#: app/templates/groups/view.html:403
 msgid "Share Account"
 msgstr "Compartir Cuenta"
 
-#: app/templates/groups/view.html:396
+#: app/templates/groups/view.html:417
 msgid "Group Settings"
 msgstr "Configuración del Grupo"
 
-#: app/templates/groups/view.html:417 app/templates/main/profile.html:64
+#: app/templates/groups/view.html:438 app/templates/main/profile.html:64
 msgid "Save Changes"
 msgstr "Guardar Cambios"
 
@@ -1537,11 +1588,6 @@ msgstr "No se encontraron publicaciones para esta etiqueta."
 msgid "Check out %(user)s's profile on Ecobank."
 msgstr "Mira el perfil de %(user)s en Ecobank."
 
-#: app/templates/hive/user_blog.html:61 app/templates/hive/wallet.html:7
-#: app/templates/hive/wallet.html:15
-msgid "Wallet"
-msgstr "Billetera"
-
 #: app/templates/hive/user_blog.html:81 app/templates/main/user_profile.html:23
 msgid "Joined"
 msgstr "Unido"
@@ -1566,23 +1612,32 @@ msgstr "Leer más"
 msgid "No posts found here yet."
 msgstr "Aún no se encontraron publicaciones aquí."
 
-#: app/templates/hive/wallet.html:41
+#: app/templates/hive/wallet.html:22
+#, fuzzy
+msgid "Pending Rewards"
+msgstr "Abrir en PeakD"
+
+#: app/templates/hive/wallet.html:31
+msgid "Claim Rewards"
+msgstr ""
+
+#: app/templates/hive/wallet.html:58
 msgid "Savings"
 msgstr "Ahorros"
 
-#: app/templates/hive/wallet.html:54
+#: app/templates/hive/wallet.html:71
 msgid "Account Info"
 msgstr "Información de la Cuenta"
 
-#: app/templates/hive/wallet.html:57
+#: app/templates/hive/wallet.html:74
 msgid "Created Date"
 msgstr "Fecha de Creación"
 
-#: app/templates/hive/wallet.html:61
+#: app/templates/hive/wallet.html:78
 msgid "Post Count"
 msgstr "Conteo de Publicaciones"
 
-#: app/templates/hive/wallet.html:65
+#: app/templates/hive/wallet.html:82
 msgid "Memo Key"
 msgstr "Clave Memo"
 
@@ -1942,4 +1997,14 @@ msgstr "Sin notificaciones."
 
 #~ msgid "Published History"
 #~ msgstr "Historial de Publicaciones"
+
+#~ msgid ""
+#~ "View\n"
+#~ "                            Keys"
+#~ msgstr ""
+#~ "Crear\n"
+#~ "                        Nuevo Borrador"
+
+#~ msgid "Create New Post"
+#~ msgstr "Crear Nueva Publicación"
 

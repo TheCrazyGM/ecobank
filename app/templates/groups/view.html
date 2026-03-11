@@ -320,6 +320,11 @@
                                                     }}</a>
                                                 <a href="{{ url_for('drafts.view', draft_id=draft.id) }}"
                                                    class="btn btn-sm btn-outline-secondary">{{ _('Local Record') }}</a>
+                                                <form action="{{ url_for('drafts.propose_edit', draft_id=draft.id) }}"
+                                                      method="POST" class="d-inline">
+                                                    <button type="submit" class="btn btn-sm btn-outline-primary"
+                                                            title="{{ _('Propose Edit') }}">{{ _('Propose Edit') }}</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     {% endfor %}

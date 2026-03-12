@@ -18,14 +18,14 @@
     {% endif %}
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ request.url }}">
-    <meta property="twitter:title" content="{{ post.title }}">
-    <meta property="twitter:description" content="{{ post.summary|default(post.title) }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url }}">
+    <meta name="twitter:title" content="{{ post.title }}">
+    <meta name="twitter:description" content="{{ post.summary|default(post.title) }}">
     {% if post.thumbnail %}
-        <meta property="twitter:image" content="{{ post.thumbnail }}">
+        <meta name="twitter:image" content="{{ post.thumbnail }}">
     {% else %}
-        <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+        <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
     {% endif %}
 {% endblock %}
 

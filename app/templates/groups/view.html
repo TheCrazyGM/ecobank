@@ -1,6 +1,24 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block title %}{{ group.name }} | Ecobank{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ group.description }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{{ group.name }}">
+    <meta property="og:description" content="{{ group.description }}">
+    <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url }}">
+    <meta name="twitter:title" content="{{ group.name }}">
+    <meta name="twitter:description" content="{{ group.description }}">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
+{% endblock %}{% block content %}
     <div class="row">
         <div class="col-md-12 mb-3">
             <nav aria-label="breadcrumb">

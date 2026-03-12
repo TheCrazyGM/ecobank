@@ -6,9 +6,19 @@
     <meta name="robots" content="noindex">
     <meta name="description" content="{{ _('Preview post: %(title)s', title=draft.title) }}">
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ request.url }}">
     <meta property="og:title" content="[Unpublished] {{ draft.title }}">
     <meta property="og:description" content="{{ _('This is an unpublished post on Ecobank.') }}">
+    <meta property="og:image" content="{{ author.avatar_url or url_for('static', filename='img/ecobank_header.png', _external=True) }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url }}">
+    <meta name="twitter:title" content="[Unpublished] {{ draft.title }}">
+    <meta name="twitter:description" content="{{ _('This is an unpublished post on Ecobank.') }}">
+    <meta name="twitter:image" content="{{ author.avatar_url or url_for('static', filename='img/ecobank_header.png', _external=True) }}">
 {% endblock %}
 
 {% block content %}

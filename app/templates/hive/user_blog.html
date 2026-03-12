@@ -19,16 +19,16 @@
     {% endif %}
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ request.url }}">
-    <meta property="twitter:title" content="{{ profile.display_name or username }} (@{{ username }})">
-    <meta property="twitter:description" content="{{ profile.about or _('Check out %(user)s\'s profile on Ecobank.', user=username) }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url }}">
+    <meta name="twitter:title" content="{{ profile.display_name or username }} (@{{ username }})">
+    <meta name="twitter:description" content="{{ profile.about or _('Check out %(user)s\'s profile on Ecobank.', user=username) }}">
     {% if profile.cover_image %}
-        <meta property="twitter:image" content="{{ profile.cover_image }}">
+        <meta name="twitter:image" content="{{ profile.cover_image }}">
     {% elif profile.profile_image %}
-        <meta property="twitter:image" content="{{ profile.profile_image }}">
+        <meta name="twitter:image" content="{{ profile.profile_image }}">
     {% else %}
-        <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
+        <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank-cover.jpg', _external=True) }}">
     {% endif %}
 {% endblock %}
 

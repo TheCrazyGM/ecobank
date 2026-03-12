@@ -18,11 +18,11 @@
       <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
 
   <!-- Twitter -->
-      <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:url" content="{{ request.url }}">
-      <meta property="twitter:title" content="{{ self.title() }}">
-      <meta property="twitter:description" content="{{ _('Ecobank - Your decentralized writing platform.') }}">
-      <meta property="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:url" content="{{ request.url }}">
+      <meta name="twitter:title" content="{{ self.title() }}">
+      <meta name="twitter:description" content="{{ _('Ecobank - Your decentralized writing platform.') }}">
+      <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
     {% endblock %}
 
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">

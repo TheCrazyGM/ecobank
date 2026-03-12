@@ -1476,11 +1476,11 @@ msgstr "Aún no hay recursos compartidos."
 
 #: app/templates/groups/view.html:242
 msgid "Unpublished Posts"
-msgstr "Publicaciones No Publicadas"
+msgstr "Borradores"
 
 #: app/templates/groups/view.html:249
 msgid "Published Posts"
-msgstr "Publicaciones Publicadas"
+msgstr "Compartidas"
 
 #: app/templates/groups/view.html:252
 #, fuzzy

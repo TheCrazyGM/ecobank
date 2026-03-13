@@ -1600,14 +1600,8 @@ msgid "At Ecobank, your privacy is important to us."
 msgstr "En Ecobank, tu privacidad es importante para nosotros."
 
 #: app/templates/main/privacy.html:8
-#, fuzzy
-msgid ""
-"This Privacy Policy describes how your personal information is collected,"
-" used, and shared when you visit or make a purchase from the site."
-msgstr ""
-"Esta Política de Privacidad describe cómo se recopila, utiliza y comparte"
-" tu información personal cuando visitas o realizas una compra en el "
-"sitio."
+msgid "This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from the site."
+msgstr "Esta Política de Privacidad describe cómo se recopila, utiliza y comparte tu información personal cuando visitas o realizas una compra en el sitio."
 
 #: app/templates/main/privacy.html:10
 msgid "What personal information we collect"

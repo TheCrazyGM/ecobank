@@ -251,9 +251,8 @@ msgid "Spam detected."
 msgstr ""
 
 #: app/auth/forms.py:63
-#, fuzzy
 msgid "Form submitted too quickly. Please try again."
-msgstr "Fallo al eliminar las claves. Por favor inténtalo de nuevo."
+msgstr "Muy rápido!  Intenta otra vez"
 
 #: app/auth/forms.py:68
 msgid "Form session expired. Please refresh."
@@ -352,16 +351,12 @@ msgid "Your password has been reset."
 msgstr "Tu contraseña ha sido restablecida."
 
 #: app/auth/routes.py:205
-#, fuzzy
 msgid "This account is already verified."
 msgstr "Cuenta ya verificada."
 
 #: app/auth/routes.py:208 app/auth/routes.py:211
-#, fuzzy
 msgid "Check your email for the verification link."
-msgstr ""
-"Revisa tu correo electrónico para obtener las instrucciones para "
-"restablecer tu contraseña"
+msgstr "Revisa tu correo electrónico para la verificación"
 
 #: app/drafts/routes.py:253
 #, python-format
@@ -462,7 +457,6 @@ msgid "Posting key not found for this account. Cannot claim rewards."
 msgstr ""
 
 #: app/main/routes.py:294
-#, fuzzy
 msgid "Failed to access account keys."
 msgstr "Fallo al recuperar las claves de la cuenta."
 
@@ -485,9 +479,8 @@ msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
 #: app/templates/base.html:10
-#, fuzzy
 msgid "Ecobank - Your decentralized restoration hub and blogging platform."
-msgstr "Ecobank - Tu plataforma descentralizada de escribir"
+msgstr "Ecobank - Plataforma de Acciones Decentralizadas"
 
 #: app/templates/base.html:17 app/templates/base.html:24
 msgid "Ecobank - Your decentralized writing platform."
@@ -547,7 +540,6 @@ msgid "Admin"
 msgstr "Administrador"
 
 #: app/templates/base.html:129
-#, fuzzy
 msgid "Dashboard"
 msgstr "Panel de Administración"
 
@@ -560,9 +552,8 @@ msgid "Login"
 msgstr "Iniciar Sesión"
 
 #: app/templates/base.html:177
-#, fuzzy
 msgid "About"
-msgstr "Monto"
+msgstr "Descripción"
 
 #: app/templates/index.html:5
 msgid "Welcome to EcoBank"
@@ -642,8 +633,8 @@ msgstr "Un Solo Crédito"
 msgid "Perfect for creating your first keys."
 msgstr "Perfecto para crear tus primeras claves."
 
+#. TODO: change English source to "Perfect for creating your first keys."
 #: app/templates/account/buy_credits.html:32
-#, fuzzy
 msgid "Perfect for creating your first account."
 msgstr "Perfecto para crear tus primeras claves."
 
@@ -694,13 +685,8 @@ msgid "Individual Keys"
 msgstr "Claves Individuales"
 
 #: app/templates/account/import.html:31
-#, fuzzy
-msgid ""
-"We will derive all keys from this password and verify them\n"
-"                        against the blockchain."
-msgstr ""
-"Derivaremos todas las claves de esta contraseña y las verificaremos "
-"contra la blockchain."
+msgid "We will derive all keys from this password and verify them against the blockchain."
+msgstr "Derivaremos todas las claves de esta contraseña y las verificaremos con tecnología blockchain."
 
 #: app/templates/account/import.html:38
 msgid "Provide at least one private key (wif)."
@@ -733,9 +719,8 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #: app/templates/account/list.html:4
-#, fuzzy
 msgid "My Hive Keys"
-msgstr "Clave Hive"
+msgstr "Claves Hive"
 
 #: app/templates/account/list.html:6
 msgid "Create New"
@@ -768,9 +753,8 @@ msgid "Created"
 msgstr "Creada"
 
 #: app/templates/account/list.html:31
-#, fuzzy
 msgid "View Keys"
-msgstr "Clave Hive"
+msgstr "Ver Claves"
 
 #: app/templates/account/list.html:33 app/templates/groups/view.html:134
 #: app/templates/hive/user_blog.html:61 app/templates/hive/wallet.html:7
@@ -815,10 +799,7 @@ msgid "Download Keys"
 msgstr "Descargar Claves"
 
 #: app/templates/account/view.html:29
-#, fuzzy
-msgid ""
-"Delete\n"
-"        Keys from EcoBank"
+msgid "Delete Keys from EcoBank"
 msgstr "Eliminar Claves del EcoBank"
 
 #: app/templates/account/view.html:38
@@ -826,19 +807,8 @@ msgid "Confirm Keys Deletion"
 msgstr "Confirmar Eliminación de las Claves"
 
 #: app/templates/account/view.html:42
-#, fuzzy
-msgid ""
-"WARNING: This action will permanently remove these Hive keys from\n"
-"                        EcoBank's management. The wallet will remain "
-"valid on the Hive blockchain, but EcoBank will no\n"
-"                        longer store your keys or manage them. You MUST "
-"download your keys if you wish to retain access to\n"
-"                        this wallet."
-msgstr ""
-"ADVERTENCIA: Esta acción eliminará permanentemente estas claves de Hive "
-"de la gestión de EcoBank. La billetera permanecerá en la blockchain Hive,"
-" pero EcoBank ya no almacenará tus claves ni las gestionará. DEBES "
-"descargar tus claves si deseas conservar el acceso a esta billetera."
+msgid "WARNING: This action will permanently remove these Hive keys from EcoBank's management. The wallet will remain valid on the Hive blockchain, but EcoBank will no longer store your keys or manage them. You MUST download your keys if you wish to retain access to this wallet."
+msgstr "ADVERTENCIA: Esta acción eliminará permanentemente estas claves de Hive de la gestión de EcoBank. La billetera permanecerá en la blockchain Hive, pero EcoBank ya no almacenará tus claves ni las gestionará. DEBES descargar tus claves si deseas conservar el acceso a esta billetera."
 
 #: app/templates/account/view.html:49
 msgid ""
@@ -927,22 +897,12 @@ msgid "Quick Links"
 msgstr "Enlaces Rápidos"
 
 #: app/templates/admin/dashboard.html:65
-#, fuzzy
-msgid ""
-"View\n"
-"                        PayPal Logs"
-msgstr ""
-"Crear\n"
-"                        Nuevo Borrador"
+msgid "View PayPal Logs"
+msgstr "Ver Historial Paypal"
 
-#: app/templates/admin/dashboard.html:67
-#, fuzzy
-msgid ""
-"View Key\n"
-"                        Creation Logs"
-msgstr ""
-"Crear\n"
-"                        Nuevo Borrador"
+#: app/templates/admin/dashboard.html:66
+msgid "View Key Creation Logs"
+msgstr "Ver Historial de Claves"
 
 #: app/templates/admin/group_edit.html:8
 #, python-format
@@ -1458,13 +1418,8 @@ msgid "Cover Image URL"
 msgstr "URL de Imagen de Portada"
 
 #: app/templates/groups/view.html:205
-#, fuzzy
-msgid ""
-"Note: Updates are broadcast to the Hive blockchain immediately\n"
-"                                            using the Posting Key."
-msgstr ""
-"Nota: Las actualizaciones se transmiten a la blockchain de Hive "
-"inmediatamente usando la Clave Posting."
+msgid "Note: Updates are broadcast to the Hive blockchain immediately using the Posting Key."
+msgstr "Nota: Las actualizaciones se transmiten a la blockchain de Hive inmediatamente usando la Clave Posting."
 
 #: app/templates/groups/view.html:212
 msgid "Update Profile"
@@ -1482,14 +1437,9 @@ msgstr "Borradores"
 msgid "Published Posts"
 msgstr "Compartidas"
 
-#: app/templates/groups/view.html:252
-#, fuzzy
-msgid ""
-"Create\n"
-"                    New Post"
-msgstr ""
-"Crear\n"
-"                        Nuevo Borrador"
+#: app/templates/groups/view.html:270
+msgid "Create New Post"
+msgstr "crear nuevo"
 
 #: app/templates/groups/view.html:283
 msgid "Edit / View"
@@ -2005,6 +1955,4 @@ msgstr "Sin notificaciones."
 #~ "Crear\n"
 #~ "                        Nuevo Borrador"
 
-#~ msgid "Create New Post"
-#~ msgstr "Crear Nueva Publicación"
 

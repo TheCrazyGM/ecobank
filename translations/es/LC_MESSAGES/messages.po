@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-11 05:52-0400\n"
+"POT-Creation-Date: 2026-03-13 07:38-0400\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.18.0\n"
 
 #: app/account/routes.py:59
 msgid "You do not have enough credits to create an account."
@@ -173,16 +173,16 @@ msgid "Update User"
 msgstr "Actualizar Usuario"
 
 #: app/admin/forms.py:21 app/templates/groups/create.html:7
-#: app/templates/groups/view.html:422
+#: app/templates/groups/view.html:437
 msgid "Group Name"
 msgstr "Nombre del Grupo"
 
 #: app/admin/forms.py:22 app/templates/admin/groups.html:14
-#: app/templates/groups/create.html:11 app/templates/groups/view.html:426
+#: app/templates/groups/create.html:11 app/templates/groups/view.html:441
 msgid "Description"
 msgstr "Descripción"
 
-#: app/admin/forms.py:23 app/templates/groups/view.html:430
+#: app/admin/forms.py:23 app/templates/groups/view.html:445
 msgid "Default Tags"
 msgstr "Etiquetas predeterminadas"
 
@@ -237,7 +237,7 @@ msgstr "Iniciar Sesión"
 msgid "Repeat Password"
 msgstr "Repetir Contraseña"
 
-#: app/auth/forms.py:30 app/templates/groups/view.html:170
+#: app/auth/forms.py:30 app/templates/groups/view.html:188
 msgid "Website"
 msgstr "Sitio Web"
 
@@ -358,34 +358,34 @@ msgstr "Cuenta ya verificada."
 msgid "Check your email for the verification link."
 msgstr "Revisa tu correo electrónico para la verificación"
 
-#: app/drafts/routes.py:253
+#: app/drafts/routes.py:256
 #, python-format
 msgid "Your draft '%(title)s' was updated by %(username)s"
 msgstr "Tu borrador '%(title)s' fue actualizado por %(username)s"
 
-#: app/drafts/routes.py:320
+#: app/drafts/routes.py:323
 msgid "Unauthorized to assign author."
 msgstr "No autorizado para asignar autor."
 
-#: app/drafts/routes.py:325
+#: app/drafts/routes.py:328
 msgid "Invalid author selected."
 msgstr "Autor seleccionado inválido."
 
-#: app/drafts/routes.py:333
+#: app/drafts/routes.py:336
 msgid "Selected user has not contributed to this draft."
 msgstr "El usuario seleccionado no ha contribuido a este borrador."
 
-#: app/drafts/routes.py:344
+#: app/drafts/routes.py:347
 #, python-format
 msgid "Draft authorship reassigned from %(old)s to %(new)s."
 msgstr "Autoría del borrador reasignada de %(old)s a %(new)s."
 
-#: app/drafts/routes.py:682
+#: app/drafts/routes.py:689
 #, python-format
 msgid "Your draft '%(title)s' has been published to Hive!"
 msgstr "¡Tu borrador '%(title)s' ha sido publicado en Hive!"
 
-#: app/drafts/routes.py:739
+#: app/drafts/routes.py:746
 #, python-format
 msgid "%(username)s has proposed an edit to your published post '%(title)s'"
 msgstr ""
@@ -518,8 +518,8 @@ msgstr "Colaboración"
 msgid "My Groups"
 msgstr "Mis Grupos"
 
-#: app/templates/base.html:110 app/templates/groups/view.html:268
-#: app/templates/groups/view.html:304
+#: app/templates/base.html:110 app/templates/groups/view.html:284
+#: app/templates/groups/view.html:320
 msgid "Account"
 msgstr "Cuenta"
 
@@ -563,7 +563,7 @@ msgstr "Bienvenido a EcoBank"
 msgid "Your decentralized restoration hub."
 msgstr "Tu hub de restauración descentralizada."
 
-#: app/templates/drafts/view.html:19 app/templates/hive/post.html:46
+#: app/templates/drafts/view.html:29 app/templates/hive/post.html:46
 #: app/templates/hive/tag_feed.html:36 app/templates/index.html:27
 msgid "By"
 msgstr "Por"
@@ -629,12 +629,10 @@ msgstr ""
 msgid "Single Credit"
 msgstr "Un Solo Crédito"
 
-#: app/templates/account/buy_credits.html:20 app/templates/account/buy_credits.html:32
+#: app/templates/account/buy_credits.html:20
+#: app/templates/account/buy_credits.html:32
 msgid "Perfect for creating your first keys."
 msgstr "Perfecto para crear tus primeras claves."
-
-#~ msgid "Perfect for creating your first account."
-#~ msgstr "Perfecto para crear tus primeras claves."
 
 #: app/templates/account/buy_credits.html:40
 msgid "Pack of 5"
@@ -683,8 +681,13 @@ msgid "Individual Keys"
 msgstr "Claves Individuales"
 
 #: app/templates/account/import.html:31
-msgid "We will derive all keys from this password and verify them against the blockchain."
-msgstr "Derivaremos todas las claves de esta contraseña y las verificaremos con tecnología blockchain."
+#, fuzzy
+msgid ""
+"We will derive all keys from this password and verify them\n"
+"                        against the blockchain."
+msgstr ""
+"Derivaremos todas las claves de esta contraseña y las verificaremos con "
+"tecnología blockchain."
 
 #: app/templates/account/import.html:38
 msgid "Provide at least one private key (wif)."
@@ -707,12 +710,12 @@ msgid "Import Key(s)"
 msgstr "Importar Clave(s)"
 
 #: app/templates/account/import.html:59 app/templates/account/verify.html:22
-#: app/templates/account/view.html:60
+#: app/templates/account/view.html:56
 #: app/templates/auth/change_password.html:36
 #: app/templates/drafts/create.html:67 app/templates/drafts/edit.html:49
-#: app/templates/drafts/view.html:118 app/templates/groups/view.html:211
-#: app/templates/groups/view.html:365 app/templates/groups/view.html:401
-#: app/templates/groups/view.html:436
+#: app/templates/drafts/view.html:128 app/templates/groups/view.html:228
+#: app/templates/groups/view.html:381 app/templates/groups/view.html:416
+#: app/templates/groups/view.html:451
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -737,8 +740,8 @@ msgid "Source"
 msgstr "Fuente"
 
 #: app/templates/account/list.html:15 app/templates/admin/groups.html:18
-#: app/templates/admin/users.html:16 app/templates/groups/view.html:270
-#: app/templates/groups/view.html:306
+#: app/templates/admin/users.html:16 app/templates/groups/view.html:286
+#: app/templates/groups/view.html:322
 msgid "Actions"
 msgstr "Acciones"
 
@@ -754,7 +757,7 @@ msgstr "Creada"
 msgid "View Keys"
 msgstr "Ver Claves"
 
-#: app/templates/account/list.html:33 app/templates/groups/view.html:134
+#: app/templates/account/list.html:33 app/templates/groups/view.html:152
 #: app/templates/hive/user_blog.html:61 app/templates/hive/wallet.html:7
 #: app/templates/hive/wallet.html:15
 msgid "Wallet"
@@ -800,15 +803,23 @@ msgstr "Descargar Claves"
 msgid "Delete Keys from EcoBank"
 msgstr "Eliminar Claves del EcoBank"
 
-#: app/templates/account/view.html:38
+#: app/templates/account/view.html:37
 msgid "Confirm Keys Deletion"
 msgstr "Confirmar Eliminación de las Claves"
 
-#: app/templates/account/view.html:42
-msgid "WARNING: This action will permanently remove these Hive keys from EcoBank's management. The wallet will remain valid on the Hive blockchain, but EcoBank will no longer store your keys or manage them. You MUST download your keys if you wish to retain access to this wallet."
-msgstr "ADVERTENCIA: Esta acción eliminará permanentemente estas claves de Hive de la gestión de EcoBank. La billetera permanecerá en la blockchain Hive, pero EcoBank ya no almacenará tus claves ni las gestionará. DEBES descargar tus claves si deseas conservar el acceso a esta billetera."
+#: app/templates/account/view.html:41
+msgid ""
+"WARNING: This action will permanently remove these Hive keys from "
+"EcoBank's management. The wallet will remain valid on the Hive "
+"blockchain, but EcoBank will no longer store your keys or manage them. "
+"You MUST download your keys if you wish to retain access to this wallet."
+msgstr ""
+"ADVERTENCIA: Esta acción eliminará permanentemente estas claves de Hive "
+"de la gestión de EcoBank. La billetera permanecerá en la blockchain Hive,"
+" pero EcoBank ya no almacenará tus claves ni las gestionará. DEBES "
+"descargar tus claves si deseas conservar el acceso a esta billetera."
 
-#: app/templates/account/view.html:49
+#: app/templates/account/view.html:45
 msgid ""
 "I have downloaded all my keys and understand EcoBank will no longer store"
 " them."
@@ -816,7 +827,7 @@ msgstr ""
 "He descargado todas mis claves y entiendo que EcoBank ya no las "
 "almacenará."
 
-#: app/templates/account/view.html:55
+#: app/templates/account/view.html:51
 msgid ""
 "I understand this action is permanent and EcoBank cannot recover my "
 "account."
@@ -824,15 +835,15 @@ msgstr ""
 "Entiendo que esta acción es permanente y EcoBank no puede recuperar mi "
 "cuenta."
 
-#: app/templates/account/view.html:61
+#: app/templates/account/view.html:57
 msgid "Delete Permanently"
 msgstr "Eliminar Permanentemente"
 
-#: app/templates/account/view.html:119
+#: app/templates/account/view.html:115
 msgid "Failed to delete keys. Please try again."
 msgstr "Fallo al eliminar las claves. Por favor inténtalo de nuevo."
 
-#: app/templates/account/view.html:126
+#: app/templates/account/view.html:122
 msgid "An error occurred. Please try again."
 msgstr "Ocurrió un error. Por favor inténtalo de nuevo."
 
@@ -866,7 +877,7 @@ msgid "Manage"
 msgstr "Gestionar"
 
 #: app/templates/admin/dashboard.html:26 app/templates/admin/dashboard.html:50
-#: app/templates/groups/view.html:8
+#: app/templates/groups/view.html:26
 msgid "Groups"
 msgstr "Grupos"
 
@@ -908,7 +919,7 @@ msgid "Edit Group: %(name)s"
 msgstr "Editar Grupo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:9
-#: app/templates/drafts/view.html:26
+#: app/templates/drafts/view.html:36
 msgid "Back"
 msgstr "Volver"
 
@@ -942,12 +953,12 @@ msgstr "Nombre"
 msgid "Owner"
 msgstr "Propietario"
 
-#: app/templates/admin/groups.html:16 app/templates/groups/view.html:31
+#: app/templates/admin/groups.html:16 app/templates/groups/view.html:49
 msgid "Members"
 msgstr "Miembros"
 
 #: app/templates/admin/groups.html:31 app/templates/admin/users.html:28
-#: app/templates/drafts/view.html:33
+#: app/templates/drafts/view.html:43
 msgid "Edit"
 msgstr "Editar"
 
@@ -1021,13 +1032,13 @@ msgid "Post / Draft Manager"
 msgstr "Gestor de Publicaciones / Borradores"
 
 #: app/templates/admin/posts.html:13 app/templates/drafts/create.html:23
-#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:266
-#: app/templates/groups/view.html:302
+#: app/templates/drafts/edit.html:9 app/templates/groups/view.html:282
+#: app/templates/groups/view.html:318
 msgid "Title"
 msgstr "Título"
 
-#: app/templates/admin/posts.html:14 app/templates/groups/view.html:267
-#: app/templates/groups/view.html:303
+#: app/templates/admin/posts.html:14 app/templates/groups/view.html:283
+#: app/templates/groups/view.html:319
 msgid "Author"
 msgstr "Autor"
 
@@ -1035,7 +1046,7 @@ msgstr "Autor"
 msgid "Group"
 msgstr "Grupo"
 
-#: app/templates/admin/posts.html:17 app/templates/groups/view.html:269
+#: app/templates/admin/posts.html:17 app/templates/groups/view.html:285
 msgid "Last Updated"
 msgstr "Última Actualización"
 
@@ -1154,7 +1165,7 @@ msgstr "Editar Publicación"
 msgid "Group:"
 msgstr "Grupo:"
 
-#: app/templates/drafts/edit.html:11 app/templates/drafts/view.html:20
+#: app/templates/drafts/edit.html:11 app/templates/drafts/view.html:30
 msgid "Permlink:"
 msgstr "Enlace permanente:"
 
@@ -1209,80 +1220,80 @@ msgstr "No hay historial disponible."
 msgid "Preview post: %(title)s"
 msgstr "Previsualización de publicación: %(title)s"
 
-#: app/templates/drafts/view.html:11
+#: app/templates/drafts/view.html:13 app/templates/drafts/view.html:20
 msgid "This is an unpublished post on Ecobank."
 msgstr "Esta es una publicación no publicada en Ecobank."
 
-#: app/templates/drafts/view.html:19
+#: app/templates/drafts/view.html:29
 msgid "For account:"
 msgstr "Para cuenta:"
 
-#: app/templates/drafts/view.html:39
+#: app/templates/drafts/view.html:49
 msgid "Are you sure you want to publish this to Hive? This cannot be undone."
 msgstr ""
 "¿Estás seguro de que quieres publicar esto en Hive? Esto no se puede "
 "deshacer."
 
-#: app/templates/drafts/view.html:41
+#: app/templates/drafts/view.html:51
 msgid "Publish"
 msgstr "Publicar"
 
-#: app/templates/drafts/view.html:47 app/templates/groups/view.html:319
+#: app/templates/drafts/view.html:57 app/templates/groups/view.html:335
 msgid "View on Hive"
 msgstr "Ver en Hive"
 
-#: app/templates/drafts/view.html:60
+#: app/templates/drafts/view.html:70
 msgid "History"
 msgstr "Historial de Versiones"
 
-#: app/templates/drafts/view.html:68
+#: app/templates/drafts/view.html:78
 msgid "Change Author"
 msgstr "Cambiar Autor"
 
-#: app/templates/drafts/view.html:80
+#: app/templates/drafts/view.html:90
 msgid "Are you sure you want to reject/delete this post?"
 msgstr "¿Estás seguro de que quieres rechazar/eliminar esta publicación?"
 
-#: app/templates/drafts/view.html:82
+#: app/templates/drafts/view.html:92
 msgid "Reject"
 msgstr "Rechazar"
 
-#: app/templates/drafts/view.html:100
+#: app/templates/drafts/view.html:110
 msgid "Reassign Authorship"
 msgstr "Reasignar Autoría"
 
-#: app/templates/drafts/view.html:105
+#: app/templates/drafts/view.html:115
 msgid "Select a user from the list of contributors to assign as the new author."
 msgstr ""
 "Selecciona un usuario de la lista de colaboradores para asignarlo como el"
 " nuevo autor."
 
-#: app/templates/drafts/view.html:107
+#: app/templates/drafts/view.html:117
 msgid "New Author"
 msgstr "Nuevo Autor"
 
-#: app/templates/drafts/view.html:119
+#: app/templates/drafts/view.html:129
 msgid "Assign Author"
 msgstr "Asignar Autor"
 
-#: app/templates/drafts/view.html:132
+#: app/templates/drafts/view.html:142
 msgid "Automatic Header Preview"
 msgstr "Vista Previa del Encabezado Automático"
 
-#: app/templates/drafts/view.html:133
+#: app/templates/drafts/view.html:143
 msgid "This will be prepended to your post upon submission."
 msgstr "Esto se añadirá al principio de tu publicación al enviarla."
 
-#: app/templates/drafts/view.html:143 app/templates/main/profile.html:84
+#: app/templates/drafts/view.html:153 app/templates/main/profile.html:84
 msgid "About the Author"
 msgstr "Sobre el Autor"
 
-#: app/templates/drafts/view.html:146
+#: app/templates/drafts/view.html:156
 #, python-format
 msgid "Member of %(group)s"
 msgstr "Miembro de %(group)s"
 
-#: app/templates/drafts/view.html:155
+#: app/templates/drafts/view.html:165
 msgid "Content Preview"
 msgstr "Vista Previa del Contenido"
 
@@ -1334,168 +1345,176 @@ msgstr ""
 msgid "You are not a member of any groups."
 msgstr "No eres miembro de ningún grupo."
 
-#: app/templates/groups/view.html:13
+#: app/templates/groups/view.html:31
 msgid "System Admin"
 msgstr ""
 
-#: app/templates/groups/view.html:18
+#: app/templates/groups/view.html:36
 msgid "Settings"
 msgstr "Configuración"
 
-#: app/templates/groups/view.html:35
+#: app/templates/groups/view.html:53
 msgid "Add"
 msgstr "Agregar"
 
-#: app/templates/groups/view.html:54
+#: app/templates/groups/view.html:72
 msgid "Promote"
 msgstr "Promover"
 
-#: app/templates/groups/view.html:67
+#: app/templates/groups/view.html:85
 msgid "Demote"
 msgstr "Degradar"
 
-#: app/templates/groups/view.html:78
+#: app/templates/groups/view.html:96
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
-#: app/templates/groups/view.html:79
+#: app/templates/groups/view.html:97
 msgid "Remove"
 msgstr "Eliminar"
 
-#: app/templates/groups/view.html:99
+#: app/templates/groups/view.html:117
 msgid "Shared Resources"
 msgstr "Recursos Compartidos"
 
-#: app/templates/groups/view.html:101 app/templates/groups/view.html:379
+#: app/templates/groups/view.html:119 app/templates/groups/view.html:395
 msgid "Share Hive Key"
 msgstr "Compartir Clave Hive"
 
-#: app/templates/groups/view.html:110
+#: app/templates/groups/view.html:128
 msgid "Hive Key"
 msgstr "Clave Hive"
 
-#: app/templates/groups/view.html:119
+#: app/templates/groups/view.html:137
 msgid "Unlink this resource?"
 msgstr "¿Desvincular este recurso?"
 
-#: app/templates/groups/view.html:126
+#: app/templates/groups/view.html:144
 msgid "Manage Profile"
 msgstr "Gestionar Perfil"
 
-#: app/templates/groups/view.html:129
+#: app/templates/groups/view.html:147
 msgid "Unlink"
 msgstr "Desvincular"
 
-#: app/templates/groups/view.html:148
+#: app/templates/groups/view.html:166
 #, python-format
 msgid "Update Profile for @%(user)s"
 msgstr "Actualizar Perfil para @%(user)s"
 
-#: app/templates/groups/view.html:155
+#: app/templates/groups/view.html:173
 msgid "Display Name"
 msgstr "Nombre a Mostrar"
 
-#: app/templates/groups/view.html:160
+#: app/templates/groups/view.html:178
 msgid "About (Bio)"
 msgstr "Acerca de (Biografía)"
 
-#: app/templates/groups/view.html:165
+#: app/templates/groups/view.html:183
 msgid "Location"
 msgstr "Ubicación"
 
-#: app/templates/groups/view.html:175
+#: app/templates/groups/view.html:193
 msgid "Profile Image URL"
 msgstr "URL de Imagen de Perfil"
 
-#: app/templates/groups/view.html:182 app/templates/groups/view.html:197
+#: app/templates/groups/view.html:200 app/templates/groups/view.html:215
 msgid "Upload"
 msgstr "Subir"
 
-#: app/templates/groups/view.html:190
+#: app/templates/groups/view.html:208
 msgid "Cover Image URL"
 msgstr "URL de Imagen de Portada"
 
-#: app/templates/groups/view.html:205
-msgid "Note: Updates are broadcast to the Hive blockchain immediately using the Posting Key."
-msgstr "Nota: Las actualizaciones se transmiten a la blockchain de Hive inmediatamente usando la Clave Posting."
+#: app/templates/groups/view.html:223
+msgid ""
+"Note: Updates are broadcast to the Hive blockchain immediately using the "
+"Posting Key."
+msgstr ""
+"Nota: Las actualizaciones se transmiten a la blockchain de Hive "
+"inmediatamente usando la Clave Posting."
 
-#: app/templates/groups/view.html:212
+#: app/templates/groups/view.html:229
 msgid "Update Profile"
 msgstr "Actualizar Perfil"
 
-#: app/templates/groups/view.html:224
+#: app/templates/groups/view.html:241
 msgid "No shared resources yet."
 msgstr "Aún no hay recursos compartidos."
 
-#: app/templates/groups/view.html:242
+#: app/templates/groups/view.html:259
 msgid "Unpublished Posts"
 msgstr "Borradores"
 
-#: app/templates/groups/view.html:249
+#: app/templates/groups/view.html:266
 msgid "Published Posts"
 msgstr "Compartidas"
 
-#: app/templates/groups/view.html:270
+#: app/templates/groups/view.html:269
 msgid "Create New Post"
 msgstr "crear nuevo"
 
-#: app/templates/groups/view.html:283
+#: app/templates/groups/view.html:299
 msgid "Edit / View"
 msgstr "Editar / Ver"
 
-#: app/templates/groups/view.html:290
+#: app/templates/groups/view.html:306
 msgid "No active drafts. Start writing!"
 msgstr "No hay borradores activos. ¡Empieza a escribir!"
 
-#: app/templates/groups/view.html:305
+#: app/templates/groups/view.html:321
 msgid "Published Date"
 msgstr "Fecha de Publicación"
 
-#: app/templates/groups/view.html:322
+#: app/templates/groups/view.html:338
 msgid "Local Record"
 msgstr "Registro Local"
 
-#: app/templates/groups/view.html:326
+#: app/templates/groups/view.html:342
 msgid "Propose Edit"
 msgstr "Proponer Cambio"
 
-#: app/templates/groups/view.html:334
+#: app/templates/groups/view.html:350
 msgid "No published posts yet."
 msgstr "Aún no hay publicaciones."
 
-#: app/templates/groups/view.html:349 app/templates/groups/view.html:366
+#: app/templates/groups/view.html:365 app/templates/groups/view.html:382
 msgid "Add Member"
 msgstr "Agregar Miembro"
 
-#: app/templates/groups/view.html:354
+#: app/templates/groups/view.html:370
 msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
-#: app/templates/groups/view.html:383
-msgid "Share one of your Hive keys with this group. Members will be able to use it for drafting (and posting, if permissions allow)."
-msgstr "Comparte una clave HIVE con este grupo. Los miembros podrán redactar (y publicar, con rol de moderador o superior)."
+#: app/templates/groups/view.html:399
+msgid ""
+"Share one of your Hive keys with this group. Members will be able to use "
+"it for drafting (and posting, if permissions allow)."
+msgstr ""
+"Comparte una clave HIVE con este grupo. Los miembros podrán redactar (y "
+"publicar, con rol de moderador o superior)."
 
-#: app/templates/groups/view.html:387
+#: app/templates/groups/view.html:402
 msgid "Select Account"
 msgstr "Seleccionar Cuenta"
 
-#: app/templates/groups/view.html:396
+#: app/templates/groups/view.html:411
 msgid "You have no available Hive accounts to share."
 msgstr "No tienes cuentas Hive disponibles para compartir."
 
-#: app/templates/groups/view.html:397
+#: app/templates/groups/view.html:412
 msgid "Create one?"
 msgstr "¿Crear una?"
 
-#: app/templates/groups/view.html:403
+#: app/templates/groups/view.html:418
 msgid "Share Account"
 msgstr "Compartir Cuenta"
 
-#: app/templates/groups/view.html:417
+#: app/templates/groups/view.html:432
 msgid "Group Settings"
 msgstr "Configuración del Grupo"
 
-#: app/templates/groups/view.html:438 app/templates/main/profile.html:64
+#: app/templates/groups/view.html:453 app/templates/main/profile.html:64
 msgid "Save Changes"
 msgstr "Guardar Cambios"
 
@@ -1582,24 +1601,45 @@ msgid "Memo Key"
 msgstr "Clave Memo"
 
 #: app/templates/main/about.html:7
-msgid "Ecobank is a community of people who believe that conscious action can make the world a better place."
-msgstr "Ecobank es una comunidad de personas que creen que la acción consciente puede mejorar el mundo."
+msgid ""
+"Ecobank is a community of people who believe that conscious action can "
+"make the world a better place."
+msgstr ""
+"Ecobank es una comunidad de personas que creen que la acción consciente "
+"puede mejorar el mundo."
+
+#: app/templates/main/about.html:8
+msgid ""
+"We have created a series of tools to use cutting edge technology for "
+"sharing and storage, and want to share it with all positive-minded people"
+" in the world!"
+msgstr ""
+"¡Hemos creado una serie de herramientas para utilizar tecnología de "
+"vanguardia para compartir y almacenar, y queremos compartirla con todas "
+"las personas de mentalidad positiva del mundo!"
 
 #: app/templates/main/about.html:9
-msgid "We have created a series of tools to use cutting edge technology for sharing and storage, and want to share it with all positive-minded people in the world!"
-msgstr "¡Hemos creado una serie de herramientas para utilizar tecnología de vanguardia para compartir y almacenar, y queremos compartirla con todas las personas de mentalidad positiva del mundo!"
-
-#: app/templates/main/about.html:10
-msgid "Our aim to simplify the complexities of modern, decentralized technology, making it easier for everyone to participate in decentralization, making the world a better place."
-msgstr "Nuestro objetivo es simplificar las complejidades de la tecnología moderna y descentralizada, haciendo que sea más fácil para todos participar en la descentralización, mejorando el mundo."
+msgid ""
+"Our aim to simplify the complexities of modern, decentralized technology,"
+" making it easier for everyone to participate in decentralization, making"
+" the world a better place."
+msgstr ""
+"Nuestro objetivo es simplificar las complejidades de la tecnología "
+"moderna y descentralizada, haciendo que sea más fácil para todos "
+"participar en la descentralización, mejorando el mundo."
 
 #: app/templates/main/privacy.html:7
 msgid "At Ecobank, your privacy is important to us."
 msgstr "En Ecobank, tu privacidad es importante para nosotros."
 
 #: app/templates/main/privacy.html:8
-msgid "This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from the site."
-msgstr "Esta Política de Privacidad describe cómo se recopila, utiliza y comparte tu información personal cuando visitas o realizas una compra en el sitio."
+msgid ""
+"This Privacy Policy describes how your personal information is collected,"
+" used, and shared when you visit or make a purchase from the site."
+msgstr ""
+"Esta Política de Privacidad describe cómo se recopila, utiliza y comparte"
+" tu información personal cuando visitas o realizas una compra en el "
+"sitio."
 
 #: app/templates/main/privacy.html:10
 msgid "What personal information we collect"
@@ -1820,9 +1860,12 @@ msgstr "Ninguna Clave asociada"
 msgid "Mark All Read"
 msgstr "Marcar Todo como Leído"
 
-#: app/templates/notifications/index.html:24
+#: app/templates/notifications/index.html:23
 msgid "No notifications."
 msgstr "Sin notificaciones."
+
+#~ msgid "Perfect for creating your first account."
+#~ msgstr "Perfecto para crear tus primeras claves."
 
 #~ msgid "Owner Key (Private)"
 #~ msgstr "Clave Owner (Privada)"
@@ -1912,5 +1955,4 @@ msgstr "Sin notificaciones."
 #~ msgstr ""
 #~ "Crear\n"
 #~ "                        Nuevo Borrador"
-
 

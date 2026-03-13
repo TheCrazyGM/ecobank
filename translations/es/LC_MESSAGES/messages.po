@@ -629,14 +629,12 @@ msgstr ""
 msgid "Single Credit"
 msgstr "Un Solo Crédito"
 
-#: app/templates/account/buy_credits.html:20
+#: app/templates/account/buy_credits.html:20 app/templates/account/buy_credits.html:32
 msgid "Perfect for creating your first keys."
 msgstr "Perfecto para crear tus primeras claves."
 
-#. TODO: change English source to "Perfect for creating your first keys."
-#: app/templates/account/buy_credits.html:32
-msgid "Perfect for creating your first account."
-msgstr "Perfecto para crear tus primeras claves."
+#~ msgid "Perfect for creating your first account."
+#~ msgstr "Perfecto para crear tus primeras claves."
 
 #: app/templates/account/buy_credits.html:40
 msgid "Pack of 5"

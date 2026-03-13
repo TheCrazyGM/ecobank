@@ -1458,9 +1458,8 @@ msgid "Local Record"
 msgstr "Registro Local"
 
 #: app/templates/groups/view.html:326
-#, fuzzy
 msgid "Propose Edit"
-msgstr "por crédito"
+msgstr "Proponer Cambio"
 
 #: app/templates/groups/view.html:334
 msgid "No published posts yet."
@@ -1475,14 +1474,8 @@ msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
 #: app/templates/groups/view.html:383
-#, fuzzy
-msgid ""
-"Share one of your Hive keys with this group. Members will be\n"
-"                        able to use it for drafting (and posting, if "
-"permissions allow)."
-msgstr ""
-"Comparte una de tus claves Hive con este grupo. Los miembros podrán "
-"usarla para redactar (y publicar, si los permisos lo permiten)."
+msgid "Share one of your Hive keys with this group. Members will be able to use it for drafting (and posting, if permissions allow)."
+msgstr "Comparte una clave HIVE con este grupo. Los miembros podrán redactar (y publicar, con rol de moderador o superior)."
 
 #: app/templates/groups/view.html:387
 msgid "Select Account"
@@ -1563,9 +1556,8 @@ msgid "No posts found here yet."
 msgstr "Aún no se encontraron publicaciones aquí."
 
 #: app/templates/hive/wallet.html:22
-#, fuzzy
 msgid "Pending Rewards"
-msgstr "Abrir en PeakD"
+msgstr "Recompensas por Reclamar"
 
 #: app/templates/hive/wallet.html:31
 msgid "Claim Rewards"
@@ -1592,36 +1584,16 @@ msgid "Memo Key"
 msgstr "Clave Memo"
 
 #: app/templates/main/about.html:7
-#, fuzzy
-msgid ""
-"Ecobank is a community of people who believe that conscious action can "
-"make the world a better\n"
-"        place."
-msgstr ""
-"Ecobank es una comunidad de personas que creen que la acción consciente "
-"puede hacer del mundo un lugar mejor."
+msgid "Ecobank is a community of people who believe that conscious action can make the world a better place."
+msgstr "Ecobank es una comunidad de personas que creen que la acción consciente puede mejorar el mundo."
 
 #: app/templates/main/about.html:9
-#, fuzzy
-msgid ""
-"We have created a series of tools to use cutting edge technology for "
-"sharing and storage, and want to share it\n"
-"        with all positive-minded people in the world!"
-msgstr ""
-"¡Hemos creado una serie de herramientas para utilizar tecnología de "
-"vanguardia para compartir y almacenar, y queremos compartirla con todas "
-"las personas de mentalidad positiva del mundo!"
+msgid "We have created a series of tools to use cutting edge technology for sharing and storage, and want to share it with all positive-minded people in the world!"
+msgstr "¡Hemos creado una serie de herramientas para utilizar tecnología de vanguardia para compartir y almacenar, y queremos compartirla con todas las personas de mentalidad positiva del mundo!"
 
-#: app/templates/main/about.html:11
-#, fuzzy
-msgid ""
-"Our aim to simplify the complexities of modern, decentralized technology,"
-" making it easier for everyone to\n"
-"        participate in decentralization, making the world a better place."
-msgstr ""
-"Nuestro objetivo es simplificar las complejidades de la tecnología "
-"moderna y descentralizada, haciendo que sea más fácil para todos "
-"participar en la descentralización, haciendo del mundo un lugar mejor."
+#: app/templates/main/about.html:10
+msgid "Our aim to simplify the complexities of modern, decentralized technology, making it easier for everyone to participate in decentralization, making the world a better place."
+msgstr "Nuestro objetivo es simplificar las complejidades de la tecnología moderna y descentralizada, haciendo que sea más fácil para todos participar en la descentralización, mejorando el mundo."
 
 #: app/templates/main/privacy.html:7
 msgid "At Ecobank, your privacy is important to us."
@@ -1841,25 +1813,19 @@ msgid "Recent Activity"
 msgstr ""
 
 #: app/templates/main/user_profile.html:94
-#, fuzzy
 msgid "No recent posts found."
-msgstr "No se encontraron cuentas compartidas"
+msgstr "No encontramos contenido compartida"
 
 #: app/templates/main/user_profile.html:103
-#, fuzzy
 msgid "Linked Hive Accounts"
-msgstr "Crear Cuenta Hive"
+msgstr "Claves Asociadas"
 
 #: app/templates/main/user_profile.html:118
-#, fuzzy
 msgid "No linked accounts."
-msgstr "Error cargando cuentas"
+msgstr "Ninguna Clave asociada"
 
 #: app/templates/notifications/index.html:6
-#, fuzzy
-msgid ""
-"Mark All\n"
-"            Read"
+msgid "Mark All Read"
 msgstr "Marcar Todo como Leído"
 
 #: app/templates/notifications/index.html:24

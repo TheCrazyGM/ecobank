@@ -11,6 +11,33 @@ from app.api import bp
 from app.models import Group, GroupMember, GroupResource, HiveAccount
 
 
+def _process_and_upload_image(file, posting_key, account_username):
+    hive = Hive(keys=[posting_key])
+    uploader = ImageUploader(blockchain_instance=hive)
+
+    img = Image.open(file)
+
+    # Convert to RGB if necessary (e.g. for PNGs with transparency if saving as JPEG, though we'll keep format if possible or stick to JPEG for optimization)
+    if img.mode in ("RGBA", "P"):
+        img = img.convert("RGB")
+
+    max_size = 2048
+    if max(img.size) > max_size:
+        ratio = max_size / max(img.size)
+        new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
+        img = img.resize(new_size, Image.Resampling.LANCZOS)
+
+    # Save to BytesIO
+    output = io.BytesIO()
+    # default to JPEG for efficiency
+    img.save(output, format="JPEG", quality=85)
+    image_data = output.getvalue()
+
+    # The upload method signature is: upload(self, image, account, image_name=None)
+    url = uploader.upload(image_data, account_username, image_name=file.filename)
+    return url["url"]
+
+
 @bp.route("/upload_image", methods=["POST"])
 @login_required
 def upload_image():
@@ -84,33 +111,8 @@ def upload_image():
 
     # Upload
     try:
-        hive = Hive(keys=[posting_key])
-        # ImageUploader(blockchain_instance=...)
-        uploader = ImageUploader(blockchain_instance=hive)
-
-        # Resize image if larger than 2048px on either side
-        img = Image.open(file)
-
-        # Convert to RGB if necessary (e.g. for PNGs with transparency if saving as JPEG, though we'll keep format if possible or stick to JPEG for optimization)
-        if img.mode in ("RGBA", "P"):
-            img = img.convert("RGB")
-
-        max_size = 2048
-        if max(img.size) > max_size:
-            ratio = max_size / max(img.size)
-            new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
-            img = img.resize(new_size, Image.Resampling.LANCZOS)
-
-        # Save to BytesIO
-        output = io.BytesIO()
-        # default to JPEG for efficiency
-        img.save(output, format="JPEG", quality=85)
-        image_data = output.getvalue()
-
-        # The upload method signature is: upload(self, image, account, image_name=None)
-        url = uploader.upload(image_data, target_username, image_name=file.filename)
-
-        return jsonify({"url": url["url"]})
+        url = _process_and_upload_image(file, posting_key, target_username)
+        return jsonify({"url": url})
     except Exception as e:
         current_app.logger.error(f"Image upload failed: {e}")
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500
@@ -151,25 +153,8 @@ def upload_image_profile():
         return jsonify({"error": "Posting key not found"}), 500
 
     try:
-        hive = Hive(keys=[posting_key])
-        uploader = ImageUploader(blockchain_instance=hive)
-
-        img = Image.open(file)
-        if img.mode in ("RGBA", "P"):
-            img = img.convert("RGB")
-
-        max_size = 2048
-        if max(img.size) > max_size:
-            ratio = max_size / max(img.size)
-            new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
-            img = img.resize(new_size, Image.Resampling.LANCZOS)
-
-        output = io.BytesIO()
-        img.save(output, format="JPEG", quality=85)
-        image_data = output.getvalue()
-
-        url = uploader.upload(image_data, upload_account, image_name=file.filename)
-        return jsonify({"url": url["url"]})
+        url = _process_and_upload_image(file, posting_key, upload_account)
+        return jsonify({"url": url})
     except Exception as e:
         current_app.logger.error(f"Profile image upload failed: {e}")
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500

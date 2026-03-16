@@ -115,7 +115,7 @@ def upload_image():
         return jsonify({"url": url})
     except Exception as e:
         current_app.logger.error(f"Image upload failed: {e}")
-        return jsonify({"error": f"Upload failed: {str(e)}"}), 500
+        return jsonify({"error": "Upload failed. Please try again."}), 500
 
 
 @bp.route("/upload_image_profile", methods=["POST"])
@@ -157,7 +157,7 @@ def upload_image_profile():
         return jsonify({"url": url})
     except Exception as e:
         current_app.logger.error(f"Profile image upload failed: {e}")
-        return jsonify({"error": f"Upload failed: {str(e)}"}), 500
+        return jsonify({"error": "Upload failed. Please try again."}), 500
 
 
 @bp.route("/group/<int:group_id>/accounts")

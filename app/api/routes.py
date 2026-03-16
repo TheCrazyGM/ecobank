@@ -1,6 +1,6 @@
 import json
 import io
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from cryptography.fernet import Fernet
 from flask import jsonify, request, current_app
 from flask_login import current_user, login_required
@@ -11,11 +11,26 @@ from app.api import bp
 from app.models import Group, GroupMember, GroupResource, HiveAccount
 
 
+MAX_IMAGE_BYTES = 4 * 1024 * 1024  # 4MB
+
+
 def _process_and_upload_image(file, posting_key, account_username):
+    # Check file size before handing to Pillow
+    file.stream.seek(0, 2)
+    size = file.stream.tell()
+    file.stream.seek(0)
+    if size > MAX_IMAGE_BYTES:
+        raise ValueError(f"File size {size} exceeds maximum allowed {MAX_IMAGE_BYTES} bytes")
+
     hive = Hive(keys=[posting_key])
     uploader = ImageUploader(blockchain_instance=hive)
 
-    img = Image.open(file)
+    try:
+        img = Image.open(file)
+    except UnidentifiedImageError:
+        raise ValueError("Uploaded file is not a valid image")
+    except Image.DecompressionBombError:
+        raise ValueError("Image dimensions are too large")
 
     # Convert to RGB if necessary (e.g. for PNGs with transparency if saving as JPEG, though we'll keep format if possible or stick to JPEG for optimization)
     if img.mode in ("RGBA", "P"):
@@ -113,6 +128,8 @@ def upload_image():
     try:
         url = _process_and_upload_image(file, posting_key, target_username)
         return jsonify({"url": url})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         current_app.logger.error(f"Image upload failed: {e}")
         return jsonify({"error": "Upload failed. Please try again."}), 500
@@ -155,6 +172,8 @@ def upload_image_profile():
     try:
         url = _process_and_upload_image(file, posting_key, upload_account)
         return jsonify({"url": url})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
         current_app.logger.error(f"Profile image upload failed: {e}")
         return jsonify({"error": "Upload failed. Please try again."}), 500

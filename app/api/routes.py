@@ -116,6 +116,65 @@ def upload_image():
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500
 
 
+@bp.route("/upload_image_profile", methods=["POST"])
+@login_required
+def upload_image_profile():
+    if "image" not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    file = request.files["image"]
+    if file.filename == "":
+        return jsonify({"error": "No selected file"}), 400
+
+    upload_account = current_app.config.get("HIVE_UPLOAD_ACCOUNT")
+    if not upload_account:
+        return jsonify({"error": "Image upload service not configured"}), 503
+
+    account_record = HiveAccount.query.filter_by(username=upload_account).first()
+    if not account_record:
+        return jsonify({"error": "Image upload service unavailable"}), 503
+
+    encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
+    if not encryption_key:
+        return jsonify({"error": "Server configuration error"}), 500
+
+    try:
+        fernet = Fernet(encryption_key)
+        keys_json = fernet.decrypt(account_record.keys_enc.encode()).decode()
+        keys_dict = json.loads(keys_json)
+        posting_key = keys_dict.get("posting", {}).get("private")
+    except Exception as e:
+        current_app.logger.error(f"Decryption failed for {upload_account}: {e}")
+        return jsonify({"error": "Credential error"}), 500
+
+    if not posting_key:
+        return jsonify({"error": "Posting key not found"}), 500
+
+    try:
+        hive = Hive(keys=[posting_key])
+        uploader = ImageUploader(blockchain_instance=hive)
+
+        img = Image.open(file)
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+
+        max_size = 2048
+        if max(img.size) > max_size:
+            ratio = max_size / max(img.size)
+            new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
+            img = img.resize(new_size, Image.Resampling.LANCZOS)
+
+        output = io.BytesIO()
+        img.save(output, format="JPEG", quality=85)
+        image_data = output.getvalue()
+
+        url = uploader.upload(image_data, upload_account, image_name=file.filename)
+        return jsonify({"url": url["url"]})
+    except Exception as e:
+        current_app.logger.error(f"Profile image upload failed: {e}")
+        return jsonify({"error": f"Upload failed: {str(e)}"}), 500
+
+
 @bp.route("/group/<int:group_id>/accounts")
 @login_required
 def get_group_accounts(group_id):

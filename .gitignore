@@ -179,5 +179,6 @@ backups/
 # Claude Code
 CLAUDE.md
 agent_collaboration_guide.md
+imageUploadPlan.md
 
 # End of https://www.toptal.com/developers/gitignore/api/python

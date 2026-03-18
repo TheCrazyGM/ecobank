@@ -86,7 +86,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <center><img src="{{ user.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
+                                    <center><img id="avatar_preview_img" src="{{ user.avatar_url or url_for('static', filename='img/user-circle-svgrepo-com.svg') }}" style="border-radius: 50%; width: 100px; height: 100px;"/></center>
                                 </td>
                                 <td class="ps-3">
                                     <span><h4>{{ _('About the Author') }}</h4></span>
@@ -126,7 +126,8 @@ document.getElementById('avatar_file_input').addEventListener('change', function
     .then(data => {
         if (data.url) {
             document.getElementById('avatar_url').value = data.url;
-            document.querySelector('.border img') && (document.querySelector('.border img').src = data.url);
+            const previewImg = document.getElementById('avatar_preview_img');
+            if (previewImg) previewImg.src = data.url;
         } else {
             errorDiv.textContent = data.error || '{{ _("Upload failed. Please try again.") }}';
             errorDiv.classList.remove('d-none');

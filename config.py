@@ -33,7 +33,7 @@ class Config:
     HIVE_CLAIMER_KEY = os.environ.get("HIVE_CLAIMER_KEY")
     HIVE_ENCRYPTION_KEY = os.environ.get("HIVE_ENCRYPTION_KEY")
     # Sponsor account for profile picture uploads (username only — key stored in DB)
-    HIVE_UPLOAD_ACCOUNT = os.environ.get("HIVE_UPLOAD_ACCOUNT")
+    HIVE_UPLOAD_ACCOUNT = (os.environ.get("HIVE_UPLOAD_ACCOUNT") or "").strip() or None
     # Default to 15 HP delegation for new accounts
     HIVE_DELEGATION_AMOUNT = float(os.environ.get("HIVE_DELEGATION_AMOUNT", 15.0))
 

@@ -20,7 +20,9 @@ def _process_and_upload_image(file, posting_key, account_username):
     size = file.stream.tell()
     file.stream.seek(0)
     if size > MAX_IMAGE_BYTES:
-        raise ValueError(f"File size {size} exceeds maximum allowed {MAX_IMAGE_BYTES} bytes")
+        raise ValueError(
+            f"File size {size} exceeds maximum allowed {MAX_IMAGE_BYTES} bytes"
+        )
 
     hive = Hive(keys=[posting_key])
     uploader = ImageUploader(blockchain_instance=hive)
@@ -129,7 +131,8 @@ def upload_image():
         url = _process_and_upload_image(file, posting_key, target_username)
         return jsonify({"url": url})
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        current_app.logger.error(f"Validation error during image upload: {e}")
+        return jsonify({"error": "Invalid request"}), 400
     except Exception as e:
         current_app.logger.error(f"Image upload failed: {e}")
         return jsonify({"error": "Upload failed. Please try again."}), 500
@@ -173,7 +176,8 @@ def upload_image_profile():
         url = _process_and_upload_image(file, posting_key, upload_account)
         return jsonify({"url": url})
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        current_app.logger.error(f"Validation error during profile image upload: {e}")
+        return jsonify({"error": "Invalid request"}), 400
     except Exception as e:
         current_app.logger.error(f"Profile image upload failed: {e}")
         return jsonify({"error": "Upload failed. Please try again."}), 500

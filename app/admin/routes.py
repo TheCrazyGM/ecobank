@@ -19,12 +19,16 @@ def dashboard():
     group_count = Group.query.count()
     draft_count = Draft.query.count()
     hive_account_count = HiveAccount.query.count()
+
+    users_no_group = User.query.filter(~User.group_memberships.any()).all()
+
     return render_template(
         "admin/dashboard.html",
         user_count=user_count,
         group_count=group_count,
         draft_count=draft_count,
         hive_account_count=hive_account_count,
+        users_no_group=users_no_group,
     )
 
 

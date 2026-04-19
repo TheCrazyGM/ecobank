@@ -60,6 +60,29 @@
     <div class="row mt-4">
         <div class="col-md-6">
             <div class="card">
+                <div class="card-header">{{ _('Users Without a Group') }} <span class="badge bg-secondary">{{ users_no_group|length }}</span></div>
+                <div class="card-body">
+                    {% if users_no_group %}
+                        <ul class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
+                            {% for u in users_no_group %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <div>
+                                        <strong>{{ u.username }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ u.email }}</small>
+                                    </div>
+                                    <a href="{{ url_for('admin.edit_user', user_id=u.id) }}" class="btn btn-sm btn-outline-primary">{{ _('Edit') }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted mb-0">{{ _('All users belong to at least one group.') }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-header">{{ _('Quick Links') }}</div>
                 <div class="list-group list-group-flush">
                     <a href="{{ url_for('admin.logs_paypal') }}" class="list-group-item list-group-item-action">{{ _('View PayPal Logs') }}</a>

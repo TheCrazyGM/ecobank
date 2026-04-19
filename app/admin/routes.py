@@ -78,6 +78,56 @@ def grant_credits(user_id):
     return redirect(url_for("admin.manage_users"))
 
 
+@bp.route("/users/delete/<int:user_id>", methods=["POST"])
+@admin_required
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if user.is_verified:
+        flash(_("Cannot delete verified users."), "danger")
+        return redirect(url_for("admin.manage_users"))
+
+    if user.created_groups.count() > 0 or user.hive_accounts.count() > 0:
+        flash(
+            _(
+                "Cannot delete this user because they have created groups or Hive accounts."
+            ),
+            "danger",
+        )
+        return redirect(url_for("admin.manage_users"))
+
+    try:
+        from app.models import (
+            DraftVersion,
+            Notification,
+            GroupMember,
+            Draft,
+            PayPalOrder,
+        )
+
+        # MongoDB cleanup
+        DraftVersion.objects(saved_by_user_id=user.id).delete()
+
+        # SQL cleanup
+        Notification.query.filter_by(user_id=user.id).delete()
+        GroupMember.query.filter_by(user_id=user.id).delete()
+        Draft.query.filter_by(author_user_id=user.id).delete()
+        PayPalOrder.query.filter_by(user_id=user.id).delete()
+
+        db.session.delete(user)
+        db.session.commit()
+        flash(
+            _("Unverified user %(username)s has been deleted.", username=user.username),
+            "success",
+        )
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Error deleting user {user_id}: {str(e)}")
+        flash(_("An error occurred while deleting the user."), "danger")
+
+    return redirect(url_for("admin.manage_users"))
+
+
 @bp.route("/groups")
 @admin_required
 def manage_groups():

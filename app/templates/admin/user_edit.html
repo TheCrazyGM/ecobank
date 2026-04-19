@@ -59,6 +59,39 @@
                             {{ form.submit(class="btn btn-primary") }}
                         </div>
                     </form>
+
+                    {% if not user.is_verified %}
+                        <hr class="my-4">
+                        <div class="p-3 bg-danger bg-opacity-10 border border-danger rounded">
+                            <h5 class="text-danger">{{ _('Danger Zone') }}</h5>
+                            <p class="mb-2">{{ _('This user is unverified. You can safely delete their account and any associated drafts, notifications, or group memberships.') }}</p>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                <i class="fas fa-trash-alt"></i> {{ _('Delete Unverified User') }}
+                            </button>
+                        </div>
+
+                    <!-- Delete Modal -->
+                        <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteUserModalLabel">{{ _('Confirm User Deletion') }}</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{ _('Are you sure you want to permanently delete the unverified user <strong>%(username)s</strong>?', username=user.username) | safe }}</p>
+                                        <p class="text-danger small"><i class="fas fa-exclamation-triangle"></i> {{ _('This action will destroy all of their drafts and cannot be undone.') }}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+                                        <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="POST">
+                                            <button type="submit" class="btn btn-danger">{{ _('Yes, Delete User') }}</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

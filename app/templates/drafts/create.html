@@ -115,8 +115,9 @@
                                 return DOMPurify.sanitize(preview);
                             },
                             uploadImage: true,
-                            imageUploadFunction: function (file, onSuccess, onError) {
-                                uploadImage(file, onSuccess, onError);
+                            imageUploadFunction: async function (file, onSuccess, onError) {
+                                const compressedFile = await compressImageClientSide(file);
+                                uploadImage(compressedFile, onSuccess, onError);
                             },
                         });
 
@@ -166,7 +167,7 @@
                         }
 
         // Manual Image Upload Handler
-                        document.getElementById('image-upload-input').addEventListener('change', function (e) {
+                        document.getElementById('image-upload-input').addEventListener('change', async function (e) {
                             if (this.files && this.files[0]) {
                                 const file = this.files[0];
                 // Show loading state if desired, or just upload
@@ -175,7 +176,9 @@
                                 btn.disabled = true;
                                 btn.innerHTML = 'Uploading...';
 
-                                uploadImage(file, (url) => {
+                                const compressedFile = await compressImageClientSide(file);
+
+                                uploadImage(compressedFile, (url) => {
                                     const cm = easyMDE.codemirror;
                                     const doc = cm.getDoc();
                                     const cursor = doc.getCursor();

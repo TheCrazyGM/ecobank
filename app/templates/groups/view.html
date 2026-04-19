@@ -465,11 +465,7 @@
     async function uploadImage(input, groupId, resourceId, type) {
         if (!input.files || !input.files[0]) return;
 
-        const file = input.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('group_id', groupId);
-        formData.append('hive_username', resourceId);
+        const originalFile = input.files[0];
 
         // Find the button to toggle loading state
         // structure: div.input-group > input, button
@@ -487,6 +483,12 @@
         btn.disabled = true;
 
         try {
+            const file = await compressImageClientSide(originalFile);
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('group_id', groupId);
+            formData.append('hive_username', resourceId);
+
             const response = await fetch("{{ url_for('api.upload_image') }}", {
                 method: 'POST',
                 body: formData

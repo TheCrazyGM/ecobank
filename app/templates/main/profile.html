@@ -100,49 +100,57 @@
             </div>
         </div>
     </div>
-<script>
-document.getElementById('avatar_file_input').addEventListener('change', function() {
-    const file = this.files[0];
-    if (!file) return;
+    <script>
+        document.getElementById('avatar_file_input').addEventListener('change', async function() {
+            const originalFile = this.files[0];
+            if (!originalFile) return;
 
-    const btn = document.getElementById('upload_btn');
-    const btnText = document.getElementById('upload_btn_text');
-    const spinner = document.getElementById('upload_spinner');
-    const errorDiv = document.getElementById('upload_error');
+            const btn = document.getElementById('upload_btn');
+            const btnText = document.getElementById('upload_btn_text');
+            const spinner = document.getElementById('upload_spinner');
+            const errorDiv = document.getElementById('upload_error');
 
-    btn.disabled = true;
-    btnText.classList.add('d-none');
-    spinner.classList.remove('d-none');
-    errorDiv.classList.add('d-none');
+            btn.disabled = true;
+            btnText.classList.add('d-none');
+            spinner.classList.remove('d-none');
+            errorDiv.classList.add('d-none');
 
-    const formData = new FormData();
-    formData.append('image', file);
+            try {
+                const file = await compressImageClientSide(originalFile);
+                const formData = new FormData();
+                formData.append('image', file);
 
-    fetch('{{ url_for("api.upload_image_profile") }}', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.url) {
-            document.getElementById('avatar_url').value = data.url;
-            const previewImg = document.getElementById('avatar_preview_img');
-            if (previewImg) previewImg.src = data.url;
-        } else {
-            errorDiv.textContent = data.error || '{{ _("Upload failed. Please try again.") }}';
-            errorDiv.classList.remove('d-none');
-        }
-    })
-    .catch(() => {
-        errorDiv.textContent = '{{ _("Upload failed. Please try again.") }}';
-        errorDiv.classList.remove('d-none');
-    })
-    .finally(() => {
-        btn.disabled = false;
-        btnText.classList.remove('d-none');
-        spinner.classList.add('d-none');
-        this.value = '';
-    });
-});
-</script>
+                fetch('{{ url_for("api.upload_image_profile") }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.url) {
+                            document.getElementById('avatar_url').value = data.url;
+                            const previewImg = document.getElementById('avatar_preview_img');
+                            if (previewImg) previewImg.src = data.url;
+                        } else {
+                            errorDiv.textContent = data.error || '{{ _("Upload failed. Please try again.") }}';
+                            errorDiv.classList.remove('d-none');
+                        }
+                    })
+                    .catch(() => {
+                        errorDiv.textContent = '{{ _("Upload failed. Please try again.") }}';
+                        errorDiv.classList.remove('d-none');
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                        btnText.classList.remove('d-none');
+                        spinner.classList.add('d-none');
+                        document.getElementById('avatar_file_input').value = '';
+                    });
+            } catch (e) {
+                btn.disabled = false;
+                btnText.classList.remove('d-none');
+                spinner.classList.add('d-none');
+                document.getElementById('avatar_file_input').value = '';
+            }
+        });
+    </script>
 {% endblock %}

@@ -108,7 +108,7 @@ def create(group_id):
         user_groups = [m.group for m in memberships]
         if not user_groups:
             flash("You must belong to a group to create a draft.", "warning")
-            return redirect(url_for("groups.create_group"))
+            return redirect(url_for("groups.create"))
 
         # If only one group, auto-select it
         if len(user_groups) == 1:

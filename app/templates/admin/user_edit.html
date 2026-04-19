@@ -5,7 +5,17 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4>{{ _('Edit User: %(username)s', username=user.username) }}</h4>
+                    <h4>
+                        {{ _('Edit User: %(username)s', username=user.username) }}
+                        {% if user.is_verified %}
+                            <span class="badge bg-success ms-2 fs-6 align-middle">{{ _('Verified') }}</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark ms-2 fs-6 align-middle">{{ _('Unverified') }}</span>
+                        {% endif %}
+                        {% if user.is_admin %}
+                            <span class="badge bg-danger ms-2 fs-6 align-middle">{{ _('Admin') }}</span>
+                        {% endif %}
+                    </h4>
                     <a href="{{ url_for('admin.manage_users') }}" class="btn btn-sm btn-secondary">{{ _('Back') }}</a>
                 </div>
                 <div class="card-body">

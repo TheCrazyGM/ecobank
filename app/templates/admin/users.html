@@ -20,7 +20,17 @@
             {% for user in users %}
                 <tr>
                     <td>{{ user.id }}</td>
-                    <td>{{ user.username }}</td>
+                    <td>
+                        {{ user.username }}
+                        {% if user.is_verified %}
+                            <span class="badge bg-success ms-1" title="{{ _('Verified') }}"><i class="fas fa-check-circle"></i></span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark ms-1" title="{{ _('Unverified') }}"><i class="fas fa-exclamation-triangle"></i></span>
+                        {% endif %}
+                        {% if user.is_admin %}
+                            <span class="badge bg-danger ms-1" title="{{ _('Admin') }}"><i class="fas fa-user-shield"></i></span>
+                        {% endif %}
+                    </td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.account_credits }}</td>
                     <td>

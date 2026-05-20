@@ -327,6 +327,8 @@ def unlink_resource(id, resource_id):
         abort(403)
 
     resource = GroupResource.query.get_or_404(resource_id)
+    if resource.group_id != id:
+        abort(404)
 
     can_delete = False
     if (membership and membership.role in ["owner", "admin"]) or current_user.is_admin:
@@ -389,6 +391,14 @@ def update_resource_profile(id, resource_id):
 
     if not hive_account:
         flash(_("Hive Account not found in local database."), "danger")
+        return redirect(url_for("groups.view", id=id))
+
+    # Security check: Only the account owner can update the profile
+    if hive_account.created_by_id != current_user.id and not current_user.is_admin:
+        flash(
+            _("You do not own this Hive account and cannot update its profile."),
+            "danger",
+        )
         return redirect(url_for("groups.view", id=id))
 
     # Decrypt keys

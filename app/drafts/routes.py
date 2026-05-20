@@ -541,7 +541,7 @@ def submit(draft_id):
 </td>
 <td>
 <span><h4>About the Author</h4></span>
-<div><span><strong>{author.display_name}</strong></span> - 
+<div><span><strong>{author.display_name}</strong></span> -
 <span>{bio_text}</span></div>
 </td>
 </tr>

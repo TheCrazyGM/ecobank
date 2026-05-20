@@ -67,7 +67,7 @@ class RegistrationForm(FlaskForm):
             if submission_time - generation_time > 3600:
                 raise ValidationError(_l("Form session expired. Please refresh."))
 
-        except (BadSignature, ValueError, TypeError):
+        except BadSignature, ValueError, TypeError:
             raise ValidationError(_l("Spam detected."))
 
     def validate_username(self, username):

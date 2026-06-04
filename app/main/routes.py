@@ -111,11 +111,22 @@ def index():
 @login_required
 def profile():
     if request.method == "POST":
+        import json as _json
         current_user.first_name = request.form.get("first_name", "").strip()
         current_user.last_name = request.form.get("last_name", "").strip()
-        current_user.bio = request.form.get("bio", "").strip()
         current_user.avatar_url = request.form.get("avatar_url", "").strip()
         current_user.locale = request.form.get("locale", "en")
+
+        bio_text = request.form.get("bio", "").strip()
+        links = {
+            k: request.form.get(k, "").strip().lstrip("@")
+            for k in ("twitter", "instagram", "facebook", "youtube", "tiktok")
+        }
+        links = {k: v for k, v in links.items() if v}
+        if links:
+            current_user.bio = _json.dumps({"bio": bio_text, **links}, ensure_ascii=False)
+        else:
+            current_user.bio = bio_text
 
         try:
             db.session.commit()

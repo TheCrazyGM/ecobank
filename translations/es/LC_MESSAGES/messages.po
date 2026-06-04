@@ -2101,6 +2101,14 @@ msgstr "Grupos"
 msgid "Request to Join"
 msgstr "Solicitar Unirse"
 
+#: app/templates/main/profile.html
+msgid "Social Links"
+msgstr "Redes Sociales"
+
+#: app/templates/main/profile.html
+msgid "Optional. These will appear in your post footer. Enter just your handle, without @."
+msgstr "Opcional. Aparecerán en el pie de tus publicaciones. Ingresa solo tu nombre de usuario, sin @."
+
 #~ msgid "Perfect for creating your first account."
 #~ msgstr "Perfecto para crear tus primeras claves."
 

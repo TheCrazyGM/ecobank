@@ -153,8 +153,17 @@
                             <h4>{{ _('About the Author') }}</h4>
                         </span>
                         <div><span><strong>{{ author.display_name }}</strong></span> -
-                            <span>{{ author.bio or _('Member of %(group)s', group=draft.group.name) }}</span>
+                            <span>{{ author.bio_text or _('Member of %(group)s', group=draft.group.name) }}</span>
                         </div>
+                        {% if author.bio_links %}
+                        <div class="mt-1 small">
+                            {% if author.bio_links.twitter %}<a href="https://x.com/{{ author.bio_links.twitter }}" target="_blank" class="me-2 text-decoration-none">𝕏 @{{ author.bio_links.twitter }}</a>{% endif %}
+                            {% if author.bio_links.instagram %}<a href="https://instagram.com/{{ author.bio_links.instagram }}" target="_blank" class="me-2 text-decoration-none">📸 @{{ author.bio_links.instagram }}</a>{% endif %}
+                            {% if author.bio_links.youtube %}<a href="https://youtube.com/@{{ author.bio_links.youtube }}" target="_blank" class="me-2 text-decoration-none">▶ {{ author.bio_links.youtube }}</a>{% endif %}
+                            {% if author.bio_links.tiktok %}<a href="https://tiktok.com/@{{ author.bio_links.tiktok }}" target="_blank" class="me-2 text-decoration-none">🎵 @{{ author.bio_links.tiktok }}</a>{% endif %}
+                            {% if author.bio_links.facebook %}<a href="https://facebook.com/{{ author.bio_links.facebook }}" target="_blank" class="me-2 text-decoration-none">f {{ author.bio_links.facebook }}</a>{% endif %}
+                        </div>
+                        {% endif %}
                     </td>
                 </tr>
             </table>

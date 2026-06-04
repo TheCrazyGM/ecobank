@@ -64,8 +64,45 @@
 
                         <div class="mb-3">
                             <label for="bio" class="form-label">{{ _('Bio') }}</label>
-                            <textarea class="form-control" id="bio" name="bio" rows="4">{{ user.bio or '' }}</textarea>
+                            <textarea class="form-control" id="bio" name="bio" rows="4">{{ user.bio_text or '' }}</textarea>
                             <div class="form-text">{{ _('Tell us a bit about yourself. This will appear in the "About the Author" section of your posts.') }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ _('Social Links') }}</label>
+                            <div class="form-text mb-2">{{ _('Optional. These will appear in your post footer. Enter just your handle, without @.') }}</div>
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text">𝕏</span>
+                                        <input type="text" class="form-control" name="twitter" placeholder="Twitter / X" value="{{ user.bio_links.get('twitter', '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text">📸</span>
+                                        <input type="text" class="form-control" name="instagram" placeholder="Instagram" value="{{ user.bio_links.get('instagram', '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text">▶</span>
+                                        <input type="text" class="form-control" name="youtube" placeholder="YouTube" value="{{ user.bio_links.get('youtube', '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text">🎵</span>
+                                        <input type="text" class="form-control" name="tiktok" placeholder="TikTok" value="{{ user.bio_links.get('tiktok', '') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text">f</span>
+                                        <input type="text" class="form-control" name="facebook" placeholder="Facebook" value="{{ user.bio_links.get('facebook', '') }}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="d-grid gap-2">
@@ -91,7 +128,16 @@
                                 <td class="ps-3">
                                     <span><h4>{{ _('About the Author') }}</h4></span>
                                     <div><span><strong>{{ user.display_name }}</strong></span> -
-                                        <span>{{ user.bio or _('Bio not set.') }}</span></div>
+                                        <span>{{ user.bio_text or _('Bio not set.') }}</span></div>
+                                    {% if user.bio_links %}
+                                    <div class="mt-1">
+                                        {% if user.bio_links.twitter %}<a href="https://x.com/{{ user.bio_links.twitter }}" target="_blank" class="me-2 text-decoration-none">𝕏 @{{ user.bio_links.twitter }}</a>{% endif %}
+                                        {% if user.bio_links.instagram %}<a href="https://instagram.com/{{ user.bio_links.instagram }}" target="_blank" class="me-2 text-decoration-none">📸 @{{ user.bio_links.instagram }}</a>{% endif %}
+                                        {% if user.bio_links.youtube %}<a href="https://youtube.com/@{{ user.bio_links.youtube }}" target="_blank" class="me-2 text-decoration-none">▶ {{ user.bio_links.youtube }}</a>{% endif %}
+                                        {% if user.bio_links.tiktok %}<a href="https://tiktok.com/@{{ user.bio_links.tiktok }}" target="_blank" class="me-2 text-decoration-none">🎵 @{{ user.bio_links.tiktok }}</a>{% endif %}
+                                        {% if user.bio_links.facebook %}<a href="https://facebook.com/{{ user.bio_links.facebook }}" target="_blank" class="me-2 text-decoration-none">f {{ user.bio_links.facebook }}</a>{% endif %}
+                                    </div>
+                                    {% endif %}
                                 </td>
                             </tr>
                         </table>

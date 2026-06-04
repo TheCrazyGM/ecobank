@@ -529,8 +529,23 @@ def submit(draft_id):
     author = draft.author
     avatar_url = author.avatar_url or "https://via.placeholder.com/100"
 
-    # Default bio if not set
-    bio_text = author.bio or f"Member of {group.name}"
+    bio_text = author.bio_text or f"Member of {group.name}"
+
+    social_links = author.bio_links
+    social_html = ""
+    if social_links:
+        parts = []
+        if social_links.get("twitter"):
+            parts.append(f'<a href="https://x.com/{social_links["twitter"]}">𝕏 @{social_links["twitter"]}</a>')
+        if social_links.get("instagram"):
+            parts.append(f'<a href="https://instagram.com/{social_links["instagram"]}">📸 @{social_links["instagram"]}</a>')
+        if social_links.get("youtube"):
+            parts.append(f'<a href="https://youtube.com/@{social_links["youtube"]}">▶ {social_links["youtube"]}</a>')
+        if social_links.get("tiktok"):
+            parts.append(f'<a href="https://tiktok.com/@{social_links["tiktok"]}">🎵 @{social_links["tiktok"]}</a>')
+        if social_links.get("facebook"):
+            parts.append(f'<a href="https://facebook.com/{social_links["facebook"]}">f {social_links["facebook"]}</a>')
+        social_html = "<div>" + " &nbsp;|&nbsp; ".join(parts) + "</div>"
 
     footer_html = f"""
 <hr/>
@@ -543,6 +558,7 @@ def submit(draft_id):
 <span><h4>About the Author</h4></span>
 <div><span><strong>{author.display_name}</strong></span> -
 <span>{bio_text}</span></div>
+{social_html}
 </td>
 </tr>
 </table>

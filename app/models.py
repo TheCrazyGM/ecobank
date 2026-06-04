@@ -1,4 +1,5 @@
 from datetime import datetime, timezone, timedelta
+import json as _json
 import jwt
 from flask import current_app
 from flask_login import UserMixin
@@ -90,6 +91,30 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
         if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
         return self.username
+
+    @property
+    def bio_text(self):
+        """Return the plain-text bio, whether stored as JSON or legacy plain text."""
+        if not self.bio:
+            return None
+        try:
+            data = _json.loads(self.bio)
+            return data.get("bio") or None
+        except (ValueError, TypeError):
+            return self.bio
+
+    @property
+    def bio_links(self):
+        """Return social link handles stored in the bio JSON, or empty dict."""
+        if not self.bio:
+            return {}
+        try:
+            data = _json.loads(self.bio)
+            if isinstance(data, dict):
+                return {k: v for k, v in data.items() if k != "bio" and v}
+            return {}
+        except (ValueError, TypeError):
+            return {}
 
     def __repr__(self):
         return f"<User {self.username}>"

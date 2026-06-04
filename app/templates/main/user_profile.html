@@ -12,8 +12,8 @@
             <div class="col-md-9">
                 <h1 class="display-5 fw-bold">{{ user.display_name }}</h1>
                 <p class="lead text-muted">@{{ user.username }}</p>
-                {% if user.bio %}
-                    <p class="fs-5">{{ user.bio }}</p>
+                {% if user.bio_text %}
+                    <p class="fs-5">{{ user.bio_text }}</p>
                 {% endif %}
 
                 <div class="d-flex gap-2">

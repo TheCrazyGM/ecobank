@@ -31,6 +31,16 @@ from app.utils.hive import (
 logger = logging.getLogger(__name__)
 
 
+def _new_post_url():
+    """Return the smartest draft-creation URL for the current logged-in user."""
+    memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
+    if len(memberships) == 1:
+        return url_for("drafts.create", group_id=memberships[0].group_id), bool(memberships)
+    elif memberships:
+        return url_for("drafts.create"), True
+    return url_for("groups.create"), False
+
+
 @bp.route("/robots.txt")
 def robots_txt():
     if not current_app.static_folder:
@@ -58,15 +68,7 @@ def index():
             usernames_to_fetch = [acc.username for acc in all_accounts]
         feed_title = _("My Feed")
 
-        # Compute the smartest "New Post" URL
-        memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
-        has_groups = bool(memberships)
-        if len(memberships) == 1:
-            new_post_url = url_for("drafts.create", group_id=memberships[0].group_id)
-        elif memberships:
-            new_post_url = url_for("drafts.create")
-        else:
-            new_post_url = url_for("groups.create")
+        new_post_url, has_groups = _new_post_url()
     else:
         # Get public feed: latest created accounts (proxy for activity)
         all_accounts = (
@@ -137,7 +139,8 @@ def profile():
 
         return redirect(url_for("main.profile"))
 
-    return render_template("main/profile.html", user=current_user)
+    new_post_url, _ = _new_post_url()
+    return render_template("main/profile.html", user=current_user, new_post_url=new_post_url)
 
 
 @bp.route("/u/<username>")
@@ -166,10 +169,13 @@ def user_profile(username):
 
     owned_groups = Group.query.filter_by(owner_user_id=user.id).all()
     current_user_group_ids = set()
+    own_post_url = None
     if current_user.is_authenticated:
         current_user_group_ids = {
             m.group_id for m in GroupMember.query.filter_by(user_id=current_user.id).all()
         }
+        if current_user.username == user.username:
+            own_post_url, _ = _new_post_url()
 
     return render_template(
         "main/user_profile.html",
@@ -178,6 +184,7 @@ def user_profile(username):
         linked_accounts=linked_accounts,
         owned_groups=owned_groups,
         current_user_group_ids=current_user_group_ids,
+        own_post_url=own_post_url,
     )
 
 

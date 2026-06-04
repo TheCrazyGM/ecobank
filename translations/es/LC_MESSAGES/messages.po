@@ -2101,6 +2101,10 @@ msgstr "Grupos"
 msgid "Request to Join"
 msgstr "Solicitar Unirse"
 
+#: app/templates/main/profile.html app/templates/main/user_profile.html
+msgid "New Publication"
+msgstr "Nueva Publicación"
+
 #: app/templates/main/profile.html
 msgid "Social Links"
 msgstr "Redes Sociales"

@@ -16,12 +16,17 @@
                     <p class="fs-5">{{ user.bio_text }}</p>
                 {% endif %}
 
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 align-items-center flex-wrap">
                     {% if user.is_verified %}
                         <span class="badge bg-success"><i class="fas fa-check-circle"></i> {{ _('Verified') }}</span>
                     {% endif %}
                     <span class="badge bg-secondary">{{ _('Joined') }} {{ user.created_at.strftime('%Y-%m-%d') if
                         user.created_at else '' }}</span>
+                    {% if own_post_url %}
+                        <a href="{{ own_post_url }}" class="btn btn-sm btn-success ms-1">
+                            <i class="bi bi-pencil-square me-1"></i>{{ _('New Publication') }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

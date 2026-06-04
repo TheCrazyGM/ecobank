@@ -1868,6 +1868,10 @@ msgstr "Sin notificaciones."
 msgid "All notifications marked as read."
 msgstr "Todas las notificaciones marcadas como leídas."
 
+#: app/templates/index.html
+msgid "My Keys"
+msgstr "Mis Claves"
+
 #: app/main/routes.py
 msgid "Profile updated successfully!"
 msgstr "¡Perfil actualizado exitosamente!"
@@ -2050,6 +2054,52 @@ msgstr "Recurso desvinculado."
 #: app/groups/routes.py
 msgid "Unauthorized to unlink this resource."
 msgstr "No autorizado para desvincular este recurso."
+
+#: app/groups/routes.py
+msgid "You are already a member of this group."
+msgstr "Ya eres miembro de este grupo."
+
+#: app/groups/routes.py
+#, python-format
+msgid "%(username)s wants to join your group '%(group)s'"
+msgstr "%(username)s quiere unirse a tu grupo '%(group)s'"
+
+#: app/groups/routes.py
+msgid "Your request has been sent to the group owner."
+msgstr "Tu solicitud ha sido enviada al propietario del grupo."
+
+#: app/main/routes.py
+msgid "Please enter a username."
+msgstr "Por favor ingresa un nombre de usuario."
+
+#: app/main/routes.py
+#, python-format
+msgid "User '%(username)s' not found."
+msgstr "Usuario '%(username)s' no encontrado."
+
+#: app/templates/index.html
+msgid "Getting Started"
+msgstr "Primeros Pasos"
+
+#: app/templates/index.html
+msgid "Enter the username of the person who invited you to find their profile and request access to their group."
+msgstr "Ingresa el nombre de usuario de la persona que te invitó para encontrar su perfil y solicitar acceso a su grupo."
+
+#: app/templates/index.html
+msgid "Their username"
+msgstr "Su nombre de usuario"
+
+#: app/templates/index.html
+msgid "Find Sponsor"
+msgstr "Buscar Patrocinador"
+
+#: app/templates/main/user_profile.html
+msgid "Groups"
+msgstr "Grupos"
+
+#: app/templates/main/user_profile.html
+msgid "Request to Join"
+msgstr "Solicitar Unirse"
 
 #~ msgid "Perfect for creating your first account."
 #~ msgstr "Perfecto para crear tus primeras claves."

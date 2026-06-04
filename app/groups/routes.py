@@ -351,6 +351,31 @@ def unlink_resource(id, resource_id):
     return redirect(url_for("groups.view", id=id))
 
 
+@bp.route("/<int:id>/request_join", methods=["POST"])
+@login_required
+def request_join(id):
+    group = Group.query.get_or_404(id)
+
+    existing = GroupMember.query.filter_by(group_id=id, user_id=current_user.id).first()
+    if existing:
+        flash(_("You are already a member of this group."), "info")
+        return redirect(url_for("main.user_profile", username=group.owner.username))
+
+    create_notification(
+        user_id=group.owner_user_id,
+        message=_(
+            "%(username)s wants to join your group '%(group)s'",
+            username=current_user.username,
+            group=group.name,
+        ),
+        link=url_for("groups.view", id=id),
+        type="invite",
+    )
+
+    flash(_("Your request has been sent to the group owner."), "success")
+    return redirect(url_for("main.user_profile", username=group.owner.username))
+
+
 @bp.route("/<int:id>/update_resource_profile/<int:resource_id>", methods=["POST"])
 @login_required
 def update_resource_profile(id, resource_id):

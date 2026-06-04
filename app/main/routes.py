@@ -19,7 +19,7 @@ from flask_login import current_user, login_required
 
 from app.extensions import cache, db
 from app.main import bp
-from app.models import HiveAccount, User
+from app.models import Group, GroupMember, HiveAccount, User
 from app.utils.hive import (
     fetch_account_wallet,
     fetch_post,
@@ -43,6 +43,7 @@ def robots_txt():
 def index():
     usernames_to_fetch = []
 
+    new_post_url = None
     if current_user.is_authenticated:
         # Get current user's hive accounts
         usernames_to_fetch = [acc.username for acc in current_user.hive_accounts]
@@ -56,6 +57,16 @@ def index():
             )
             usernames_to_fetch = [acc.username for acc in all_accounts]
         feed_title = _("My Feed")
+
+        # Compute the smartest "New Post" URL
+        memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
+        has_groups = bool(memberships)
+        if len(memberships) == 1:
+            new_post_url = url_for("drafts.create", group_id=memberships[0].group_id)
+        elif memberships:
+            new_post_url = url_for("drafts.create")
+        else:
+            new_post_url = url_for("groups.create")
     else:
         # Get public feed: latest created accounts (proxy for activity)
         all_accounts = (
@@ -87,7 +98,13 @@ def index():
     # Ideal would be parsing ISO format back to datetime for sort.
     aggregated_posts.sort(key=lambda x: x["created"], reverse=True)
 
-    return render_template("index.html", posts=aggregated_posts, feed_title=feed_title)
+    return render_template(
+        "index.html",
+        posts=aggregated_posts,
+        feed_title=feed_title,
+        new_post_url=new_post_url,
+        has_groups=has_groups if current_user.is_authenticated else True,
+    )
 
 
 @bp.route("/profile", methods=["GET", "POST"])
@@ -136,12 +153,35 @@ def user_profile(username):
     # Ideally we'd parse dates, but string sort is "good enough" for ISO-like strings often returned by Hive APIs.
     aggregated_posts.sort(key=lambda x: x.get("created", ""), reverse=True)
 
+    owned_groups = Group.query.filter_by(owner_user_id=user.id).all()
+    current_user_group_ids = set()
+    if current_user.is_authenticated:
+        current_user_group_ids = {
+            m.group_id for m in GroupMember.query.filter_by(user_id=current_user.id).all()
+        }
+
     return render_template(
         "main/user_profile.html",
         user=user,
         posts=aggregated_posts,
         linked_accounts=linked_accounts,
+        owned_groups=owned_groups,
+        current_user_group_ids=current_user_group_ids,
     )
+
+
+@bp.route("/find-sponsor")
+@login_required
+def find_sponsor():
+    username = request.args.get("username", "").strip()
+    if not username:
+        flash(_("Please enter a username."), "warning")
+        return redirect(url_for("main.index"))
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        flash(_("User '%(username)s' not found.", username=username), "danger")
+        return redirect(url_for("main.index"))
+    return redirect(url_for("main.user_profile", username=username))
 
 
 # -------------------- Hive Social Endpoints --------------------

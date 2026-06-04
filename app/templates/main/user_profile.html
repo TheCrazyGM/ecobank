@@ -96,8 +96,38 @@
                 {% endif %}
             </div>
 
-        <!-- Sidebar: Linked Accounts -->
+        <!-- Sidebar -->
             <div class="col-md-4">
+
+                {% if owned_groups %}
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-transparent fw-bold">{{ _('Groups') }}</div>
+                    <ul class="list-group list-group-flush">
+                        {% for group in owned_groups %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="fw-semibold">{{ group.name }}</span>
+                                    {% if group.description %}
+                                    <br><small class="text-muted">{{ group.description }}</small>
+                                    {% endif %}
+                                </div>
+                                {% if current_user.is_authenticated and current_user.id != user.id %}
+                                    {% if group.id in current_user_group_ids %}
+                                    <span class="badge bg-success ms-2">{{ _('Member') }}</span>
+                                    {% else %}
+                                    <form method="post" action="{{ url_for('groups.request_join', id=group.id) }}" class="ms-2">
+                                        <button type="submit" class="btn btn-sm btn-outline-success text-nowrap">{{ _('Request to Join') }}</button>
+                                    </form>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
                 <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-transparent fw-bold">
                         {{ _('Linked Hive Accounts') }}

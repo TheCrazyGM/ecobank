@@ -190,13 +190,13 @@ def claim_ticket():
     system_key = current_app.config.get("HIVE_CLAIMER_KEY")
 
     if not system_account or not system_key:
-        flash("System account not configured.", "danger")
+        flash(_("System account not configured."), "danger")
         return redirect(url_for("admin.logs_hive"))
 
     if claim_account(system_account, system_key):
-        flash("Successfully claimed one account creation ticket!", "success")
+        flash(_("Successfully claimed one account creation ticket!"), "success")
     else:
-        flash("Failed to claim account ticket. Check RC.", "danger")
+        flash(_("Failed to claim account ticket. Check RC."), "danger")
 
     return redirect(url_for("admin.logs_hive"))
 

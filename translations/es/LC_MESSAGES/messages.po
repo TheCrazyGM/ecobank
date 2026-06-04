@@ -248,7 +248,7 @@ msgstr "Registrarse"
 
 #: app/auth/forms.py:37 app/auth/forms.py:41 app/auth/forms.py:71
 msgid "Spam detected."
-msgstr ""
+msgstr "Spam detectado."
 
 #: app/auth/forms.py:63
 msgid "Form submitted too quickly. Please try again."
@@ -256,7 +256,7 @@ msgstr "Muy rápido!  Intenta otra vez"
 
 #: app/auth/forms.py:68
 msgid "Form session expired. Please refresh."
-msgstr ""
+msgstr "La sesión del formulario ha expirado. Por favor recarga la página."
 
 #: app/auth/forms.py:76
 msgid "Please use a different username."
@@ -286,7 +286,7 @@ msgstr "Solicitar Restablecimiento de Contraseña"
 #: app/auth/forms.py:112 app/auth/routes.py:215
 #: app/templates/auth/resend_verification_request.html:4
 msgid "Resend Verification Email"
-msgstr ""
+msgstr "Reenviar Correo de Verificación"
 
 #: app/auth/routes.py:26
 msgid "[EcoBank] Verify Your Email"
@@ -301,7 +301,7 @@ msgstr "Usuario o contraseña inválidos"
 msgid ""
 "Please verify your email address before logging in. <a "
 "href='%(url)s'>Resend Email</a>"
-msgstr ""
+msgstr "Por favor verifica tu correo antes de iniciar sesión. <a href='%(url)s'>Reenviar Correo</a>"
 
 #: app/auth/routes.py:76
 msgid "Verification link is invalid or has expired."
@@ -388,7 +388,7 @@ msgstr "¡Tu borrador '%(title)s' ha sido publicado en Hive!"
 #: app/drafts/routes.py:746
 #, python-format
 msgid "%(username)s has proposed an edit to your published post '%(title)s'"
-msgstr ""
+msgstr "%(username)s ha propuesto una edición a tu publicación '%(title)s'"
 
 #: app/groups/routes.py:23 app/groups/routes.py:71
 msgid "Group name is required"
@@ -446,15 +446,15 @@ msgstr "Feed de la Comunidad"
 
 #: app/main/routes.py:263
 msgid "You do not own this account or it does not exist."
-msgstr ""
+msgstr "No eres dueño de esta cuenta o no existe."
 
 #: app/main/routes.py:271
 msgid "System configuration error."
-msgstr ""
+msgstr "Error de configuración del sistema."
 
 #: app/main/routes.py:287
 msgid "Posting key not found for this account. Cannot claim rewards."
-msgstr ""
+msgstr "No se encontró la clave posting para esta cuenta. No se pueden reclamar recompensas."
 
 #: app/main/routes.py:294
 msgid "Failed to access account keys."
@@ -462,11 +462,11 @@ msgstr "Fallo al recuperar las claves de la cuenta."
 
 #: app/main/routes.py:303
 msgid "Successfully claimed all pending rewards!"
-msgstr ""
+msgstr "¡Recompensas pendientes reclamadas exitosamente!"
 
 #: app/main/routes.py:306
 msgid "Failed to claim rewards, or there were no rewards pending."
-msgstr ""
+msgstr "No se pudieron reclamar recompensas, o no había recompensas pendientes."
 
 #: app/main/routes.py:329 app/templates/main/about.html:3
 #: app/templates/main/about.html:6
@@ -496,7 +496,7 @@ msgstr "Ecobank"
 
 #: app/templates/base.html:66
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: app/templates/base.html:76
 msgid "Home"
@@ -1339,7 +1339,7 @@ msgstr "Crear Grupo"
 
 #: app/templates/groups/list.html:20
 msgid "Pending Drafts"
-msgstr ""
+msgstr "Borradores Pendientes"
 
 #: app/templates/groups/list.html:31
 msgid "You are not a member of any groups."
@@ -1347,7 +1347,7 @@ msgstr "No eres miembro de ningún grupo."
 
 #: app/templates/groups/view.html:31
 msgid "System Admin"
-msgstr ""
+msgstr "Administrador del Sistema"
 
 #: app/templates/groups/view.html:36
 msgid "Settings"
@@ -1578,7 +1578,7 @@ msgstr "Recompensas por Reclamar"
 
 #: app/templates/hive/wallet.html:31
 msgid "Claim Rewards"
-msgstr ""
+msgstr "Reclamar Recompensas"
 
 #: app/templates/hive/wallet.html:58
 msgid "Savings"
@@ -1838,11 +1838,11 @@ msgstr "Biografía no configurada."
 
 #: app/templates/main/user_profile.html:21
 msgid "Verified"
-msgstr ""
+msgstr "Verificado"
 
 #: app/templates/main/user_profile.html:33
 msgid "Recent Activity"
-msgstr ""
+msgstr "Actividad Reciente"
 
 #: app/templates/main/user_profile.html:94
 msgid "No recent posts found."
@@ -1863,6 +1863,193 @@ msgstr "Marcar Todo como Leído"
 #: app/templates/notifications/index.html:23
 msgid "No notifications."
 msgstr "Sin notificaciones."
+
+#: app/notifications/routes.py
+msgid "All notifications marked as read."
+msgstr "Todas las notificaciones marcadas como leídas."
+
+#: app/main/routes.py
+msgid "Profile updated successfully!"
+msgstr "¡Perfil actualizado exitosamente!"
+
+#: app/main/routes.py
+msgid "Error updating profile."
+msgstr "Error al actualizar el perfil."
+
+#: app/admin/routes.py
+msgid "System account not configured."
+msgstr "Cuenta del sistema no configurada."
+
+#: app/admin/routes.py
+msgid "Successfully claimed one account creation ticket!"
+msgstr "¡Ticket de creación de cuenta reclamado exitosamente!"
+
+#: app/admin/routes.py
+msgid "Failed to claim account ticket. Check RC."
+msgstr "Fallo al reclamar el ticket de cuenta. Verifica los CR."
+
+#: app/drafts/routes.py
+msgid "You must belong to a group to create a draft."
+msgstr "Debes pertenecer a un grupo para crear un borrador."
+
+#: app/drafts/routes.py
+msgid "Invalid group selected"
+msgstr "Grupo seleccionado inválido"
+
+#: app/drafts/routes.py
+msgid "Title, body and hive account are required"
+msgstr "El título, el contenido y la cuenta Hive son obligatorios"
+
+#: app/drafts/routes.py
+msgid "Invalid hive account selected for this group"
+msgstr "Cuenta Hive inválida seleccionada para este grupo"
+
+#: app/drafts/routes.py
+msgid "Draft created."
+msgstr "Borrador creado."
+
+#: app/drafts/routes.py
+msgid "You do not have permission to edit this draft."
+msgstr "No tienes permiso para editar este borrador."
+
+#: app/drafts/routes.py
+msgid "Cannot edit published posts."
+msgstr "No se pueden editar publicaciones ya publicadas."
+
+#: app/drafts/routes.py
+msgid "Draft updated."
+msgstr "Borrador actualizado."
+
+#: app/drafts/routes.py
+msgid "Unauthorized to restore versions."
+msgstr "No autorizado para restaurar versiones."
+
+#: app/drafts/routes.py
+msgid "Version not found"
+msgstr "Versión no encontrada"
+
+#: app/drafts/routes.py
+#, python-format
+msgid "Restored version %(num)s."
+msgstr "Versión %(num)s restaurada."
+
+#: app/drafts/routes.py
+msgid "Unauthorized to delete this draft."
+msgstr "No autorizado para eliminar este borrador."
+
+#: app/drafts/routes.py
+msgid "Cannot delete published posts."
+msgstr "No se pueden eliminar publicaciones ya publicadas."
+
+#: app/drafts/routes.py
+msgid "Draft rejected/deleted."
+msgstr "Borrador rechazado/eliminado."
+
+#: app/drafts/routes.py
+msgid "Unauthorized to submit drafts. Only Owners and Moderators can publish."
+msgstr "No autorizado para enviar borradores. Solo Propietarios y Moderadores pueden publicar."
+
+#: app/drafts/routes.py
+msgid "Already published."
+msgstr "Ya publicado."
+
+#: app/drafts/routes.py
+#, python-format
+msgid "Hive account %(username)s is no longer linked to this group."
+msgstr "La cuenta Hive %(username)s ya no está vinculada a este grupo."
+
+#: app/drafts/routes.py
+msgid "Hive account credentials not found in database."
+msgstr "Credenciales de cuenta Hive no encontradas en la base de datos."
+
+#: app/drafts/routes.py
+msgid "System configuration error: Encryption key missing."
+msgstr "Error de configuración del sistema: falta la clave de encriptación."
+
+#: app/drafts/routes.py
+msgid "Failed to decrypt account keys."
+msgstr "Fallo al descifrar las claves de la cuenta."
+
+#: app/drafts/routes.py
+msgid "Posting key not found for this account."
+msgstr "No se encontró la clave posting para esta cuenta."
+
+#: app/drafts/routes.py
+msgid "Post published successfully to Hive!"
+msgstr "¡Publicación enviada exitosamente a Hive!"
+
+#: app/drafts/routes.py
+#, python-format
+msgid "Posting failed: %(error)s"
+msgstr "Publicación fallida: %(error)s"
+
+#: app/drafts/routes.py
+msgid "Can only propose edits to published posts."
+msgstr "Solo se pueden proponer ediciones a publicaciones ya publicadas."
+
+#: app/drafts/routes.py
+msgid "Draft created for proposed edit."
+msgstr "Borrador creado para la edición propuesta."
+
+#: app/groups/routes.py
+msgid "You are not a member of this group."
+msgstr "No eres miembro de este grupo."
+
+#: app/groups/routes.py
+msgid "User not found"
+msgstr "Usuario no encontrado"
+
+#: app/groups/routes.py
+msgid "User is already a member"
+msgstr "El usuario ya es miembro"
+
+#: app/groups/routes.py
+#, python-format
+msgid "%(username)s added to group."
+msgstr "%(username)s añadido al grupo."
+
+#: app/groups/routes.py
+msgid "Unauthorized. Only owner can remove members."
+msgstr "No autorizado. Solo el propietario puede eliminar miembros."
+
+#: app/groups/routes.py
+msgid "Cannot remove the owner."
+msgstr "No se puede eliminar al propietario."
+
+#: app/groups/routes.py
+msgid "Member removed."
+msgstr "Miembro eliminado."
+
+#: app/groups/routes.py
+msgid "Member not found"
+msgstr "Miembro no encontrado"
+
+#: app/groups/routes.py
+#, python-format
+msgid "Member promoted to %(role)s."
+msgstr "Miembro promovido a %(role)s."
+
+#: app/groups/routes.py
+#, python-format
+msgid "Member demoted to %(role)s."
+msgstr "Miembro degradado a %(role)s."
+
+#: app/groups/routes.py
+msgid "You do not own this Hive account."
+msgstr "No eres dueño de esta cuenta Hive."
+
+#: app/groups/routes.py
+#, python-format
+msgid "Hive account %(account)s linked to group."
+msgstr "Cuenta Hive %(account)s vinculada al grupo."
+
+#: app/groups/routes.py
+msgid "Resource unlinked."
+msgstr "Recurso desvinculado."
+
+#: app/groups/routes.py
+msgid "Unauthorized to unlink this resource."
+msgstr "No autorizado para desvincular este recurso."
 
 #~ msgid "Perfect for creating your first account."
 #~ msgstr "Perfecto para crear tus primeras claves."

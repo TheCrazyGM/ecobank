@@ -94,7 +94,7 @@ def create(group_id):
             group_id=group_id, user_id=current_user.id
         ).first()
         if not membership and not current_user.is_admin:
-            flash("Unauthorized", "danger")
+            flash(_("Unauthorized"), "danger")
             return redirect(url_for("groups.list_groups"))
 
         # Get available shared accounts for this group
@@ -107,7 +107,7 @@ def create(group_id):
         memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
         user_groups = [m.group for m in memberships]
         if not user_groups:
-            flash("You must belong to a group to create a draft.", "warning")
+            flash(_("You must belong to a group to create a draft."), "warning")
             return redirect(url_for("groups.create"))
 
         # If only one group, auto-select it
@@ -129,8 +129,8 @@ def create(group_id):
                 ).first()
                 if not membership and not current_user.is_admin:
                     abort(403)
-            except ValueError, TypeError:
-                flash("Invalid group selected", "danger")
+            except (ValueError, TypeError):
+                flash(_("Invalid group selected"), "danger")
                 return redirect(url_for("drafts.create"))
 
         title = request.form.get("title")
@@ -139,7 +139,7 @@ def create(group_id):
         hive_account = request.form.get("hive_account")
 
         if not title or not body or not hive_account:
-            flash("Title, body and hive account are required", "danger")
+            flash(_("Title, body and hive account are required"), "danger")
             if group:
                 return redirect(url_for("drafts.create", group_id=group.id))
             return redirect(url_for("drafts.create"))
@@ -152,7 +152,7 @@ def create(group_id):
         valid_accounts = [r.resource_id for r in resources]
 
         if hive_account not in valid_accounts:
-            flash("Invalid hive account selected for this group", "danger")
+            flash(_("Invalid hive account selected for this group"), "danger")
             if group:
                 return redirect(url_for("drafts.create", group_id=group.id))
             return redirect(url_for("drafts.create"))
@@ -173,7 +173,7 @@ def create(group_id):
         # Save initial version to MongoDB
         _save_draft_version(draft, current_user.id, "created")
 
-        flash("Draft created.", "success")
+        flash(_("Draft created."), "success")
         return redirect(url_for("drafts.view", draft_id=draft.id))
 
     return render_template(
@@ -210,11 +210,11 @@ def edit(draft_id):
         can_edit = True
 
     if not can_edit:
-        flash("You do not have permission to edit this draft.", "danger")
+        flash(_("You do not have permission to edit this draft."), "danger")
         return redirect(url_for("groups.view", id=group.id))
 
     if draft.status == "published":
-        flash("Cannot edit published posts.", "warning")
+        flash(_("Cannot edit published posts."), "warning")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     # Get available shared accounts (in case they want to switch, though logic might be simpler to lock it)
@@ -261,7 +261,7 @@ def edit(draft_id):
                 type="edit",
             )
 
-        flash("Draft updated.", "success")
+        flash(_("Draft updated."), "success")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     return render_template(
@@ -374,14 +374,14 @@ def restore(draft_id, version_num):
         can_edit = True
 
     if not can_edit:
-        flash("Unauthorized to restore versions.", "danger")
+        flash(_("Unauthorized to restore versions."), "danger")
         return redirect(url_for("drafts.history", draft_id=draft_id))
 
     version = DraftVersion.objects(
         draft_id=draft_id, version_number=version_num
     ).first()
     if not version:
-        flash("Version not found", "danger")
+        flash(_("Version not found"), "danger")
         return redirect(url_for("drafts.history", draft_id=draft_id))
 
     # Save current state as a version before restoring
@@ -394,7 +394,7 @@ def restore(draft_id, version_num):
     # draft.beneficiaries = version.beneficiaries # Beneficiaries are silently set, so we don't restore them explicitly from history
     db.session.commit()
 
-    flash(f"Restored version {version_num}.", "success")
+    flash(_("Restored version %(num)s.", num=version_num), "success")
     return redirect(url_for("drafts.view", draft_id=draft_id))
 
 
@@ -480,16 +480,16 @@ def reject(draft_id):
         can_delete = True
 
     if not can_delete:
-        flash("Unauthorized to delete this draft.", "danger")
+        flash(_("Unauthorized to delete this draft."), "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     if draft.status == "published":
-        flash("Cannot delete published posts.", "warning")
+        flash(_("Cannot delete published posts."), "warning")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     db.session.delete(draft)
     db.session.commit()
-    flash("Draft rejected/deleted.", "success")
+    flash(_("Draft rejected/deleted."), "success")
     return redirect(url_for("groups.view", id=group.id))
 
 
@@ -507,13 +507,13 @@ def submit(draft_id):
         not membership or membership.role not in ["owner", "admin", "moderator"]
     ):
         flash(
-            "Unauthorized to submit drafts. Only Owners and Moderators can publish.",
+            _("Unauthorized to submit drafts. Only Owners and Moderators can publish."),
             "danger",
         )
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     if draft.status == "published":
-        flash("Already published.", "warning")
+        flash(_("Already published."), "warning")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     import mdformat
@@ -562,7 +562,7 @@ def submit(draft_id):
 
     if not resource:
         flash(
-            f"Hive account {draft.hive_account_username} is no longer linked to this group.",
+            _("Hive account %(username)s is no longer linked to this group.", username=draft.hive_account_username),
             "danger",
         )
         return redirect(url_for("drafts.view", draft_id=draft_id))
@@ -574,14 +574,14 @@ def submit(draft_id):
     ).first()
 
     if not hive_account_record:
-        flash("Hive account credentials not found in database.", "danger")
+        flash(_("Hive account credentials not found in database."), "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     # Decrypt Keys
     encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
     if not encryption_key:
         current_app.logger.error("HIVE_ENCRYPTION_KEY not set in config")
-        flash("System configuration error: Encryption key missing.", "danger")
+        flash(_("System configuration error: Encryption key missing."), "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     fernet = Fernet(encryption_key)
@@ -591,11 +591,11 @@ def submit(draft_id):
         posting_key = keys_dict.get("posting", {}).get("private")
     except Exception as e:
         current_app.logger.error(f"Decryption failed: {e}")
-        flash("Failed to decrypt account keys.", "danger")
+        flash(_("Failed to decrypt account keys."), "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     if not posting_key:
-        flash("Posting key not found for this account.", "danger")
+        flash(_("Posting key not found for this account."), "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     # 3. Broadcast to Hive
@@ -693,12 +693,12 @@ def submit(draft_id):
                 type="publish",
             )
 
-        flash("Post published successfully to Hive!", "success")
+        flash(_("Post published successfully to Hive!"), "success")
         return redirect(url_for("groups.view", id=group.id, tab="history"))
 
     except Exception as e:
         current_app.logger.exception("Hive posting failed")
-        flash(f"Posting failed: {str(e)}", "danger")
+        flash(_("Posting failed: %(error)s", error=str(e)), "danger")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
 
@@ -714,11 +714,11 @@ def propose_edit(draft_id):
     ).first()
 
     if not current_user.is_admin and not membership:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.list_groups"))
 
     if original_draft.status != "published":
-        flash("Can only propose edits to published posts.", "warning")
+        flash(_("Can only propose edits to published posts."), "warning")
         return redirect(url_for("drafts.view", draft_id=draft_id))
 
     # Create new draft as a copy
@@ -751,5 +751,5 @@ def propose_edit(draft_id):
             type="info",
         )
 
-    flash("Draft created for proposed edit.", "success")
+    flash(_("Draft created for proposed edit."), "success")
     return redirect(url_for("drafts.view", draft_id=new_draft.id))

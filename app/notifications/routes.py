@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, flash
+from flask_babel import _
 from flask_login import login_required, current_user
 from app.extensions import db
 from app.models import Notification
@@ -39,5 +40,5 @@ def mark_all_read():
     for n in unread_notifications:
         n.is_read = True
     db.session.commit()
-    flash("All notifications marked as read.", "success")
+    flash(_("All notifications marked as read."), "success")
     return redirect(url_for("notifications.index"))

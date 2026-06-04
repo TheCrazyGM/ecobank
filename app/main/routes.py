@@ -102,10 +102,10 @@ def profile():
 
         try:
             db.session.commit()
-            flash("Profile updated successfully!", "success")
+            flash(_("Profile updated successfully!"), "success")
         except Exception as e:
             db.session.rollback()
-            flash(f"Error updating profile: {e}", "danger")
+            flash(_("Error updating profile."), "danger")
 
         return redirect(url_for("main.profile"))
 

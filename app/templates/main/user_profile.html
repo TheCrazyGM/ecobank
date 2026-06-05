@@ -12,16 +12,21 @@
             <div class="col-md-9">
                 <h1 class="display-5 fw-bold">{{ user.display_name }}</h1>
                 <p class="lead text-muted">@{{ user.username }}</p>
-                {% if user.bio %}
-                    <p class="fs-5">{{ user.bio }}</p>
+                {% if user.bio_text %}
+                    <p class="fs-5">{{ user.bio_text }}</p>
                 {% endif %}
 
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 align-items-center flex-wrap">
                     {% if user.is_verified %}
                         <span class="badge bg-success"><i class="fas fa-check-circle"></i> {{ _('Verified') }}</span>
                     {% endif %}
                     <span class="badge bg-secondary">{{ _('Joined') }} {{ user.created_at.strftime('%Y-%m-%d') if
                         user.created_at else '' }}</span>
+                    {% if own_post_url %}
+                        <a href="{{ own_post_url }}" class="btn btn-sm btn-success ms-1">
+                            <i class="bi bi-pencil-square me-1"></i>{{ _('New Publication') }}
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -96,8 +101,38 @@
                 {% endif %}
             </div>
 
-        <!-- Sidebar: Linked Accounts -->
+        <!-- Sidebar -->
             <div class="col-md-4">
+
+                {% if owned_groups %}
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-transparent fw-bold">{{ _('Groups') }}</div>
+                    <ul class="list-group list-group-flush">
+                        {% for group in owned_groups %}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="fw-semibold">{{ group.name }}</span>
+                                    {% if group.description %}
+                                    <br><small class="text-muted">{{ group.description }}</small>
+                                    {% endif %}
+                                </div>
+                                {% if current_user.is_authenticated and current_user.id != user.id %}
+                                    {% if group.id in current_user_group_ids %}
+                                    <span class="badge bg-success ms-2">{{ _('Member') }}</span>
+                                    {% else %}
+                                    <form method="post" action="{{ url_for('groups.request_join', id=group.id) }}" class="ms-2">
+                                        <button type="submit" class="btn btn-sm btn-outline-success text-nowrap">{{ _('Request to Join') }}</button>
+                                    </form>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
                 <div class="card mb-4 border-0 shadow-sm">
                     <div class="card-header bg-transparent fw-bold">
                         {{ _('Linked Hive Accounts') }}

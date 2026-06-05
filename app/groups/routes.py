@@ -105,7 +105,7 @@ def view(id):
         group_id=id, user_id=current_user.id
     ).first()
     if not membership and not current_user.is_admin:
-        flash("You are not a member of this group.", "danger")
+        flash(_("You are not a member of this group."), "danger")
         return redirect(url_for("groups.list_groups"))
 
     members = GroupMember.query.filter_by(group_id=id).join(User).all()
@@ -161,20 +161,20 @@ def add_member(id):
     if (
         not membership or membership.role not in ["owner", "admin"]
     ) and not current_user.is_admin:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     username = request.form.get("username")
     user_to_add = db.session.scalar(sa.select(User).where(User.username == username))
 
     if not user_to_add:
-        flash("User not found", "danger")
+        flash(_("User not found"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     # Check if already member
     existing = GroupMember.query.filter_by(group_id=id, user_id=user_to_add.id).first()
     if existing:
-        flash("User is already a member", "info")
+        flash(_("User is already a member"), "info")
         return redirect(url_for("groups.view", id=id))
 
     new_member = GroupMember(group_id=id, user_id=user_to_add.id, role="member")
@@ -190,7 +190,7 @@ def add_member(id):
         type="invite",
     )
 
-    flash(f"{username} added to group.", "success")
+    flash(_("%(username)s added to group.", username=username), "success")
     return redirect(url_for("groups.view", id=id))
 
 
@@ -204,18 +204,18 @@ def remove_member(id, user_id):
         group_id=id, user_id=current_user.id
     ).first()
     if (not membership or membership.role != "owner") and not current_user.is_admin:
-        flash("Unauthorized. Only owner can remove members.", "danger")
+        flash(_("Unauthorized. Only owner can remove members."), "danger")
         return redirect(url_for("groups.view", id=id))
 
     if user_id == group.owner_user_id:
-        flash("Cannot remove the owner.", "danger")
+        flash(_("Cannot remove the owner."), "danger")
         return redirect(url_for("groups.view", id=id))
 
     member_to_remove = GroupMember.query.filter_by(group_id=id, user_id=user_id).first()
     if member_to_remove:
         db.session.delete(member_to_remove)
         db.session.commit()
-        flash("Member removed.", "success")
+        flash(_("Member removed."), "success")
 
     return redirect(url_for("groups.view", id=id))
 
@@ -230,12 +230,12 @@ def promote_member(id, user_id):
         group_id=id, user_id=current_user.id
     ).first()
     if (not membership or membership.role != "owner") and not current_user.is_admin:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     member = GroupMember.query.filter_by(group_id=id, user_id=user_id).first()
     if not member:
-        flash("Member not found", "danger")
+        flash(_("Member not found"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     # Simple cycle: member -> editor -> moderator -> member
@@ -245,7 +245,7 @@ def promote_member(id, user_id):
         member.role = "moderator"
 
     db.session.commit()
-    flash(f"Member promoted to {member.role}.", "success")
+    flash(_("Member promoted to %(role)s.", role=member.role), "success")
     return redirect(url_for("groups.view", id=id))
 
 
@@ -258,12 +258,12 @@ def demote_member(id, user_id):
         group_id=id, user_id=current_user.id
     ).first()
     if (not membership or membership.role != "owner") and not current_user.is_admin:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     member = GroupMember.query.filter_by(group_id=id, user_id=user_id).first()
     if not member:
-        flash("Member not found", "danger")
+        flash(_("Member not found"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     # Simple cycle: moderator -> editor -> member
@@ -273,7 +273,7 @@ def demote_member(id, user_id):
         member.role = "member"
 
     db.session.commit()
-    flash(f"Member demoted to {member.role}.", "success")
+    flash(_("Member demoted to %(role)s.", role=member.role), "success")
     return redirect(url_for("groups.view", id=id))
 
 
@@ -286,7 +286,7 @@ def link_resource(id):
     ).first()
 
     if not membership and not current_user.is_admin:
-        flash("Unauthorized", "danger")
+        flash(_("Unauthorized"), "danger")
         return redirect(url_for("groups.list_groups"))
 
     resource_type = request.form.get("resource_type")
@@ -298,7 +298,7 @@ def link_resource(id):
             username=resource_id, created_by_id=current_user.id
         ).first()
         if not account:
-            flash("You do not own this Hive account.", "danger")
+            flash(_("You do not own this Hive account."), "danger")
             return redirect(url_for("groups.view", id=id))
 
         # Create link
@@ -307,7 +307,10 @@ def link_resource(id):
         )
         db.session.add(link)
         db.session.commit()
-        flash(f"Hive account {resource_id} linked to group.", "success")
+        flash(
+            _("Hive account %(account)s linked to group.", account=resource_id),
+            "success",
+        )
 
     return redirect(url_for("groups.view", id=id))
 
@@ -344,11 +347,39 @@ def unlink_resource(id, resource_id):
     if can_delete:
         db.session.delete(resource)
         db.session.commit()
-        flash("Resource unlinked.", "success")
+        flash(_("Resource unlinked."), "success")
     else:
-        flash("Unauthorized to unlink this resource.", "danger")
+        flash(_("Unauthorized to unlink this resource."), "danger")
 
     return redirect(url_for("groups.view", id=id))
+
+
+@bp.route("/<int:id>/request_join", methods=["POST"])
+@login_required
+def request_join(id):
+    group = Group.query.get_or_404(id)
+
+    existing = GroupMember.query.filter_by(group_id=id, user_id=current_user.id).first()
+    if existing:
+        flash(_("You are already a member of this group."), "info")
+        return redirect(url_for("main.user_profile", username=group.owner.username))
+
+    success = create_notification(
+        user_id=group.owner_user_id,
+        message=_(
+            "%(username)s wants to join your group '%(group)s'",
+            username=current_user.username,
+            group=group.name,
+        ),
+        link=url_for("groups.view", id=id),
+        type="invite",
+    )
+
+    if success:
+        flash(_("Your request has been sent to the group owner."), "success")
+    else:
+        flash(_("Failed to send join request. Please try again later."), "danger")
+    return redirect(url_for("main.user_profile", username=group.owner.username))
 
 
 @bp.route("/<int:id>/update_resource_profile/<int:resource_id>", methods=["POST"])

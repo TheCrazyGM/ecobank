@@ -19,7 +19,7 @@ from flask_login import current_user, login_required
 
 from app.extensions import cache, db
 from app.main import bp
-from app.models import HiveAccount, User
+from app.models import Group, GroupMember, HiveAccount, User
 from app.utils.hive import (
     fetch_account_wallet,
     fetch_post,
@@ -29,6 +29,18 @@ from app.utils.hive import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _new_post_url():
+    """Return the smartest draft-creation URL for the current logged-in user."""
+    memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
+    if len(memberships) == 1:
+        return url_for("drafts.create", group_id=memberships[0].group_id), bool(
+            memberships
+        )
+    elif memberships:
+        return url_for("drafts.create"), True
+    return url_for("groups.create"), False
 
 
 @bp.route("/robots.txt")
@@ -43,6 +55,7 @@ def robots_txt():
 def index():
     usernames_to_fetch = []
 
+    new_post_url = None
     if current_user.is_authenticated:
         # Get current user's hive accounts
         usernames_to_fetch = [acc.username for acc in current_user.hive_accounts]
@@ -56,6 +69,8 @@ def index():
             )
             usernames_to_fetch = [acc.username for acc in all_accounts]
         feed_title = _("My Feed")
+
+        new_post_url, has_groups = _new_post_url()
     else:
         # Get public feed: latest created accounts (proxy for activity)
         all_accounts = (
@@ -87,7 +102,13 @@ def index():
     # Ideal would be parsing ISO format back to datetime for sort.
     aggregated_posts.sort(key=lambda x: x["created"], reverse=True)
 
-    return render_template("index.html", posts=aggregated_posts, feed_title=feed_title)
+    return render_template(
+        "index.html",
+        posts=aggregated_posts,
+        feed_title=feed_title,
+        new_post_url=new_post_url,
+        has_groups=has_groups if current_user.is_authenticated else True,
+    )
 
 
 @bp.route("/profile", methods=["GET", "POST"])
@@ -96,20 +117,35 @@ def profile():
     if request.method == "POST":
         current_user.first_name = request.form.get("first_name", "").strip()
         current_user.last_name = request.form.get("last_name", "").strip()
-        current_user.bio = request.form.get("bio", "").strip()
         current_user.avatar_url = request.form.get("avatar_url", "").strip()
         current_user.locale = request.form.get("locale", "en")
 
+        bio_text = request.form.get("bio", "").strip()
+        links = {
+            k: request.form.get(k, "").strip().lstrip("@")
+            for k in ("twitter", "instagram", "facebook", "youtube", "tiktok")
+        }
+        links = {k: v for k, v in links.items() if v}
+        if links:
+            current_user.bio = json.dumps(
+                {"bio": bio_text, **links}, ensure_ascii=False
+            )
+        else:
+            current_user.bio = bio_text
+
         try:
             db.session.commit()
-            flash("Profile updated successfully!", "success")
-        except Exception as e:
+            flash(_("Profile updated successfully!"), "success")
+        except Exception:
             db.session.rollback()
-            flash(f"Error updating profile: {e}", "danger")
+            flash(_("Error updating profile."), "danger")
 
         return redirect(url_for("main.profile"))
 
-    return render_template("main/profile.html", user=current_user)
+    new_post_url, _has_groups = _new_post_url()
+    return render_template(
+        "main/profile.html", user=current_user, new_post_url=new_post_url
+    )
 
 
 @bp.route("/u/<username>")
@@ -136,12 +172,40 @@ def user_profile(username):
     # Ideally we'd parse dates, but string sort is "good enough" for ISO-like strings often returned by Hive APIs.
     aggregated_posts.sort(key=lambda x: x.get("created", ""), reverse=True)
 
+    owned_groups = Group.query.filter_by(owner_user_id=user.id).all()
+    current_user_group_ids = set()
+    own_post_url = None
+    if current_user.is_authenticated:
+        current_user_group_ids = {
+            m.group_id
+            for m in GroupMember.query.filter_by(user_id=current_user.id).all()
+        }
+        if current_user.username == user.username:
+            own_post_url, _has_groups = _new_post_url()
+
     return render_template(
         "main/user_profile.html",
         user=user,
         posts=aggregated_posts,
         linked_accounts=linked_accounts,
+        owned_groups=owned_groups,
+        current_user_group_ids=current_user_group_ids,
+        own_post_url=own_post_url,
     )
+
+
+@bp.route("/find-sponsor")
+@login_required
+def find_sponsor():
+    username = request.args.get("username", "").strip()
+    if not username:
+        flash(_("Please enter a username."), "warning")
+        return redirect(url_for("main.index"))
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        flash(_("User '%(username)s' not found.", username=username), "danger")
+        return redirect(url_for("main.index"))
+    return redirect(url_for("main.user_profile", username=username))
 
 
 # -------------------- Hive Social Endpoints --------------------

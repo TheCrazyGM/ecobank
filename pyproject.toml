@@ -33,3 +33,6 @@ dependencies = [
   "redis>=7.1.0",
   "requests>=2.32.5",
 ]
+
+[tool.uv.sources]
+hive-nectar = { git = "https://github.com/srbde/hive-nectar", rev = "main" }

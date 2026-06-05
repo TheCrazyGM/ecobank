@@ -7,45 +7,46 @@
     </div>
 
     {% if current_user.is_authenticated %}
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-            <a href="{{ new_post_url }}" class="btn btn-success w-100 py-3">
-                <i class="bi bi-pencil-square fs-4 d-block mb-1"></i>
-                {{ _('New Post') }}
-            </a>
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <a href="{{ new_post_url }}" class="btn btn-success w-100 py-3">
+                    <i class="bi bi-pencil-square fs-4 d-block mb-1"></i>
+                    {{ _('New Post') }}
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ url_for('groups.list_groups') }}" class="btn btn-outline-primary w-100 py-3">
+                    <i class="bi bi-people fs-4 d-block mb-1"></i>
+                    {{ _('My Groups') }}
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary w-100 py-3">
+                    <i class="bi bi-key fs-4 d-block mb-1"></i>
+                    {{ _('My Keys') }}
+                </a>
+            </div>
+            <div class="col-6 col-md-3">
+                <a href="{{ url_for('main.profile') }}" class="btn btn-outline-secondary w-100 py-3">
+                    <i class="bi bi-person-circle fs-4 d-block mb-1"></i>
+                    {{ _('Profile') }}
+                </a>
+            </div>
         </div>
-        <div class="col-6 col-md-3">
-            <a href="{{ url_for('groups.list_groups') }}" class="btn btn-outline-primary w-100 py-3">
-                <i class="bi bi-people fs-4 d-block mb-1"></i>
-                {{ _('My Groups') }}
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary w-100 py-3">
-                <i class="bi bi-key fs-4 d-block mb-1"></i>
-                {{ _('My Keys') }}
-            </a>
-        </div>
-        <div class="col-6 col-md-3">
-            <a href="{{ url_for('main.profile') }}" class="btn btn-outline-secondary w-100 py-3">
-                <i class="bi bi-person-circle fs-4 d-block mb-1"></i>
-                {{ _('Profile') }}
-            </a>
-        </div>
-    </div>
+    {% endif %}
 
     {% if current_user.is_authenticated and not has_groups %}
-    <div class="alert alert-info d-flex align-items-start gap-3 mb-4">
-        <i class="bi bi-person-raised-hand fs-3 flex-shrink-0"></i>
-        <div class="w-100">
-            <h5 class="alert-heading mb-1">{{ _('Getting Started') }}</h5>
-            <p class="mb-2">{{ _('Enter the username of the person who invited you to find their profile and request access to their group.') }}</p>
-            <form action="{{ url_for('main.find_sponsor') }}" method="get" class="d-flex gap-2">
-                <input type="text" name="username" class="form-control form-control-sm" placeholder="{{ _('Their username') }}" required>
-                <button type="submit" class="btn btn-sm btn-primary text-nowrap">{{ _('Find Sponsor') }}</button>
-            </form>
+        <div class="alert alert-info d-flex align-items-start gap-3 mb-4">
+            <i class="bi bi-person-raised-hand fs-3 flex-shrink-0"></i>
+            <div class="w-100">
+                <h5 class="alert-heading mb-1">{{ _('Getting Started') }}</h5>
+                <p class="mb-2">{{ _('Enter the username of the person who invited you to find their profile and request access to their group.') }}</p>
+                <form action="{{ url_for('main.find_sponsor') }}" method="get" class="d-flex gap-2">
+                    <input type="text" name="username" class="form-control form-control-sm" placeholder="{{ _('Their username') }}" required>
+                    <button type="submit" class="btn btn-sm btn-primary text-nowrap">{{ _('Find Sponsor') }}</button>
+                </form>
+            </div>
         </div>
-    </div>
     {% endif %}
 
     <div class="row">

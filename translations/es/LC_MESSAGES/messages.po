@@ -877,7 +877,7 @@ msgid "Manage"
 msgstr "Gestionar"
 
 #: app/templates/admin/dashboard.html:26 app/templates/admin/dashboard.html:50
-#: app/templates/groups/view.html:26
+#: app/templates/groups/view.html:26 app/templates/main/user_profile.html
 msgid "Groups"
 msgstr "Grupos"
 
@@ -2093,9 +2093,7 @@ msgstr "Su nombre de usuario"
 msgid "Find Sponsor"
 msgstr "Buscar Patrocinador"
 
-#: app/templates/main/user_profile.html
-msgid "Groups"
-msgstr "Grupos"
+
 
 #: app/templates/main/user_profile.html
 msgid "Request to Join"

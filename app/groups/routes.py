@@ -307,7 +307,10 @@ def link_resource(id):
         )
         db.session.add(link)
         db.session.commit()
-        flash(_("Hive account %(account)s linked to group.", account=resource_id), "success")
+        flash(
+            _("Hive account %(account)s linked to group.", account=resource_id),
+            "success",
+        )
 
     return redirect(url_for("groups.view", id=id))
 
@@ -361,7 +364,7 @@ def request_join(id):
         flash(_("You are already a member of this group."), "info")
         return redirect(url_for("main.user_profile", username=group.owner.username))
 
-    create_notification(
+    success = create_notification(
         user_id=group.owner_user_id,
         message=_(
             "%(username)s wants to join your group '%(group)s'",
@@ -372,7 +375,10 @@ def request_join(id):
         type="invite",
     )
 
-    flash(_("Your request has been sent to the group owner."), "success")
+    if success:
+        flash(_("Your request has been sent to the group owner."), "success")
+    else:
+        flash(_("Failed to send join request. Please try again later."), "danger")
     return redirect(url_for("main.user_profile", username=group.owner.username))
 
 

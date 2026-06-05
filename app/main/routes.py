@@ -35,7 +35,9 @@ def _new_post_url():
     """Return the smartest draft-creation URL for the current logged-in user."""
     memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
     if len(memberships) == 1:
-        return url_for("drafts.create", group_id=memberships[0].group_id), bool(memberships)
+        return url_for("drafts.create", group_id=memberships[0].group_id), bool(
+            memberships
+        )
     elif memberships:
         return url_for("drafts.create"), True
     return url_for("groups.create"), False
@@ -113,7 +115,6 @@ def index():
 @login_required
 def profile():
     if request.method == "POST":
-        import json as _json
         current_user.first_name = request.form.get("first_name", "").strip()
         current_user.last_name = request.form.get("last_name", "").strip()
         current_user.avatar_url = request.form.get("avatar_url", "").strip()
@@ -126,21 +127,25 @@ def profile():
         }
         links = {k: v for k, v in links.items() if v}
         if links:
-            current_user.bio = _json.dumps({"bio": bio_text, **links}, ensure_ascii=False)
+            current_user.bio = json.dumps(
+                {"bio": bio_text, **links}, ensure_ascii=False
+            )
         else:
             current_user.bio = bio_text
 
         try:
             db.session.commit()
             flash(_("Profile updated successfully!"), "success")
-        except Exception as e:
+        except Exception:
             db.session.rollback()
             flash(_("Error updating profile."), "danger")
 
         return redirect(url_for("main.profile"))
 
-    new_post_url, _ = _new_post_url()
-    return render_template("main/profile.html", user=current_user, new_post_url=new_post_url)
+    new_post_url, _has_groups = _new_post_url()
+    return render_template(
+        "main/profile.html", user=current_user, new_post_url=new_post_url
+    )
 
 
 @bp.route("/u/<username>")
@@ -172,10 +177,11 @@ def user_profile(username):
     own_post_url = None
     if current_user.is_authenticated:
         current_user_group_ids = {
-            m.group_id for m in GroupMember.query.filter_by(user_id=current_user.id).all()
+            m.group_id
+            for m in GroupMember.query.filter_by(user_id=current_user.id).all()
         }
         if current_user.username == user.username:
-            own_post_url, _ = _new_post_url()
+            own_post_url, _has_groups = _new_post_url()
 
     return render_template(
         "main/user_profile.html",

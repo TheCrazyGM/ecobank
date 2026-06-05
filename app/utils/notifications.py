@@ -12,5 +12,8 @@ def create_notification(user_id, message, link=None, type="info"):
         db.session.add(notification)
         db.session.commit()
         current_app.logger.info(f"Notification created for user {user_id}: {message}")
+        return True
     except Exception as e:
+        db.session.rollback()
         current_app.logger.error(f"Failed to create notification: {e}")
+        return False

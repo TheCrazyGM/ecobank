@@ -129,7 +129,7 @@ def create(group_id):
                 ).first()
                 if not membership and not current_user.is_admin:
                     abort(403)
-            except (ValueError, TypeError):
+            except ValueError, TypeError:
                 flash(_("Invalid group selected"), "danger")
                 return redirect(url_for("drafts.create"))
 
@@ -526,25 +526,33 @@ def submit(draft_id):
         clean_body = draft.body  # Fallback to original
 
     # 1. Construct Footer
-    author = draft.author
-    avatar_url = author.avatar_url or "https://via.placeholder.com/100"
+    import html
 
-    bio_text = author.bio_text or f"Member of {group.name}"
+    author = draft.author
+    avatar_url = html.escape(author.avatar_url or "https://via.placeholder.com/100")
+
+    display_name = html.escape(author.display_name)
+    bio_text = html.escape(author.bio_text or f"Member of {group.name}")
 
     social_links = author.bio_links
     social_html = ""
     if social_links:
         parts = []
         if social_links.get("twitter"):
-            parts.append(f'<a href="https://x.com/{social_links["twitter"]}">𝕏 @{social_links["twitter"]}</a>')
+            handle = html.escape(social_links["twitter"])
+            parts.append(f'<a href="https://x.com/{handle}">𝕏 @{handle}</a>')
         if social_links.get("instagram"):
-            parts.append(f'<a href="https://instagram.com/{social_links["instagram"]}">📸 @{social_links["instagram"]}</a>')
+            handle = html.escape(social_links["instagram"])
+            parts.append(f'<a href="https://instagram.com/{handle}">📸 @{handle}</a>')
         if social_links.get("youtube"):
-            parts.append(f'<a href="https://youtube.com/@{social_links["youtube"]}">▶ {social_links["youtube"]}</a>')
+            handle = html.escape(social_links["youtube"])
+            parts.append(f'<a href="https://youtube.com/@{handle}">▶ {handle}</a>')
         if social_links.get("tiktok"):
-            parts.append(f'<a href="https://tiktok.com/@{social_links["tiktok"]}">🎵 @{social_links["tiktok"]}</a>')
+            handle = html.escape(social_links["tiktok"])
+            parts.append(f'<a href="https://tiktok.com/@{handle}">🎵 @{handle}</a>')
         if social_links.get("facebook"):
-            parts.append(f'<a href="https://facebook.com/{social_links["facebook"]}">f {social_links["facebook"]}</a>')
+            handle = html.escape(social_links["facebook"])
+            parts.append(f'<a href="https://facebook.com/{handle}">f {handle}</a>')
         social_html = "<div>" + " &nbsp;|&nbsp; ".join(parts) + "</div>"
 
     footer_html = f"""
@@ -556,7 +564,7 @@ def submit(draft_id):
 </td>
 <td>
 <span><h4>About the Author</h4></span>
-<div><span><strong>{author.display_name}</strong></span> -
+<div><span><strong>{display_name}</strong></span> -
 <span>{bio_text}</span></div>
 {social_html}
 </td>
@@ -578,7 +586,10 @@ def submit(draft_id):
 
     if not resource:
         flash(
-            _("Hive account %(username)s is no longer linked to this group.", username=draft.hive_account_username),
+            _(
+                "Hive account %(username)s is no longer linked to this group.",
+                username=draft.hive_account_username,
+            ),
             "danger",
         )
         return redirect(url_for("drafts.view", draft_id=draft_id))

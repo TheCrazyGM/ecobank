@@ -99,8 +99,10 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
             return None
         try:
             data = _json.loads(self.bio)
-            return data.get("bio") or None
-        except (ValueError, TypeError):
+            if isinstance(data, dict):
+                return data.get("bio") or None
+            return self.bio
+        except ValueError, TypeError:
             return self.bio
 
     @property
@@ -113,7 +115,7 @@ class User(UserMixin, db.Model):  # ty:ignore[unsupported-base]
             if isinstance(data, dict):
                 return {k: v for k, v in data.items() if k != "bio" and v}
             return {}
-        except (ValueError, TypeError):
+        except ValueError, TypeError:
             return {}
 
     def __repr__(self):

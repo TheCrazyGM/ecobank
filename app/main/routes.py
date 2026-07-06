@@ -19,7 +19,7 @@ from flask_login import current_user, login_required
 
 from app.extensions import cache, db
 from app.main import bp
-from app.models import Group, GroupMember, HiveAccount, User
+from app.models import Group, GroupMember, HiveAccount, TokenPriceSnapshot, User
 from app.utils.hive import (
     fetch_account_wallet,
     fetch_post,
@@ -48,6 +48,15 @@ def robots_txt():
     if not current_app.static_folder:
         abort(404)
     return send_from_directory(current_app.static_folder, "robots.txt")
+
+
+@bp.route("/project-calendario")
+def project_calendario():
+    if not current_app.static_folder:
+        abort(404)
+    return send_from_directory(
+        current_app.static_folder, "pages/project-calendario.html"
+    )
 
 
 @bp.route("/")
@@ -396,6 +405,32 @@ def about():
 @bp.route("/privacy")
 def privacy():
     return render_template("main/privacy.html", title=_("Privacy Policy"))
+
+
+@bp.route("/token-price")
+@cache.cached(timeout=300)
+def token_price():
+    snapshots = (
+        TokenPriceSnapshot.query.filter_by(token="ECOBANK")
+        .order_by(TokenPriceSnapshot.created_at.asc())
+        .limit(500)
+        .all()
+    )
+    latest = snapshots[-1] if snapshots else None
+    history = [
+        {
+            "ts": s.created_at.isoformat(),
+            "price_hive": s.price_hive,
+            "price_usd": s.price_usd,
+        }
+        for s in snapshots
+    ]
+    return render_template(
+        "main/token_price.html",
+        title=_("ECOBANK Token Price"),
+        latest=latest,
+        history=history,
+    )
 
 
 @bp.route("/honey/trap")

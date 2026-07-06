@@ -50,6 +50,7 @@ def create_app(config_class=Config):
                 run_paypal_maintenance,
                 cleanup_draft_versions,
                 backup_database,
+                update_ecobank_price_snapshot,
             )  # Import function directly
 
             scheduler.start()
@@ -73,6 +74,13 @@ def create_app(config_class=Config):
                 func=backup_database,
                 trigger="interval",
                 hours=24,
+            )
+
+            scheduler.add_job(
+                id="update_ecobank_price_snapshot",
+                func=update_ecobank_price_snapshot,
+                trigger="interval",
+                hours=1,
             )
 
             atexit.register(lambda: scheduler.shutdown(wait=False))

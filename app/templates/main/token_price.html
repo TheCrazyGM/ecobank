@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('ECOBANK Token Price') }}{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">{{ _('ECOBANK Token Price') }}</h2>
+
+    {% if latest %}
+      <div class="row mb-4">
+        <div class="col-sm-6 col-lg-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="text-muted small text-uppercase">{{ _('Price (HIVE)') }}</div>
+              <div class="fs-4 fw-semibold">{{ "%.4f"|format(latest.price_hive) if latest.price_hive is not none else "—" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="text-muted small text-uppercase">{{ _('Price (USD)') }}</div>
+              <div class="fs-4 fw-semibold">${{ "%.4f"|format(latest.price_usd) if latest.price_usd is not none else "—" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="text-muted small text-uppercase">{{ _('Last Updated') }}</div>
+              <div class="fs-6">{{ latest.created_at.strftime('%Y-%m-%d %H:%M UTC') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <canvas id="ecobank-price-chart" height="90"></canvas>
+      <p class="text-muted small mt-2">{{ _('Price derived from the HSBIDAO:ECOBANK Hive-Engine liquidity pool, updated hourly.') }}</p>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+      <script>
+        const history = {{ history | tojson }};
+        const labels = history.map(r => new Date(r.ts).toLocaleString());
+
+        new Chart(document.getElementById("ecobank-price-chart"), {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "{{ _('ECOBANK / USD') }}",
+                data: history.map(r => r.price_usd),
+                borderColor: "#198754",
+                backgroundColor: "rgba(25,135,84,0.1)",
+                borderWidth: 2,
+                pointRadius: 1,
+                tension: 0.3,
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { display: false },
+              y: { ticks: { maxTicksLimit: 5 } },
+            },
+          },
+        });
+      </script>
+    {% else %}
+      <p class="text-muted">{{ _('No price data yet — the first snapshot will appear shortly.') }}</p>
+    {% endif %}
+{% endblock %}

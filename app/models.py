@@ -274,3 +274,19 @@ class Notification(db.Model):
 
     def __repr__(self) -> str:
         return f"<Notification {self.id} for {self.user_id}>"
+
+
+class TokenPriceSnapshot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(32), index=True, nullable=False)
+    price_hive = db.Column(db.Float)
+    price_usd = db.Column(db.Float)
+    created_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        index=True,
+        nullable=False,
+    )
+
+    def __repr__(self) -> str:
+        return f"<TokenPriceSnapshot {self.token} @ {self.created_at}>"

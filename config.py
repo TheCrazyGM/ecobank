@@ -37,6 +37,9 @@ class Config:
     # Default to 15 HP delegation for new accounts
     HIVE_DELEGATION_AMOUNT = float(os.environ.get("HIVE_DELEGATION_AMOUNT", 15.0))
 
+    # Hive-Engine node used for token price resolution (e.g. ECOBANK LP pricing)
+    HIVE_ENGINE_NODE = os.environ.get("HIVE_ENGINE_NODE", "https://engine.hive.pizza")
+
     # PayPal
     PAYPAL_CLIENT_ID = os.environ.get("PAYPAL_CLIENT_ID")
     PAYPAL_CLIENT_SECRET = os.environ.get("PAYPAL_CLIENT_SECRET")

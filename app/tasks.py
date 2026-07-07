@@ -215,6 +215,34 @@ def backup_database():
             logging.error(f"Pruning old backups failed: {e}")
 
 
+def update_ecobank_price_snapshot():
+    """
+    Scheduled task to resolve the current ECOBANK price via the Hive-Engine
+    LP and store a snapshot for the /token-price chart.
+    """
+    from flask import current_app
+    from app.extensions import db
+    from app.models import TokenPriceSnapshot
+    from app.utils.token_price import resolve_ecobank_price
+
+    app = scheduler.app or current_app
+    with app.app_context():
+        try:
+            prices = resolve_ecobank_price(app.config["HIVE_ENGINE_NODE"])
+        except Exception as e:
+            logging.error(f"ECOBANK price snapshot failed: {e}")
+            return
+
+        snapshot = TokenPriceSnapshot(
+            token="ECOBANK",
+            price_hive=prices.get("hive"),
+            price_usd=prices.get("usd"),
+        )
+        db.session.add(snapshot)
+        db.session.commit()
+        logging.info(f"ECOBANK price snapshot saved: {prices}")
+
+
 def purge_old_backups(directory, days=7):
     """
     Deletes files in the directory older than the specified number of days.

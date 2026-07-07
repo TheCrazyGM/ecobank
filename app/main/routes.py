@@ -412,11 +412,12 @@ def privacy():
 def token_price():
     snapshots = (
         TokenPriceSnapshot.query.filter_by(token="ECOBANK")
-        .order_by(TokenPriceSnapshot.created_at.asc())
+        .order_by(TokenPriceSnapshot.created_at.desc())
         .limit(500)
         .all()
     )
-    latest = snapshots[-1] if snapshots else None
+    latest = snapshots[0] if snapshots else None
+    snapshots = list(reversed(snapshots))
     history = [
         {
             "ts": s.created_at.isoformat(),

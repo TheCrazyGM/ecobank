@@ -282,7 +282,10 @@ class TokenPriceSnapshot(db.Model):
     price_hive = db.Column(db.Float)
     price_usd = db.Column(db.Float)
     created_at = db.Column(
-        db.DateTime, default=datetime.now(timezone.utc), index=True, nullable=False
+        db.DateTime,
+        default=lambda: datetime.now(timezone.utc),
+        index=True,
+        nullable=False,
     )
 
     def __repr__(self) -> str:

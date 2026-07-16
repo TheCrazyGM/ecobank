@@ -120,7 +120,7 @@ def backup_database():
             ) or u.drivername.startswith("postgres")
 
             env = os.environ.copy()
-            cmd = None
+            dump_args = None
             backup_file = None
 
             if is_mysql:
@@ -132,35 +132,20 @@ def backup_database():
                     target_dir, f"ecobank_backup_{timestamp}.sql.gz"
                 )
 
-                # Construct mysqldump command
-                # mysqldump -h host -P port -u user dbname | gzip > file
-                cmd_parts = ["mysqldump"]
+                # Construct mysqldump arguments without invoking a shell.
+                dump_args = ["mysqldump"]
                 if u.host:
-                    cmd_parts.extend(["-h", u.host])
+                    dump_args.extend(["-h", u.host])
                 if u.port:
-                    cmd_parts.extend(["-P", str(u.port)])
+                    dump_args.extend(["-P", str(u.port)])
                 if u.username:
-                    cmd_parts.extend(["-u", u.username])
+                    dump_args.extend(["-u", u.username])
 
                 # Password via env
                 if u.password:
                     env["MYSQL_PWD"] = u.password
 
-                cmd_parts.append(u.database)
-
-                # We construct the shell command string manually to handle the pipe
-                # safely quoting args is tricky in shell=True, but these are from config.
-                # Let's trust config for now or use Popen with list for first part?
-                # Popen with pipe requires shell=True for the pipe part usually or manual piping.
-                # Let's stick to the previous shell=True pattern for simplicity but be careful.
-
-                # Re-construct command string safely-ish
-                defs = f"mysqldump -h '{u.host or 'localhost'}' -u '{u.username or 'root'}'"
-                if u.port:
-                    defs += f" -P {u.port}"
-
-                # Don't include -p in command string, utilize MYSQL_PWD env var
-                cmd = f"{defs} '{u.database}' | gzip > '{backup_file}'"
+                dump_args.append(u.database)
 
             elif is_postgres:
                 target_dir = os.path.join(backup_dir, "postgres")
@@ -175,30 +160,44 @@ def backup_database():
                     env["PGPASSWORD"] = u.password
 
                 # pg_dump -h host -p port -U user -d db
-                defs = f"pg_dump -h '{u.host or 'localhost'}' -U '{u.username or 'postgres'}'"
+                dump_args = [
+                    "pg_dump",
+                    "-h",
+                    u.host or "localhost",
+                    "-U",
+                    u.username or "postgres",
+                ]
                 if u.port:
-                    defs += f" -p {u.port}"
-
-                cmd = f"{defs} -d '{u.database}' | gzip > '{backup_file}'"
+                    dump_args.extend(["-p", str(u.port)])
+                dump_args.extend(["-d", u.database])
 
             else:
                 logging.warning(f"Unsupported database type for backup: {u.drivername}")
                 return
 
             # Execute
-            if cmd:
-                process = subprocess.Popen(
-                    cmd,
-                    shell=True,
-                    env=env,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                )
-                stdout, stderr = process.communicate()
+            if dump_args:
+                with open(backup_file, "wb") as backup_handle:
+                    process = subprocess.Popen(
+                        dump_args,
+                        env=env,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                    )
+                    gzip_process = subprocess.Popen(
+                        ["gzip"],
+                        stdin=process.stdout,
+                        stdout=backup_handle,
+                        stderr=subprocess.PIPE,
+                    )
+                    process.stdout.close()
+                    _, dump_stderr = process.communicate()
+                    _, gzip_stderr = gzip_process.communicate()
 
-                if process.returncode == 0:
+                if process.returncode == 0 and gzip_process.returncode == 0:
                     logging.info(f"Database backup successful: {backup_file}")
                 else:
+                    stderr = dump_stderr or gzip_stderr
                     logging.error(f"Database backup failed: {stderr.decode()}")
 
         except Exception as e:

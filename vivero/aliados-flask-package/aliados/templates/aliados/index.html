@@ -1,0 +1,16 @@
+{% extends "aliados/base.html" %}
+{% block title %}Aliados{% endblock %}
+{% block description %}Aliados de Ecobank Development.{% endblock %}
+{% block content %}
+<header class="pillar-head">
+  <p class="eyebrow">Ecobank Development</p>
+  <h1>Aliados</h1>
+</header>
+<ul class="species-grid">
+  {% for p in partners %}
+  <li class="sp-card"><a href="{{ url_for('aliados.pillar', partner=p.slug) }}">
+    <h3>{{ p.pillar_title }}</h3>
+  </a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

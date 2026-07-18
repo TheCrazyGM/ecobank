@@ -1,0 +1,5 @@
+Flask>=3.0
+python-frontmatter>=1.1
+Markdown>=3.6
+# optional, only if you freeze to static HTML:
+# Frozen-Flask>=1.0

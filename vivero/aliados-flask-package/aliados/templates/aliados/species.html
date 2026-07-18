@@ -1,0 +1,42 @@
+{% extends "aliados/base.html" %}
+{% block title %}{{ species.meta_title }}{% endblock %}
+{% block description %}{{ species.meta_description }}{% endblock %}
+{% block og_image %}{% if species.image %}<meta property="og:image" content="{{ request.url_root.rstrip('/') }}{{ species.image }}">{% endif %}{% endblock %}
+
+{% block breadcrumbs %}
+<nav class="crumbs wrap" aria-label="Ruta de navegación">
+  <a href="/">Inicio</a> <span aria-hidden="true">›</span>
+  <a href="{{ url_for('aliados.pillar', partner=partner.slug) }}">{{ partner.pillar_title }}</a>
+  <span aria-hidden="true">›</span>
+  <span aria-current="page">{{ species.title }}</span>
+</nav>
+{% endblock %}
+
+{% block content %}
+<article class="species">
+  <header class="sp-head">
+    {% if species.conservation or species.cites %}
+    <p class="badges">
+      {% if species.conservation %}<span class="badge badge-cr">{{ species.conservation }}</span>{% endif %}
+      {% if species.cites %}<span class="badge badge-cites">CITES {{ species.cites }}</span>{% endif %}
+    </p>
+    {% endif %}
+    <h1>{{ species.title }} <em>{{ species.scientific_name }}</em></h1>
+    <p class="family">{{ species.family }}{% if species.common_names %} · {{ species.common_names[:2] | join(" · ") }}{% endif %}</p>
+    {% if species.common_names and species.common_names | length > 2 %}
+    <p class="alt-names">También conocido regionalmente como: {{ species.common_names[2:] | join(", ") }}</p>
+    {% endif %}
+  </header>
+
+  <div class="sp-body">
+    {{ species.body_html | safe }}
+  </div>
+
+  <aside class="cta-block">
+    <h2>Encarga tu tanda de {{ species.title | lower }}</h2>
+    <p>Disponible por encargo (tanda por rescate). Dinos cantidad y fecha objetivo.</p>
+    {% if partner.whatsapp %}<a class="cta" href="https://wa.me/{{ partner.whatsapp }}?text=Hola,%20quiero%20encargar%20una%20tanda%20de%20{{ species.title }}">Solicitar por WhatsApp</a>{% endif %}
+    <p class="back"><a href="{{ url_for('aliados.pillar', partner=partner.slug) }}">← Ver todas las especies</a></p>
+  </aside>
+</article>
+{% endblock %}

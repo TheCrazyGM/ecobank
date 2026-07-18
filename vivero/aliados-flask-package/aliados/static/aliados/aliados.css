@@ -1,0 +1,109 @@
+/* ---------------------------------------------------------------
+   Aliados — starter styles for the native-species partner pages.
+   Rebrand by overriding the :root tokens to match ecobankdevelopment.com.
+   Palette is grounded in the Andean cloud forest, not a generic default.
+--------------------------------------------------------------- */
+:root{
+  --paper:#f7faf6;      /* cool near-white with a faint leaf tint */
+  --ink:#17211b;        /* deep canopy near-black */
+  --canopy:#1f4d33;     /* deep forest green — brand/headings */
+  --leaf:#3f8457;       /* living green — links & CTA */
+  --leaf-dk:#2c6440;
+  --bark:#6d5a43;       /* earthy brown — secondary text */
+  --line:#dde6dc;       /* hairline */
+  --cr:#8a2f2f;         /* conservation red */
+  --cites:#7a5a1e;      /* CITES amber-brown */
+  --max:70rem;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Inter",system-ui,-apple-system,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:1.06rem;line-height:1.65;
+  font-feature-settings:"liga" 1,"kern" 1;
+}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2.5rem)}
+
+h1,h2,h3{font-family:var(--display);color:var(--canopy);line-height:1.12;letter-spacing:-.01em;margin:0 0 .4em}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:600}
+h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:600}
+h3{font-size:1.2rem;font-weight:600}
+h1 em,h2 em,h3 em{font-style:italic;font-weight:400;color:var(--bark);display:block;font-size:.62em;margin-top:.15em}
+
+a{color:var(--leaf-dk);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--leaf)}
+:focus-visible{outline:2.5px solid var(--leaf);outline-offset:2px;border-radius:2px}
+
+/* eyebrow / taxonomic labels — the signature small-caps rule */
+.eyebrow{
+  font:600 .72rem/1 var(--body);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--leaf-dk);margin:0 0 1rem;
+  padding-bottom:.6rem;border-bottom:1px solid var(--line);
+}
+
+.crumbs{padding-top:1.4rem;font-size:.85rem;color:var(--bark)}
+.crumbs a{color:var(--bark)}
+.crumbs span[aria-current]{color:var(--ink)}
+
+.pillar-head{padding:2.2rem 0 1rem}
+.lede{max-width:52ch;color:var(--ink)}
+.lede p{margin:.8em 0}
+
+/* hero band */
+.heroes{margin:2.4rem 0}
+.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1rem}
+.hero-card{
+  display:block;text-decoration:none;color:inherit;
+  background:var(--canopy);border-radius:14px;padding:1.5rem 1.4rem;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.hero-card *{color:var(--paper)}
+.hero-card h2{color:var(--paper)}
+.hero-card h2 em{color:#b9d6c2}
+.hero-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(31,77,51,.28)}
+.hero-card .go{display:inline-block;margin-top:.6rem;font-weight:600;font-size:.92rem}
+
+/* catalog clusters */
+.catalog{margin:2.4rem 0}
+.cluster{margin-bottom:2.4rem}
+.cluster-title{padding-bottom:.5rem;border-bottom:2px solid var(--canopy)}
+.species-grid{list-style:none;margin:1.2rem 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.9rem}
+.sp-card a{
+  display:block;text-decoration:none;color:inherit;height:100%;
+  background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.15rem;
+  transition:border-color .18s ease,transform .18s ease;
+}
+.sp-card a:hover{border-color:var(--leaf);transform:translateY(-2px)}
+.sp-card h3{margin-bottom:.4rem}
+.teaser{margin:.35rem 0 0;font-size:.95rem;color:var(--bark)}
+
+.badges{margin:0 0 .5rem;display:flex;gap:.4rem;flex-wrap:wrap}
+.badge{font:600 .68rem/1 var(--body);letter-spacing:.03em;padding:.32em .6em;border-radius:999px;color:#fff}
+.badge-cr{background:var(--cr)}
+.badge-cites{background:var(--cites)}
+
+/* species page */
+.species{padding-top:1.4rem;max-width:60ch}
+.sp-head{margin-bottom:1.6rem}
+.family{font-family:var(--display);font-style:italic;color:var(--bark);margin:.2rem 0 0}
+.alt-names{font-size:.85rem;color:var(--bark);margin:.3rem 0 0}
+.sp-body h2{margin-top:1.8rem}
+.sp-body ul{padding-left:1.1rem}
+.sp-body li{margin:.3em 0}
+
+/* CTA */
+.cta-block{margin:2.6rem 0;padding:1.6rem 1.5rem;background:#fff;border:1px solid var(--line);border-left:4px solid var(--leaf);border-radius:12px}
+.cta{display:inline-block;margin-top:.6rem;background:var(--leaf);color:#fff;font-weight:600;
+  text-decoration:none;padding:.7rem 1.3rem;border-radius:999px;transition:background .18s ease}
+.cta:hover{background:var(--leaf-dk);color:#fff}
+.back{margin-top:1rem;font-size:.92rem}
+
+.site-foot{margin-top:3rem;padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--bark);font-size:.9rem}
+.site-foot p{margin:.2rem 0}
+.foot-note{font-style:italic}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}

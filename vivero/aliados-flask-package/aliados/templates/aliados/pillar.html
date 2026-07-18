@@ -1,0 +1,67 @@
+{% extends "aliados/base.html" %}
+{% block title %}{{ partner.meta_title or partner.pillar_title }}{% endblock %}
+{% block description %}{{ partner.meta_description }}{% endblock %}
+
+{% block breadcrumbs %}
+<nav class="crumbs wrap" aria-label="Ruta de navegación">
+  <a href="/">Inicio</a> <span aria-hidden="true">›</span>
+  <span aria-current="page">{{ partner.pillar_title }}</span>
+</nav>
+{% endblock %}
+
+{% block content %}
+<header class="pillar-head">
+  <p class="eyebrow">Vivero aliado · Andes de Colombia</p>
+  <h1>{{ partner.pillar_title }}</h1>
+  <div class="lede">{{ partner.body_html | safe }}</div>
+</header>
+
+{% set heroes = species | selectattr("hero") | list %}
+{% if heroes %}
+<section class="heroes" aria-label="Árboles insignia">
+  <p class="eyebrow">Insignia · fijadores de nitrógeno</p>
+  <div class="hero-grid">
+    {% for s in heroes %}
+    <a class="hero-card" href="{{ url_for('aliados.species', partner=partner.slug, species=s.slug) }}">
+      <h2>{{ s.title }} <em>{{ s.scientific_name }}</em></h2>
+      <p>{{ s.teaser }}</p>
+      <span class="go">Ver ficha y encargar →</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="catalog" aria-label="Catálogo de especies">
+  {% for cluster in partner.clusters %}
+    {% set group = species | selectattr("cluster", "equalto", cluster.id) | list %}
+    {% if group %}
+    <div class="cluster">
+      <h2 class="cluster-title">{{ cluster.label }}</h2>
+      <ul class="species-grid">
+        {% for s in group %}
+        <li class="sp-card">
+          <a href="{{ url_for('aliados.species', partner=partner.slug, species=s.slug) }}">
+            <h3>{{ s.title }} <em>{{ s.scientific_name }}</em></h3>
+            {% if s.conservation or s.cites %}
+            <p class="badges">
+              {% if s.conservation %}<span class="badge badge-cr">{{ s.conservation }}</span>{% endif %}
+              {% if s.cites %}<span class="badge badge-cites">CITES {{ s.cites }}</span>{% endif %}
+            </p>
+            {% endif %}
+            <p class="teaser">{{ s.teaser }}</p>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endfor %}
+</section>
+
+<section class="cta-block">
+  <h2>Encarga tu tanda</h2>
+  <p>Cuéntanos qué especie, cuántas plántulas y para cuándo las necesitas.</p>
+  {% if partner.whatsapp %}<a class="cta" href="https://wa.me/{{ partner.whatsapp }}">Solicitar por WhatsApp</a>{% endif %}
+</section>
+{% endblock %}

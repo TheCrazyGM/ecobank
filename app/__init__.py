@@ -1,11 +1,13 @@
+from datetime import UTC
+
 from flask import Flask, current_app, request
 from flask_babel import gettext as _
 from flask_babel import ngettext
 from flask_login import current_user
 
-from app.extensions import babel, db, login_manager, migrate, mail, scheduler
-from config import Config
+from app.extensions import babel, db, login_manager, mail, migrate, scheduler
 from app.utils.markdown_render import render_markdown
+from config import Config
 
 
 def get_locale():
@@ -38,8 +40,8 @@ def create_app(config_class=Config):
     # Only run scheduler in production or if explicitly enabled, to avoid double-runs in debug reloader
     if not app.debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         try:
-            import fcntl
             import atexit
+            import fcntl
 
             lock_file = open("/tmp/ecobank_scheduler.lock", "w")
             fcntl.lockf(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -47,9 +49,9 @@ def create_app(config_class=Config):
             # If we acquire the lock, we are the designated scheduler worker
             scheduler.init_app(app)
             from app.tasks import (
-                run_paypal_maintenance,
-                cleanup_draft_versions,
                 backup_database,
+                cleanup_draft_versions,
+                run_paypal_maintenance,
                 update_ecobank_price_snapshot,
             )  # Import function directly
 
@@ -86,7 +88,7 @@ def create_app(config_class=Config):
             atexit.register(lambda: scheduler.shutdown(wait=False))
             # Lock is automatically released when the process exits and file identifier is closed
 
-        except IOError:
+        except OSError:
             # Failed to acquire lock, another worker is running the scheduler
             pass
 
@@ -107,9 +109,9 @@ def create_app(config_class=Config):
     # Context Processors
     @app.context_processor
     def inject_now():
-        from datetime import datetime, timezone
+        from datetime import datetime
 
-        return {"now": datetime.now(timezone.utc)}
+        return {"now": datetime.now(UTC)}
 
     login_manager.login_view = "auth.login"
 
@@ -159,12 +161,13 @@ def create_app(config_class=Config):
     app.register_blueprint(errors_bp)
 
     # Activate "Under Attack" Mode (Browser Check Middleware)
-    from app.middleware import BrowserCheckMiddleware
+    # Disabled to avoid Google Safe Browsing redirect/cloaking flags
+    # from app.middleware import BrowserCheckMiddleware
     from werkzeug.middleware.proxy_fix import ProxyFix
 
-    # Order: Request -> BrowserCheck -> ProxyFix -> Flask
+    # Order: Request -> ProxyFix -> Flask
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
-    app.wsgi_app = BrowserCheckMiddleware(app.wsgi_app)
+    # app.wsgi_app = BrowserCheckMiddleware(app.wsgi_app)
 
     import os  # Ensure os is imported
 

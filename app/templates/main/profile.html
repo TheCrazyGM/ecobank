@@ -135,13 +135,13 @@
                                     <div><span><strong>{{ user.display_name }}</strong></span> -
                                         <span>{{ user.bio_text or _('Bio not set.') }}</span></div>
                                     {% if user.bio_links %}
-                                    <div class="mt-1">
-                                        {% if user.bio_links.twitter %}<a href="https://x.com/{{ user.bio_links.twitter }}" target="_blank" class="me-2 text-decoration-none">𝕏 @{{ user.bio_links.twitter }}</a>{% endif %}
-                                        {% if user.bio_links.instagram %}<a href="https://instagram.com/{{ user.bio_links.instagram }}" target="_blank" class="me-2 text-decoration-none">📸 @{{ user.bio_links.instagram }}</a>{% endif %}
-                                        {% if user.bio_links.youtube %}<a href="https://youtube.com/@{{ user.bio_links.youtube }}" target="_blank" class="me-2 text-decoration-none">▶ {{ user.bio_links.youtube }}</a>{% endif %}
-                                        {% if user.bio_links.tiktok %}<a href="https://tiktok.com/@{{ user.bio_links.tiktok }}" target="_blank" class="me-2 text-decoration-none">🎵 @{{ user.bio_links.tiktok }}</a>{% endif %}
-                                        {% if user.bio_links.facebook %}<a href="https://facebook.com/{{ user.bio_links.facebook }}" target="_blank" class="me-2 text-decoration-none">f {{ user.bio_links.facebook }}</a>{% endif %}
-                                    </div>
+                                        <div class="mt-1">
+                                            {% if user.bio_links.twitter %}<a href="https://x.com/{{ user.bio_links.twitter }}" target="_blank" class="me-2 text-decoration-none">𝕏 @{{ user.bio_links.twitter }}</a>{% endif %}
+                                            {% if user.bio_links.instagram %}<a href="https://instagram.com/{{ user.bio_links.instagram }}" target="_blank" class="me-2 text-decoration-none">📸 @{{ user.bio_links.instagram }}</a>{% endif %}
+                                            {% if user.bio_links.youtube %}<a href="https://youtube.com/@{{ user.bio_links.youtube }}" target="_blank" class="me-2 text-decoration-none">▶ {{ user.bio_links.youtube }}</a>{% endif %}
+                                            {% if user.bio_links.tiktok %}<a href="https://tiktok.com/@{{ user.bio_links.tiktok }}" target="_blank" class="me-2 text-decoration-none">🎵 @{{ user.bio_links.tiktok }}</a>{% endif %}
+                                            {% if user.bio_links.facebook %}<a href="https://facebook.com/{{ user.bio_links.facebook }}" target="_blank" class="me-2 text-decoration-none">f {{ user.bio_links.facebook }}</a>{% endif %}
+                                        </div>
                                     {% endif %}
                                 </td>
                             </tr>

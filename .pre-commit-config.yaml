@@ -26,5 +26,6 @@ repos:
     rev: '3.0.11' # replace with the latest tag on GitHub
     hooks:
       - id: djhtml
+        exclude: ^app/static/
       - id: djcss
       - id: djjs

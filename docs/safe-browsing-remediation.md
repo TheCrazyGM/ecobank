@@ -237,11 +237,13 @@ SRBDE cross-links). Remaining, in order:
 
 | # | Change | Status |
 |---|---|---|
-| P2-1 | **`/security` page** (do first). The custodial model stated plainly: keys stored encrypted (Fernet at rest); **owner key never accepted or stored for *connected* profiles**; for *created* profiles EcoBank holds the master password on purpose, why, and how to take custody. What each key type can do. **"EcoBank will never email or DM you asking for a key or password."** How to remove keys (built — `account/view`). | ⬜ |
-| P2-2 | **`/terms` page**. What the service is/isn't: keys are the user's property; the custody model and how it ends; **not a financial/investment service — no deposits, no yield, no returns**; credit pricing and refund terms. | ⬜ |
-| P2-3 | Link `/security` + `/terms` from the footer and from `about.html`. | ⬜ |
+| P2-1 | **`/security` page** — custodial model stated plainly; owner key never taken for connected profiles; created profiles hold the master password on purpose (why + how to take custody); what each key does; "EcoBank will never ask you for a key"; how to remove keys. Public/indexable, linked from footer + About. | ✅ done |
+| P2-1b | Reframe the money story: most users hold no keys and buy nothing (post through a shared community account); a "credit" is prepaid account creation (service fee for the ~3 HIVE network cost), not buying currency/an investment. `buy_credits.html`, homepage onboarding, nav label. `docs/vocabulary.md` — three-accounts distinction. | ✅ done |
+| P2-2 | **`/terms` page**. What the service is/isn't: keys are the user's property; the custody model and how it ends; **not a financial/investment service — no deposits, no yield, no returns**; credit pricing and refund terms. | ⬜ next |
+| P2-3 | Link `/security` (done) + `/terms` from footer and `about.html`. | 🟡 security done; terms pending P2-2 |
 | P2-4 | **OG image check** — `img/ecobank_header.png` must not read as bank branding. | ⬜ |
 | P2-5 | Honeypot review — the hidden `<a>"Constructo"` footer link + `/honey/trap`. Form-field honeypots are fine; the hidden link is cloaking-adjacent. **Deferred to thecrazygm** (it's his anti-abuse tool). | ⬜ thecrazygm |
+| P2-6 | Decide: rename the "groups" feature to "communities" in the UI? (prose already says "community"; feature/route still "group".) | ⬜ Alex |
 
 **Custody mitigations to keep the model defensible** (some now, some ongoing):
 

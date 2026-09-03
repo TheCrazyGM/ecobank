@@ -160,6 +160,11 @@ def create_app(config_class=Config):
 
     app.register_blueprint(errors_bp)
 
+    # Search-engine indexing policy: noindex everything except public pages
+    from app import security_headers
+
+    security_headers.init_app(app)
+
     # Activate "Under Attack" Mode (Browser Check Middleware)
     # Disabled to avoid Google Safe Browsing redirect/cloaking flags
     # from app.middleware import BrowserCheckMiddleware

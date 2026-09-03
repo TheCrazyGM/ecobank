@@ -188,18 +188,20 @@ Everywhere: "EcoBank", "wallet", "bank account", "My Keys", "Wallet Management".
 **Deliverable:** one paragraph — which list(s), what they cite, what evidence they show.
 
 ### Phase 1 — Remove the social-engineering signals (small, reviewable PRs)
-| # | Change | Files |
-|---|---|---|
-| 1 | Fix `info@ecobank.com` → real contact | `privacy.html` |
-| 2 | Rework `/account/import`: option (a)+(b) above — fewer secret inputs, gated interstitial, `noindex` | `account/import.html`, `account/routes.py`, add meta |
-| 3 | `type="password"` + `autocomplete` on all secret fields; crypto-strong generator | `create.html`, `login.html`, `register.html`, `import.html` |
-| 4 | House-language pass: "wallet/bank account" → "Hive account / keys", soften "bank" everywhere user-facing; keep a clear one-liner of what EcoBank is | many templates, i18n strings |
-| 5 | Site-wide non-affiliation notice (footer or a small persistent line) + `noindex` on all `/account`, `/drafts`, `/admin` | `base.html`, blueprint templates |
-| 6 | `robots.txt`: allow public pages, disallow app routes; add `sitemap.xml` for public pages only | `static/robots.txt`, `main/routes.py` |
-| 7 | Add CSP + SRI; move inline `buy_credits` JS to a static file | `__init__.py` / new `security.py`, `base.html`, `buy_credits.html` |
+Branch `safety/vocab-and-phishing-signals`.
 
-Each row = its own PR/commit so review stays easy. i18n: keep long strings on one line
-(see `feedback_po_linebreaks`), run `./update_translations.sh`, add `es` translations.
+| # | Change | Status |
+|---|---|---|
+| 1 | Fix `info@ecobank.com` → real contact (`CONTACT_EMAIL` config, env-overridable) | ✅ done — **default is a guess, set the env var** |
+| 2 | Rework `/account/import` → "Connect a digital profile": master-password path removed, single posting-key field + optional active, links to `tools.crypto-dreamr.com/key-recovery`, `noindex`, consent checkbox | ✅ done |
+| 3 | Crypto-strong generator on `create.html` (`crypto.getRandomValues`), "saved it" confirm; `type=password` + `autocomplete=off` on connect fields | ✅ done (create.html shows the new master password by design, stays `type=text`) |
+| 4 | Vocabulary pass — canonical terms in `docs/vocabulary.md`; "digital profile", "credit", "My Account", "recovery keys" | ✅ done (EN); `login.html` / `register.html` untouched (no jargon there) |
+| 5 | Site-wide non-affiliation line + operator identity in footer & meta; About + Privacy rewritten | ✅ done. `noindex` on `/account`, `/drafts`, `/admin` — ⬜ still to do |
+| 6 | `robots.txt`: allow public pages, disallow app routes; `sitemap.xml` for public pages | ⬜ **needs thecrazygm** (coordinate with proxy) |
+| 7 | CSP + SRI; move inline `buy_credits` JS to a static file | ⬜ **needs thecrazygm** (proxy header interaction) |
+| 8 | Spanish catalog: `./update_translations.sh`, translate new strings | ⬜ after EN sign-off |
+
+i18n: keep long strings on one line (see `feedback_po_linebreaks`).
 
 ### Phase 2 — Legitimacy scaffolding
 | # | Change |

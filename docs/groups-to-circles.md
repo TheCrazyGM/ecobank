@@ -124,8 +124,13 @@ revisit, add `circle_*` keys alongside and keep both.
 
 ## Rollout
 
-1. **PR 1 — L1 copy** (English). Folds in with the Phase 2 vocabulary work. Easy review.
-2. **PR 2 — L2 URLs** — prefix change + `redirects.py` + test checklist.
-3. **PR 3 — Spanish** — `update_translations.sh`, translate the delta.
+1. **L1 copy** (English) — ✅ done. Commit `refactor(vocab): rename 'groups' -> 'circles' in user-facing copy`.
+2. **L2 URLs** — ✅ done. `url_prefix` `/groups` → `/circles`; `admin` routes `/admin/groups*` → `/admin/circles*` (endpoint names unchanged); new `app/redirects.py` 301s both old prefixes (query string preserved). Verified: `/groups/5?tab=history` → `/circles/5?tab=history`, `/admin/groups/edit/5` → `/admin/circles/edit/5`.
+3. **Spanish** — ⬜ `update_translations.sh`, translate the delta (*grupo* → *círculo*, masculine articles unchanged).
 
-Update `docs/vocabulary.md` (the `group`/`community` row → `circle`) as part of PR 1.
+`docs/vocabulary.md` row updated to `circle`.
+
+### Not touched (as planned)
+Blueprint id `groups`; `Group`/`GroupMember`/`GroupResource`; `group_id` columns and
+FKs; `/api/group/<id>/accounts` (internal XHR); `ecobank.group_id` / `group_name`
+in on-chain post metadata; template vars `has_groups` / `owned_groups`.

@@ -128,14 +128,14 @@ def delete_user(user_id):
     return redirect(url_for("admin.manage_users"))
 
 
-@bp.route("/groups")
+@bp.route("/circles")
 @admin_required
 def manage_groups():
     groups = Group.query.order_by(Group.created_at.desc()).limit(50).all()
     return render_template("admin/groups.html", groups=groups)
 
 
-@bp.route("/groups/edit/<int:group_id>", methods=["GET", "POST"])
+@bp.route("/circles/edit/<int:group_id>", methods=["GET", "POST"])
 @admin_required
 def edit_group(group_id):
     group = Group.query.get_or_404(group_id)

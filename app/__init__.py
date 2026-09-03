@@ -134,7 +134,10 @@ def create_app(config_class=Config):
 
     from app.groups import bp as groups_bp
 
-    app.register_blueprint(groups_bp, url_prefix="/groups")
+    # User-facing name is "circle"; the blueprint id stays "groups" (and the
+    # Group models / group_id columns are unchanged) so url_for("groups.*")
+    # keeps working. Old /groups/* URLs 301 to /circles/* via app.redirects.
+    app.register_blueprint(groups_bp, url_prefix="/circles")
 
     from app.drafts import bp as drafts_bp
 
@@ -164,6 +167,11 @@ def create_app(config_class=Config):
     from app import security_headers
 
     security_headers.init_app(app)
+
+    # 301s for URLs that moved (e.g. /groups/* -> /circles/*)
+    from app import redirects
+
+    redirects.init_app(app)
 
     # Activate "Under Attack" Mode (Browser Check Middleware)
     # Disabled to avoid Google Safe Browsing redirect/cloaking flags

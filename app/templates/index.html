@@ -5,7 +5,7 @@
         <h1>{{ _('Welcome to EcoBank') }}</h1>
         <p class="lead">{{ _('Your decentralized restoration hub.') }}</p>
         {% if not current_user.is_authenticated %}
-            <p class="mb-3">{{ _('Join a community and publish to the Hive network through the account it shares. No keys to manage, no setup, and nothing to buy.') }}</p>
+            <p class="mb-3">{{ _('Join a circle and publish to the Hive network through the account it shares. No keys to manage, no setup, and nothing to buy.') }}</p>
             <a href="{{ url_for('auth.register') }}" class="btn btn-primary">{{ _('Get started') }}</a>
         {% endif %}
     </div>
@@ -93,11 +93,11 @@
                 <div class="alert alert-info text-center py-5">
                     <h4>{{ _('No posts here yet.') }}</h4>
                     {% if not current_user.is_authenticated %}
-                        <p>{{ _('Join a community to start seeing what people are publishing.') }}</p>
+                        <p>{{ _('Join a circle to start seeing what people are publishing.') }}</p>
                         <a href="{{ url_for('auth.register') }}" class="btn btn-primary">{{ _('Join now') }}</a>
                     {% else %}
-                        <p>{{ _('Join a community and publish through its shared account to get started.') }}</p>
-                        <a href="{{ url_for('groups.list_groups') }}" class="btn btn-success">{{ _('Find a community') }}</a>
+                        <p>{{ _('Join a circle and publish through its shared account to get started.') }}</p>
+                        <a href="{{ url_for('groups.list_groups') }}" class="btn btn-success">{{ _('Find a circle') }}</a>
                     {% endif %}
                 </div>
             {% endif %}

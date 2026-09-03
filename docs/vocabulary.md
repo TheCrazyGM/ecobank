@@ -35,7 +35,7 @@ qualify which one you mean whenever it isn't obvious.
 | Prepaid one-time cost of creating a Hive account (EcoBank fronts the ~3 HIVE network cost) | **credit** — "prepaid account creation" | "account creation key", "ticket" (user-facing); anything that implies buying currency, a token, or an investment | _(later)_ |
 | Screen showing HIVE / HP / HBD balances | **Wallet** (page title: "Wallet dashboard") | "bank", "balance sheet" | _(later)_ |
 | The EcoBank user's own settings/bio page | **My Account** | "Profile" (now means the Hive thing) | _(later)_ |
-| A group of people sharing one Hive account | **community** in prose; **group** where it's the literal UI feature/route (`/groups`) | — | _(later)_ |
+| A set of people sharing one Hive account | **circle** ("join a circle", "the circle's shared account") | "group" (kept only in internal code / DB / `Group` model); "community" (that's Hive's *native* feature) | _(later)_ |
 | Adding an existing digital profile to EcoBank | **Connect** ("Connect a digital profile") | "Import keys", "Import account" | _(later)_ |
 | Making a brand-new digital profile | **Create** ("Create a digital profile") | "Create keys" | _(later)_ |
 | EcoBank storing your recovery keys encrypted | **managed for you** / "EcoBank looks after the keys" | "custody", "we hold your keys" | _(later)_ |

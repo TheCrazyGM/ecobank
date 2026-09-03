@@ -243,7 +243,7 @@ SRBDE cross-links). Remaining, in order:
 | P2-3 | Link `/security` (done) + `/terms` from footer and `about.html`. | 🟡 security done; terms pending P2-2 |
 | P2-4 | **OG image check** — `img/ecobank_header.png` must not read as bank branding. | ⬜ |
 | P2-5 | Honeypot review — the hidden `<a>"Constructo"` footer link + `/honey/trap`. Form-field honeypots are fine; the hidden link is cloaking-adjacent. **Deferred to thecrazygm** (it's his anti-abuse tool). | ⬜ thecrazygm |
-| P2-6 | Decide: rename the "groups" feature to "communities" in the UI? (prose already says "community"; feature/route still "group".) | ⬜ Alex |
+| P2-6 | Rename the "groups" feature → **"circles"** (user-facing only; code/DB stay `Group`). Scoped in `docs/groups-to-circles.md`: PR1 = L1 copy, PR2 = URL prefix + redirect shim, PR3 = Spanish. | 🟡 scoped; homepage strings already switched to "circle" |
 
 **Custody mitigations to keep the model defensible** (some now, some ongoing):
 

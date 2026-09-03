@@ -57,7 +57,7 @@ class Config:
     ADMINS = ["your-email@example.com"]
 
     # Public-facing contact address (shown in About / Privacy Policy).
-    CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "info@ecobankdevelopment.co")
+    CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "srbde@protonmail.com")
     # Legal operating entity, shown in footer / policies.
     OPERATING_ENTITY = os.environ.get(
         "OPERATING_ENTITY", "Ecobank Development Colombia SAS"

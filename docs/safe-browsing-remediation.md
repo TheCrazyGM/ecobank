@@ -192,7 +192,7 @@ Branch `safety/vocab-and-phishing-signals`.
 
 | # | Change | Status |
 |---|---|---|
-| 1 | Fix `info@ecobank.com` → real contact (`CONTACT_EMAIL` config, env-overridable) | ✅ done — **default is a guess, set the env var** |
+| 1 | Fix `info@ecobank.com` → real contact. `CONTACT_EMAIL` / `OPERATING_ENTITY` config vars, env-overridable; default `srbde@protonmail.com` (SRBDE's staffed inbox) | ✅ done |
 | 2 | Rework `/account/import` → "Connect a digital profile": master-password path removed, single posting-key field + optional active, links to `tools.crypto-dreamr.com/key-recovery`, `noindex`, consent checkbox | ✅ done |
 | 3 | Crypto-strong generator on `create.html` (`crypto.getRandomValues`), "saved it" confirm; `type=password` + `autocomplete=off` on connect fields | ✅ done (create.html shows the new master password by design, stays `type=text`) |
 | 4 | Vocabulary pass — canonical terms in `docs/vocabulary.md`; "digital profile", "credit", "My Account", "recovery keys" | ✅ done (EN); `login.html` / `register.html` untouched (no jargon there) |
@@ -209,47 +209,111 @@ for now; move specific routes into the allowlist if we want them in search.
 
 i18n: keep long strings on one line (see `feedback_po_linebreaks`).
 
+### The key-custody model (context for Phases 2+)
+
+EcoBank **deliberately holds users' keys** — including the master password for
+profiles it creates — as a custodian during a new account's early life. This is
+the product thesis, not an oversight:
+
+- A brand-new Hive account has **no value**. The "you are sovereign from second
+  zero, we never touch your keys" approach means new users routinely lose their
+  keys and their account *before it is worth anything*.
+- Accounts gain value over time through participation and learning. EcoBank holds
+  the keys so that when the account *has* accrued value, the incentive pushes the
+  user to learn, retrieve their keys, rotate them, and take full custody.
+- The failure mode we're correcting for: an over-strict "safety" posture that
+  leaves beginners holding a bag they don't know how to carry.
+
+So the remediation is **not** "stop holding keys." It is: *hold them responsibly,
+explain the model in plain language, and build the mechanism that hands custody
+back at the right moment.* The Safe Browsing flag is about a site that looks like
+it's phishing secrets — fixed by identity + de-shaping the forms + the `/security`
+page below — not about custody per se.
+
 ### Phase 2 — Legitimacy scaffolding
-| # | Change |
-|---|---|
-| 8 | Rewrite **About**: what EcoBank is, that it's operated by **Ecobank Development Colombia SAS** (Colombia, registration/NIT), who we are, contact email on our own domain, link to Hive docs. Explicit "not affiliated with Ecobank Transnational Incorporated or any licensed bank; 'EcoBank' here = ecological restoration + Hive, not deposit-taking." |
-| 9 | Real **Privacy Policy** matching actual data flows; name the data controller. |
-| 10 | Add **Terms of Service** (`/terms`) — what the service does, that keys are user property, custody model, no financial/investment service, dispute/refund terms for credits. |
-| 11 | Add a **Security page** (`/security`): key custody (Fernet at rest, owner keys never stored), what each Hive key can do, "we will never DM/email you for your keys", how to remove keys (already built — `account/view`). |
-| 12 | Real **contact** route + monitored inbox. |
 
-### Phase 3 — Request review
-Only after Phase 1+2 are live and crawlable:
-1. Google Search Console → Security Issues → Request Review; describe the changes
-   plainly (removed the credential-style import form, added operator identity + policies,
-   opened crawling). Turnaround: days to ~2 weeks.
-2. PhishTank: comment on the submission with evidence it's our own registered company;
-   request invalidation.
-3. Yandex / SmartScreen re-check as applicable.
-4. Track: re-check the transparency report every few days; don't re-file while pending.
+Most of the original Phase 2 landed in Phase 1 (About, Privacy, operator identity,
+SRBDE cross-links). Remaining, in order:
 
-### Phase 4 — If review is rejected twice with the name cited
-Escalate the rebrand decision. Prep work to make that cheap: keep the public marketing
-copy brand-light in Phase 1, keep templates i18n-driven, and have thecrazygm confirm
-what a domain move would cost (email, DNS, PayPal app config, Hive app metadata).
+| # | Change | Status |
+|---|---|---|
+| P2-1 | **`/security` page** (do first). The custodial model stated plainly: keys stored encrypted (Fernet at rest); **owner key never accepted or stored for *connected* profiles**; for *created* profiles EcoBank holds the master password on purpose, why, and how to take custody. What each key type can do. **"EcoBank will never email or DM you asking for a key or password."** How to remove keys (built — `account/view`). | ⬜ |
+| P2-2 | **`/terms` page**. What the service is/isn't: keys are the user's property; the custody model and how it ends; **not a financial/investment service — no deposits, no yield, no returns**; credit pricing and refund terms. | ⬜ |
+| P2-3 | Link `/security` + `/terms` from the footer and from `about.html`. | ⬜ |
+| P2-4 | **OG image check** — `img/ecobank_header.png` must not read as bank branding. | ⬜ |
+| P2-5 | Honeypot review — the hidden `<a>"Constructo"` footer link + `/honey/trap`. Form-field honeypots are fine; the hidden link is cloaking-adjacent. **Deferred to thecrazygm** (it's his anti-abuse tool). | ⬜ thecrazygm |
+
+**Custody mitigations to keep the model defensible** (some now, some ongoing):
+
+- Encryption key (`HIVE_ENCRYPTION_KEY`) stays out of the DB / in env — confirm with thecrazygm. Envelope / per-user encryption is a later hardening.
+- Viewing recovery keys already re-prompts for the EcoBank password (`verify.html`) — keep.
+- **Build the "take custody" nudge** (see Phase 5) — the model is only ethical if users are actively prompted to graduate as their account gains value/age/HP.
+
+### Phase 3 — Request review (gated: Phases 1–2 live in production and crawlable)
+
+0. **Phase 0 first** — still outstanding. Click "Why was this blocked?" in Opera;
+   record the provider. Check the domain in the GSB transparency report, PhishTank,
+   Yandex Webmaster, SmartScreen.
+1. Verify `ecobankdevelopment.com` in **Google Search Console** (thecrazygm). Read
+   Security Issues + Manual Actions.
+2. Confirm crawlability: robots.txt open, public pages 200, private pages carry
+   `noindex`.
+3. File: GSB → Security Issues → Request Review (plain description of what changed:
+   removed the credential-style import form, stated the operator + custodial model,
+   added `/security` + `/terms`, opened crawling). PhishTank → comment with evidence
+   it's a registered company operated with SRBDE; request invalidation. Yandex /
+   SmartScreen re-check as applicable.
+4. Monitor the transparency report every few days. **Do not re-file while pending.**
+
+### Phase 4 — Contingency (only if review is rejected twice, citing the name)
+
+Escalate the rebrand decision. Alex's position: "only if unavoidable — I like this
+domain." Cheap-insurance prep already in place: marketing copy is brand-light and
+i18n-driven. thecrazygm to scope a domain move (email, DNS, PayPal app config, Hive
+app metadata).
+
+### Phase 5 — Don't regress / ongoing
+
+- `docs/vocabulary.md` guards new user-facing strings. `app/security_headers.py`
+  makes new routes `noindex` by default.
+- **Small test suite**: no template uses "master password" as a bare form label;
+  `X-Robots-Tag` fires for a private endpoint and not for a public one; every
+  `PUBLIC_ENDPOINTS` name resolves to a real route.
+- **"Take custody" nudge** (product work, own track): notifications / prompts that
+  encourage a user to retrieve and rotate their keys as their profile accrues
+  value — account age, HP, post count, rewards. This is the mechanism that makes
+  the custodial model work as intended.
+- Quarterly: re-check Safe Browsing status; watch `srbde@protonmail.com` for an
+  ETI brand-protection notice (higher-stakes than an automated flag).
+- Once CSP ships: watch its `report-uri`.
+
+### Deferred — separate track, thecrazygm sign-off
+
+**Client-side key handling for *connect*** — derive/verify keys in the browser so
+the server never receives a private key for an imported profile. (Created profiles
+stay custodial by design.) Strongest possible "we never see your secrets" story for
+the connect path. Not Phase 1–4.
 
 ---
 
 ## 6. Open questions for thecrazygm (sysadmin)
-- Is the domain in Google Search Console? Can we verify it today?
+- Is `ecobankdevelopment.com` in Google Search Console? Can we verify it now?
+- What does "Why was this blocked?" in Opera name as the provider?
 - Any abuse email from the host / registrar / PayPal?
 - Do we retain access logs from ~the week the flag appeared?
-- Where does mail for our real domain land — is there a monitored inbox for
-  `security@` / `abuse@` / `info@`?
+- Is `HIVE_ENCRYPTION_KEY` stored separately from the database (env / secrets manager)?
 - Current TLS / HSTS / security-header setup at the proxy (so the app-level CSP doesn't
   conflict)?
+- Keep or remove the hidden `/honey/trap` footer link?
 
 ## 7. What NOT to do
-- Don't file any review request before Phase 1+2 ship.
-- Don't add more cloaking/anti-bot logic — it's counterproductive here.
+- Don't file any review request before Phases 1–2 ship and the site is crawlable.
+- Don't add more cloaking / anti-bot logic — counterproductive here.
+- Don't "fix" the flag by dropping custody — the custodial model is the product;
+  the fix is transparency + de-shaping the forms.
 - Don't rush a rebrand; it's the expensive lever and probably not required.
-- Don't make sweeping architectural changes to key handling in one PR — stage F1
-  option (c) separately, later, with thecrazygm's sign-off.
+- Don't restructure key handling in one big PR — the client-side connect path is a
+  separate, later track with thecrazygm's sign-off.
 
 ---
 

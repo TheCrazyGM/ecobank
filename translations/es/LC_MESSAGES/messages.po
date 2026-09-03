@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-03 08:54-0500\n"
+"POT-Creation-Date: 2026-09-03 09:03-0500\n"
 "PO-Revision-Date: 2025-12-03 11:22-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es <LL@li.org>\n"
@@ -19,9 +19,8 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 #: app/account/routes.py:59
-#, fuzzy
 msgid "You do not have enough credits to create a profile."
-msgstr "No tienes suficientes créditos para crear una cuenta."
+msgstr "No tienes suficientes créditos para crear un perfil."
 
 #: app/account/routes.py:66 app/account/routes.py:200
 msgid "Invalid username format."
@@ -32,9 +31,8 @@ msgid "Password is required."
 msgstr "Se requiere contraseña."
 
 #: app/account/routes.py:77
-#, fuzzy
 msgid "That profile name is already taken on Hive."
-msgstr "El usuario escogido ya existe en Hive."
+msgstr "Ese nombre de perfil ya está en uso en Hive."
 
 #: app/account/routes.py:87
 msgid "Account creator not configured."
@@ -75,34 +73,32 @@ msgid "RC delegation amount is 0, skipping delegation."
 msgstr "La cantidad de delegación de CR es 0, omitiendo la delegación."
 
 #: app/account/routes.py:181
-#, fuzzy, python-format
+#, python-format
 msgid "Digital profile %(username)s created successfully!"
-msgstr "¡Cuenta %(username)s creada exitosamente!"
+msgstr "¡Perfil digital %(username)s creado con éxito!"
 
 #: app/account/routes.py:208
-#, fuzzy
 msgid "You have already connected this profile."
-msgstr "Ya has importado esta cuenta."
+msgstr "Ya conectaste este perfil."
 
 #: app/account/routes.py:216
 msgid "That profile was not found on the Hive network."
-msgstr ""
+msgstr "No se encontró ese perfil en la red Hive."
 
 #: app/account/routes.py:259
-#, fuzzy
 msgid "No valid keys provided that match the profile's on-chain authorities."
 msgstr ""
-"No se proporcionaron claves válidas que coincidan con las autoridades de la "
-"cuenta."
+"Las claves que ingresaste no coinciden con las autorizaciones del perfil en "
+"la cadena."
 
 #: app/account/routes.py:267
 msgid "Encryption key error."
 msgstr "Error de clave de encriptación."
 
 #: app/account/routes.py:287
-#, fuzzy, python-format
+#, python-format
 msgid "Profile %(username)s connected successfully!"
-msgstr "¡Cuenta %(username)s creada exitosamente!"
+msgstr "¡Perfil %(username)s conectado con éxito!"
 
 #: app/account/routes.py:304 app/account/routes.py:349 app/drafts/routes.py:97
 #: app/drafts/routes.py:743 app/groups/routes.py:63 app/groups/routes.py:164
@@ -126,19 +122,17 @@ msgid "Failed to decrypt credentials."
 msgstr "Fallo al desencriptar credenciales."
 
 #: app/account/routes.py:357
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Profile %(username)s has been removed from EcoBank. Keep your recovery keys "
 "safe!"
 msgstr ""
-"La cuenta Hive %(username)s ha sido eliminada de EcoBank. ¡Recuerda mantener"
-" tus claves a salvo!"
+"Se quitó el perfil %(username)s de EcoBank. ¡Guarda bien tus claves de "
+"recuperación!"
 
 #: app/account/routes.py:366
-#, fuzzy
 msgid "Failed to remove the profile from EcoBank. Please try again."
-msgstr ""
-"No se pudo eliminar la cuenta Hive de EcoBank. Por favor inténtalo de nuevo."
+msgstr "No se pudo quitar el perfil de EcoBank. Inténtalo de nuevo."
 
 #: app/admin/forms.py:9 app/auth/forms.py:12 app/auth/forms.py:20
 #: app/templates/account/list.html:13 app/templates/admin/credits.html:8
@@ -203,24 +197,24 @@ msgid "Credits updated for user %(username)s."
 msgstr "Créditos actualizados para el usuario %(username)s."
 
 #: app/admin/routes.py:87
-#, fuzzy
 msgid "Cannot delete verified users."
-msgstr "No se pueden eliminar publicaciones ya publicadas."
+msgstr "No se pueden eliminar usuarios verificados."
 
 #: app/admin/routes.py:93
 msgid ""
-"Cannot delete this user because they have created groups or Hive accounts."
+"Cannot delete this user because they have created circles or Hive accounts."
 msgstr ""
+"No se puede eliminar este usuario porque ha creado círculos o cuentas de "
+"Hive."
 
 #: app/admin/routes.py:120
 #, python-format
 msgid "Unverified user %(username)s has been deleted."
-msgstr ""
+msgstr "Se eliminó el usuario sin verificar %(username)s."
 
 #: app/admin/routes.py:126
-#, fuzzy
 msgid "An error occurred while deleting the user."
-msgstr "Ocurrió un error. Por favor inténtalo de nuevo."
+msgstr "Ocurrió un error al eliminar el usuario."
 
 #: app/admin/routes.py:159
 #, python-format
@@ -228,9 +222,9 @@ msgid "User %(username)s not found. Owner not changed."
 msgstr "Usuario %(username)s no encontrado. El propietario no fue cambiado."
 
 #: app/admin/routes.py:167
-#, fuzzy, python-format
+#, python-format
 msgid "Circle %(name)s updated successfully."
-msgstr "Grupo %(name)s actualizado exitosamente."
+msgstr "Círculo %(name)s actualizado con éxito."
 
 #: app/admin/routes.py:193
 msgid "System account not configured."
@@ -387,23 +381,20 @@ msgid "Check your email for the verification link."
 msgstr "Revisa tu correo electrónico para la verificación"
 
 #: app/drafts/routes.py:110
-#, fuzzy
 msgid "You must be in a circle to create a draft."
-msgstr "Debes pertenecer a un grupo para crear un borrador."
+msgstr "Debes estar en un círculo para crear un borrador."
 
 #: app/drafts/routes.py:133
-#, fuzzy
 msgid "Invalid circle selected"
-msgstr "Grupo seleccionado inválido"
+msgstr "Círculo seleccionado no válido"
 
 #: app/drafts/routes.py:142
 msgid "Title, body and hive account are required"
 msgstr "El título, el contenido y la cuenta Hive son obligatorios"
 
 #: app/drafts/routes.py:155
-#, fuzzy
 msgid "Invalid Hive account selected for this circle"
-msgstr "Cuenta Hive inválida seleccionada para este grupo"
+msgstr "Cuenta de Hive no válida para este círculo"
 
 #: app/drafts/routes.py:176
 msgid "Draft created."
@@ -527,29 +518,25 @@ msgid "Draft created for proposed edit."
 msgstr "Borrador creado para la edición propuesta."
 
 #: app/groups/routes.py:23 app/groups/routes.py:71
-#, fuzzy
 msgid "Circle name is required"
-msgstr "El nombre del grupo es obligatorio."
+msgstr "El nombre del círculo es obligatorio"
 
 #: app/groups/routes.py:28 app/groups/routes.py:78
-#, fuzzy
 msgid "A circle with that name already exists"
-msgstr "El nombre del grupo ya existe."
+msgstr "Ya existe un círculo con ese nombre"
 
 #: app/groups/routes.py:45
-#, fuzzy, python-format
+#, python-format
 msgid "Circle \"%(name)s\" created!"
-msgstr "¡Grupo \"%(name)s\" creado!"
+msgstr "¡Círculo \"%(name)s\" creado!"
 
 #: app/groups/routes.py:86
-#, fuzzy
 msgid "Circle settings updated."
-msgstr "Configuración del grupo actualizada."
+msgstr "Ajustes del círculo actualizados."
 
 #: app/groups/routes.py:108
-#, fuzzy
 msgid "You are not a member of this circle."
-msgstr "No eres miembro de este grupo."
+msgstr "No eres miembro de este círculo."
 
 #: app/groups/routes.py:171
 msgid "User not found"
@@ -560,14 +547,14 @@ msgid "User is already a member"
 msgstr "El usuario ya es miembro"
 
 #: app/groups/routes.py:187
-#, fuzzy, python-format
+#, python-format
 msgid "You have been added to circle '%(name)s'"
-msgstr "Has sido añadido al grupo '%(name)s'"
+msgstr "Te añadieron al círculo '%(name)s'"
 
 #: app/groups/routes.py:193
-#, fuzzy, python-format
+#, python-format
 msgid "%(username)s added to the circle."
-msgstr "%(username)s añadido al grupo."
+msgstr "%(username)s se añadió al círculo."
 
 #: app/groups/routes.py:207
 msgid "Unauthorized. Only owner can remove members."
@@ -600,9 +587,9 @@ msgid "You do not own this Hive account."
 msgstr "No eres dueño de esta cuenta Hive."
 
 #: app/groups/routes.py:311
-#, fuzzy, python-format
+#, python-format
 msgid "Hive account %(account)s linked to the circle."
-msgstr "Cuenta Hive %(account)s vinculada al grupo."
+msgstr "Cuenta de Hive %(account)s vinculada al círculo."
 
 #: app/groups/routes.py:350
 msgid "Resource unlinked."
@@ -613,24 +600,21 @@ msgid "Unauthorized to unlink this resource."
 msgstr "No autorizado para desvincular este recurso."
 
 #: app/groups/routes.py:364
-#, fuzzy
 msgid "You are already a member of this circle."
-msgstr "Ya eres miembro de este grupo."
+msgstr "Ya eres miembro de este círculo."
 
 #: app/groups/routes.py:370
-#, fuzzy, python-format
+#, python-format
 msgid "%(username)s wants to join your circle '%(circle)s'"
-msgstr ""
+msgstr "%(username)s quiere unirse a tu círculo '%(circle)s'"
 
 #: app/groups/routes.py:379
-#, fuzzy
 msgid "Your request has been sent to the circle's owner."
-msgstr "Tu solicitud ha sido enviada al propietario del grupo."
+msgstr "Tu solicitud se envió al propietario del círculo."
 
 #: app/groups/routes.py:381
-#, fuzzy
 msgid "Failed to send join request. Please try again later."
-msgstr "Fallo al eliminar las claves. Por favor inténtalo de nuevo."
+msgstr "No se pudo enviar la solicitud. Inténtalo más tarde."
 
 #: app/groups/routes.py:405
 msgid "This resource type does not support profile updates."
@@ -641,9 +625,9 @@ msgid "Hive Account not found in local database."
 msgstr "Cuenta Hive no encontrada en la base de datos local."
 
 #: app/groups/routes.py:430
-#, fuzzy
 msgid "You do not own this Hive account and cannot update its profile."
-msgstr "No eres dueño de esta cuenta Hive."
+msgstr ""
+"No eres el dueño de esta cuenta de Hive y no puedes actualizar su perfil."
 
 #: app/groups/routes.py:438
 msgid "Server configuration error: Encryption key missing."
@@ -725,19 +709,18 @@ msgstr "Política de Privacidad"
 
 #: app/main/routes.py:412 app/templates/base.html:184
 #: app/templates/main/security.html:3 app/templates/main/security.html:6
-#, fuzzy
 msgid "Security"
-msgstr "Verificación de Seguridad"
+msgstr "Seguridad"
 
 #: app/main/routes.py:417 app/templates/auth/register.html:47
 #: app/templates/main/terms.html:3 app/templates/main/terms.html:6
 msgid "Terms of Service"
-msgstr ""
+msgstr "Términos del servicio"
 
 #: app/main/routes.py:441 app/templates/main/token_price.html:3
 #: app/templates/main/token_price.html:6
 msgid "ECOBANK Token Price"
-msgstr ""
+msgstr "Precio del token ECOBANK"
 
 #: app/notifications/routes.py:43
 msgid "All notifications marked as read."
@@ -749,12 +732,17 @@ msgid ""
 "sustainable development, by Ecobank Development Colombia SAS. Not a "
 "financial institution."
 msgstr ""
+"EcoBank es un banco de proyectos de restauración ecológica y desarrollo "
+"sostenible liderado por la comunidad, de Ecobank Development Colombia SAS. "
+"No es una institución financiera."
 
 #: app/templates/base.html:17 app/templates/base.html:24
 msgid ""
 "A project bank for ecological restoration and community-led sustainable "
 "development. Not a financial institution."
 msgstr ""
+"Un banco de proyectos de restauración ecológica y desarrollo sostenible "
+"liderado por la comunidad. No es una institución financiera."
 
 #: app/templates/base.html:30
 msgid "Ecobank Development"
@@ -787,7 +775,7 @@ msgstr "Colaboración"
 #: app/templates/base.html:105 app/templates/groups/list.html:5
 #: app/templates/index.html:24
 msgid "My Circles"
-msgstr ""
+msgstr "Mis círculos"
 
 #: app/templates/base.html:110 app/templates/groups/view.html:284
 #: app/templates/groups/view.html:320
@@ -800,14 +788,12 @@ msgid "My Account"
 msgstr "Mi cuenta"
 
 #: app/templates/account/list.html:4 app/templates/base.html:117
-#, fuzzy
 msgid "My digital profiles"
-msgstr "Editar Perfil"
+msgstr "Mis perfiles digitales"
 
 #: app/templates/base.html:121 app/templates/main/profile.html:15
-#, fuzzy
 msgid "Account credits"
-msgstr "Créditos de Cuenta"
+msgstr "Créditos de cuenta"
 
 #: app/templates/admin/user_edit.html:16 app/templates/admin/users.html:31
 #: app/templates/base.html:126
@@ -832,19 +818,21 @@ msgid ""
 "Development Colombia SAS. It is not a financial institution and is not "
 "affiliated with any bank."
 msgstr ""
+"EcoBank apoya proyectos de restauración ecológica y es operado por Ecobank "
+"Development Colombia SAS. No es una institución financiera ni está afiliado "
+"a ningún banco."
 
 #: app/templates/base.html:179
 msgid "Built and run with SRBDE"
-msgstr ""
+msgstr "Construido y operado con SRBDE"
 
 #: app/templates/base.html:183
 msgid "About"
 msgstr "Descripción"
 
 #: app/templates/base.html:185
-#, fuzzy
 msgid "Terms"
-msgstr "Usuarios"
+msgstr "Términos"
 
 #: app/templates/index.html:5
 msgid "Welcome to EcoBank"
@@ -859,29 +847,29 @@ msgid ""
 "Join a circle and publish to the Hive network through the account it shares."
 " No keys to manage, no setup, and nothing to buy."
 msgstr ""
+"Únete a un círculo y publica en la red Hive a través de la cuenta que "
+"comparte. Sin claves que gestionar, sin configuración y sin nada que "
+"comprar."
 
 #: app/templates/index.html:9
-#, fuzzy
 msgid "Get started"
-msgstr "Primeros Pasos"
+msgstr "Empezar"
 
 #: app/templates/index.html:30
-#, fuzzy
 msgid "My profiles"
-msgstr "Perfil"
+msgstr "Mis perfiles"
 
 #: app/templates/index.html:46
 msgid "Getting Started"
 msgstr "Primeros Pasos"
 
 #: app/templates/index.html:47
-#, fuzzy
 msgid ""
 "Enter the username of the person who invited you. You can see their circles "
 "and ask to join."
 msgstr ""
-"Ingresa el nombre de usuario de la persona que te invitó para encontrar su "
-"perfil y solicitar acceso a su grupo."
+"Ingresa el nombre de usuario de la persona que te invitó. Podrás ver sus "
+"círculos y pedir unirte."
 
 #: app/templates/index.html:49
 msgid "Their username"
@@ -889,7 +877,7 @@ msgstr "Su nombre de usuario"
 
 #: app/templates/index.html:50
 msgid "Find them"
-msgstr ""
+msgstr "Buscar"
 
 #: app/templates/drafts/view.html:29 app/templates/hive/post.html:46
 #: app/templates/hive/tag_feed.html:36 app/templates/index.html:74
@@ -907,38 +895,37 @@ msgid "Read More"
 msgstr "Leer Más"
 
 #: app/templates/index.html:94
-#, fuzzy
 msgid "No posts here yet."
-msgstr "Aún no se encontraron publicaciones aquí."
+msgstr "Aún no hay publicaciones."
 
 #: app/templates/index.html:96
 msgid "Join a circle to start seeing what people are publishing."
-msgstr ""
+msgstr "Únete a un círculo para empezar a ver lo que publica la gente."
 
 #: app/templates/index.html:97
-#, fuzzy
 msgid "Join now"
-msgstr "Únete Ahora"
+msgstr "Únete ahora"
 
 #: app/templates/index.html:99
 msgid "Join a circle and publish through its shared account to get started."
-msgstr ""
+msgstr "Únete a un círculo y publica desde su cuenta compartida para empezar."
 
 #: app/templates/index.html:100
 msgid "Find a circle"
-msgstr ""
+msgstr "Buscar un círculo"
 
 #: app/templates/account/buy_credits.html:4
 #: app/templates/account/create.html:44
-#, fuzzy
 msgid "Get a credit"
-msgstr "por crédito"
+msgstr "Obtener un crédito"
 
 #: app/templates/account/buy_credits.html:5
 msgid ""
 "A credit is prepaid account creation. One credit creates one new Hive "
 "account for you."
 msgstr ""
+"Un crédito es la creación de cuenta prepagada. Un crédito crea una cuenta de"
+" Hive nueva para ti."
 
 #: app/templates/account/buy_credits.html:6
 msgid ""
@@ -948,6 +935,11 @@ msgid ""
 "never holds a balance for you. If your community already shares an account, "
 "you do not need this at all."
 msgstr ""
+"Crear una cuenta de Hive tiene un pequeño costo de red (unos 3 HIVE). "
+"EcoBank cubre ese costo y hace la configuración; el precio del crédito es la"
+" tarifa por ese servicio. No estás comprando moneda, un token ni una "
+"inversión, y EcoBank nunca guarda un saldo por ti. Si tu comunidad ya "
+"comparte una cuenta, no necesitas esto para nada."
 
 #: app/templates/account/buy_credits.html:7
 msgid "Price:"
@@ -958,22 +950,20 @@ msgid "per credit"
 msgstr "por crédito"
 
 #: app/templates/account/buy_credits.html:11
-#, fuzzy
 msgid ""
 "No credits are available to create profiles right now. Please check back "
 "later!"
 msgstr ""
-"Actualmente no hay tickets de creación de claves disponibles. ¡Por favor "
-"vuelve a intentar más tarde!"
+"Por ahora no hay créditos disponibles para crear perfiles. ¡Vuelve más "
+"tarde!"
 
 #: app/templates/account/buy_credits.html:14
-#, fuzzy
 msgid ""
 "Only single credits are available at the moment. More will be available "
 "soon!"
 msgstr ""
-"Solo hay tickets de creación de claves individuales disponibles por el "
-"momento. ¡Pronto habrá más disponibles!"
+"Por el momento solo hay créditos individuales disponibles. ¡Pronto habrá "
+"más!"
 
 #: app/templates/account/buy_credits.html:20
 #: app/templates/account/buy_credits.html:32
@@ -982,9 +972,8 @@ msgstr "Un Solo Crédito"
 
 #: app/templates/account/buy_credits.html:21
 #: app/templates/account/buy_credits.html:33
-#, fuzzy
 msgid "Perfect for creating your first profile."
-msgstr "Perfecto para crear tus primeras claves."
+msgstr "Perfecto para crear tu primer perfil."
 
 #: app/templates/account/buy_credits.html:41
 msgid "Pack of 5"
@@ -1003,16 +992,17 @@ msgid ""
 "This creates a new account for you on the Hive network. EcoBank looks after "
 "the recovery keys so you can start posting right away."
 msgstr ""
+"Esto crea una cuenta nueva para ti en la red Hive. EcoBank cuida las claves "
+"de recuperación para que puedas empezar a publicar de una vez."
 
 #: app/templates/account/create.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "You have <strong>%(credits)s</strong> credit(s)."
-msgstr "Tienes <strong>%(credits)s</strong> crédito(s) de creación de claves."
+msgstr "Tienes <strong>%(credits)s</strong> crédito(s)."
 
 #: app/templates/account/create.html:14 app/templates/account/import.html:22
-#, fuzzy
 msgid "Profile name"
-msgstr "Perfil"
+msgstr "Nombre del perfil"
 
 #: app/templates/account/create.html:17
 msgid "3-16 chars, lowercase, numbers, . -"
@@ -1023,29 +1013,28 @@ msgid "Master password"
 msgstr "contraseña maestra"
 
 #: app/templates/account/create.html:22
-#, fuzzy
 msgid "Generate"
-msgstr "Generar Aleatorio"
+msgstr "Generar"
 
 #: app/templates/account/create.html:23
 msgid ""
 "Save this somewhere safe before continuing. It is the master password for "
 "your new profile and EcoBank shows it only once."
 msgstr ""
+"Guárdala en un lugar seguro antes de continuar. Es la contraseña maestra de "
+"tu nuevo perfil y EcoBank la muestra una sola vez."
 
 #: app/templates/account/create.html:27
 msgid "I have saved this master password somewhere safe."
-msgstr ""
+msgstr "He guardado esta contraseña maestra en un lugar seguro."
 
 #: app/templates/account/create.html:29
-#, fuzzy
 msgid "Create profile (1 credit)"
-msgstr "Crear Claves (Cuesta 1 Crédito)"
+msgstr "Crear perfil (1 crédito)"
 
 #: app/templates/account/create.html:43
-#, fuzzy
 msgid "You need a credit to create a digital profile."
-msgstr "Necesitas un crédito para crear unas claves Hive."
+msgstr "Necesitas un crédito para crear un perfil digital."
 
 #: app/templates/account/import.html:3 app/templates/account/import.html:6
 msgid "Connect a digital profile"
@@ -1056,11 +1045,12 @@ msgid ""
 "Already have a profile on the Hive network? Give EcoBank its posting key so "
 "it can publish on your behalf."
 msgstr ""
+"¿Ya tienes un perfil en la red Hive? Dale a EcoBank su clave de publicación "
+"para que pueda publicar en tu nombre."
 
 #: app/templates/account/import.html:10
-#, fuzzy
 msgid "Before you start:"
-msgstr "¿Estás seguro?"
+msgstr "Antes de empezar:"
 
 #: app/templates/account/import.html:11
 msgid ""
@@ -1069,18 +1059,27 @@ msgid ""
 "deposits, and is not affiliated with Ecobank Transnational Incorporated or "
 "any other financial institution."
 msgstr ""
+"EcoBank está construido sobre la cadena de bloques Hive y es operado por "
+"Ecobank Development Colombia SAS (Colombia). No es un banco, no recibe "
+"depósitos y no está afiliado a Ecobank Transnational Incorporated ni a "
+"ninguna otra institución financiera."
 
 #: app/templates/account/import.html:15
 msgid ""
 "A posting key lets EcoBank publish posts as your profile. It cannot move "
 "funds, change your password, or recover your profile."
 msgstr ""
+"Una clave de publicación permite a EcoBank publicar como tu perfil. No puede"
+" mover fondos, cambiar tu contraseña ni recuperar tu perfil."
 
 #: app/templates/account/import.html:16
 msgid ""
 "Only have a master password? Do not paste it here. Use the key recovery tool"
 " to get your posting key, then bring just that key back:"
 msgstr ""
+"¿Solo tienes una contraseña maestra? No la pegues aquí. Usa la herramienta "
+"de recuperación de claves para obtener tu clave de publicación y trae solo "
+"esa clave:"
 
 #: app/templates/account/import.html:28
 msgid "Posting key"
@@ -1091,32 +1090,36 @@ msgid ""
 "Starts with 5. EcoBank verifies it against the blockchain and stores it "
 "encrypted."
 msgstr ""
+"Empieza por 5. EcoBank la verifica contra la cadena de bloques y la guarda "
+"cifrada."
 
 #: app/templates/account/import.html:35
 msgid "Advanced: also connect the active key"
-msgstr ""
+msgstr "Avanzado: conectar también la clave activa"
 
 #: app/templates/account/import.html:37
-#, fuzzy
 msgid "Active key (optional)"
-msgstr "Clave Active (Privada)"
+msgstr "Clave activa (opcional)"
 
 #: app/templates/account/import.html:39
 msgid ""
 "The active key can move funds. Only add it if you need EcoBank to manage "
 "wallet actions for this profile."
 msgstr ""
+"La clave activa puede mover fondos. Agrégala solo si necesitas que EcoBank "
+"gestione acciones de billetera para este perfil."
 
 #: app/templates/account/import.html:45
 msgid ""
 "I understand what a posting key can do and I am choosing to let EcoBank use "
 "it."
 msgstr ""
+"Entiendo lo que puede hacer una clave de publicación y elijo dejar que "
+"EcoBank la use."
 
 #: app/templates/account/import.html:48
-#, fuzzy
 msgid "Connect profile"
-msgstr "Editar Perfil"
+msgstr "Conectar perfil"
 
 #: app/templates/account/import.html:49 app/templates/account/verify.html:22
 #: app/templates/account/view.html:60 app/templates/admin/user_edit.html:86
@@ -1133,16 +1136,16 @@ msgid ""
 "Each profile is an account on the Hive network that EcoBank publishes from "
 "on your behalf."
 msgstr ""
+"Cada perfil es una cuenta en la red Hive desde la que EcoBank publica en tu "
+"nombre."
 
 #: app/templates/account/list.html:7
-#, fuzzy
 msgid "Create a profile"
-msgstr "Actualizar Perfil"
+msgstr "Crear un perfil"
 
 #: app/templates/account/list.html:8
-#, fuzzy
 msgid "Connect a profile"
-msgstr "Editar Perfil"
+msgstr "Conectar un perfil"
 
 #: app/templates/account/list.html:14 app/templates/admin/groups.html:17
 msgid "Created At"
@@ -1181,25 +1184,26 @@ msgid "Security Check"
 msgstr "Verificación de Seguridad"
 
 #: app/templates/account/verify.html:11
-#, fuzzy
 msgid "Enter your EcoBank password to view the recovery keys for profile:"
-msgstr "Por favor ingresa tu contraseña para ver las claves del grupo:"
+msgstr ""
+"Ingresa tu contraseña de EcoBank para ver las claves de recuperación del "
+"perfil:"
 
 #: app/templates/account/verify.html:20
-#, fuzzy
 msgid "Verify"
-msgstr "Verificado"
+msgstr "Verificar"
 
 #: app/templates/account/view.html:4
-#, fuzzy
 msgid "Recovery keys:"
-msgstr "Ver Claves"
+msgstr "Claves de recuperación:"
 
 #: app/templates/account/view.html:5
 msgid ""
 "These control the digital profile. Download a backup and store it somewhere "
 "only you can reach."
 msgstr ""
+"Estas controlan el perfil digital. Descarga una copia de seguridad y "
+"guárdala en un lugar al que solo tú puedas llegar."
 
 #: app/templates/account/view.html:17
 msgid "Keys"
@@ -1226,9 +1230,8 @@ msgid "Remove from EcoBank"
 msgstr "Quitar de EcoBank"
 
 #: app/templates/account/view.html:41
-#, fuzzy
 msgid "Remove this profile?"
-msgstr "Editar Perfil"
+msgstr "¿Quitar este perfil?"
 
 #: app/templates/account/view.html:45
 msgid ""
@@ -1236,23 +1239,26 @@ msgid ""
 " Hive network, but EcoBank will no longer store its keys or be able to post "
 "for you. Download a backup first, or you will lose access through EcoBank."
 msgstr ""
+"Esto quita las claves de recuperación de EcoBank. Tu perfil sigue siendo "
+"válido en la red Hive, pero EcoBank ya no guardará sus claves ni podrá "
+"publicar por ti. Descarga primero una copia de seguridad, o perderás el "
+"acceso a través de EcoBank."
 
 #: app/templates/account/view.html:49
-#, fuzzy
 msgid ""
 "I have downloaded a backup and understand EcoBank will no longer store these"
 " keys."
 msgstr ""
-"He descargado todas mis claves y entiendo que EcoBank ya no las almacenará."
+"He descargado una copia de seguridad y entiendo que EcoBank ya no guardará "
+"estas claves."
 
 #: app/templates/account/view.html:55
-#, fuzzy
 msgid ""
 "I understand this is permanent and EcoBank cannot recover the profile for "
 "me."
 msgstr ""
-"Entiendo que esta acción es permanente y EcoBank no puede recuperar mi "
-"cuenta."
+"Entiendo que esto es permanente y que EcoBank no puede recuperar el perfil "
+"por mí."
 
 #: app/templates/account/view.html:61
 msgid "Delete Permanently"
@@ -1301,9 +1307,8 @@ msgid "Circles"
 msgstr "círculos"
 
 #: app/templates/admin/dashboard.html:29
-#, fuzzy
 msgid "Active circles"
-msgstr "Grupos activos"
+msgstr "Círculos activos"
 
 #: app/templates/admin/dashboard.html:38
 msgid "Posts / Drafts"
@@ -1314,14 +1319,12 @@ msgid "Total drafts created"
 msgstr "Total de borradores creados"
 
 #: app/templates/admin/dashboard.html:50
-#, fuzzy
 msgid "Hive Accounts"
-msgstr "Claves Asociadas"
+msgstr "Cuentas de Hive"
 
 #: app/templates/admin/dashboard.html:53
-#, fuzzy
 msgid "Accounts managed"
-msgstr "Groups gestionadas"
+msgstr "Cuentas gestionadas"
 
 #: app/templates/admin/dashboard.html:54
 msgid "View Logs"
@@ -1329,7 +1332,7 @@ msgstr "Ver Registros"
 
 #: app/templates/admin/dashboard.html:63
 msgid "Users not in a circle"
-msgstr ""
+msgstr "Usuarios sin círculo"
 
 #: app/templates/admin/dashboard.html:74 app/templates/admin/groups.html:31
 #: app/templates/admin/users.html:38 app/templates/drafts/view.html:43
@@ -1338,7 +1341,7 @@ msgstr "Editar"
 
 #: app/templates/admin/dashboard.html:79
 msgid "All users are in at least one circle."
-msgstr ""
+msgstr "Todos los usuarios están en al menos un círculo."
 
 #: app/templates/admin/dashboard.html:86
 msgid "Quick Links"
@@ -1353,9 +1356,9 @@ msgid "View Key Creation Logs"
 msgstr "Ver Historial de Claves"
 
 #: app/templates/admin/group_edit.html:8
-#, fuzzy, python-format
+#, python-format
 msgid "Edit circle: %(name)s"
-msgstr "Editar Grupo: %(name)s"
+msgstr "Editar círculo: %(name)s"
 
 #: app/templates/admin/group_edit.html:9 app/templates/admin/user_edit.html:19
 #: app/templates/drafts/view.html:36
@@ -1375,9 +1378,8 @@ msgstr ""
 "válido."
 
 #: app/templates/admin/groups.html:5
-#, fuzzy
 msgid "Circle Manager"
-msgstr "Gestor de Usuarios"
+msgstr "Gestor de círculos"
 
 #: app/templates/admin/groups.html:6 app/templates/admin/logs_hive.html:6
 #: app/templates/admin/logs_paypal.html:6 app/templates/admin/posts.html:6
@@ -1509,9 +1511,8 @@ msgid "Verified"
 msgstr "Verificado"
 
 #: app/templates/admin/user_edit.html:13 app/templates/admin/users.html:28
-#, fuzzy
 msgid "Unverified"
-msgstr "Verificado"
+msgstr "Sin verificar"
 
 #: app/templates/admin/user_edit.html:50
 msgid "Reset Password (Optional)"
@@ -1529,37 +1530,40 @@ msgstr ""
 
 #: app/templates/admin/user_edit.html:66
 msgid "Danger Zone"
-msgstr ""
+msgstr "Zona de peligro"
 
 #: app/templates/admin/user_edit.html:67
 msgid ""
 "This user is unverified. You can safely delete their account and any "
 "associated drafts, notifications, or circle memberships."
 msgstr ""
+"Este usuario no está verificado. Puedes eliminar con seguridad su cuenta y "
+"todos los borradores, notificaciones o membresías de círculos asociados."
 
 #: app/templates/admin/user_edit.html:69
 msgid "Delete Unverified User"
-msgstr ""
+msgstr "Eliminar usuario sin verificar"
 
 #: app/templates/admin/user_edit.html:78
-#, fuzzy
 msgid "Confirm User Deletion"
-msgstr "Confirmar Eliminación de las Claves"
+msgstr "Confirmar eliminación del usuario"
 
 #: app/templates/admin/user_edit.html:82
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Are you sure you want to permanently delete the unverified user "
 "<strong>%(username)s</strong>?"
-msgstr "¿Estás seguro de que quieres rechazar/eliminar esta publicación?"
+msgstr ""
+"¿Seguro que quieres eliminar de forma permanente al usuario sin verificar "
+"<strong>%(username)s</strong>?"
 
 #: app/templates/admin/user_edit.html:83
 msgid "This action will destroy all of their drafts and cannot be undone."
-msgstr ""
+msgstr "Esta acción destruirá todos sus borradores y no se puede deshacer."
 
 #: app/templates/admin/user_edit.html:88
 msgid "Yes, Delete User"
-msgstr ""
+msgstr "Sí, eliminar usuario"
 
 #: app/templates/admin/users.html:5
 msgid "User Manager"
@@ -1583,12 +1587,11 @@ msgstr "¡Haz clic para registrarte!"
 
 #: app/templates/auth/register.html:46
 msgid "By registering you agree to the"
-msgstr ""
+msgstr "Al registrarte aceptas nuestros"
 
 #: app/templates/auth/register.html:47
-#, fuzzy
 msgid "and"
-msgstr "Agregar"
+msgstr "y la"
 
 #: app/templates/auth/register.html:51
 msgid "Already have an account?"
@@ -1599,29 +1602,24 @@ msgid "Create Post"
 msgstr "Crear Publicación"
 
 #: app/templates/drafts/create.html:8
-#, fuzzy
 msgid "For circle:"
-msgstr "Para cuenta:"
+msgstr "Para el círculo:"
 
 #: app/templates/drafts/create.html:12
-#, fuzzy
 msgid "Select a circle"
-msgstr "Seleccionar Cuenta"
+msgstr "Selecciona un círculo"
 
 #: app/templates/drafts/create.html:14
-#, fuzzy
 msgid "Choose a circle..."
-msgstr "Elige un grupo..."
+msgstr "Elige un círculo..."
 
 #: app/templates/drafts/create.html:28 app/templates/drafts/edit.html:16
-#, fuzzy
 msgid "Publish as"
-msgstr "Publicar"
+msgstr "Publicar como"
 
 #: app/templates/drafts/create.html:36
-#, fuzzy
 msgid "Select a circle first"
-msgstr "Selecciona un grupo primero"
+msgstr "Selecciona primero un círculo"
 
 #: app/templates/drafts/create.html:42 app/templates/drafts/edit.html:25
 msgid "Content (Markdown)"
@@ -1656,9 +1654,8 @@ msgid "Edit Post"
 msgstr "Editar Publicación"
 
 #: app/templates/drafts/edit.html:5
-#, fuzzy
 msgid "Circle:"
-msgstr "Precio:"
+msgstr "Círculo:"
 
 #: app/templates/drafts/edit.html:11 app/templates/drafts/view.html:30
 msgid "Permlink:"
@@ -1785,9 +1782,9 @@ msgid "About the Author"
 msgstr "Sobre el Autor"
 
 #: app/templates/drafts/view.html:156
-#, fuzzy, python-format
+#, python-format
 msgid "Member of %(circle)s"
-msgstr ""
+msgstr "Miembro de %(circle)s"
 
 #: app/templates/drafts/view.html:174
 msgid "Content Preview"
@@ -1823,14 +1820,12 @@ msgstr ""
 
 #: app/templates/groups/create.html:4 app/templates/groups/create.html:18
 #: app/templates/groups/list.html:6
-#, fuzzy
 msgid "Create a circle"
-msgstr "Fecha de Creación"
+msgstr "Crear un círculo"
 
 #: app/templates/groups/create.html:7 app/templates/groups/view.html:437
-#, fuzzy
 msgid "Circle name"
-msgstr "Nombre"
+msgstr "Nombre del círculo"
 
 #: app/templates/groups/create.html:15
 msgid "Default Tags (space separated)"
@@ -1841,9 +1836,8 @@ msgid "Pending Drafts"
 msgstr "Borradores Pendientes"
 
 #: app/templates/groups/list.html:31
-#, fuzzy
 msgid "You are not in any circles yet."
-msgstr "No eres miembro de ningún grupo."
+msgstr "Aún no estás en ningún círculo."
 
 #: app/templates/groups/view.html:31
 msgid "System Admin"
@@ -1988,13 +1982,12 @@ msgid "Username of User to Add"
 msgstr "Usuario a Agregar"
 
 #: app/templates/groups/view.html:399
-#, fuzzy
 msgid ""
 "Share one of your Hive keys with this circle. Members will be able to use it"
 " for drafting (and posting, if permissions allow)."
 msgstr ""
-"Comparte una clave HIVE con este grupo. Los miembros podrán redactar (y "
-"publicar, con rol de moderador o superior)."
+"Comparte una de tus claves de Hive con este círculo. Los miembros podrán "
+"usarla para redactar (y publicar, si los permisos lo permiten)."
 
 #: app/templates/groups/view.html:402
 msgid "Select Account"
@@ -2013,9 +2006,8 @@ msgid "Share Account"
 msgstr "Compartir Cuenta"
 
 #: app/templates/groups/view.html:432
-#, fuzzy
 msgid "Circle settings"
-msgstr "Configuración"
+msgstr "Ajustes del círculo"
 
 #: app/templates/groups/view.html:453 app/templates/main/profile.html:116
 msgid "Save Changes"
@@ -2105,9 +2097,8 @@ msgid "Memo Key"
 msgstr "Clave Memo"
 
 #: app/templates/main/about.html:3 app/templates/main/about.html:6
-#, fuzzy
 msgid "About EcoBank"
-msgstr "Acerca de Ecobank"
+msgstr "Acerca de EcoBank"
 
 #: app/templates/main/about.html:7
 #, python-format
@@ -2117,6 +2108,11 @@ msgid ""
 "seed bank or a land bank, not a financial one. It is how %(entity)s "
 "organises community-led sustainable-development work."
 msgstr ""
+"EcoBank es un banco de proyectos de restauración ecológica. «Eco» es "
+"restauración ecológica; «bank» significa un fondo común de proyectos, en el "
+"sentido de un banco de semillas o un banco de tierras, no uno financiero. Es"
+" la forma en que %(entity)s organiza el trabajo de desarrollo sostenible "
+"liderado por la comunidad."
 
 #: app/templates/main/about.html:9
 msgid ""
@@ -2126,6 +2122,12 @@ msgid ""
 " publishes them using only a posting key, which it looks after so people can"
 " take part without first learning how blockchain keys work."
 msgstr ""
+"Este sitio es una de esas herramientas. Permite que una comunidad escriba y "
+"publique en conjunto bajo una identidad compartida, para que un círculo "
+"pueda hablar con una sola voz sin que ningún miembro tenga una contraseña. "
+"Los colaboradores escriben borradores y EcoBank los publica usando solo una "
+"clave de publicación, que cuida para que la gente pueda participar sin tener"
+" que aprender primero cómo funcionan las claves de la cadena de bloques."
 
 #: app/templates/main/about.html:11
 msgid ""
@@ -2133,15 +2135,19 @@ msgid ""
 "community creates flow back to its work. The restoration effort comes first,"
 " though, and would continue with or without any blockchain."
 msgstr ""
+"La publicación funciona sobre la red Hive, que además permite que parte del "
+"valor que crea una comunidad regrese a su trabajo. Aun así, el esfuerzo de "
+"restauración va primero y continuaría con o sin ninguna cadena de bloques."
 
 #: app/templates/main/about.html:13
 msgid "Who runs it"
-msgstr ""
+msgstr "Quién lo opera"
 
 #: app/templates/main/about.html:14
 #, python-format
 msgid "EcoBank is operated by %(entity)s, a company registered in Colombia."
 msgstr ""
+"EcoBank es operado por %(entity)s, una empresa registrada en Colombia."
 
 #: app/templates/main/about.html:15
 msgid ""
@@ -2149,18 +2155,22 @@ msgid ""
 "Resource and Business Development Enterprise), an independent open-source "
 "software enterprise. EcoBank is a client of SRBDE."
 msgstr ""
+"Está construido y funciona sobre infraestructura mantenida por SRBDE "
+"(Sustainable Resource and Business Development Enterprise), una empresa "
+"independiente de software de código abierto. EcoBank es cliente de SRBDE."
 
 #: app/templates/main/about.html:18
 msgid "Questions, privacy requests, and security reports go to"
 msgstr ""
+"Las preguntas, solicitudes de privacidad e informes de seguridad van a"
 
 #: app/templates/main/about.html:18
 msgid "which is staffed by the SRBDE team."
-msgstr ""
+msgstr "que gestiona el equipo de SRBDE."
 
 #: app/templates/main/about.html:20
 msgid "Not a financial institution"
-msgstr ""
+msgstr "No es una institución financiera"
 
 #: app/templates/main/about.html:21
 msgid ""
@@ -2170,26 +2180,33 @@ msgid ""
 "\"wallet\" screen only shows the HIVE, HIVE Power and HBD already held by a "
 "Hive profile you control."
 msgstr ""
+"EcoBank no recibe depósitos, no guarda dinero por ti ni ofrece ningún "
+"servicio financiero, y no está afiliado a Ecobank Transnational Incorporated"
+" ni a ningún otro banco. Aquí «bank» significa un banco de proyectos de "
+"restauración. La pantalla de «billetera» solo muestra los HIVE, HIVE Power y"
+" HBD que ya tiene un perfil de Hive que tú controlas."
 
 #: app/templates/main/about.html:23
-#, fuzzy
 msgid "Your keys"
-msgstr "Mis Claves"
+msgstr "Tus claves"
 
 #: app/templates/main/about.html:24
 msgid ""
 "Most people who use EcoBank hold no keys at all — they post through an "
 "account their community shares. If you run your own profile, the"
 msgstr ""
+"La mayoría de las personas que usan EcoBank no tienen ninguna clave: "
+"publican a través de una cuenta que comparte su comunidad. Si manejas tu "
+"propio perfil, la"
 
 #: app/templates/main/about.html:25 app/templates/main/terms.html:12
-#, fuzzy
 msgid "Security page"
-msgstr "Verificación de Seguridad"
+msgstr "página de seguridad"
 
 #: app/templates/main/about.html:25
 msgid "explains exactly where your keys are and how to take full control."
 msgstr ""
+"explica exactamente dónde están tus claves y cómo tomar el control total."
 
 #: app/templates/main/privacy.html:7
 #, python-format
@@ -2197,10 +2214,13 @@ msgid ""
 "EcoBank is operated by %(entity)s (Colombia), on infrastructure run by SRBDE"
 " (ecoinstats.net). This policy explains what we collect and why."
 msgstr ""
+"EcoBank es operado por %(entity)s (Colombia), sobre infraestructura que "
+"gestiona SRBDE (ecoinstats.net). Esta política explica qué recopilamos y por"
+" qué."
 
 #: app/templates/main/privacy.html:9
 msgid "What we collect"
-msgstr ""
+msgstr "Qué recopilamos"
 
 #: app/templates/main/privacy.html:11
 msgid ""
@@ -2208,6 +2228,9 @@ msgid ""
 "profile information you choose to add (display name, bio, avatar URL, social"
 " links)."
 msgstr ""
+"Los datos de cuenta que nos das: tu nombre de usuario y correo electrónico, "
+"y cualquier información de perfil que elijas agregar (nombre visible, "
+"biografía, URL del avatar, enlaces sociales)."
 
 #: app/templates/main/privacy.html:12
 msgid ""
@@ -2215,22 +2238,30 @@ msgid ""
 "encrypted and are used only to publish content you write and to perform "
 "wallet actions you request."
 msgstr ""
+"Las claves de Hive que elijas conectar o que creamos para ti. Se guardan "
+"cifradas y se usan solo para publicar el contenido que escribes y para "
+"realizar acciones de billetera que solicites."
 
 #: app/templates/main/privacy.html:13
 msgid ""
 "Payment records for credit purchases. Payments are processed by PayPal; we "
 "receive the order status and amount, not your card details."
 msgstr ""
+"Los registros de pago por la compra de créditos. Los pagos los procesa "
+"PayPal; nosotros recibimos el estado y el monto del pedido, no los datos de "
+"tu tarjeta."
 
 #: app/templates/main/privacy.html:14
 msgid ""
 "Basic technical data (IP address, browser type) used to keep the service "
 "secure and to detect abuse."
 msgstr ""
+"Datos técnicos básicos (dirección IP, tipo de navegador) que se usan para "
+"mantener el servicio seguro y detectar abusos."
 
 #: app/templates/main/privacy.html:17
 msgid "How we use it"
-msgstr ""
+msgstr "Cómo lo usamos"
 
 #: app/templates/main/privacy.html:18
 msgid ""
@@ -2238,11 +2269,13 @@ msgid ""
 "purchases, communicate with you about your account, and protect the service "
 "against fraud and abuse. We do not sell your personal information."
 msgstr ""
+"Para operar el servicio, publicar el contenido que creas, procesar las "
+"compras de créditos, comunicarnos contigo sobre tu cuenta y proteger el "
+"servicio contra el fraude y el abuso. No vendemos tu información personal."
 
 #: app/templates/main/privacy.html:20
-#, fuzzy
 msgid "Sharing"
-msgstr "Ahorros"
+msgstr "Con quién lo compartimos"
 
 #: app/templates/main/privacy.html:21
 msgid ""
@@ -2251,6 +2284,10 @@ msgid ""
 "Content you publish is written to the public Hive blockchain and is not "
 "private."
 msgstr ""
+"Compartimos datos únicamente con proveedores que nos ayudan a operar el "
+"servicio (por ejemplo PayPal para los pagos y nuestro proveedor de correo), "
+"y cuando la ley lo exige. El contenido que publicas se escribe en la cadena "
+"de bloques pública de Hive y no es privado."
 
 #: app/templates/main/privacy.html:23
 msgid "Your rights"
@@ -2262,6 +2299,9 @@ msgid ""
 " profiles from EcoBank, and request deletion of your EcoBank account by "
 "contacting us."
 msgstr ""
+"Puedes ver y editar la información de tu perfil en cualquier momento, quitar"
+" de EcoBank los perfiles conectados y solicitar la eliminación de tu cuenta "
+"de EcoBank escribiéndonos."
 
 #: app/templates/main/privacy.html:26
 msgid "Changes"
@@ -2272,19 +2312,20 @@ msgid ""
 "We may update this policy from time to time. Material changes will be "
 "announced on the site."
 msgstr ""
+"Podemos actualizar esta política de vez en cuando. Los cambios importantes "
+"se anunciarán en el sitio."
 
 #: app/templates/main/privacy.html:29
-#, fuzzy
 msgid "Contact"
-msgstr "Contáctanos"
+msgstr "Contacto"
 
 #: app/templates/main/privacy.html:30
 msgid "Questions or complaints:"
-msgstr ""
+msgstr "Preguntas o reclamos:"
 
 #: app/templates/main/privacy.html:30
 msgid "(staffed by the SRBDE team on behalf of the operator)."
-msgstr ""
+msgstr "(gestionado por el equipo de SRBDE en nombre del operador)."
 
 #: app/templates/main/profile.html:9 app/templates/main/user_profile.html:27
 msgid "New Publication"
@@ -2292,12 +2333,11 @@ msgstr "Nueva Publicación"
 
 #: app/templates/main/profile.html:16
 msgid "Get another"
-msgstr ""
+msgstr "Obtener otro"
 
 #: app/templates/main/profile.html:26
-#, fuzzy
 msgid "Account details"
-msgstr "Créditos de Cuenta"
+msgstr "Datos de la cuenta"
 
 #: app/templates/main/profile.html:40
 msgid "Language / Idioma"
@@ -2356,9 +2396,8 @@ msgid "Bio not set."
 msgstr "Biografía no configurada."
 
 #: app/templates/main/profile.html:187 app/templates/main/profile.html:192
-#, fuzzy
 msgid "Upload failed. Please try again."
-msgstr "Fallo al eliminar las claves. Por favor inténtalo de nuevo."
+msgstr "Falló la subida. Inténtalo de nuevo."
 
 #: app/templates/main/security.html:8
 msgid ""
@@ -2366,10 +2405,13 @@ msgid ""
 "network without first becoming a blockchain expert. Here is exactly how that"
 " works and where your keys are."
 msgstr ""
+"EcoBank existe para que la gente pueda participar en una comunidad de la red"
+" Hive sin tener que volverse primero experta en cadenas de bloques. Aquí te "
+"explicamos exactamente cómo funciona eso y dónde están tus claves."
 
 #: app/templates/main/security.html:10
 msgid "Most people here hold no keys at all"
-msgstr ""
+msgstr "La mayoría de la gente aquí no tiene ninguna clave"
 
 #: app/templates/main/security.html:11
 msgid ""
@@ -2378,10 +2420,15 @@ msgid ""
 "publishes it. You never see a key, never hold a key, and never need one. If "
 "you leave, the community keeps its account and you keep your EcoBank login."
 msgstr ""
+"La forma habitual de usar EcoBank es unirte a una comunidad y publicar a "
+"través de la cuenta que esa comunidad comparte. Tú escribes y la cuenta de "
+"la comunidad lo publica. Nunca ves una clave, nunca tienes una clave y nunca"
+" necesitas una. Si te vas, la comunidad conserva su cuenta y tú conservas tu"
+" inicio de sesión de EcoBank."
 
 #: app/templates/main/security.html:13
 msgid "This is the opposite of buying crypto"
-msgstr ""
+msgstr "Esto es lo contrario de comprar cripto"
 
 #: app/templates/main/security.html:14
 msgid ""
@@ -2391,10 +2438,15 @@ msgid ""
 "of network cost, which EcoBank covers for you). Nobody funds a balance, buys"
 " a token, or makes an investment here."
 msgstr ""
+"No metes dinero para tener un saldo. Obtienes una cuenta y ganas con el "
+"tiempo al participar. Las transacciones en Hive son prácticamente gratis. Lo"
+" único que tiene precio en EcoBank es crear una cuenta de Hive nueva (unos 3"
+" HIVE de costo de red, que EcoBank cubre por ti). Nadie fondea un saldo, "
+"compra un token ni hace una inversión aquí."
 
 #: app/templates/main/security.html:16
 msgid "If you do run your own digital profile"
-msgstr ""
+msgstr "Si manejas tu propio perfil digital"
 
 #: app/templates/main/security.html:17
 msgid ""
@@ -2403,10 +2455,15 @@ msgid ""
 "needs, encrypted at rest, and decrypts them only to carry out an action you "
 "asked for (publishing a post, or a wallet action you requested)."
 msgstr ""
+"Algunas personas quieren su propia cuenta de Hive. Puedes crear una a través"
+" de EcoBank o conectar una que ya tengas. En ambos casos EcoBank guarda las "
+"claves que necesita, cifradas en reposo, y las descifra solo para realizar "
+"una acción que hayas pedido (publicar una entrada o una acción de billetera "
+"que hayas solicitado)."
 
 #: app/templates/main/security.html:19
 msgid "Profiles you connect"
-msgstr ""
+msgstr "Perfiles que conectas"
 
 #: app/templates/main/security.html:20
 msgid ""
@@ -2417,10 +2474,16 @@ msgid ""
 "you derive the posting key yourself with an external tool and bring back "
 "just that key."
 msgstr ""
+"Tú proporcionas únicamente la clave o claves que elijas delegar, normalmente"
+" solo la clave de publicación. EcoBank verifica cada clave contra las "
+"autorizaciones de la cuenta en la cadena y no guarda nada más. Nunca pide, "
+"recibe ni guarda tu contraseña maestra ni tu clave de propietario. Si solo "
+"tienes una contraseña maestra, tú mismo derivas la clave de publicación con "
+"una herramienta externa y traes solo esa clave."
 
 #: app/templates/main/security.html:22
 msgid "Profiles EcoBank creates for you"
-msgstr ""
+msgstr "Perfiles que EcoBank crea para ti"
 
 #: app/templates/main/security.html:23
 msgid ""
@@ -2432,36 +2495,50 @@ msgid ""
 "download a backup of your keys at any time, and remove the account from "
 "EcoBank whenever you want; it stays valid on Hive."
 msgstr ""
+"En una cuenta que crea EcoBank, este conserva la contraseña maestra, "
+"cifrada, a propósito. Una cuenta nueva no tiene valor, y quienes empiezan y "
+"reciben la responsabilidad total de una clave desde el primer día suelen "
+"perderla, y con ella la cuenta. EcoBank guarda las claves para que más "
+"adelante, cuando la cuenta ya valga la pena cuidar, puedas recuperar todo y "
+"tomar el control total. Puedes descargar una copia de seguridad de tus "
+"claves en cualquier momento y quitar la cuenta de EcoBank cuando quieras; "
+"sigue siendo válida en Hive."
 
 #: app/templates/main/security.html:25
 msgid "What each key can do"
-msgstr ""
+msgstr "Qué puede hacer cada clave"
 
 #: app/templates/main/security.html:27
 msgid ""
 "Posting key: publish, comment, vote. Cannot touch funds. This is all EcoBank"
 " needs to publish for you."
 msgstr ""
+"Clave de publicación: publicar, comentar, votar. No puede tocar fondos. Es "
+"todo lo que EcoBank necesita para publicar por ti."
 
 #: app/templates/main/security.html:28
 msgid ""
 "Active key: move funds and change account settings. EcoBank only stores this"
 " if you explicitly add it for wallet actions."
 msgstr ""
+"Clave activa: mover fondos y cambiar los ajustes de la cuenta. EcoBank la "
+"guarda solo si la agregas explícitamente para acciones de billetera."
 
 #: app/templates/main/security.html:29
 msgid "Memo key: read and write encrypted memos. Optional."
-msgstr ""
+msgstr "Clave de nota: leer y escribir notas cifradas. Opcional."
 
 #: app/templates/main/security.html:30
 msgid ""
 "Owner key: full control, including recovery. EcoBank never accepts or stores"
 " an owner key for a connected profile."
 msgstr ""
+"Clave de propietario: control total, incluida la recuperación. EcoBank nunca"
+" acepta ni guarda una clave de propietario de un perfil conectado."
 
 #: app/templates/main/security.html:33
 msgid "EcoBank will never ask you for a key"
-msgstr ""
+msgstr "EcoBank nunca te pedirá una clave"
 
 #: app/templates/main/security.html:34
 msgid ""
@@ -2470,21 +2547,28 @@ msgid ""
 "us. The only place you ever enter a key is the \"Connect a digital profile\""
 " page on this site, over HTTPS, when you chose to go there."
 msgstr ""
+"EcoBank nunca te enviará un correo, un mensaje ni una llamada para pedirte "
+"una clave, una contraseña maestra o tu contraseña de EcoBank. Cualquiera que"
+" lo haga se está haciendo pasar por nosotros. El único lugar donde llegas a "
+"ingresar una clave es la página «Conectar un perfil digital» de este sitio, "
+"por HTTPS, cuando tú decidiste ir allí."
 
 #: app/templates/main/security.html:36
-#, fuzzy
 msgid "Reporting a problem"
-msgstr "Error al actualizar el perfil."
+msgstr "Cómo reportar un problema"
 
 #: app/templates/main/security.html:37
 msgid "Security reports go to"
-msgstr ""
+msgstr "Los informes de seguridad van a"
 
 #: app/templates/main/security.html:37
 msgid ""
 "staffed by the SRBDE team. Please include steps to reproduce. We do not run "
 "a paid bounty program, but we credit reporters who ask to be credited."
 msgstr ""
+"que gestiona el equipo de SRBDE. Incluye los pasos para reproducirlo. No "
+"tenemos un programa de recompensas pago, pero damos crédito a quien lo "
+"reporta y pide ser mencionado."
 
 #: app/templates/main/terms.html:8
 #, python-format
@@ -2493,28 +2577,33 @@ msgid ""
 "infrastructure run by SRBDE. By creating an EcoBank account you agree to "
 "them."
 msgstr ""
+"Estos términos rigen tu uso de EcoBank, operado por %(entity)s (Colombia) "
+"sobre infraestructura que gestiona SRBDE. Al crear una cuenta de EcoBank los"
+" aceptas."
 
 #: app/templates/main/terms.html:10
-#, fuzzy
 msgid "1. What EcoBank is"
-msgstr "Acerca de Ecobank"
+msgstr "1. Qué es EcoBank"
 
 #: app/templates/main/terms.html:11
 msgid ""
 "EcoBank is a tool for taking part in communities on the Hive blockchain — "
-"mainly by publishing content through an account a group shares. It is not a "
-"bank, a financial service, a custodian of money, an exchange, or an "
+"mainly by publishing content through an account a circle shares. It is not a"
+" bank, a financial service, a custodian of money, an exchange, or an "
 "investment product. See the"
 msgstr ""
+"EcoBank es una herramienta para participar en comunidades de la cadena de "
+"bloques Hive, principalmente publicando contenido a través de una cuenta que"
+" comparte un círculo. No es un banco, un servicio financiero, un custodio de"
+" dinero, un exchange ni un producto de inversión. Consulta la"
 
 #: app/templates/main/terms.html:12
 msgid "for how keys are handled."
-msgstr ""
+msgstr "para saber cómo se manejan las claves."
 
 #: app/templates/main/terms.html:14
-#, fuzzy
 msgid "2. Your EcoBank account"
-msgstr "Error cargando cuentas"
+msgstr "2. Tu cuenta de EcoBank"
 
 #: app/templates/main/terms.html:15
 msgid ""
@@ -2523,30 +2612,41 @@ msgid ""
 " to form a binding contract where you live. We may suspend or close accounts"
 " that break these terms or are used for abuse."
 msgstr ""
+"Eres responsable de mantener seguro tu inicio de sesión de EcoBank y de la "
+"actividad realizada con él. Danos una dirección de correo donde puedas "
+"recibir mensajes. Debes tener la edad suficiente para celebrar un contrato "
+"vinculante en el lugar donde vives. Podemos suspender o cerrar cuentas que "
+"incumplan estos términos o que se usen para abusar del servicio."
 
 #: app/templates/main/terms.html:17
-#, fuzzy
 msgid "3. Circles and shared accounts"
-msgstr "No se encontraron cuentas compartidas"
+msgstr "3. Círculos y cuentas compartidas"
 
 #: app/templates/main/terms.html:18
 msgid ""
-"A circle is a group of people who share one Hive account to publish "
-"together. The circle's owner controls its membership and settings. If you "
-"post through a circle's account, your post is published by that account and "
-"is subject to the circle's rules. Leaving a circle does not remove content "
-"you already published."
+"A circle is a set of people who share one Hive account to publish together. "
+"The circle's owner controls its membership and settings. If you post through"
+" a circle's account, your post is published by that account and is subject "
+"to the circle's rules. Leaving a circle does not remove content you already "
+"published."
 msgstr ""
+"Un círculo es un conjunto de personas que comparten una cuenta de Hive para "
+"publicar en conjunto. El propietario del círculo controla sus miembros y "
+"ajustes. Si publicas a través de la cuenta de un círculo, tu publicación la "
+"hace esa cuenta y queda sujeta a las reglas del círculo. Salir de un círculo"
+" no elimina el contenido que ya publicaste."
 
 #: app/templates/main/terms.html:20
 msgid "4. Digital profiles and keys"
-msgstr ""
+msgstr "4. Perfiles digitales y claves"
 
 #: app/templates/main/terms.html:21
 msgid ""
 "A digital profile is a Hive account. Its keys are yours. You can create a "
 "profile through EcoBank or connect one you already have."
 msgstr ""
+"Un perfil digital es una cuenta de Hive. Sus claves son tuyas. Puedes crear "
+"un perfil a través de EcoBank o conectar uno que ya tengas."
 
 #: app/templates/main/terms.html:23
 msgid ""
@@ -2555,12 +2655,19 @@ msgid ""
 " You can download a backup at any time and take full control whenever you "
 "want."
 msgstr ""
+"En un perfil que crea EcoBank, EcoBank conserva las claves (incluida la "
+"contraseña maestra) cifradas, para que puedas empezar a participar sin tener"
+" que gestionarlas todavía. Puedes descargar una copia de seguridad en "
+"cualquier momento y tomar el control total cuando quieras."
 
 #: app/templates/main/terms.html:24
 msgid ""
 "For a profile you connect, EcoBank stores only the individual key(s) you "
 "choose to provide, and never your master password or owner key."
 msgstr ""
+"En un perfil que conectas, EcoBank guarda únicamente la clave o claves que "
+"elijas proporcionar, y nunca tu contraseña maestra ni tu clave de "
+"propietario."
 
 #: app/templates/main/terms.html:25
 msgid ""
@@ -2568,6 +2675,9 @@ msgid ""
 " on Hive; EcoBank simply stops holding its keys and can no longer act for "
 "it."
 msgstr ""
+"Puedes quitar cualquier perfil de EcoBank en cualquier momento. La cuenta "
+"sigue siendo válida en Hive; EcoBank simplemente deja de guardar sus claves "
+"y ya no puede actuar por ella."
 
 #: app/templates/main/terms.html:27
 msgid ""
@@ -2575,10 +2685,14 @@ msgid ""
 " you request. No system is perfectly secure; holding your own keys is always"
 " the safest option, and EcoBank is built to hand them back."
 msgstr ""
+"EcoBank guarda las claves cifradas en reposo y las usa solo para realizar "
+"las acciones que solicites. Ningún sistema es perfectamente seguro; tener "
+"tus propias claves siempre es la opción más segura, y EcoBank está hecho "
+"para devolvértelas."
 
 #: app/templates/main/terms.html:29
 msgid "5. Credits and payment"
-msgstr ""
+msgstr "5. Créditos y pago"
 
 #: app/templates/main/terms.html:30
 msgid ""
@@ -2587,12 +2701,18 @@ msgid ""
 "setup, and the credit price is the service fee. One credit creates one "
 "profile."
 msgstr ""
+"Crear una cuenta de Hive nueva tiene un pequeño costo de red (unos 3 HIVE). "
+"Un crédito es la creación de cuenta prepagada: EcoBank cubre ese costo y "
+"hace la configuración, y el precio del crédito es la tarifa del servicio. Un"
+" crédito crea un perfil."
 
 #: app/templates/main/terms.html:32
 msgid ""
 "The current price is shown on the credits page. Payments are processed by "
 "PayPal under their terms; EcoBank does not store card details."
 msgstr ""
+"El precio actual se muestra en la página de créditos. Los pagos los procesa "
+"PayPal bajo sus términos; EcoBank no guarda los datos de la tarjeta."
 
 #: app/templates/main/terms.html:33
 msgid ""
@@ -2600,6 +2720,9 @@ msgid ""
 "cash value beyond its use to create one account, earns nothing, and cannot "
 "be traded or transferred."
 msgstr ""
+"Un crédito no es moneda, un token, un depósito ni una inversión. No tiene "
+"valor en efectivo más allá de su uso para crear una cuenta, no genera nada y"
+" no se puede intercambiar ni transferir."
 
 #: app/templates/main/terms.html:34
 msgid ""
@@ -2607,11 +2730,13 @@ msgid ""
 "create an account, it is non-refundable, because the network cost has been "
 "spent."
 msgstr ""
+"Un crédito sin usar se puede reembolsar si lo solicitas. Una vez que un "
+"crédito se ha usado para crear una cuenta, no es reembolsable, porque ya se "
+"gastó el costo de red."
 
 #: app/templates/main/terms.html:37
-#, fuzzy
 msgid "6. Content and the blockchain"
-msgstr "Cuenta no encontrada en la blockchain Hive."
+msgstr "6. El contenido y la cadena de bloques"
 
 #: app/templates/main/terms.html:38
 msgid ""
@@ -2622,6 +2747,12 @@ msgid ""
 "content; you grant EcoBank permission to publish and display it as part of "
 "running the service."
 msgstr ""
+"El contenido que publicas se escribe en la cadena de bloques pública de "
+"Hive. Es público y prácticamente permanente: EcoBank no puede editarlo ni "
+"eliminarlo una vez publicado, y nadie más tampoco. Eres responsable de lo "
+"que publicas y confirmas que tienes derecho a publicarlo. Conservas la "
+"propiedad de tu contenido; le concedes a EcoBank permiso para publicarlo y "
+"mostrarlo como parte de la operación del servicio."
 
 #: app/templates/main/terms.html:39
 msgid ""
@@ -2630,10 +2761,15 @@ msgid ""
 "service. Hive author rewards are variable and are often zero; nothing here "
 "is a promise of earnings."
 msgstr ""
+"EcoBank se establece como beneficiario en las publicaciones que hace, "
+"tomando una parte de las recompensas de autor que esas publicaciones generen"
+" (actualmente 10%). Esto financia el servicio. Las recompensas de autor en "
+"Hive son variables y a menudo son cero; nada de esto es una promesa de "
+"ganancias."
 
 #: app/templates/main/terms.html:41
 msgid "7. Acceptable use"
-msgstr ""
+msgstr "7. Uso aceptable"
 
 #: app/templates/main/terms.html:42
 msgid ""
@@ -2641,10 +2777,13 @@ msgid ""
 "spam, infringe copyright, or attack the service or the Hive network. Do not "
 "try to access accounts or data that are not yours."
 msgstr ""
+"No uses EcoBank para publicar contenido ilegal, hacerte pasar por otras "
+"personas, enviar spam, infringir derechos de autor ni atacar el servicio o "
+"la red Hive. No intentes acceder a cuentas o datos que no son tuyos."
 
 #: app/templates/main/terms.html:44
 msgid "8. Not a financial service"
-msgstr ""
+msgstr "8. No es un servicio financiero"
 
 #: app/templates/main/terms.html:45
 msgid ""
@@ -2654,10 +2793,15 @@ msgid ""
 "Hive network, not by EcoBank. Nothing on EcoBank is an offer to buy or sell "
 "a security or currency."
 msgstr ""
+"EcoBank no recibe depósitos, no guarda ni transmite dinero, no da asesoría "
+"financiera o de inversión ni ofrece ningún rendimiento. Los HIVE, HIVE Power"
+" y HBD que se muestran en una vista de billetera pertenecen a una cuenta de "
+"Hive que tú controlas y se rigen por la red Hive, no por EcoBank. Nada en "
+"EcoBank es una oferta para comprar o vender un valor o una moneda."
 
 #: app/templates/main/terms.html:47
 msgid "9. No warranty; limitation of liability"
-msgstr ""
+msgstr "9. Sin garantía; limitación de responsabilidad"
 
 #: app/templates/main/terms.html:48
 #, python-format
@@ -2669,48 +2813,58 @@ msgid ""
 " for loss of rewards, keys, or content beyond our reasonable control. "
 "Nothing in these terms limits liability that cannot be limited by law."
 msgstr ""
+"EcoBank se ofrece «tal cual», sin garantías de ningún tipo. No garantizamos "
+"que el servicio sea ininterrumpido ni esté libre de errores, ni que la red "
+"Hive se comporte de una forma determinada. En la medida en que la ley lo "
+"permita, %(entity)s y SRBDE no son responsables de daños indirectos o "
+"consecuentes, ni de la pérdida de recompensas, claves o contenido que esté "
+"fuera de nuestro control razonable. Nada en estos términos limita la "
+"responsabilidad que no se pueda limitar por ley."
 
 #: app/templates/main/terms.html:50
-#, fuzzy
 msgid "10. Changes"
-msgstr "Cambios"
+msgstr "10. Cambios"
 
 #: app/templates/main/terms.html:51
 msgid ""
 "We may update these terms. Material changes will be announced on the site. "
 "Continuing to use EcoBank after a change means you accept the updated terms."
 msgstr ""
+"Podemos actualizar estos términos. Los cambios importantes se anunciarán en "
+"el sitio. Seguir usando EcoBank después de un cambio significa que aceptas "
+"los términos actualizados."
 
 #: app/templates/main/terms.html:53
 msgid "11. Governing law and contact"
-msgstr ""
+msgstr "11. Ley aplicable y contacto"
 
 #: app/templates/main/terms.html:54
 msgid "These terms are governed by the laws of Colombia. Questions:"
-msgstr ""
+msgstr "Estos términos se rigen por las leyes de Colombia. Preguntas:"
 
 #: app/templates/main/token_price.html:13
 msgid "Price (HIVE)"
-msgstr ""
+msgstr "Precio (HIVE)"
 
 #: app/templates/main/token_price.html:21
 msgid "Price (USD)"
-msgstr ""
+msgstr "Precio (USD)"
 
 #: app/templates/main/token_price.html:37
 msgid ""
 "Price derived from the HSBIDAO:ECOBANK Hive-Engine liquidity pool, updated "
 "hourly."
 msgstr ""
+"Precio derivado del fondo de liquidez HSBIDAO:ECOBANK de Hive-Engine, "
+"actualizado cada hora."
 
 #: app/templates/main/token_price.html:50
-#, fuzzy
 msgid "ECOBANK / USD"
-msgstr "Ecobank"
+msgstr "ECOBANK / USD"
 
 #: app/templates/main/token_price.html:72
 msgid "No price data yet — the first snapshot will appear shortly."
-msgstr ""
+msgstr "Aún no hay datos de precio: la primera captura aparecerá pronto."
 
 #: app/templates/main/user_profile.html:38
 msgid "Recent Activity"
@@ -2721,9 +2875,8 @@ msgid "No recent posts found."
 msgstr "No encontramos contenido compartida"
 
 #: app/templates/main/user_profile.html:122
-#, fuzzy
 msgid "Member"
-msgstr "Miembros"
+msgstr "Miembro"
 
 #: app/templates/main/user_profile.html:125
 msgid "Request to Join"
@@ -3106,3 +3259,22 @@ msgstr "Sin notificaciones."
 
 #~ msgid "Find Sponsor"
 #~ msgstr "Buscar Patrocinador"
+
+#~ msgid ""
+#~ "Cannot delete this user because they have created groups or Hive accounts."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "EcoBank is a tool for taking part in communities on the Hive blockchain — "
+#~ "mainly by publishing content through an account a group shares. It is not a "
+#~ "bank, a financial service, a custodian of money, an exchange, or an "
+#~ "investment product. See the"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "A circle is a group of people who share one Hive account to publish "
+#~ "together. The circle's owner controls its membership and settings. If you "
+#~ "post through a circle's account, your post is published by that account and "
+#~ "is subject to the circle's rules. Leaving a circle does not remove content "
+#~ "you already published."
+#~ msgstr ""

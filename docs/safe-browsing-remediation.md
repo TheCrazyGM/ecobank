@@ -200,7 +200,7 @@ Branch `safety/vocab-and-phishing-signals`.
 | 5b | `X-Robots-Tag: noindex` on every route except the public allowlist (`app/security_headers.py`) | ✅ done — effective once robots.txt is opened |
 | 6 | `robots.txt`: allow public pages, disallow app routes; `sitemap.xml` for public pages | ⬜ **needs thecrazygm** (coordinate with proxy) |
 | 7 | CSP + SRI; move inline `buy_credits` JS to a static file | ⬜ **needs thecrazygm** (proxy header interaction) |
-| 8 | Spanish catalog: `./update_translations.sh`, translate new strings | ⬜ after EN sign-off |
+| 8 | Spanish catalog | 🟡 tooling built (`scripts/translate_po.py`, glossary, `docs/translations.md`); catalog regenerated (~240 entries fuzzy/empty). **Left to do: run with a `DEEPL_API_KEY`, then review the fuzzies.** |
 
 Public (indexable) endpoints, per `app/security_headers.py`: `main.index`,
 `main.about`, `main.privacy`, `main.token_price`, `static`. Everything else —

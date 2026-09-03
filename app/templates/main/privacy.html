@@ -4,7 +4,7 @@
 
 {% block content %}
     <h2 class="mb-4">{{ _('Privacy Policy') }}</h2>
-    <p class="lead">{{ _('EcoBank is operated by %(entity)s (Colombia). This policy explains what we collect and why.', entity=config.OPERATING_ENTITY) }}</p>
+    <p class="lead">{{ _('EcoBank is operated by %(entity)s (Colombia), on infrastructure run by SRBDE (ecoinstats.net). This policy explains what we collect and why.', entity=config.OPERATING_ENTITY) }}</p>
 
     <h3>{{ _('What we collect') }}</h3>
     <ul>
@@ -27,5 +27,5 @@
     <p>{{ _('We may update this policy from time to time. Material changes will be announced on the site.') }}</p>
 
     <h3>{{ _('Contact') }}</h3>
-    <p>{{ _('Questions or complaints:') }} <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a></p>
+    <p>{{ _('Questions or complaints:') }} <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a> {{ _('(staffed by the SRBDE team on behalf of the operator).') }}</p>
 {% endblock %}

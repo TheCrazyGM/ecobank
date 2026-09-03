@@ -9,8 +9,11 @@
     <p>{{ _('It is built on Hive so that a group can share one public identity without sharing a password: contributors write drafts, and EcoBank publishes them using only a posting key. EcoBank looks after that key so people can take part without first learning how blockchain keys work.') }}</p>
 
     <h3>{{ _('Who runs it') }}</h3>
-    <p>{{ _('EcoBank is operated by %(entity)s, a company registered in Colombia. You can reach us at', entity=config.OPERATING_ENTITY) }}
-        <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a>.</p>
+    <p>{{ _('EcoBank is operated by %(entity)s, a company registered in Colombia.', entity=config.OPERATING_ENTITY) }}</p>
+    <p>{{ _('It is built and run on infrastructure maintained by SRBDE (Sustainable Resource and Business Development Enterprise), an independent open-source software enterprise. EcoBank is a client of SRBDE.') }}
+        <a href="https://ecoinstats.net" target="_blank" rel="noopener noreferrer">ecoinstats.net</a> &middot;
+        <a href="https://github.com/srbde" target="_blank" rel="noopener noreferrer">github.com/srbde</a></p>
+    <p>{{ _('Questions, privacy requests, and security reports go to') }} <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a>, {{ _('which is staffed by the SRBDE team.') }}</p>
 
     <h3>{{ _('Not a bank') }}</h3>
     <p>{{ _('EcoBank is not a bank. It does not take deposits, hold money for you, or offer any financial service, and it is not affiliated with Ecobank Transnational Incorporated or any other financial institution. The name refers to ecological restoration funded through the Hive network. The "wallet" screen simply shows the HIVE, HIVE Power and HBD held by a Hive profile you control.') }}</p>

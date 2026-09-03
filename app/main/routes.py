@@ -407,6 +407,11 @@ def privacy():
     return render_template("main/privacy.html", title=_("Privacy Policy"))
 
 
+@bp.route("/security")
+def security():
+    return render_template("main/security.html", title=_("Security"))
+
+
 @bp.route("/token-price")
 @cache.cached(timeout=300)
 def token_price():

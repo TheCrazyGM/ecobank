@@ -19,4 +19,8 @@
 
     <h3>{{ _('Not a financial institution') }}</h3>
     <p>{{ _('EcoBank does not take deposits, hold money for you, or offer any financial service, and it is not affiliated with Ecobank Transnational Incorporated or any other bank. "Bank" here means a bank of restoration projects. The "wallet" screen only shows the HIVE, HIVE Power and HBD already held by a Hive profile you control.') }}</p>
+
+    <h3>{{ _('Your keys') }}</h3>
+    <p>{{ _('Most people who use EcoBank hold no keys at all — they post through an account their community shares. If you run your own profile, the') }}
+        <a href="{{ url_for('main.security') }}">{{ _('Security page') }}</a> {{ _('explains exactly where your keys are and how to take full control.') }}</p>
 {% endblock %}

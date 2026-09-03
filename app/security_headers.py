@@ -20,6 +20,7 @@ PUBLIC_ENDPOINTS = frozenset(
         "main.index",
         "main.about",
         "main.privacy",
+        "main.security",
         "main.token_price",
     }
 )

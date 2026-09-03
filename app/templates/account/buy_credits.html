@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('Buy credits') }}</h2>
-    <p class="lead">{{ _('Each credit lets you create one digital profile on the Hive network.') }}</p>
+    <h2>{{ _('Get a credit') }}</h2>
+    <p class="lead">{{ _('A credit is prepaid account creation. One credit creates one new Hive account for you.') }}</p>
+    <p>{{ _('Creating a Hive account has a small network cost (about 3 HIVE). EcoBank covers that cost and does the setup; the credit price is the service fee for that. You are not buying currency, a token, or an investment, and EcoBank never holds a balance for you. If your community already shares an account, you do not need this at all.') }}</p>
     <p><strong>{{ _('Price:') }}</strong> ${{ "%.2f"|format(price) }} USD {{ _('per credit') }}</p>
 
     {% if hive_claim_tickets == 0 %}

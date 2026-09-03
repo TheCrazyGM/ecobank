@@ -118,7 +118,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('account.buy_credits') }}"><i
-                      class="bi bi-credit-card me-2"></i> {{ _('Buy credits') }}</a>
+                      class="bi bi-credit-card me-2"></i> {{ _('Account credits') }}</a>
                   </li>
 
                   {% if current_user.is_admin %}
@@ -181,6 +181,7 @@
             <a href="https://github.com/srbde" class="text-muted" target="_blank" rel="noopener noreferrer">github.com/srbde</a></small>
           <br>
           <a href="{{ url_for('main.about') }}" class="text-muted me-2">{{ _('About') }}</a>
+          <a href="{{ url_for('main.security') }}" class="text-muted me-2">{{ _('Security') }}</a>
           <a href="{{ url_for('main.privacy') }}" class="text-muted">{{ _('Privacy Policy') }}</a>
         <!-- Honeypot Link -->
           <a href="{{ url_for('main.honey_trap') }}" style="display:none;" aria-hidden="true">Constructo</a>

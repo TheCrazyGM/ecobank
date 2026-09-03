@@ -22,14 +22,14 @@
             </div>
             <div class="col-6 col-md-3">
                 <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary w-100 py-3">
-                    <i class="bi bi-key fs-4 d-block mb-1"></i>
-                    {{ _('My Keys') }}
+                    <i class="bi bi-person-badge fs-4 d-block mb-1"></i>
+                    {{ _('My profiles') }}
                 </a>
             </div>
             <div class="col-6 col-md-3">
                 <a href="{{ url_for('main.profile') }}" class="btn btn-outline-secondary w-100 py-3">
                     <i class="bi bi-person-circle fs-4 d-block mb-1"></i>
-                    {{ _('Profile') }}
+                    {{ _('My Account') }}
                 </a>
             </div>
         </div>
@@ -88,11 +88,11 @@
             {% else %}
                 <div class="alert alert-info text-center py-5">
                     <h4>{{ _('No posts found right now.') }}</h4>
-                    <p>{{ _('Register a Hive account or create one to start seeing content here!') }}</p>
+                    <p>{{ _('Connect a digital profile or create one to start seeing content here!') }}</p>
                     {% if not current_user.is_authenticated %}
                         <a href="{{ url_for('auth.register') }}" class="btn btn-primary">{{ _('Join Now') }}</a>
                     {% else %}
-                        <a href="{{ url_for('account.create') }}" class="btn btn-success">{{ _('Create Hive Account') }}</a>
+                        <a href="{{ url_for('account.create') }}" class="btn btn-success">{{ _('Create a digital profile') }}</a>
                     {% endif %}
                 </div>
             {% endif %}

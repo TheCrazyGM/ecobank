@@ -8,7 +8,7 @@
                     <h4 class="mb-0">{{ _('Security Check') }}</h4>
                 </div>
                 <div class="card-body">
-                    <p>{{ _('Please enter your password to view the keys for group:') }} <strong>{{ account.username
+                    <p>{{ _('Enter your EcoBank password to view the recovery keys for profile:') }} <strong>{{ account.username
                         }}</strong></p>
 
                     <form method="POST">
@@ -17,7 +17,7 @@
                             <input type="password" class="form-control" id="password" name="password" required autofocus>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">{{ _('Verify & View Keys') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ _('Verify') }}</button>
                             <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary">{{
                                 _('Cancel') }}</a>
                         </div>

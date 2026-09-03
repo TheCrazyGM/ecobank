@@ -56,6 +56,13 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     ADMINS = ["your-email@example.com"]
 
+    # Public-facing contact address (shown in About / Privacy Policy).
+    CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "info@ecobankdevelopment.co")
+    # Legal operating entity, shown in footer / policies.
+    OPERATING_ENTITY = os.environ.get(
+        "OPERATING_ENTITY", "Ecobank Development Colombia SAS"
+    )
+
     # Cost per credit in USD
     CREDIT_PRICE_USD = 3.00
 

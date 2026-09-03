@@ -56,7 +56,7 @@ def create():
 
     # POST Logic
     if current_user.account_credits < 1:
-        flash(_("You do not have enough credits to create an account."), "danger")
+        flash(_("You do not have enough credits to create a profile."), "danger")
         return redirect(url_for("account.buy_credits"))
 
     username = request.form.get("username", "").strip().lower()
@@ -74,7 +74,7 @@ def create():
     hive = Hive()
     try:
         Account(username, blockchain_instance=hive)
-        flash(_("Username already exists on Hive."), "danger")
+        flash(_("That profile name is already taken on Hive."), "danger")
         return redirect(url_for("account.create"))
     except Exception:
         pass  # Username is available
@@ -177,7 +177,10 @@ def create():
     else:
         flash(_("RC delegation amount is 0, skipping delegation."), "info")
 
-    flash(_("Account %(username)s created successfully!", username=username), "success")
+    flash(
+        _("Digital profile %(username)s created successfully!", username=username),
+        "success",
+    )
     return redirect(url_for("account.list_accounts"))
 
 
@@ -188,7 +191,6 @@ def import_account():
         return render_template("account/import.html")
 
     username = request.form.get("username", "").strip().lower()
-    password = request.form.get("password", "").strip()
 
     posting_key = request.form.get("posting_key", "").strip()
     active_key = request.form.get("active_key", "").strip()
@@ -203,7 +205,7 @@ def import_account():
         username=username, created_by_id=current_user.id
     ).first()
     if existing:
-        flash(_("You have already imported this account."), "warning")
+        flash(_("You have already connected this profile."), "warning")
         return redirect(url_for("account.list_accounts"))
 
     # Validate against blockchain
@@ -211,104 +213,53 @@ def import_account():
     try:
         acc = Account(username, blockchain_instance=hive)
     except Exception:
-        flash(_("Account not found on Hive blockchain."), "danger")
+        flash(_("That profile was not found on the Hive network."), "danger")
         return redirect(url_for("account.import_account"))
 
     prefix = hive.prefix
     keys_to_save = {}
     verified = False
 
-    # 1. Validate via Master Password
-    if password:
-        try:
-            # Verify Posting Key derived from password matches chain
-            pk = PasswordKey(username, password, role="posting", prefix=prefix)
-            derived_pub = str(pk.get_private_key().pubkey)
-
-            # Get on-chain posting auths
-            # structure: {'key_auths': [['STM...', 1], ...]}
-            posting_auths = acc.get("posting", {}).get("key_auths", [])
-            auth_keys = [k[0] for k in posting_auths]
-
-            if derived_pub in auth_keys:
-                verified = True
-                # Generate keys from password to save - EXCLUDING OWNER for security
-                for role in ["active", "posting", "memo"]:
-                    pk_role = PasswordKey(username, password, role=role, prefix=prefix)
-                    priv = pk_role.get_private_key()
-                    keys_to_save[role] = {
-                        "public": str(priv.pubkey),
-                        "private": str(priv),
-                    }
-            else:
-                flash(
-                    _(
-                        "Master password validation failed: Derived posting key does not match account."
-                    ),
-                    "danger",
-                )
-                return redirect(url_for("account.import_account"))
-
-        except Exception as e:
-            current_app.logger.error(f"Password validation error: {e}")
-            flash(_("Error validating password."), "danger")
-            return redirect(url_for("account.import_account"))
-
-    # 2. Validate via Individual Keys
-    else:
-        # Helper to verify a specific key role
-        def verify_key(role, private_wif):
-            if not private_wif:
-                return None
-            try:
-                priv = PrivateKey(private_wif, prefix=prefix)
-                pub = str(priv.pubkey)
-
-                # Get auths for role (memo is special, stored directly as string usually)
-                if role == "memo":
-                    chain_key = acc.get("memo_key")
-                    if chain_key == pub:
-                        return {"public": pub, "private": str(priv)}
-                else:
-                    role_auths = acc.get(role, {}).get("key_auths", [])
-                    auth_keys = [k[0] for k in role_auths]
-                    if pub in auth_keys:
-                        return {"public": pub, "private": str(priv)}
-            except Exception:
-                pass
+    # EcoBank never accepts a master password. Users connect a profile by
+    # providing the specific private key(s) they choose to delegate; each is
+    # verified against the account's on-chain authorities before being stored.
+    # The owner key is never accepted or stored.
+    def verify_key(role, private_wif):
+        if not private_wif:
             return None
+        try:
+            priv = PrivateKey(private_wif, prefix=prefix)
+            pub = str(priv.pubkey)
 
-        # Try verifying each provided key
-        if posting_key:
-            res = verify_key("posting", posting_key)
-            if res:
-                keys_to_save["posting"] = res
-                verified = True
-        if active_key:
-            res = verify_key("active", active_key)
-            if res:
-                keys_to_save["active"] = res
-                verified = True
+            # memo is stored on-chain directly as a string, not in key_auths
+            if role == "memo":
+                if acc.get("memo_key") == pub:
+                    return {"public": pub, "private": str(priv)}
+            else:
+                role_auths = acc.get(role, {}).get("key_auths", [])
+                auth_keys = [k[0] for k in role_auths]
+                if pub in auth_keys:
+                    return {"public": pub, "private": str(priv)}
+        except Exception:
+            pass
+        return None
 
-        # Do NOT save owner key even if provided
-        # if owner_key:
-        #     res = verify_key("owner", owner_key)
-        #     if res:
-        #         keys_to_save["owner"] = res
-        #         verified = True
+    for role, wif in (
+        ("posting", posting_key),
+        ("active", active_key),
+        ("memo", memo_key),
+    ):
+        res = verify_key(role, wif)
+        if res:
+            keys_to_save[role] = res
+            verified = True
 
-        if memo_key:
-            res = verify_key("memo", memo_key)
-            if res:
-                keys_to_save["memo"] = res
-                verified = True
-
-        if not verified:
-            flash(
-                _("No valid keys provided that match the account authorities."),
-                "danger",
-            )
-            return redirect(url_for("account.import_account"))
+    if not verified:
+        flash(
+            _("No valid keys provided that match the profile's on-chain authorities."),
+            "danger",
+        )
+        return redirect(url_for("account.import_account"))
 
     # Save to DB
     encryption_key = current_app.config.get("HIVE_ENCRYPTION_KEY")
@@ -318,20 +269,13 @@ def import_account():
 
     fernet = Fernet(encryption_key)
 
-    # If we used password, we save it encrypted.
-    # SECURITY NOTE: Saving master password is risky. We should consider NOT saving it if we already derived keys.
-    # However, user might expect us to manage everything. For import, we'll save it if they provided it,
-    # but strictly speaking we only need the derived keys.
-    # Let's keep saving it for now per current architecture, but NOT generating the owner key from it for storage.
-    password_enc = None
-    if password:
-        password_enc = fernet.encrypt(password.encode()).decode()
-
+    # Connected profiles: EcoBank stores only the individual keys the user
+    # chose to delegate. There is no master password to store.
     keys_enc = fernet.encrypt(json.dumps(keys_to_save).encode()).decode()
 
     new_account = HiveAccount(
         username=username,
-        password_enc=password_enc,
+        password_enc=None,
         keys_enc=keys_enc,
         created_by_id=current_user.id,
         tx_id="import",
@@ -340,7 +284,7 @@ def import_account():
     db.session.commit()
 
     flash(
-        _("Account %(username)s imported successfully!", username=username), "success"
+        _("Profile %(username)s connected successfully!", username=username), "success"
     )
     return redirect(url_for("account.list_accounts"))
 
@@ -410,7 +354,7 @@ def delete_account(id):
         db.session.commit()
         flash(
             _(
-                "Hive account %(username)s has been removed from EcoBank. Remember to keep your keys safe!",
+                "Profile %(username)s has been removed from EcoBank. Keep your recovery keys safe!",
                 username=account.username,
             ),
             "success",
@@ -419,7 +363,7 @@ def delete_account(id):
         db.session.rollback()
         current_app.logger.error(f"Error deleting HiveAccount {account.username}: {e}")
         flash(
-            _("Failed to remove Hive account from EcoBank. Please try again."), "danger"
+            _("Failed to remove the profile from EcoBank. Please try again."), "danger"
         )
 
     return redirect(url_for("account.list_accounts"))

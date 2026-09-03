@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('Group Details:') }} {{ account.username }}</h2>
-    <div class="card mb-3">
-        <div class="card-header">{{ _('Master Password') }}</div>
-        <div class="card-body">
-            <code>{{ password }}</code>
+    <h2>{{ _('Recovery keys:') }} {{ account.username }}</h2>
+    <p class="text-muted">{{ _('These control the digital profile. Download a backup and store it somewhere only you can reach.') }}</p>
+
+    {% if password %}
+        <div class="card mb-3">
+            <div class="card-header">{{ _('Master password') }}</div>
+            <div class="card-body">
+                <code>{{ password }}</code>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="card mb-3">
         <div class="card-header">{{ _('Keys') }}</div>
@@ -23,10 +27,10 @@
 
     <a href="{{ url_for('account.list_accounts') }}" class="btn btn-secondary">{{ _('Back to List') }}</a>
 
-    <button type="button" class="btn btn-info me-2" id="downloadKeysBtn">{{ _('Download Keys') }}</button>
+    <button type="button" class="btn btn-info me-2" id="downloadKeysBtn">{{ _('Download backup') }}</button>
 
 <!-- Button to trigger delete modal -->
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">{{ _('Delete Keys from EcoBank') }}</button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">{{ _('Remove from EcoBank') }}</button>
 
 <!-- Confirmation Modal -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
@@ -34,21 +38,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">{{ _('Confirm Keys Deletion') }}</h5>
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">{{ _('Remove this profile?') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-danger">{{ _('WARNING: This action will permanently remove these Hive keys from EcoBank\'s management. The wallet will remain valid on the Hive blockchain, but EcoBank will no longer store your keys or manage them. You MUST download your keys if you wish to retain access to this wallet.') }}</p>
+                    <p class="text-danger">{{ _('This removes the recovery keys from EcoBank. Your profile stays valid on the Hive network, but EcoBank will no longer store its keys or be able to post for you. Download a backup first, or you will lose access through EcoBank.') }}</p>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="confirmDownloadedKeys">
                         <label class="form-check-label" for="confirmDownloadedKeys">
-                            {{ _('I have downloaded all my keys and understand EcoBank will no longer store them.') }}
+                            {{ _('I have downloaded a backup and understand EcoBank will no longer store these keys.') }}
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="confirmUnderstoodPermanent">
                         <label class="form-check-label" for="confirmUnderstoodPermanent">
-                            {{ _('I understand this action is permanent and EcoBank cannot recover my account.') }}
+                            {{ _('I understand this is permanent and EcoBank cannot recover the profile for me.') }}
                         </label>
                     </div>
                 </div>

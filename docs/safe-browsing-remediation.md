@@ -196,10 +196,16 @@ Branch `safety/vocab-and-phishing-signals`.
 | 2 | Rework `/account/import` → "Connect a digital profile": master-password path removed, single posting-key field + optional active, links to `tools.crypto-dreamr.com/key-recovery`, `noindex`, consent checkbox | ✅ done |
 | 3 | Crypto-strong generator on `create.html` (`crypto.getRandomValues`), "saved it" confirm; `type=password` + `autocomplete=off` on connect fields | ✅ done (create.html shows the new master password by design, stays `type=text`) |
 | 4 | Vocabulary pass — canonical terms in `docs/vocabulary.md`; "digital profile", "credit", "My Account", "recovery keys" | ✅ done (EN); `login.html` / `register.html` untouched (no jargon there) |
-| 5 | Site-wide non-affiliation line + operator identity in footer & meta; About + Privacy rewritten | ✅ done. `noindex` on `/account`, `/drafts`, `/admin` — ⬜ still to do |
+| 5 | Site-wide non-affiliation line + operator identity in footer & meta; About + Privacy rewritten; SRBDE relationship stated + cross-linked (`ecoinstats.net`, `github.com/srbde`) | ✅ done |
+| 5b | `X-Robots-Tag: noindex` on every route except the public allowlist (`app/security_headers.py`) | ✅ done — effective once robots.txt is opened |
 | 6 | `robots.txt`: allow public pages, disallow app routes; `sitemap.xml` for public pages | ⬜ **needs thecrazygm** (coordinate with proxy) |
 | 7 | CSP + SRI; move inline `buy_credits` JS to a static file | ⬜ **needs thecrazygm** (proxy header interaction) |
 | 8 | Spanish catalog: `./update_translations.sh`, translate new strings | ⬜ after EN sign-off |
+
+Public (indexable) endpoints, per `app/security_headers.py`: `main.index`,
+`main.about`, `main.privacy`, `main.token_price`, `static`. Everything else —
+including Hive post/blog/wallet mirrors and `main.user_profile` — is noindexed
+for now; move specific routes into the allowlist if we want them in search.
 
 i18n: keep long strings on one line (see `feedback_po_linebreaks`).
 

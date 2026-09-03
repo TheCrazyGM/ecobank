@@ -90,7 +90,7 @@ def delete_user(user_id):
     if user.created_groups.count() > 0 or user.hive_accounts.count() > 0:
         flash(
             _(
-                "Cannot delete this user because they have created groups or Hive accounts."
+                "Cannot delete this user because they have created circles or Hive accounts."
             ),
             "danger",
         )

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Terms of Service') }}{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">{{ _('Terms of Service') }}</h2>
+
+    <p class="lead">{{ _('These terms cover your use of EcoBank, operated by %(entity)s (Colombia) on infrastructure run by SRBDE. By creating an EcoBank account you agree to them.', entity=config.OPERATING_ENTITY) }}</p>
+
+    <h3>{{ _('1. What EcoBank is') }}</h3>
+    <p>{{ _('EcoBank is a tool for taking part in communities on the Hive blockchain — mainly by publishing content through an account a group shares. It is not a bank, a financial service, a custodian of money, an exchange, or an investment product. See the') }}
+        <a href="{{ url_for('main.security') }}">{{ _('Security page') }}</a> {{ _('for how keys are handled.') }}</p>
+
+    <h3>{{ _('2. Your EcoBank account') }}</h3>
+    <p>{{ _('You are responsible for keeping your EcoBank login secure and for activity under it. Give us an address you can receive mail at. You must be old enough to form a binding contract where you live. We may suspend or close accounts that break these terms or are used for abuse.') }}</p>
+
+    <h3>{{ _('3. Circles and shared accounts') }}</h3>
+    <p>{{ _('A circle is a group of people who share one Hive account to publish together. The circle\'s owner controls its membership and settings. If you post through a circle\'s account, your post is published by that account and is subject to the circle\'s rules. Leaving a circle does not remove content you already published.') }}</p>
+
+    <h3>{{ _('4. Digital profiles and keys') }}</h3>
+    <p>{{ _('A digital profile is a Hive account. Its keys are yours. You can create a profile through EcoBank or connect one you already have.') }}</p>
+    <ul>
+        <li>{{ _('For a profile EcoBank creates, EcoBank keeps the keys (including the master password) encrypted, so you can start taking part without managing them yet. You can download a backup at any time and take full control whenever you want.') }}</li>
+        <li>{{ _('For a profile you connect, EcoBank stores only the individual key(s) you choose to provide, and never your master password or owner key.') }}</li>
+        <li>{{ _('You can remove any profile from EcoBank at any time. The account stays valid on Hive; EcoBank simply stops holding its keys and can no longer act for it.') }}</li>
+    </ul>
+    <p>{{ _('EcoBank keeps keys encrypted at rest and uses them only to carry out actions you request. No system is perfectly secure; holding your own keys is always the safest option, and EcoBank is built to hand them back.') }}</p>
+
+    <h3>{{ _('5. Credits and payment') }}</h3>
+    <p>{{ _('Creating a new Hive account has a small network cost (about 3 HIVE). A credit is prepaid account creation: EcoBank covers that cost and does the setup, and the credit price is the service fee. One credit creates one profile.') }}</p>
+    <ul>
+        <li>{{ _('The current price is shown on the credits page. Payments are processed by PayPal under their terms; EcoBank does not store card details.') }}</li>
+        <li>{{ _('A credit is not currency, a token, a deposit, or an investment. It has no cash value beyond its use to create one account, earns nothing, and cannot be traded or transferred.') }}</li>
+        <li>{{ _('An unused credit can be refunded on request. Once a credit has been used to create an account, it is non-refundable, because the network cost has been spent.') }}</li>
+    </ul>
+
+    <h3>{{ _('6. Content and the blockchain') }}</h3>
+    <p>{{ _('Content you publish is written to the public Hive blockchain. It is public and effectively permanent: EcoBank cannot edit or delete it once published, and neither can anyone else. You are responsible for what you publish and confirm you have the right to publish it. You keep ownership of your content; you grant EcoBank permission to publish and display it as part of running the service.') }}</p>
+    <p>{{ _('EcoBank sets itself as a beneficiary on posts it publishes, taking a share of any author rewards those posts earn (currently 10%). This funds the service. Hive author rewards are variable and are often zero; nothing here is a promise of earnings.') }}</p>
+
+    <h3>{{ _('7. Acceptable use') }}</h3>
+    <p>{{ _('Do not use EcoBank to publish unlawful content, impersonate others, send spam, infringe copyright, or attack the service or the Hive network. Do not try to access accounts or data that are not yours.') }}</p>
+
+    <h3>{{ _('8. Not a financial service') }}</h3>
+    <p>{{ _('EcoBank does not take deposits, hold or transmit money, provide financial or investment advice, or offer any return. HIVE, HIVE Power and HBD shown in a wallet view belong to a Hive account you control and are governed by the Hive network, not by EcoBank. Nothing on EcoBank is an offer to buy or sell a security or currency.') }}</p>
+
+    <h3>{{ _('9. No warranty; limitation of liability') }}</h3>
+    <p>{{ _('EcoBank is provided "as is", without warranties of any kind. We do not guarantee the service will be uninterrupted or error-free, or that the Hive network will behave in any particular way. To the extent the law allows, %(entity)s and SRBDE are not liable for indirect or consequential losses, or for loss of rewards, keys, or content beyond our reasonable control. Nothing in these terms limits liability that cannot be limited by law.', entity=config.OPERATING_ENTITY) }}</p>
+
+    <h3>{{ _('10. Changes') }}</h3>
+    <p>{{ _('We may update these terms. Material changes will be announced on the site. Continuing to use EcoBank after a change means you accept the updated terms.') }}</p>
+
+    <h3>{{ _('11. Governing law and contact') }}</h3>
+    <p>{{ _('These terms are governed by the laws of Colombia. Questions:') }}
+        <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a>.</p>
+{% endblock %}

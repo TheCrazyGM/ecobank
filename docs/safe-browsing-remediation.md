@@ -239,8 +239,8 @@ SRBDE cross-links). Remaining, in order:
 |---|---|---|
 | P2-1 | **`/security` page** — custodial model stated plainly; owner key never taken for connected profiles; created profiles hold the master password on purpose (why + how to take custody); what each key does; "EcoBank will never ask you for a key"; how to remove keys. Public/indexable, linked from footer + About. | ✅ done |
 | P2-1b | Reframe the money story: most users hold no keys and buy nothing (post through a shared community account); a "credit" is prepaid account creation (service fee for the ~3 HIVE network cost), not buying currency/an investment. `buy_credits.html`, homepage onboarding, nav label. `docs/vocabulary.md` — three-accounts distinction. | ✅ done |
-| P2-2 | **`/terms` page**. What the service is/isn't: keys are the user's property; the custody model and how it ends; **not a financial/investment service — no deposits, no yield, no returns**; credit pricing and refund terms. | ⬜ next |
-| P2-3 | Link `/security` (done) + `/terms` from footer and `about.html`. | 🟡 security done; terms pending P2-2 |
+| P2-2 | **`/terms` page** — 11 sections: what EcoBank is/isn't, circles, keys are the user's property + custody model + how it ends, credits (not currency/investment; unused refundable, used non-refundable), content is public + permanent + the 10% beneficiary fee, not a financial service, no warranty, Colombia governing law. Public/indexable. Linked from footer + register form. | ✅ done |
+| P2-3 | Link `/security` + `/terms` from footer, `about.html` (security), register form (both). | ✅ done |
 | P2-4 | **OG image check** — `img/ecobank_header.png` must not read as bank branding. | ⬜ |
 | P2-5 | Honeypot review — the hidden `<a>"Constructo"` footer link + `/honey/trap`. Form-field honeypots are fine; the hidden link is cloaking-adjacent. **Deferred to thecrazygm** (it's his anti-abuse tool). | ⬜ thecrazygm |
 | P2-6 | Rename the "groups" feature → **"circles"** (user-facing only; code/DB stay `Group`). See `docs/groups-to-circles.md`. | ✅ L1 (copy) + L2 (URLs + `/groups`→`/circles` 301s) done; Spanish pending |

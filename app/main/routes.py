@@ -412,6 +412,11 @@ def security():
     return render_template("main/security.html", title=_("Security"))
 
 
+@bp.route("/terms")
+def terms():
+    return render_template("main/terms.html", title=_("Terms of Service"))
+
+
 @bp.route("/token-price")
 @cache.cached(timeout=300)
 def token_price():

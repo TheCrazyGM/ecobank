@@ -4,8 +4,13 @@ Single source of truth for user-facing wording. When you add or change a
 user-facing string, make it match this table. Goal: **one word per concept**,
 friendly but not vague, and nothing that reads like a phishing page.
 
-Spanish column is filled **after** the English is settled, then
-`./update_translations.sh` is run.
+Spanish is Latin-American / Colombian, informal **tú**. The ES column below is
+the **locked glossary** — `translations/glossary.es.json` mirrors it, and
+`scripts/translate_po.py` forces these exact renderings. See `docs/translations.md`.
+
+**Never translated:** EcoBank, Hive, SRBDE, HIVE, HIVE Power, HP, HBD, HBD Savings,
+Ecobank Development Colombia SAS, Ecobank Transnational Incorporated, PayPal,
+Fernet, VESTS, RC, Resource Credits.
 
 ---
 
@@ -15,40 +20,46 @@ Most people who use EcoBank hold **no keys at all**. They log in and participate
 through a shared account a community runs. "Get your own profile" is an optional
 later step, not the starting point.
 
-| # | Thing | Term | Who has it |
-|---|---|---|---|
-| 1 | Your EcoBank login | **your EcoBank account** / "My Account" | everyone, free |
-| 2 | A Hive account a group owns and shares | **community profile** (or "the community's shared account") | most participants post through one of these; they hold no keys |
-| 3 | A Hive account that is yours alone | **your digital profile** | optional — created or connected when you're ready to run your own |
+| # | Thing | Term (EN) | Term (ES) | Who has it |
+|---|---|---|---|---|
+| 1 | Your EcoBank login | **your EcoBank account** / "My Account" | **tu cuenta de EcoBank** / "Mi cuenta" | everyone, free |
+| 2 | A Hive account a circle shares | **the circle's shared account** | **la cuenta compartida del círculo** | most participants post through one of these; they hold no keys |
+| 3 | A Hive account that is yours alone | **your digital profile** | **tu perfil digital** | optional — created or connected when you're ready to run your own |
 
 Terms 2 and 3 are both "digital profiles" (Hive accounts) in the generic sense;
 qualify which one you mean whenever it isn't obvious.
 
 ## Core concepts
 
-| Concept | Use | Do NOT use | ES |
+| Concept | Use (EN) | ES (locked) | Do NOT use |
 |---|---|---|---|
-| A Hive account (`@name`), personal or community-shared | **digital profile** | "Hive account", "wallet", "your keys", "bank account" | _(later)_ |
-| — same, in help/tooltip text where precision matters | "your digital profile (a Hive blockchain account)" | — | _(later)_ |
-| The secrets that control a digital profile | **recovery keys** — only ever shown inside a security/backup screen | "master password", "private key", "WIF" as a bare field label | _(later)_ |
-| The specific key that lets EcoBank publish for you | **posting key** | "your password" | _(later)_ |
-| Prepaid one-time cost of creating a Hive account (EcoBank fronts the ~3 HIVE network cost) | **credit** — "prepaid account creation" | "account creation key", "ticket" (user-facing); anything that implies buying currency, a token, or an investment | _(later)_ |
-| Screen showing HIVE / HP / HBD balances | **Wallet** (page title: "Wallet dashboard") | "bank", "balance sheet" | _(later)_ |
-| The EcoBank user's own settings/bio page | **My Account** | "Profile" (now means the Hive thing) | _(later)_ |
-| A set of people sharing one Hive account | **circle** ("join a circle", "the circle's shared account") | "group" (kept only in internal code / DB / `Group` model); "community" (that's Hive's *native* feature) | _(later)_ |
-| Adding an existing digital profile to EcoBank | **Connect** ("Connect a digital profile") | "Import keys", "Import account" | _(later)_ |
-| Making a brand-new digital profile | **Create** ("Create a digital profile") | "Create keys" | _(later)_ |
-| EcoBank storing your recovery keys encrypted | **managed for you** / "EcoBank looks after the keys" | "custody", "we hold your keys" | _(later)_ |
+| A Hive account (`@name`), personal or shared | **digital profile** | **perfil digital** | "Hive account", "wallet", "your keys", "bank account" |
+| — with precision, in help text | "your digital profile (a Hive blockchain account)" | "tu perfil digital (una cuenta de la cadena de bloques Hive)" | — |
+| The secrets that control a digital profile | **recovery keys** | **claves de recuperación** | "master password", "private key", "WIF" as a bare label |
+| The master password itself (where it must be named) | **master password** | **contraseña maestra** | — |
+| The key that lets EcoBank publish for you | **posting key** | **clave de publicación** | "your password" |
+| The key that can move funds | **active key** | **clave activa** | — |
+| The key for full control / recovery | **owner key** | **clave de propietario** | — |
+| Prepaid one-time cost of creating a Hive account | **credit** ("prepaid account creation") | **crédito** ("creación de cuenta prepagada") | "account creation key", "ticket"; anything implying buying currency / a token / an investment |
+| Screen showing HIVE / HP / HBD balances | **Wallet** ("Wallet dashboard") | **Billetera** ("Panel de billetera") | "bank", "balance sheet" |
+| The EcoBank user's own settings/bio page | **My Account** | **Mi cuenta** | "Profile" (that's the Hive thing) |
+| A set of people sharing one Hive account | **circle** | **círculo** | "group" (internal code/DB only); "community" (Hive's *native* feature) |
+| Hive's native communities feature | **community** | **comunidad** | using it for a circle |
+| Adding an existing digital profile to EcoBank | **Connect** ("Connect a digital profile") | **Conectar** ("Conectar un perfil digital") | "Import keys", "Import account" |
+| Making a brand-new digital profile | **Create** ("Create a digital profile") | **Crear** ("Crear un perfil digital") | "Create keys" |
+| EcoBank storing your recovery keys encrypted | "EcoBank looks after the keys" | "EcoBank cuida las claves por ti" | "custody", "we hold your keys" |
 
 ## Action verbs
 
-| Action | Verb | ES |
+| Action | EN | ES (locked) |
 |---|---|---|
-| Add existing profile | **Connect** | _(later)_ |
-| Make new profile | **Create** | _(later)_ |
-| Remove profile's keys from EcoBank | **Remove from EcoBank** | _(later)_ |
-| Save a local copy of the keys | **Download backup** | _(later)_ |
-| Publish a draft to Hive | **Publish** | _(later)_ |
+| Add existing profile | **Connect** | **Conectar** |
+| Make new profile | **Create** | **Crear** |
+| Remove a profile from EcoBank | **Remove from EcoBank** | **Quitar de EcoBank** |
+| Save a local copy of the keys | **Download backup** | **Descargar copia de seguridad** |
+| Publish a draft to Hive | **Publish** | **Publicar** |
+| Join a circle | **Join** | **Unirse** |
+| Ask to join a circle | **Request to join** | **Solicitar unirse** |
 
 ## Standing disclaimers (use verbatim)
 
@@ -80,3 +91,5 @@ back just the posting key.
   `memory/feedback_po_linebreaks`.
 - "Hive" is fine to say — it's the network name, not jargon we're hiding.
   We just don't lead with "Hive account".
+- Spanish translation workflow: `docs/translations.md`. The ES terms above are
+  authoritative; `translations/glossary.es.json` is generated to match.

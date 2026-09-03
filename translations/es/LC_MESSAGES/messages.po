@@ -77,7 +77,11 @@ msgstr "La cantidad de delegación de CR es 0, omitiendo la delegación."
 msgid "Digital profile %(username)s created successfully!"
 msgstr "¡Perfil digital %(username)s creado con éxito!"
 
-#: app/account/routes.py:208
+#: app/account/routes.py:196
+msgid "Please confirm the consent checkbox before connecting."
+msgstr "Confirma la casilla de consentimiento antes de conectar el perfil."
+
+#: app/account/routes.py:212
 msgid "You have already connected this profile."
 msgstr "Ya conectaste este perfil."
 

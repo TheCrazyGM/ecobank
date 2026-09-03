@@ -192,6 +192,10 @@ def import_account():
 
     username = request.form.get("username", "").strip().lower()
 
+    if request.form.get("consent") != "yes":
+        flash(_("Please confirm the consent checkbox before connecting."), "danger")
+        return redirect(url_for("account.import_account"))
+
     posting_key = request.form.get("posting_key", "").strip()
     active_key = request.form.get("active_key", "").strip()
     memo_key = request.form.get("memo_key", "").strip()

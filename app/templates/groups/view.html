@@ -23,7 +23,7 @@
         <div class="col-md-12 mb-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ url_for('groups.list_groups') }}">{{ _('Groups') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('groups.list_groups') }}">{{ _('Circles') }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ group.name }}</li>
                 </ol>
             </nav>
@@ -396,7 +396,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="small text-muted">{{ _('Share one of your Hive keys with this group. Members will be able to use it for drafting (and posting, if permissions allow).') }}</p>
+                    <p class="small text-muted">{{ _('Share one of your Hive keys with this circle. Members will be able to use it for drafting (and posting, if permissions allow).') }}</p>
                     {% if available_accounts %}
                         <div class="mb-3">
                             <label for="resource_id" class="form-label">{{ _('Select Account') }}</label>
@@ -429,12 +429,12 @@
         <div class="modal-content">
             <form action="{{ url_for('groups.edit_group', id=group.id) }}" method="POST">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ _('Group Settings') }}</h5>
+                    <h5 class="modal-title">{{ _('Circle settings') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="name" class="form-label">{{ _('Group Name') }}</label>
+                        <label for="name" class="form-label">{{ _('Circle name') }}</label>
                         <input type="text" class="form-control" name="name" value="{{ group.name }}" required>
                     </div>
                     <div class="mb-3">

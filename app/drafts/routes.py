@@ -107,7 +107,7 @@ def create(group_id):
         memberships = GroupMember.query.filter_by(user_id=current_user.id).all()
         user_groups = [m.group for m in memberships]
         if not user_groups:
-            flash(_("You must belong to a group to create a draft."), "warning")
+            flash(_("You must be in a circle to create a draft."), "warning")
             return redirect(url_for("groups.create"))
 
         # If only one group, auto-select it
@@ -130,7 +130,7 @@ def create(group_id):
                 if not membership and not current_user.is_admin:
                     abort(403)
             except ValueError, TypeError:
-                flash(_("Invalid group selected"), "danger")
+                flash(_("Invalid circle selected"), "danger")
                 return redirect(url_for("drafts.create"))
 
         title = request.form.get("title")
@@ -152,7 +152,7 @@ def create(group_id):
         valid_accounts = [r.resource_id for r in resources]
 
         if hive_account not in valid_accounts:
-            flash(_("Invalid hive account selected for this group"), "danger")
+            flash(_("Invalid Hive account selected for this circle"), "danger")
             if group:
                 return redirect(url_for("drafts.create", group_id=group.id))
             return redirect(url_for("drafts.create"))

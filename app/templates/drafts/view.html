@@ -153,7 +153,7 @@
                             <h4>{{ _('About the Author') }}</h4>
                         </span>
                         <div><span><strong>{{ author.display_name }}</strong></span> -
-                            <span>{{ author.bio_text or _('Member of %(group)s', group=draft.group.name) }}</span>
+                            <span>{{ author.bio_text or _('Member of %(circle)s', circle=draft.group.name) }}</span>
                         </div>
                         {% if author.bio_links %}
                             <div class="mt-1 small">

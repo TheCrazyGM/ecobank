@@ -164,7 +164,7 @@ def edit_group(group_id):
             return render_template("admin/group_edit.html", form=form, group=group)
 
         db.session.commit()
-        flash(_("Group %(name)s updated successfully.", name=group.name), "success")
+        flash(_("Circle %(name)s updated successfully.", name=group.name), "success")
         return redirect(url_for("admin.manage_groups"))
     return render_template("admin/group_edit.html", form=form, group=group)
 

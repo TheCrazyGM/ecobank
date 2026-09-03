@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('Create New Group') }}</h2>
+    <h2>{{ _('Create a circle') }}</h2>
     <form method="POST">
         <div class="mb-3">
-            <label for="name" class="form-label">{{ _('Group Name') }}</label>
+            <label for="name" class="form-label">{{ _('Circle name') }}</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="mb-3">
@@ -15,6 +15,6 @@
             <label for="default_tags" class="form-label">{{ _('Default Tags (space separated)') }}</label>
             <input type="text" class="form-control" id="default_tags" name="default_tags" placeholder="tag1 tag2">
         </div>
-        <button type="submit" class="btn btn-primary">{{ _('Create Group') }}</button>
+        <button type="submit" class="btn btn-primary">{{ _('Create a circle') }}</button>
     </form>
 {% endblock %}

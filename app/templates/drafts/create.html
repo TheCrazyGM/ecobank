@@ -5,13 +5,13 @@
 
     <form method="POST">
         {% if group %}
-            <p class="text-muted">{{ _('For Group:') }} {{ group.name }}</p>
+            <p class="text-muted">{{ _('For circle:') }} {{ group.name }}</p>
             <input type="hidden" name="group_id" value="{{ group.id }}">
         {% else %}
             <div class="mb-3">
-                <label for="group_id" class="form-label">{{ _('Select Group') }}</label>
+                <label for="group_id" class="form-label">{{ _('Select a circle') }}</label>
                 <select class="form-select" id="group_id" name="group_id" required onchange="loadHiveAccounts()">
-                    <option value="" disabled selected>{{ _('Choose a group...') }}</option>
+                    <option value="" disabled selected>{{ _('Choose a circle...') }}</option>
                     {% for g in user_groups %}
                         <option value="{{ g.id }}">{{ g.name }}</option>
                     {% endfor %}
@@ -33,7 +33,7 @@
                             <option value="{{ acc }}">{{ acc }}</option>
                         {% endfor %}
                     {% else %}
-                        <option value="" disabled selected>{{ _('Select a group first') }}</option>
+                        <option value="" disabled selected>{{ _('Select a circle first') }}</option>
                     {% endif %}
                 </select>
                 </div>

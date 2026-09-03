@@ -7,21 +7,21 @@
 
   <!-- SEO & Social Meta Tags -->
     {% block meta %}
-      <meta name="description" content="{{ _('EcoBank is a Hive blockchain publishing tool by Ecobank Development Colombia SAS. Not a bank, and not affiliated with any bank.') }}">
+      <meta name="description" content="{{ _('EcoBank is a project bank for ecological restoration and community-led sustainable development, by Ecobank Development Colombia SAS. Not a financial institution.') }}">
       <meta name="author" content="Ecobank Development Colombia SAS">
 
   <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website">
       <meta property="og:url" content="{{ request.url }}">
       <meta property="og:title" content="{{ self.title() }}">
-      <meta property="og:description" content="{{ _('A Hive blockchain publishing tool for ecological restoration communities. Not a bank.') }}">
+      <meta property="og:description" content="{{ _('A project bank for ecological restoration and community-led sustainable development. Not a financial institution.') }}">
       <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
 
   <!-- Twitter -->
       <meta name="twitter:card" content="summary_large_image">
       <meta name="twitter:url" content="{{ request.url }}">
       <meta name="twitter:title" content="{{ self.title() }}">
-      <meta name="twitter:description" content="{{ _('A Hive blockchain publishing tool for ecological restoration communities. Not a bank.') }}">
+      <meta name="twitter:description" content="{{ _('A project bank for ecological restoration and community-led sustainable development. Not a financial institution.') }}">
       <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
     {% endblock %}
 
@@ -174,7 +174,7 @@
         <span class="text-muted">
           &copy; {{ now.year }} Ecobank Development Colombia SAS
           <br>
-          <small>{{ _('EcoBank is a Hive blockchain tool operated by Ecobank Development Colombia SAS. Not a bank, and not affiliated with any bank.') }}</small>
+          <small>{{ _('EcoBank supports ecological restoration projects and is operated by Ecobank Development Colombia SAS. It is not a financial institution and is not affiliated with any bank.') }}</small>
           <br>
           <small>{{ _('Built and run with SRBDE') }} &mdash;
             <a href="https://ecoinstats.net" class="text-muted" target="_blank" rel="noopener noreferrer">ecoinstats.net</a> &middot;

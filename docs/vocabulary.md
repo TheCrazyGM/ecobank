@@ -36,10 +36,12 @@ Spanish column is filled **after** the English is settled, then
 
 ## Standing disclaimers (use verbatim)
 
+- **What the name means:** "Eco" = ecological restoration. "Bank" = a *bank of projects* (as in a seed bank or land bank), not a financial bank. The mission is community-led sustainable development; Hive is one tool it uses, not the point.
 - **Non-affiliation (short, site-wide):**
-  "EcoBank is a Hive blockchain tool operated by Ecobank Development Colombia SAS. Not a bank, and not affiliated with any bank."
+  "EcoBank supports ecological restoration projects and is operated by Ecobank Development Colombia SAS. It is not a financial institution and is not affiliated with any bank."
 - **Non-affiliation (long, About/import):**
-  "EcoBank is built on the Hive blockchain and is operated by Ecobank Development Colombia SAS (Colombia). It is not a bank, does not take deposits, and is not affiliated with Ecobank Transnational Incorporated or any other financial institution. 'EcoBank' here refers to ecological restoration funded through Hive."
+  "EcoBank does not take deposits, hold money for you, or offer any financial service, and it is not affiliated with Ecobank Transnational Incorporated or any other bank. 'Bank' here means a bank of restoration projects."
+- **Operator vs builder:** operated by Ecobank Development Colombia SAS; built and run on infrastructure by SRBDE (EcoBank is a client of SRBDE). Links: ecoinstats.net, github.com/srbde.
 - **What the posting key can do (on the connect form):**
   "A posting key lets EcoBank publish posts as your profile. It cannot move funds, change your password, or recover your profile."
 

@@ -1,65 +1,51 @@
 {% extends "base.html" %}
 
+{% block title %}{{ _('Connect a digital profile') }}{% endblock %}
+
 {% block content %}
-    <h2>{{ _('Import Hive Keys') }}</h2>
-    <p class="lead">{{ _('Import an existing Hive key to manage it here.') }}</p>
+    <h2>{{ _('Connect a digital profile') }}</h2>
+    <p class="lead">{{ _('Already have a profile on the Hive network? Give EcoBank its posting key so it can publish on your behalf.') }}</p>
 
     <div class="alert alert-warning">
-        <strong>{{ _('Important Notice:') }}</strong> {{ _('This application is built on the Hive Blockchain and is not affiliated with the African financial institution Ecobank. We only use Hive keys to publish content and manage your decentralized ecological bank account.') }}
+        <strong>{{ _('Before you start:') }}</strong>
+        {{ _('EcoBank is built on the Hive blockchain and is operated by Ecobank Development Colombia SAS (Colombia). It is not a bank, does not take deposits, and is not affiliated with Ecobank Transnational Incorporated or any other financial institution.') }}
+    </div>
+
+    <div class="alert alert-info">
+        <p class="mb-1">{{ _('A posting key lets EcoBank publish posts as your profile. It cannot move funds, change your password, or recover your profile.') }}</p>
+        <p class="mb-0 small">{{ _('Only have a master password? Do not paste it here. Use the key recovery tool to get your posting key, then bring just that key back:') }}
+            <a href="https://tools.crypto-dreamr.com/key-recovery" target="_blank" rel="noopener noreferrer">tools.crypto-dreamr.com/key-recovery</a></p>
     </div>
 
     <form method="POST">
         <div class="mb-3">
-            <label for="username" class="form-label">{{ _('Username') }}</label>
+            <label for="username" class="form-label">{{ _('Profile name') }}</label>
             <input type="text" class="form-control" id="username" name="username" required pattern="^[a-z0-9.-]+$"
                    title="Lowercase letters, numbers, dots, hyphens only">
         </div>
 
-        <ul class="nav nav-tabs mb-3" id="importTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="password-tab" data-bs-toggle="tab" data-bs-target="#password-content"
-                        type="button" role="tab">{{ _('Master Password') }}</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="keys-tab" data-bs-toggle="tab" data-bs-target="#keys-content" type="button"
-                        role="tab">{{ _('Individual Keys') }}</button>
-            </li>
-        </ul>
-
-        <div class="tab-content" id="importTabsContent">
-        <!-- Master Password Tab -->
-            <div class="tab-pane fade show active" id="password-content" role="tabpanel">
-                <div class="mb-3">
-                    <label for="password" class="form-label">{{ _('Master Password') }}</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                    <div class="form-text text-warning">{{ _('We will derive all keys from this password and verify them
-                        against the blockchain.') }}</div>
-                </div>
-            </div>
-
-        <!-- Individual Keys Tab -->
-            <div class="tab-pane fade" id="keys-content" role="tabpanel">
-                <div class="alert alert-info py-2 small">{{ _('Provide at least one private key (wif).') }}</div>
-                <div class="mb-3">
-                    <label for="posting_key" class="form-label">{{ _('Posting Key (Private)') }}</label>
-                    <input type="password" class="form-control" id="posting_key" name="posting_key" placeholder="5...">
-                </div>
-                <div class="mb-3">
-                    <label for="active_key" class="form-label">{{ _('Active Key (Private)') }}</label>
-                    <input type="text" class="form-control" id="active_key" name="active_key">
-                </div>
-
-            <!-- Owner Key removed for security - EcoBank does not hold Owner keys for imported accounts -->
-
-                <div class="mb-3">
-                    <label for="memo_key" class="form-label">{{ _('Memo Key (Private)') }}</label>
-                    <input type="text" class="form-control" id="memo_key" name="memo_key">
-                </div>
-
-            </div>
+        <div class="mb-3">
+            <label for="posting_key" class="form-label">{{ _('Posting key') }}</label>
+            <input type="password" class="form-control font-monospace" id="posting_key" name="posting_key" required
+                   autocomplete="off" placeholder="5...">
+            <div class="form-text">{{ _('Starts with 5. EcoBank verifies it against the blockchain and stores it encrypted.') }}</div>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">{{ _('Import Key(s)') }}</button>
-        <a href="{{ url_for('account.list_accounts') }}" class="btn btn-secondary mt-3">{{ _('Cancel') }}</a>
+        <details class="mb-3">
+            <summary class="text-muted">{{ _('Advanced: also connect the active key') }}</summary>
+            <div class="mt-2">
+                <label for="active_key" class="form-label">{{ _('Active key (optional)') }}</label>
+                <input type="password" class="form-control font-monospace" id="active_key" name="active_key" autocomplete="off">
+                <div class="form-text text-warning">{{ _('The active key can move funds. Only add it if you need EcoBank to manage wallet actions for this profile.') }}</div>
+            </div>
+        </details>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="understand" name="consent" value="yes" required>
+            <label class="form-check-label" for="understand">{{ _('I understand what a posting key can do and I am choosing to let EcoBank use it.') }}</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{{ _('Connect profile') }}</button>
+        <a href="{{ url_for('account.list_accounts') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
     </form>
 {% endblock %}

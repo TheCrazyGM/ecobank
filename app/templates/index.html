@@ -4,6 +4,10 @@
     <div class="jumbotron p-4 p-md-5 rounded bg-light mb-4">
         <h1>{{ _('Welcome to EcoBank') }}</h1>
         <p class="lead">{{ _('Your decentralized restoration hub.') }}</p>
+        {% if not current_user.is_authenticated %}
+            <p class="mb-3">{{ _('Join a circle and publish to the Hive network through the account it shares. No keys to manage, no setup, and nothing to buy.') }}</p>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">{{ _('Get started') }}</a>
+        {% endif %}
     </div>
 
     {% if current_user.is_authenticated %}
@@ -17,19 +21,19 @@
             <div class="col-6 col-md-3">
                 <a href="{{ url_for('groups.list_groups') }}" class="btn btn-outline-primary w-100 py-3">
                     <i class="bi bi-people fs-4 d-block mb-1"></i>
-                    {{ _('My Groups') }}
+                    {{ _('My Circles') }}
                 </a>
             </div>
             <div class="col-6 col-md-3">
                 <a href="{{ url_for('account.list_accounts') }}" class="btn btn-outline-secondary w-100 py-3">
-                    <i class="bi bi-key fs-4 d-block mb-1"></i>
-                    {{ _('My Keys') }}
+                    <i class="bi bi-person-badge fs-4 d-block mb-1"></i>
+                    {{ _('My profiles') }}
                 </a>
             </div>
             <div class="col-6 col-md-3">
                 <a href="{{ url_for('main.profile') }}" class="btn btn-outline-secondary w-100 py-3">
                     <i class="bi bi-person-circle fs-4 d-block mb-1"></i>
-                    {{ _('Profile') }}
+                    {{ _('My Account') }}
                 </a>
             </div>
         </div>
@@ -40,10 +44,10 @@
             <i class="bi bi-person-raised-hand fs-3 flex-shrink-0"></i>
             <div class="w-100">
                 <h5 class="alert-heading mb-1">{{ _('Getting Started') }}</h5>
-                <p class="mb-2">{{ _('Enter the username of the person who invited you to find their profile and request access to their group.') }}</p>
+                <p class="mb-2">{{ _('Enter the username of the person who invited you. You can see their circles and ask to join.') }}</p>
                 <form action="{{ url_for('main.find_sponsor') }}" method="get" class="d-flex gap-2">
                     <input type="text" name="username" class="form-control form-control-sm" placeholder="{{ _('Their username') }}" required>
-                    <button type="submit" class="btn btn-sm btn-primary text-nowrap">{{ _('Find Sponsor') }}</button>
+                    <button type="submit" class="btn btn-sm btn-primary text-nowrap">{{ _('Find them') }}</button>
                 </form>
             </div>
         </div>
@@ -87,12 +91,13 @@
                 </div>
             {% else %}
                 <div class="alert alert-info text-center py-5">
-                    <h4>{{ _('No posts found right now.') }}</h4>
-                    <p>{{ _('Register a Hive account or create one to start seeing content here!') }}</p>
+                    <h4>{{ _('No posts here yet.') }}</h4>
                     {% if not current_user.is_authenticated %}
-                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">{{ _('Join Now') }}</a>
+                        <p>{{ _('Join a circle to start seeing what people are publishing.') }}</p>
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary">{{ _('Join now') }}</a>
                     {% else %}
-                        <a href="{{ url_for('account.create') }}" class="btn btn-success">{{ _('Create Hive Account') }}</a>
+                        <p>{{ _('Join a circle and publish through its shared account to get started.') }}</p>
+                        <a href="{{ url_for('groups.list_groups') }}" class="btn btn-success">{{ _('Find a circle') }}</a>
                     {% endif %}
                 </div>
             {% endif %}

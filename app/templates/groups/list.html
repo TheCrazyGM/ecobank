@@ -2,8 +2,8 @@
 
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>{{ _('My Groups') }}</h2>
-        <a href="{{ url_for('groups.create') }}" class="btn btn-success">{{ _('Create Group') }}</a>
+        <h2>{{ _('My Circles') }}</h2>
+        <a href="{{ url_for('groups.create') }}" class="btn btn-success">{{ _('Create a circle') }}</a>
     </div>
 
     {% if memberships %}
@@ -28,7 +28,7 @@
         </div>
     {% else %}
         <div class="text-center text-muted py-5">
-            <p>{{ _('You are not a member of any groups.') }}</p>
+            <p>{{ _('You are not in any circles yet.') }}</p>
         </div>
     {% endif %}
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block content %}
     <h2>{{ _('Edit Post') }}</h2>
-    <p class="text-muted">{{ _('Group:') }} {{ group.name }}</p>
+    <p class="text-muted">{{ _('Circle:') }} {{ group.name }}</p>
 
     <form method="POST">
         <div class="mb-3">
@@ -13,7 +13,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="hive_account" class="form-label">{{ _('Post As (Hive Keys)') }}</label>
+            <label for="hive_account" class="form-label">{{ _('Publish as') }}</label>
             <select class="form-select" id="hive_account" name="hive_account" required>
                 {% for acc in hive_accounts %}
                     <option value="{{ acc }}" {% if acc==draft.hive_account_username %}selected{% endif %}>{{ acc }}</option>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Security') }}{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">{{ _('Security') }}</h2>
+
+    <p class="lead">{{ _('EcoBank exists so that people can take part in a community on the Hive network without first becoming a blockchain expert. Here is exactly how that works and where your keys are.') }}</p>
+
+    <h3>{{ _('Most people here hold no keys at all') }}</h3>
+    <p>{{ _('The common way to use EcoBank is to join a community and publish through the account that community shares. You write, and the community\'s account publishes it. You never see a key, never hold a key, and never need one. If you leave, the community keeps its account and you keep your EcoBank login.') }}</p>
+
+    <h3>{{ _('This is the opposite of buying crypto') }}</h3>
+    <p>{{ _('You do not put money in and hold a balance. You get an account and earn over time by taking part. Hive transactions are essentially free. The only thing with a price on EcoBank is creating a brand-new Hive account (about 3 HIVE of network cost, which EcoBank covers for you). Nobody funds a balance, buys a token, or makes an investment here.') }}</p>
+
+    <h3>{{ _('If you do run your own digital profile') }}</h3>
+    <p>{{ _('Some people want their own Hive account. You can create one through EcoBank or connect one you already have. In both cases EcoBank stores the keys it needs, encrypted at rest, and decrypts them only to carry out an action you asked for (publishing a post, or a wallet action you requested).') }}</p>
+
+    <h4>{{ _('Profiles you connect') }}</h4>
+    <p>{{ _('You provide only the individual key(s) you choose to delegate, usually just the posting key. EcoBank verifies each key against the account\'s on-chain authorities and stores nothing else. It never asks for, receives, or stores your master password or your owner key. If you only have a master password, you derive the posting key yourself with an external tool and bring back just that key.') }}</p>
+
+    <h4>{{ _('Profiles EcoBank creates for you') }}</h4>
+    <p>{{ _('For an account EcoBank creates, it keeps the master password, encrypted, on purpose. A new account has no value, and beginners who are handed sole responsibility for a key on day one routinely lose it and the account with it. EcoBank holds the keys so that later, once the account has become worth looking after, you can retrieve everything and take full control. You can download a backup of your keys at any time, and remove the account from EcoBank whenever you want; it stays valid on Hive.') }}</p>
+
+    <h3>{{ _('What each key can do') }}</h3>
+    <ul>
+        <li>{{ _('Posting key: publish, comment, vote. Cannot touch funds. This is all EcoBank needs to publish for you.') }}</li>
+        <li>{{ _('Active key: move funds and change account settings. EcoBank only stores this if you explicitly add it for wallet actions.') }}</li>
+        <li>{{ _('Memo key: read and write encrypted memos. Optional.') }}</li>
+        <li>{{ _('Owner key: full control, including recovery. EcoBank never accepts or stores an owner key for a connected profile.') }}</li>
+    </ul>
+
+    <h3>{{ _('EcoBank will never ask you for a key') }}</h3>
+    <p>{{ _('EcoBank will never email you, message you, or call you asking for a key, a master password, or your EcoBank password. Anyone who does is impersonating us. The only place you ever enter a key is the "Connect a digital profile" page on this site, over HTTPS, when you chose to go there.') }}</p>
+
+    <h3>{{ _('Reporting a problem') }}</h3>
+    <p>{{ _('Security reports go to') }} <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a>, {{ _('staffed by the SRBDE team. Please include steps to reproduce. We do not run a paid bounty program, but we credit reporters who ask to be credited.') }}</p>
+{% endblock %}

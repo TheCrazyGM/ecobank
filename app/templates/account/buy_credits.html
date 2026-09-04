@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ _('Buy Key Creation Credits') }}</h2>
-    <p class="lead">{{ _('Each credit allows you to create one set of Hive keys.') }}</p>
+    <h2>{{ _('Get a credit') }}</h2>
+    <p class="lead">{{ _('A credit is prepaid account creation. One credit creates one new Hive account for you.') }}</p>
+    <p>{{ _('Creating a Hive account has a small network cost (about 3 HIVE). EcoBank covers that cost and does the setup; the credit price is the service fee for that. You are not buying currency, a token, or an investment, and EcoBank never holds a balance for you. If your community already shares an account, you do not need this at all.') }}</p>
     <p><strong>{{ _('Price:') }}</strong> ${{ "%.2f"|format(price) }} USD {{ _('per credit') }}</p>
 
     {% if hive_claim_tickets == 0 %}
         <div class="alert alert-warning" role="alert">
-            {{ _('Currently, no key creation tickets are available. Please check back later!') }}
+            {{ _('No credits are available to create profiles right now. Please check back later!') }}
         </div>
     {% elif hive_claim_tickets < 5 %} <div class="alert alert-info" role="alert">
-        {{ _('Only single key creation tickets are available at the moment. More will be available soon!') }}
+        {{ _('Only single credits are available at the moment. More will be available soon!') }}
     </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">{{ _('Single Credit') }}</h5>
-                        <p class="card-text">{{ _('Perfect for creating your first keys.') }}</p>
+                        <p class="card-text">{{ _('Perfect for creating your first profile.') }}</p>
                         <div id="paypal-button-container-1"></div>
                     </div>
                 </div>
@@ -29,7 +30,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">{{ _('Single Credit') }}</h5>
-                        <p class="card-text">{{ _('Perfect for creating your first keys.') }}</p>
+                        <p class="card-text">{{ _('Perfect for creating your first profile.') }}</p>
                         <div id="paypal-button-container-1"></div>
                     </div>
                 </div>

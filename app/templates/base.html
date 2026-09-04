@@ -7,21 +7,21 @@
 
   <!-- SEO & Social Meta Tags -->
     {% block meta %}
-      <meta name="description" content="{{ _('Ecobank - Your decentralized restoration hub and blogging platform.') }}">
-      <meta name="author" content="Ecobank">
+      <meta name="description" content="{{ _('EcoBank is a project bank for ecological restoration and community-led sustainable development, by Ecobank Development Colombia SAS. Not a financial institution.') }}">
+      <meta name="author" content="Ecobank Development Colombia SAS">
 
   <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website">
       <meta property="og:url" content="{{ request.url }}">
       <meta property="og:title" content="{{ self.title() }}">
-      <meta property="og:description" content="{{ _('Ecobank - Your decentralized writing platform.') }}">
+      <meta property="og:description" content="{{ _('A project bank for ecological restoration and community-led sustainable development. Not a financial institution.') }}">
       <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
 
   <!-- Twitter -->
       <meta name="twitter:card" content="summary_large_image">
       <meta name="twitter:url" content="{{ request.url }}">
       <meta name="twitter:title" content="{{ self.title() }}">
-      <meta name="twitter:description" content="{{ _('Ecobank - Your decentralized writing platform.') }}">
+      <meta name="twitter:description" content="{{ _('A project bank for ecological restoration and community-led sustainable development. Not a financial institution.') }}">
       <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
     {% endblock %}
 
@@ -102,7 +102,7 @@
                                              style="font-size: 0.75rem;">{{ _('Collaboration') }}</span></li>
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('groups.list_groups') }}"><i class="bi bi-people me-2"></i> {{
-                      _('My Groups') }}</a>
+                      _('My Circles') }}</a>
                   </li>
 
               <!-- Account -->
@@ -110,15 +110,15 @@
                                              style="font-size: 0.75rem;">{{ _('Account') }}</span></li>
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('main.profile') }}"><i class="bi bi-person me-2"></i> {{
-                      _('Profile') }}</a>
+                      _('My Account') }}</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('account.list_accounts') }}"><i
-                      class="bi bi-wallet2 me-2"></i> {{ _('Wallet Management') }}</a>
+                      class="bi bi-person-badge me-2"></i> {{ _('My digital profiles') }}</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link py-2" href="{{ url_for('account.buy_credits') }}"><i
-                      class="bi bi-credit-card me-2"></i> {{ _('Buy Credits') }}</a>
+                      class="bi bi-credit-card me-2"></i> {{ _('Account credits') }}</a>
                   </li>
 
                   {% if current_user.is_admin %}
@@ -172,9 +172,17 @@
     <footer class="footer mt-auto py-3 bg-light">
       <div class="container text-center">
         <span class="text-muted">
-          &copy; {{ now.year }} Sustainable Resource and Business Development Enterprise
+          &copy; {{ now.year }} Ecobank Development Colombia SAS
+          <br>
+          <small>{{ _('EcoBank supports ecological restoration projects and is operated by Ecobank Development Colombia SAS. It is not a financial institution and is not affiliated with any bank.') }}</small>
+          <br>
+          <small>{{ _('Built and run with SRBDE') }} &mdash;
+            <a href="https://ecoinstats.net" class="text-muted" target="_blank" rel="noopener noreferrer">ecoinstats.net</a> &middot;
+            <a href="https://github.com/srbde" class="text-muted" target="_blank" rel="noopener noreferrer">github.com/srbde</a></small>
           <br>
           <a href="{{ url_for('main.about') }}" class="text-muted me-2">{{ _('About') }}</a>
+          <a href="{{ url_for('main.security') }}" class="text-muted me-2">{{ _('Security') }}</a>
+          <a href="{{ url_for('main.terms') }}" class="text-muted me-2">{{ _('Terms') }}</a>
           <a href="{{ url_for('main.privacy') }}" class="text-muted">{{ _('Privacy Policy') }}</a>
         <!-- Honeypot Link -->
           <a href="{{ url_for('main.honey_trap') }}" style="display:none;" aria-hidden="true">Constructo</a>

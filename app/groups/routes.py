@@ -20,12 +20,12 @@ def create():
         default_tags = request.form.get("default_tags")
 
         if not name:
-            flash(_("Group name is required"), "danger")
+            flash(_("Circle name is required"), "danger")
             return redirect(url_for("groups.create"))
 
         existing = db.session.scalar(sa.select(Group).where(Group.name == name))
         if existing:
-            flash(_("Group name already exists"), "danger")
+            flash(_("A circle with that name already exists"), "danger")
             return redirect(url_for("groups.create"))
 
         group = Group(
@@ -42,7 +42,7 @@ def create():
         db.session.add(member)
         db.session.commit()
 
-        flash(_('Group "%(name)s" created!', name=name), "success")
+        flash(_('Circle "%(name)s" created!', name=name), "success")
         return redirect(url_for("groups.view", id=group.id))
 
     return render_template("groups/create.html")
@@ -68,14 +68,14 @@ def edit_group(id):
     default_tags = request.form.get("default_tags")
 
     if not name:
-        flash(_("Group name is required"), "danger")
+        flash(_("Circle name is required"), "danger")
         return redirect(url_for("groups.view", id=id))
 
     # Check name uniqueness if changed
     if name != group.name:
         existing = db.session.scalar(sa.select(Group).where(Group.name == name))
         if existing:
-            flash(_("Group name already exists"), "danger")
+            flash(_("A circle with that name already exists"), "danger")
             return redirect(url_for("groups.view", id=id))
 
     group.name = name
@@ -83,7 +83,7 @@ def edit_group(id):
     group.default_tags = default_tags
     db.session.commit()
 
-    flash(_("Group settings updated."), "success")
+    flash(_("Circle settings updated."), "success")
     return redirect(url_for("groups.view", id=id))
 
 
@@ -105,7 +105,7 @@ def view(id):
         group_id=id, user_id=current_user.id
     ).first()
     if not membership and not current_user.is_admin:
-        flash(_("You are not a member of this group."), "danger")
+        flash(_("You are not a member of this circle."), "danger")
         return redirect(url_for("groups.list_groups"))
 
     members = GroupMember.query.filter_by(group_id=id).join(User).all()
@@ -184,13 +184,13 @@ def add_member(id):
     create_notification(
         user_id=user_to_add.id,
         message=_(
-            "You have been added to group '%(name)s'", name=Group.query.get(id).name
+            "You have been added to circle '%(name)s'", name=Group.query.get(id).name
         ),
         link=url_for("groups.view", id=id),
         type="invite",
     )
 
-    flash(_("%(username)s added to group.", username=username), "success")
+    flash(_("%(username)s added to the circle.", username=username), "success")
     return redirect(url_for("groups.view", id=id))
 
 
@@ -308,7 +308,7 @@ def link_resource(id):
         db.session.add(link)
         db.session.commit()
         flash(
-            _("Hive account %(account)s linked to group.", account=resource_id),
+            _("Hive account %(account)s linked to the circle.", account=resource_id),
             "success",
         )
 
@@ -361,22 +361,22 @@ def request_join(id):
 
     existing = GroupMember.query.filter_by(group_id=id, user_id=current_user.id).first()
     if existing:
-        flash(_("You are already a member of this group."), "info")
+        flash(_("You are already a member of this circle."), "info")
         return redirect(url_for("main.user_profile", username=group.owner.username))
 
     success = create_notification(
         user_id=group.owner_user_id,
         message=_(
-            "%(username)s wants to join your group '%(group)s'",
+            "%(username)s wants to join your circle '%(circle)s'",
             username=current_user.username,
-            group=group.name,
+            circle=group.name,
         ),
         link=url_for("groups.view", id=id),
         type="invite",
     )
 
     if success:
-        flash(_("Your request has been sent to the group owner."), "success")
+        flash(_("Your request has been sent to the circle's owner."), "success")
     else:
         flash(_("Failed to send join request. Please try again later."), "danger")
     return redirect(url_for("main.user_profile", username=group.owner.username))

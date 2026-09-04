@@ -43,6 +43,9 @@
             {% endfor %}
         </p>
         <p>{{ form.submit(class="btn btn-primary") }}</p>
+        <p class="small text-muted">{{ _('By registering you agree to the') }}
+            <a href="{{ url_for('main.terms') }}">{{ _('Terms of Service') }}</a> {{ _('and') }}
+            <a href="{{ url_for('main.privacy') }}">{{ _('Privacy Policy') }}</a>.</p>
     </form>
     <p>
         {{ _('Already have an account?') }}

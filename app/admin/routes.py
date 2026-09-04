@@ -90,7 +90,7 @@ def delete_user(user_id):
     if user.created_groups.count() > 0 or user.hive_accounts.count() > 0:
         flash(
             _(
-                "Cannot delete this user because they have created groups or Hive accounts."
+                "Cannot delete this user because they have created circles or Hive accounts."
             ),
             "danger",
         )
@@ -128,14 +128,14 @@ def delete_user(user_id):
     return redirect(url_for("admin.manage_users"))
 
 
-@bp.route("/groups")
+@bp.route("/circles")
 @admin_required
 def manage_groups():
     groups = Group.query.order_by(Group.created_at.desc()).limit(50).all()
     return render_template("admin/groups.html", groups=groups)
 
 
-@bp.route("/groups/edit/<int:group_id>", methods=["GET", "POST"])
+@bp.route("/circles/edit/<int:group_id>", methods=["GET", "POST"])
 @admin_required
 def edit_group(group_id):
     group = Group.query.get_or_404(group_id)
@@ -164,7 +164,7 @@ def edit_group(group_id):
             return render_template("admin/group_edit.html", form=form, group=group)
 
         db.session.commit()
-        flash(_("Group %(name)s updated successfully.", name=group.name), "success")
+        flash(_("Circle %(name)s updated successfully.", name=group.name), "success")
         return redirect(url_for("admin.manage_groups"))
     return render_template("admin/group_edit.html", form=form, group=group)
 

@@ -2,23 +2,48 @@
 
 {% block title %}{{ _('About EcoBank') }}{% endblock %}
 
+{% block meta %}
+    <link rel="canonical" href="{{ url_for('main.about', _external=True) }}">
+    <meta name="description" content="{{ _('EcoBank grew out of a decade of ecological restoration work in Colombia — rescuing native seedlings and healing soil — and is now how that work gets organised, published, and trusted.') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{{ _('About EcoBank — ecological restoration and community-led development') }}">
+    <meta property="og:description" content="{{ _('Started in the field over a decade ago. Learn how EcoBank helps circles publish restoration work together, why it uses the word bank, and who operates and maintains the platform.') }}">
+    <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ _('About EcoBank — ecological restoration and community-led development') }}">
+    <meta name="twitter:description" content="{{ _('A project bank for ecological restoration and community-led sustainable development. Not a financial institution.') }}">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
+{% endblock %}
+
 {% block content %}
     <h2 class="mb-4">{{ _('About EcoBank') }}</h2>
-    <p class="lead">{{ _('EcoBank is a project bank for ecological restoration. "Eco" is ecological restoration; "bank" means a shared pool of projects, in the sense of a seed bank or a land bank, not a financial one. It is how %(entity)s organises community-led sustainable-development work.', entity=config.OPERATING_ENTITY) }}</p>
 
-    <p>{{ _('This site is one of the tools. It lets a community write and publish together under one shared identity, so a circle can speak with one voice without any member holding a password. Contributors write drafts and EcoBank publishes them using only a posting key, which it looks after so people can take part without first learning how blockchain keys work.') }}</p>
+    <p class="lead">{{ _('EcoBank started in the field, not in a codebase: rescuing native seedlings, healing degraded soil at Aula Viva — Centro de Investigación Buena Vista, and watching pollinators return to land that had been written off. That work is over a decade old.') }}</p>
 
-    <p>{{ _('Publishing runs on the Hive network, which also lets some of the value a community creates flow back to its work. The restoration effort comes first, though, and would continue with or without any blockchain.') }}</p>
+    <p>{{ _('Restoration like that is slow, and it is easy for the record of it — who planted what, which batch of comino crespo or cedro de montaña came from where, which circle did the work — to live only in scattered notebooks and phone photos. EcoBank is the tool we built so that record could be shared, trusted, and carried forward by the people doing the work, not just the people funding it.') }}</p>
+
+    <p>{{ _('EcoBank is a project bank for ecological restoration and community-led sustainable development, operated in Colombia by %(entity)s.', entity=config.OPERATING_ENTITY) }}</p>
+
+    <p>{{ _('The name is deliberate: "Eco" points to ecological restoration, while "bank" means a shared pool of projects — like a seed bank or land bank, not a financial institution. EcoBank helps people organise, publish, and support practical work that improves the places where they live.') }}</p>
+
+    <h3>{{ _('How it works') }}</h3>
+    <p>{{ _('A circle is a group of people working together through one shared digital profile. Contributors write drafts, the circle reviews them, and EcoBank publishes approved work under the circle\'s shared identity. Most participants never need to handle a blockchain key.') }}</p>
+
+    <p>{{ _('Publishing runs on the Hive blockchain. Hive provides the public record and the account infrastructure, but it is a tool rather than the mission: the restoration work comes first and would continue with or without a blockchain.') }}</p>
+
+    <h3>{{ _('What we are building') }}</h3>
+    <p>{{ _('We are building a practical home for projects that are easy to explain, contribute to, and follow over time. That means shared publishing, transparent records, and tools that let a circle focus on its work instead of becoming a blockchain technology project.') }}</p>
 
     <h3>{{ _('Who runs it') }}</h3>
     <p>{{ _('EcoBank is operated by %(entity)s, a company registered in Colombia.', entity=config.OPERATING_ENTITY) }}</p>
-    <p>{{ _('It is built and run on infrastructure maintained by SRBDE (Sustainable Resource and Business Development Enterprise), an independent open-source software enterprise. EcoBank is a client of SRBDE.') }}
+    <p>{{ _('It is built and run on infrastructure maintained by SRBDE (Sustainable Resource and Business Development Enterprise), an independent software enterprise that publishes open-source infrastructure and community-first platforms. EcoBank is a client of SRBDE.') }}
         <a href="https://ecoinstats.net" target="_blank" rel="noopener noreferrer">ecoinstats.net</a> &middot;
         <a href="https://github.com/srbde" target="_blank" rel="noopener noreferrer">github.com/srbde</a></p>
     <p>{{ _('Questions, privacy requests, and security reports go to') }} <a href="mailto:{{ config.CONTACT_EMAIL }}">{{ config.CONTACT_EMAIL }}</a>, {{ _('which is staffed by the SRBDE team.') }}</p>
 
     <h3>{{ _('Not a financial institution') }}</h3>
-    <p>{{ _('EcoBank does not take deposits, hold money for you, or offer any financial service, and it is not affiliated with Ecobank Transnational Incorporated or any other bank. "Bank" here means a bank of restoration projects. The "wallet" screen only shows the HIVE, HIVE Power and HBD already held by a Hive profile you control.') }}</p>
+    <p>{{ _('EcoBank does not take deposits, hold money for you, or offer financial services. It is not affiliated with Ecobank Transnational Incorporated or any other bank. The "wallet" screen only shows HIVE, HIVE Power, and HBD already held by a Hive profile you control.') }}</p>
 
     <h3>{{ _('Your keys') }}</h3>
     <p>{{ _('Most people who use EcoBank hold no keys at all — they post through an account their community shares. If you run your own profile, the') }}

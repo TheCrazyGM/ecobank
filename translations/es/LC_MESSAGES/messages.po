@@ -3284,20 +3284,28 @@ msgstr "Sin notificaciones."
 #~ msgstr ""
 
 #: app/templates/main/about.html
-msgid "EcoBank is a project bank for ecological restoration and community-led sustainable development, operated in Colombia and built with Hive."
-msgstr "EcoBank es un banco de proyectos para la restauración ecológica y el desarrollo sostenible liderado por comunidades, operado en Colombia y construido con Hive."
+msgid "EcoBank grew out of a decade of ecological restoration work in Colombia — rescuing native seedlings and healing soil — and is now how that work gets organised, published, and trusted."
+msgstr "EcoBank nació de más de una década de trabajo de restauración ecológica en Colombia — rescatando plántulas nativas y sanando el suelo — y hoy es la forma en que ese trabajo se organiza, se publica y se vuelve confiable."
 
 #: app/templates/main/about.html
 msgid "About EcoBank — ecological restoration and community-led development"
 msgstr "Sobre EcoBank — restauración ecológica y desarrollo liderado por comunidades"
 
 #: app/templates/main/about.html
-msgid "Learn how EcoBank helps circles publish together, why it uses the word bank, and who operates and maintains the platform."
-msgstr "Conoce cómo EcoBank ayuda a los círculos a publicar juntos, por qué usa la palabra banco y quién opera y mantiene la plataforma."
+msgid "Started in the field over a decade ago. Learn how EcoBank helps circles publish restoration work together, why it uses the word bank, and who operates and maintains the platform."
+msgstr "Empezó en el campo hace más de una década. Conoce cómo EcoBank ayuda a los círculos a publicar juntos su trabajo de restauración, por qué usa la palabra banco y quién opera y mantiene la plataforma."
 
 #: app/templates/main/about.html
 msgid "A project bank for ecological restoration and community-led sustainable development. Not a financial institution."
 msgstr "Un banco de proyectos para la restauración ecológica y el desarrollo sostenible liderado por comunidades. No es una institución financiera."
+
+#: app/templates/main/about.html
+msgid "EcoBank started in the field, not in a codebase: rescuing native seedlings, healing degraded soil at Aula Viva — Centro de Investigación Buena Vista, and watching pollinators return to land that had been written off. That work is over a decade old."
+msgstr "EcoBank empezó en el campo, no en un código: rescatando plántulas nativas, sanando suelo degradado en Aula Viva — Centro de Investigación Buena Vista, y viendo regresar a los polinizadores a tierras que se daban por perdidas. Ese trabajo tiene más de una década."
+
+#: app/templates/main/about.html
+msgid "Restoration like that is slow, and it is easy for the record of it — who planted what, which batch of comino crespo or cedro de montaña came from where, which circle did the work — to live only in scattered notebooks and phone photos. EcoBank is the tool we built so that record could be shared, trusted, and carried forward by the people doing the work, not just the people funding it."
+msgstr "Una restauración así es lenta, y es fácil que el registro de ese trabajo — quién sembró qué, de dónde salió cada tanda de comino crespo o cedro de montaña, qué círculo hizo la labor — quede regado en cuadernos sueltos y fotos de celular. EcoBank es la herramienta que construimos para que ese registro se pudiera compartir, confiar y llevar adelante por las personas que hacen el trabajo, no solo por quienes lo financian."
 
 #: app/templates/main/about.html
 msgid "EcoBank is a project bank for ecological restoration and community-led sustainable development, operated in Colombia by %(entity)s."

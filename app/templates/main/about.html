@@ -4,11 +4,11 @@
 
 {% block meta %}
     <link rel="canonical" href="{{ url_for('main.about', _external=True) }}">
-    <meta name="description" content="{{ _('EcoBank is a project bank for ecological restoration and community-led sustainable development, operated in Colombia and built with Hive.') }}">
+    <meta name="description" content="{{ _('EcoBank grew out of a decade of ecological restoration work in Colombia — rescuing native seedlings and healing soil — and is now how that work gets organised, published, and trusted.') }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url }}">
     <meta property="og:title" content="{{ _('About EcoBank — ecological restoration and community-led development') }}">
-    <meta property="og:description" content="{{ _('Learn how EcoBank helps circles publish together, why it uses the word bank, and who operates and maintains the platform.') }}">
+    <meta property="og:description" content="{{ _('Started in the field over a decade ago. Learn how EcoBank helps circles publish restoration work together, why it uses the word bank, and who operates and maintains the platform.') }}">
     <meta property="og:image" content="{{ url_for('static', filename='img/ecobank_header.png', _external=True) }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ _('About EcoBank — ecological restoration and community-led development') }}">
@@ -18,7 +18,12 @@
 
 {% block content %}
     <h2 class="mb-4">{{ _('About EcoBank') }}</h2>
-    <p class="lead">{{ _('EcoBank is a project bank for ecological restoration and community-led sustainable development, operated in Colombia by %(entity)s.', entity=config.OPERATING_ENTITY) }}</p>
+
+    <p class="lead">{{ _('EcoBank started in the field, not in a codebase: rescuing native seedlings, healing degraded soil at Aula Viva — Centro de Investigación Buena Vista, and watching pollinators return to land that had been written off. That work is over a decade old.') }}</p>
+
+    <p>{{ _('Restoration like that is slow, and it is easy for the record of it — who planted what, which batch of comino crespo or cedro de montaña came from where, which circle did the work — to live only in scattered notebooks and phone photos. EcoBank is the tool we built so that record could be shared, trusted, and carried forward by the people doing the work, not just the people funding it.') }}</p>
+
+    <p>{{ _('EcoBank is a project bank for ecological restoration and community-led sustainable development, operated in Colombia by %(entity)s.', entity=config.OPERATING_ENTITY) }}</p>
 
     <p>{{ _('The name is deliberate: "Eco" points to ecological restoration, while "bank" means a shared pool of projects — like a seed bank or land bank, not a financial institution. EcoBank helps people organise, publish, and support practical work that improves the places where they live.') }}</p>
 

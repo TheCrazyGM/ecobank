@@ -36,7 +36,7 @@
     <canvas id="ecobank-price-chart" height="90"></canvas>
     <p class="text-muted small mt-2">{{ _('Price derived from the HSBIDAO:ECOBANK Hive-Engine liquidity pool, updated hourly.') }}</p>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js" integrity="sha384-XcdcwHqIPULERb2yDEM4R0XaQKU3YnDsrTmjACBZyfdVVqjh6xQ4/DCMd7XLcA6Y" crossorigin="anonymous"></script>
     <script>
       const history = {{ history | tojson }};
       const labels = history.map(r => new Date(r.ts).toLocaleString());

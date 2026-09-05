@@ -47,7 +47,7 @@
         </div>
     {% endif %}
 
-    <script src="https://www.paypal.com/sdk/js?client-id={{ client_id }}&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id={{ client_id }}&currency=USD" crossorigin="anonymous"></script>
     <script>
         function setupPaypal(containerId, qty) {
             paypal.Buttons({
